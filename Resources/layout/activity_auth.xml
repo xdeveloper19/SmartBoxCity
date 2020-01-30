@@ -54,6 +54,7 @@
             android:layout_marginBottom="10dp"
             android:layout_below="@+id/label_login"
             android:id="@+id/s_login"
+			android:padding = "7dp"
 			android:background = "@drawable/edittext_stili"
             android:hint="Логин"/>
 
@@ -72,6 +73,7 @@
             android:layout_height="50dp"
             android:layout_below="@+id/label_pass"
             android:id="@+id/s_pass"
+			android:padding = "7dp"
 			android:background = "@drawable/edittext_stili"
             android:hint="Пароль"/>
 

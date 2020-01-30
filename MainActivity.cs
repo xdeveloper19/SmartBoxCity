@@ -9,7 +9,6 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.View;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
-
 using Android.Views;
 using Android.Widget;
 using Com.Karumi.Dexter;
@@ -38,19 +37,25 @@ namespace SmartBoxCity
             Dexter.WithActivity(this).WithPermissions(permissions).WithListener(new CompositeMultiplePermissionsListener(new SamplePermissionListener(this))).Check();
 
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
+            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
 
             navigation.NavigationItemSelected += (sender, e) =>
             {
                 switch (e.Item.ItemId)
                 {
                     case Resource.Id.navigation_home:
-                        Toast.MakeText(this, "Выбрана главная страница.", ToastLength.Long).Show();
+
+                        Toast.MakeText(this, "Главная страница.", ToastLength.Long).Show();
                         break;
-                    case Resource.Id.navigation_dashboard:
-                        Toast.MakeText(this, "Выбран второй элемент.", ToastLength.Long).Show();
+                    case Resource.Id.title_about_us:
+
+                        Toast.MakeText(this, "Страница: О нас.", ToastLength.Long).Show();
                         break;
-                    case Resource.Id.navigation_notifications:
-                        Toast.MakeText(this, "Выбраны уведомления.", ToastLength.Long).Show();
+                    case Resource.Id.title_reviews:
+                        Toast.MakeText(this, "Страница: Отзывы.", ToastLength.Long).Show();
+                        break;
+                    case Resource.Id.title_contacts:
+                        Toast.MakeText(this, "Страница: Контакты.", ToastLength.Long).Show();
                         break;
                 }
             };

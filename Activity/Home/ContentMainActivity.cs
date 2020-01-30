@@ -41,9 +41,6 @@ namespace SmartBoxCity.Activity.Home
 
             try
             {
-                string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-                string file_data_remember;
-
                 btn_auth_form = view.FindViewById<Button>(Resource.Id.btn_auth_form);
                 btn_reg_form = view.FindViewById<Button>(Resource.Id.btn_reg_form);
                 btn_calculate = view.FindViewById<Button>(Resource.Id.btn_calculate);

@@ -1,0 +1,379 @@
+﻿<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".ui.login.LoginActivity">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"> 
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight = "8dp"
+            >
+            <RelativeLayout
+                android:id="@+id/fioBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+               
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Регистрация"
+                    android:padding="10dp"
+                    android:textSize="15sp"
+                    android:id = "@+id/textHeading"
+                    android:layout_centerHorizontal = "true"
+                />
+               
+                <TextView
+                    android:id="@+id/textfrom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:layout_below = "@+id/textHeading"
+                    android:padding="10dp"
+                    android:text="Email:"
+                    android:textSize="15sp"
+                   
+                    />
+
+                <EditText
+                    android:id="@+id/s_edit_from"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/textfrom"
+                    android:layout_toRightOf="@+id/textfrom"
+                    android:layout_below = "@+id/textHeading"
+                    android:inputType="text"
+                    android:layout_marginTop="8dp"
+                    android:padding="8dp"
+                    android:background = "@drawable/edittext_stili"
+                    android:textSize="9sp"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:id="@+id/textWhere"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:layout_below = "@+id/textfrom"
+                    android:padding="10dp"
+                    android:text="Телефон:"
+                    android:textSize="15sp"
+                   
+                    />
+
+                <EditText
+                    android:id="@+id/s_edit_where"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/textWhere"
+                    android:layout_toRightOf="@+id/textWhere"
+                    android:layout_below = "@+id/s_edit_from"
+                    android:inputType="text"
+                    android:layout_marginTop="13dp"
+                    android:padding="8dp"
+                    android:background = "@drawable/edittext_stili"
+                    android:textSize="9sp"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:id="@+id/TextShipmentTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:layout_below = "@+id/textWhere"
+                    android:padding="10dp"
+                    android:text="Пароль:"
+                    android:textSize="15sp"
+                   
+                    />
+
+                <EditText
+                    android:id="@+id/s_shipment_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/TextShipmentTime"
+                    android:layout_toRightOf="@+id/TextShipmentTime"
+                    android:layout_below = "@+id/s_edit_where"
+                    android:inputType="text"
+                    android:layout_marginTop="12dp"
+                    android:padding="8dp"
+                    android:background = "@drawable/edittext_stili"
+                    android:textSize="9sp"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:id="@+id/TextShippingDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:layout_below = "@+id/TextShipmentTime"
+                    android:padding="10dp"
+                    android:text="Подтвердите пароль:"
+                    android:textSize="15sp"
+                   
+                    />
+
+                <EditText
+                    android:id="@+id/s_shipping_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/TextShippingDate"
+                    android:layout_toRightOf="@+id/TextShippingDate"
+                    android:layout_below = "@+id/s_shipment_time"
+                    android:inputType="text"
+                    android:layout_marginTop="12dp"
+                    android:padding="8dp"
+                    android:background = "@drawable/edittext_stili"
+                    android:textSize="9sp"
+                    android:gravity="center"
+                    />
+
+              </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/fioBox1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below = "@+id/fioBox"
+                >
+               
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Данные организации"
+                    android:padding="10dp"
+                    android:textSize="15sp"
+                    android:id = "@+id/textHeading"
+                    android:layout_centerHorizontal = "true"
+                />
+               
+                <TextView
+                    android:id="@+id/textSurname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:layout_below = "@+id/textHeading"
+                    android:padding="10dp"
+                    android:text="Фамилия:"
+                    android:textSize="15sp"
+                   
+                    />
+
+                <EditText
+                    android:id="@+id/s_surname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/textSurname"
+                    android:layout_toRightOf="@+id/textSurname"
+                    android:layout_below = "@+id/textHeading"
+                    android:inputType="text"
+                    android:layout_marginTop="8dp"
+                    android:padding="8dp"
+                    android:background = "@drawable/edittext_stili"
+                    android:textSize="9sp"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:id="@+id/textName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:layout_below = "@+id/textSurname"
+                    android:padding="10dp"
+                    android:text="Имя:"
+                    android:textSize="15sp"
+                   
+                    />
+
+                <EditText
+                    android:id="@+id/s_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/textName"
+                    android:layout_toRightOf="@+id/textName"
+                    android:layout_below = "@+id/textSurname"
+                    android:inputType="text"
+                    android:layout_marginTop="13dp"
+                    android:padding="8dp"
+                    android:background = "@drawable/edittext_stili"
+                    android:textSize="9sp"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:id="@+id/TextPatronymic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:layout_below = "@+id/textName"
+                    android:padding="10dp"
+                    android:text="Отчество:"
+                    android:textSize="15sp"
+                   
+                    />
+
+                <EditText
+                    android:id="@+id/s_patronymic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/TextPatronymic"
+                    android:layout_toRightOf="@+id/TextPatronymic"
+                    android:layout_below = "@+id/textName"
+                    android:inputType="text"
+                    android:layout_marginTop="12dp"
+                    android:padding="8dp"
+                    android:background = "@drawable/edittext_stili"
+                    android:textSize="9sp"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:id="@+id/TextPassportSeries"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:layout_below = "@+id/TextPatronymic"
+                    android:padding="10dp"
+                    android:text="Серия паспорта:"
+                    android:textSize="15sp"
+                   
+                    />
+
+                <EditText
+                    android:id="@+id/s_passport_series"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/TextPassportSeries"
+                    android:layout_toRightOf="@+id/TextPassportSeries"
+                    android:layout_below = "@+id/TextPatronymic"
+                    android:inputType="text"
+                    android:layout_marginTop="12dp"
+                    android:padding="8dp"
+                    android:background = "@drawable/edittext_stili"
+                    android:textSize="9sp"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:id="@+id/TextPassportNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:layout_below = "@+id/TextPassportSeries"
+                    android:padding="10dp"
+                    android:text="Номер паспорта:"
+                    android:textSize="15sp"
+                   
+                    />
+
+                <EditText
+                    android:id="@+id/s_passport_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/TextPassportNumber"
+                    android:layout_toRightOf="@+id/TextPassportNumber"
+                    android:layout_below = "@+id/TextPassportSeries"
+                    android:inputType="text"
+                    android:layout_marginTop="12dp"
+                    android:padding="8dp"
+                    android:background = "@drawable/edittext_stili"
+                    android:textSize="9sp"
+                    android:gravity="center"
+                    />
+
+                <TextView
+                    android:id="@+id/TextDateBirth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:layout_below = "@+id/TextPassportNumber"
+                    android:padding="10dp"
+                    android:text="Дата рождения:"
+                    android:textSize="15sp"
+                   
+                    />
+
+                <EditText
+                    android:id="@+id/s_date_birth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/TextDateBirth"
+                    android:layout_toRightOf="@+id/TextDateBirth"
+                    android:layout_below = "@+id/TextPassportNumber"
+                    android:inputType="text"
+                    android:layout_marginTop="12dp"
+                    android:padding="8dp"
+                    android:background = "@drawable/edittext_stili"
+                    android:textSize="9sp"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:id="@+id/TextDepartmentCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="left|center_vertical"
+                    android:layout_below = "@+id/TextDateBirth"
+                    android:padding="10dp"
+                    android:text="Код подразделения:"
+                    android:textSize="15sp"
+                   
+                    />
+
+                <EditText
+                    android:id="@+id/s_department_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/TextDepartmentCode"
+                    android:layout_toRightOf="@+id/TextDepartmentCode"
+                    android:layout_below = "@+id/TextDateBirth"
+                    android:inputType="text"
+                    android:layout_marginTop="12dp"
+                    android:padding="8dp"
+                    android:background = "@drawable/edittext_stili"
+                    android:textSize="9sp"
+                    android:gravity="center"
+                    />
+               
+                <CheckBox
+                    android:id ="@+id/check_personal_data_processing"
+                    android:layout_below ="@+id/TextDepartmentCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text ="Согласие на обработку персональный данных"
+                    />
+                <Button
+                    android:id="@+id/btn_make_request"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/button_stili"
+                    android:layout_below = "@+id/check_personal_data_processing"
+                    android:layout_centerHorizontal ="true"
+                    android:padding = "5dp"
+                    android:text="Зарегистрироваться"
+                    android:textSize="8sp"
+                  />
+
+              </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+    <ProgressBar
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/preloader"
+        />
+ </RelativeLayout>
+            
