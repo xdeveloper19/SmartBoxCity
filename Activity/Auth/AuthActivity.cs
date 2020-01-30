@@ -14,6 +14,7 @@ using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
 using Plugin.Settings;
+using SmartBoxCity.Activity.Home;
 using SmartBoxCity.Model;
 using SmartBoxCity.Model.AuthViewModel;
 using SmartBoxCity.Repository;
@@ -210,7 +211,10 @@ namespace SmartBoxCity.Activity.Auth
                                 //StartActivity(UserActivity);
                                 //this.Finish();
                             }
-
+                            CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
+                            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                            UserActivity content = new UserActivity();
+                            transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
                         }
                         else
                         {

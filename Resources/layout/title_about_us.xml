@@ -8,7 +8,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main"
     android:background = "@drawable/activity_stili"
-    android:id="@+id/auth_layout">
+    android:id="@+id/about_us_layout">
 
 
     <ScrollView

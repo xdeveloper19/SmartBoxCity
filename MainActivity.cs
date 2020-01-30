@@ -9,14 +9,17 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.View;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
+using System.IO;
 using Android.Views;
 using Android.Widget;
 using Com.Karumi.Dexter;
 using Com.Karumi.Dexter.Listener;
 using Com.Karumi.Dexter.Listener.Multi;
+using Plugin.Settings;
 using SmartBoxCity.Activity;
 using SmartBoxCity.Activity.Auth;
 using SmartBoxCity.Activity.Home;
+using SmartBoxCity.Activity.Order;
 
 namespace SmartBoxCity
 {
@@ -24,6 +27,7 @@ namespace SmartBoxCity
     public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
     {
         private int MY_PERMISSIONS_REQUEST_CAMERA = 100;
+        private View exit { get; set; }
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -37,15 +41,29 @@ namespace SmartBoxCity
             Dexter.WithActivity(this).WithPermissions(permissions).WithListener(new CompositeMultiplePermissionsListener(new SamplePermissionListener(this))).Check();
 
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
+
             FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+            ContentMainActivity home = new ContentMainActivity();
+            transaction1.Replace(Resource.Id.framelayout, home).AddToBackStack(null).Commit();
 
             navigation.NavigationItemSelected += (sender, e) =>
             {
+                FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
                 switch (e.Item.ItemId)
                 {
                     case Resource.Id.navigation_home:
 
-                        Toast.MakeText(this, "Главная страница.", ToastLength.Long).Show();
+                        if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+                        {
+                            UserActivity content2 = new UserActivity();
+                            transaction2.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+                        }
+                        else
+                        {
+                            ContentMainActivity content = new ContentMainActivity();
+                            transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                        }
+                        
                         break;
                     case Resource.Id.title_about_us:
 
@@ -69,6 +87,14 @@ namespace SmartBoxCity
             toggle.SyncState();
 
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
+            var exit1 = navigationView.Menu.FindItem(Resource.Id.nav_exit);
+
+            if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+                exit1.SetVisible(true);
+            else
+            {
+                exit1.SetVisible(false);
+            }
             navigationView.SetNavigationItemSelectedListener(this);
         }
 
@@ -112,25 +138,38 @@ namespace SmartBoxCity
         public bool OnNavigationItemSelected(IMenuItem item)
         {
             int id = item.ItemId;
+            //MenuItem register = item.findItem(R.id.menuregistrar);
             FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
 
-            if (id == Resource.Id.nav_camera)
-            {
-                ContentMainActivity home = new ContentMainActivity();
-                transaction1.Replace(Resource.Id.framelayout, home).AddToBackStack(null).Commit();
-            }
-            else if (id == Resource.Id.nav_gallery)
+            if (id == Resource.Id.nav_auth)
             {
                 AuthActivity home = new AuthActivity();
                 transaction1.Replace(Resource.Id.framelayout, home).AddToBackStack(null).Commit();
             }
+            if (id == Resource.Id.nav_camera)
+            {
+                
+            }
+            else if (id == Resource.Id.nav_gallery)
+            {
+                if (CrossSettings.Current.GetValueOrDefault("isAuth","") == "true")
+                {
+                    UserActivity content = new UserActivity();
+                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                }
+            }
             else if (id == Resource.Id.nav_slideshow)
             {
-
+                if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+                {
+                    AddOrderActivity content = new AddOrderActivity();
+                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                }   
             }
             else if (id == Resource.Id.nav_manage)
             {
-
+                ListOrdersActivity content = new ListOrdersActivity();
+                transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
             }
             else if (id == Resource.Id.nav_share)
             {
@@ -139,6 +178,14 @@ namespace SmartBoxCity
             else if (id == Resource.Id.nav_send)
             {
 
+            }
+            else if (id == Resource.Id.nav_exit)
+            {
+                string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+                File.Delete(dir_path + "user_data.txt");
+                CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
+                Intent content = new Intent(this, typeof(MainActivity));
+                StartActivity(content);
             }
 
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);

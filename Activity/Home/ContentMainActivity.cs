@@ -10,6 +10,8 @@ using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
+using SmartBoxCity.Activity.Auth;
+using SmartBoxCity.Activity.Order;
 
 namespace SmartBoxCity.Activity.Home
 {
@@ -54,15 +56,18 @@ namespace SmartBoxCity.Activity.Home
                 // Переход к форме регистрации.
                 btn_calculate.Click += (s, e) =>
                 {
-
+                    FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                    AddOrderActivity content = new AddOrderActivity();
+                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
                 };
 
                 // Переход к форме авторизация
 
                 btn_auth_form.Click += (s, e) =>
                 {
-                    //Intent authActivity = new Intent(this, typeof(Auth.AuthActivity));
-                    //StartActivity(authActivity);
+                    FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                    AuthActivity content = new AuthActivity();
+                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
                 };
             }
             catch(Exception ex)

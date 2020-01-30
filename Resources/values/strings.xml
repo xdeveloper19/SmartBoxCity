@@ -7,6 +7,7 @@
     <string name="title_about_us">О нас</string>
     <string name="title_reviews">Отзывы</string>
     <string name="title_contacts">Контакты</string>
+    <string name="google_key">AIzaSyC-Xr7NjKh4zLw642p8A7cRjpYwfsfnm7Y</string>
   
     <string-array name="a_role">
       <item>Водитель</item>

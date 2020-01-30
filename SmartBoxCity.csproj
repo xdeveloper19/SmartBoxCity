@@ -62,6 +62,9 @@
   <ItemGroup>
     <Compile Include="Activity\Auth\AuthActivity.cs" />
     <Compile Include="Activity\Home\ContentMainActivity.cs" />
+    <Compile Include="Activity\Home\UserActivity.cs" />
+    <Compile Include="Activity\Order\AddOrderActivity.cs" />
+    <Compile Include="Activity\Order\ListOrdersActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Model\AuthViewModel\AuthModel.cs" />
     <Compile Include="Model\AuthViewModel\AuthResponseData.cs" />
@@ -140,6 +143,12 @@
     <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.1" />
     <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.1" />
     <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
+    <PackageReference Include="Xamarin.GooglePlayServices.Location">
+      <Version>71.1600.0</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.GooglePlayServices.Maps">
+      <Version>71.1610.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\navigation.xml" />
@@ -170,8 +179,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Activity\Menu\" />
-    <Folder Include="Activity\NewFolder1\" />
-    <Folder Include="Activity\Order\" />
     <Folder Include="Model\BoxViewModel\" />
   </ItemGroup>
   <ItemGroup>
@@ -179,9 +186,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\review_photo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\navigation_home.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\title_about_us.xml" />
@@ -200,6 +204,18 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_order_status.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_information.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\ic_menu_account.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_user.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\ic_menu_exit.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
