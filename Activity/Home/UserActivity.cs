@@ -14,6 +14,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Plugin.Settings;
+using SmartBoxCity.Activity.Order;
 
 namespace SmartBoxCity.Activity.Home
 {
@@ -219,40 +220,9 @@ namespace SmartBoxCity.Activity.Home
 
             btn_pass_delivery_service.Click += async delegate
             {
-                Android.Support.V7.App.AlertDialog alertDialog;
-                List<string> Item = new List<string>();
-                Item.Add("Выгрузка завершена. Контейнер готов к отправке.");
-
-
-                var builder = new Android.Support.V7.App.AlertDialog.Builder(Context);
-                builder.SetTitle("Вы действительно хотите закрыть замок контейнера?");
-
-                bool[] toDownload = { false };
-                builder.SetMultiChoiceItems(Item.ToArray(), toDownload, (sender, e) =>
-                {
-                    int index = e.Which;
-
-                    toDownload[index] = e.IsChecked;
-                });
-
-                builder.SetNegativeButton("Отмена", delegate
-                {
-                    //Some to do...
-                })
-                .SetPositiveButton("Закрыть", delegate
-                {
-                    if (toDownload[0] == true)
-                    {
-                        //to do...
-                    }
-                    if (s_lock_unlock_door.Text == "заблокирована")
-                        s_lock_unlock_door.Text = "разблокирована";
-                    else
-                        s_lock_unlock_door.Text = "заблокирована";
-                });
-
-                alertDialog = builder.Create();
-                alertDialog.Show();
+                FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                OrderActivity content = new OrderActivity();
+                transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
             };
 
             btn_exit_.Click += async delegate

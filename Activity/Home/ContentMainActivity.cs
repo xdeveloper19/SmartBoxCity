@@ -66,6 +66,7 @@ namespace SmartBoxCity.Activity.Home
                 btn_auth_form.Click += (s, e) =>
                 {
                     FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                    
                     AuthActivity content = new AuthActivity();
                     transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
                 };

@@ -20,6 +20,10 @@ using SmartBoxCity.Activity;
 using SmartBoxCity.Activity.Auth;
 using SmartBoxCity.Activity.Home;
 using SmartBoxCity.Activity.Order;
+using System.Text;
+using SmartBoxCity.Model.AuthViewModel;
+using Newtonsoft.Json;
+using SmartBoxCity.Repository;
 
 namespace SmartBoxCity
 {
@@ -40,11 +44,11 @@ namespace SmartBoxCity
             Android.Support.V4.App.ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.Camera }, MY_PERMISSIONS_REQUEST_CAMERA);
             Dexter.WithActivity(this).WithPermissions(permissions).WithListener(new CompositeMultiplePermissionsListener(new SamplePermissionListener(this))).Check();
 
+            string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
 
             FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-            ContentMainActivity home = new ContentMainActivity();
-            transaction1.Replace(Resource.Id.framelayout, home).AddToBackStack(null).Commit();
+            
 
             navigation.NavigationItemSelected += (sender, e) =>
             {
@@ -85,16 +89,24 @@ namespace SmartBoxCity
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
             drawer.AddDrawerListener(toggle);
             toggle.SyncState();
-
             NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
+            var account = navigationView.Menu.FindItem(Resource.Id.nav_auth);
             var exit1 = navigationView.Menu.FindItem(Resource.Id.nav_exit);
-
-            if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+            if (CrossSettings.Current.GetValueOrDefault("isAuth","") == "true")
+            {
+                UserActivity content = new UserActivity();
+                transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                account.SetTitle(StaticUser.FirstName + " " + StaticUser.LastName);
                 exit1.SetVisible(true);
+            }
             else
             {
+                ContentMainActivity home = new ContentMainActivity();
+                transaction1.Replace(Resource.Id.framelayout, home).AddToBackStack(null).Commit();
                 exit1.SetVisible(false);
+                account.SetTitle("Войти");
             }
+            
             navigationView.SetNavigationItemSelectedListener(this);
         }
 
@@ -140,11 +152,20 @@ namespace SmartBoxCity
             int id = item.ItemId;
             //MenuItem register = item.findItem(R.id.menuregistrar);
             FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-
+            
             if (id == Resource.Id.nav_auth)
             {
-                AuthActivity home = new AuthActivity();
-                transaction1.Replace(Resource.Id.framelayout, home).AddToBackStack(null).Commit();
+                if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+                {
+                    UserActivity content2 = new UserActivity();
+                    transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+                }
+                else
+                {
+                    AuthActivity home = new AuthActivity();
+                    transaction1.Replace(Resource.Id.framelayout, home).AddToBackStack(null).Commit();
+                }
+                
             }
             if (id == Resource.Id.nav_camera)
             {
@@ -168,8 +189,16 @@ namespace SmartBoxCity
             }
             else if (id == Resource.Id.nav_manage)
             {
-                ListOrdersActivity content = new ListOrdersActivity();
-                transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+                {
+                    ListOrdersActivity content = new ListOrdersActivity();
+                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                }
+                else
+                {
+                    SearchOrderActivity content = new SearchOrderActivity();
+                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                }
             }
             else if (id == Resource.Id.nav_share)
             {
@@ -184,6 +213,7 @@ namespace SmartBoxCity
                 string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
                 File.Delete(dir_path + "user_data.txt");
                 CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
+                
                 Intent content = new Intent(this, typeof(MainActivity));
                 StartActivity(content);
             }

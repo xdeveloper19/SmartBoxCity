@@ -10,6 +10,8 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
+using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
 using Newtonsoft.Json;
@@ -21,7 +23,7 @@ using SmartBoxCity.Repository;
 
 namespace SmartBoxCity.Activity.Auth
 {
-    public class AuthActivity: Fragment
+    public class AuthActivity: Android.App.Fragment
     {
         /// <summary>
         /// Почта клиента
@@ -61,8 +63,7 @@ namespace SmartBoxCity.Activity.Auth
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            Toast.MakeText(Context, "Ваш статус: «Свободен для заказов»", ToastLength.Long).Show();
-
+           
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -212,9 +213,15 @@ namespace SmartBoxCity.Activity.Auth
                                 //this.Finish();
                             }
                             CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
-                            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                            UserActivity content = new UserActivity();
-                            transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                            Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                            //NavigationView navigationView = view.FindViewById<NavigationView>(Resource.Id.nav_view);
+                            //var exit1 = navigationView.Menu.FindItem(Resource.Id.nav_exit);
+                            //var account = navigationView.Menu.FindItem(Resource.Id.nav_auth);
+                            //account.SetTitle(StaticUser.FirstName + " " + StaticUser.LastName);
+                            //exit1.SetVisible(true);
+                            
+                            Intent main = new Intent(Context, typeof(MainActivity));
+                            StartActivity(main);
                         }
                         else
                         {
