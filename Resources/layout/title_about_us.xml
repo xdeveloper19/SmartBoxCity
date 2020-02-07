@@ -5,6 +5,10 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main"
     android:background = "@drawable/activity_stili"
@@ -13,32 +17,59 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="wrap_content">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <RelativeLayout
+           <EditText
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text = "Инженерно-консультационный центр «Мысль» НГТУ"
+               android:gravity = "center"
+               android:padding = "10dp"
+                android:id ="@+id/EditTextTop"
+            />
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-            >
+                android:id = "@+id/linearlayout1"
+                android:orientation = "vertical"
+                android:layout_below = "@+id/EditTextTop">
+                 <ImageView
+                    android:src="@drawable/map2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imagmap2" />
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                </RelativeLayout>
-            <Button
-                android:id="@+id/textlogin"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:padding="10dp"
-                android:layout_marginTop="300dp"
-                android:text="Предварительный расчёт стоимости перевозки груза"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:text="@string/textAboutAs1"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background = "@drawable/edittext_stili"
+                    android:minWidth="25px"
+                    android:padding = "10dp"
+                    android:layout_marginTop = "7dp"
+                    android:minHeight="25px"
+                    android:textSize = "14sp"
+                    android:id="@+id/textView1" />
+                
+                <TextView
+                    android:text="@string/textAboutAs2"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="match_parent"
+                    android:textSize = "14sp"
+                    android:minWidth="25px"
+                    android:padding = "10dp"
+                    android:layout_marginTop = "7dp"
+                    android:background = "@drawable/edittext_stili"
+                    android:minHeight="25px"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView3" />
+                
+            </LinearLayout>
 
         </RelativeLayout>
-    </ScrollView>
+        </ScrollView>
 
     <ProgressBar
         android:layout_centerHorizontal="true"
@@ -49,5 +80,3 @@
         android:id="@+id/loader"
         />
 </RelativeLayout>
-
-

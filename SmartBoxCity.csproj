@@ -60,14 +60,19 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activity\Menu\Activity_About_As.cs" />
     <Compile Include="Activity\Auth\AuthActivity.cs" />
     <Compile Include="Activity\Home\ContentMainActivity.cs" />
     <Compile Include="Activity\Home\UserActivity.cs" />
+    <Compile Include="Activity\Menu\Activity_List_Contacts.cs" />
+    <Compile Include="Activity\Menu\Activity_Reviews.cs" />
     <Compile Include="Activity\Order\AddOrderActivity.cs" />
     <Compile Include="Activity\Order\CustomListAdapter.cs" />
     <Compile Include="Activity\Order\ListOrdersActivity.cs" />
     <Compile Include="Activity\Order\OrderActivity.cs" />
     <Compile Include="Activity\Order\SearchOrderActivity.cs" />
+    <Compile Include="Activity\Registration\Activity_Legal_Entity_Registration.cs" />
+    <Compile Include="Activity\Registration\Activity_Registration_Individual_Person.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Model\AuthViewModel\AuthModel.cs" />
     <Compile Include="Model\AuthViewModel\AuthResponseData.cs" />
@@ -182,7 +187,6 @@
     <AndroidResource Include="Resources\drawable\progress_bar_drawable.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Activity\Menu\" />
     <Folder Include="Model\BoxViewModel\" />
   </ItemGroup>
   <ItemGroup>
@@ -229,6 +233,24 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_find_order.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_list_contacts.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\map3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\map2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-v21\ic_menu_registration.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_reviews.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\maphome.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

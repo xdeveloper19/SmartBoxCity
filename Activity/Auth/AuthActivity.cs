@@ -91,24 +91,7 @@ namespace SmartBoxCity.Activity.Auth
                 s_pass.Text = CrossSettings.Current.GetValueOrDefault("password", "");
             }
 
-            //        if (file_data_remember.Substring(0, 1) == "1")
-            //        {
-            //preloader.Visibility = Android.Views.ViewStates.Visible;
-            //file_data_remember = file_data_remember.Remove(0, 1);
-            //            AuthResponseData o_data = JsonConvert.DeserializeObject<AuthResponseData>(file_data_remember);
-
-            //            StaticUser.AddInfoAuth(o_data);
-
-            //preloader.Visibility = Android.Views.ViewStates.Gone;
-
-            //// Переход на главную страницу.
-            //Intent homeActivity = new Intent(this, typeof(Home.HomeActivity));
-            //            StartActivity(homeActivity);
-            //            //this.Finish();
-            //        }
-            //        else
-            //        {
-            // Переход к форме регистрации.
+          
             btn_register.Click += (s, e) =>
             {
                 //Intent registerActivity = new Intent(this, typeof(Auth.RegisterActivity));
@@ -136,14 +119,7 @@ namespace SmartBoxCity.Activity.Auth
                     myHttpClient.DefaultRequestHeaders.Authorization = _authHeader;
 
                     var uri = new Uri("http://iot.tmc-centert.ru/api/auth/login?email=" + auth.Email + "&password=" + auth.Password);
-                    /*
-                    //json структура.
-                    var formContent = new FormUrlEncodedContent(new Dictionary<string, string>
-                    {
-                        { "Email", auth.Email },
-                        { "Password", auth.Password }
-                    });
-                    */
+                
                     // Поучаю ответ об авторизации [успех или нет]
                     HttpResponseMessage response = await myHttpClient.PostAsync(uri.ToString(), new StringContent(JsonConvert.SerializeObject(auth), Encoding.UTF8, "application/json"));
 
@@ -196,29 +172,13 @@ namespace SmartBoxCity.Activity.Auth
                                 file.Write(array, 0, array.Length);
                             }
 
-                            //var role = o_data.ResponseData.Role;
-                            //Начинаю собирать информацию о клиенте
+                           
                             preloader.Visibility = Android.Views.ViewStates.Invisible;
                             // Переход на страницу водителя.
-                            if (o_data.ResponseData.Role == "driver")
-                            {
-                                //Intent Driver = new Intent(this, typeof(Auth.DriverActivity));
-                                //StartActivity(Driver);
-                                //this.Finish();
-                            }
-                            else if (o_data.ResponseData.Role == "user")
-                            {
-                                //Intent UserActivity = new Intent(this, typeof(Auth.ActivityUserBox));
-                                //StartActivity(UserActivity);
-                                //this.Finish();
-                            }
+                           
                             CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
                             Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                            //NavigationView navigationView = view.FindViewById<NavigationView>(Resource.Id.nav_view);
-                            //var exit1 = navigationView.Menu.FindItem(Resource.Id.nav_exit);
-                            //var account = navigationView.Menu.FindItem(Resource.Id.nav_auth);
-                            //account.SetTitle(StaticUser.FirstName + " " + StaticUser.LastName);
-                            //exit1.SetVisible(true);
+                            
                             
                             Intent main = new Intent(Context, typeof(MainActivity));
                             StartActivity(main);

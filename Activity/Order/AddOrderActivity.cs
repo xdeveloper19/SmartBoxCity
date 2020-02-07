@@ -54,7 +54,7 @@ namespace SmartBoxCity.Activity.Order
 
         private Spinner s_loading_methods;
 
-        private RadioButton r_cargo_insurance;
+        private CheckBox chek_cargo_insurance;
 
         private string a_cargo_characteristic;
 
@@ -92,11 +92,14 @@ namespace SmartBoxCity.Activity.Order
                 s_cargo_characteristic = view.FindViewById<Spinner>(Resource.Id.s_cargo_characteristic);
                 s_hazard_class = view.FindViewById<Spinner>(Resource.Id.s_hazard_class);
                 s_loading_methods = view.FindViewById<Spinner>(Resource.Id.s_loading_methods);
-                r_cargo_insurance = view.FindViewById<RadioButton>(Resource.Id.r_cargo_insurance);
+                chek_cargo_insurance = view.FindViewById<CheckBox>(Resource.Id.chek_cargo_insurance);
+
 
                 ProgressBar preloader = view.FindViewById<ProgressBar>(Resource.Id.preloader);
 
-                r_cargo_insurance.Click += RadioButtonClick;
+                chek_cargo_insurance.Click += (o, e) => {
+
+                };
 
                 s_cargo_characteristic.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(Spinner_ItemSelected);
                 var adapter1 = ArrayAdapter.CreateFromResource(Context, Resource.Array.array_cargo_characteristic, Android.Resource.Layout.SimpleSpinnerItem);

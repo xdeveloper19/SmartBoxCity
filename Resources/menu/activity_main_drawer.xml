@@ -8,6 +8,10 @@
             android:id="@+id/nav_auth"
             android:icon="@drawable/ic_menu_account"
             android:title="Войти" />
+      <item
+            android:id="@+id/nav_registration"
+            android:icon="@drawable/ic_menu_registration"
+            android:title="Зарегистрироваться" />
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_camera"
@@ -19,7 +23,7 @@
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Заказать перевозку" />
+            android:title="Оформить заказ" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"

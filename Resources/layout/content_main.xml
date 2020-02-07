@@ -1,10 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/content_main"
+	android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main">
 
@@ -16,77 +19,52 @@
         android:minWidth = "25px"
         >
         
-          <RelativeLayout
+    <RelativeLayout
       
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 		android:orientation="vertical">
-            <TextView
+          <TextView
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:textSize = "30sp"
 				android:gravity="center"
-				android:layout_marginTop = "0dp"
+				android:layout_marginTop = "100dp"
 				android:textColor = "#20B2AA"
 				android:text = "SmartBoxCity"
                 android:id="@+id/title_bg"/> 
-	
-			<RelativeLayout
-      
+		  <LinearLayout
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"
 				android:orientation="vertical"
-				android:padding="32dp"
+				android:padding="32dp"				
 				android:background = "@drawable/activity_stili"
 				android:layout_below="@+id/title_bg"
 				android:id="@+id/main_form"
 				>
-
-		     <TextView
+                
+		  <TextView
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
 				 android:id = "@+id/Text"
-				 android:textSize = "18sp"
-			     android:padding = "10dp"
+				 android:textSize = "15sp"
+			     android:padding = "2dp"
 				 android:gravity="center"
-				 android:textStyle="bold"
-					
+				 android:textStyle="bold"					
 				 android:background = "@drawable/edittext_stili"
 				 android:text = "Инновационный проект для оптимизации рынка транспортно-логистических услуг в условиях урбанизированной среды."
 				/>
-
-
-			<Button
-				android:text="Войти"
+          <Button
+				android:text="Оформить заказ"
 				android:layout_width="fill_parent"
 				android:layout_height="45dp"
 				android:layout_marginTop="20dp"
-				android:layout_below = "@+id/Text"
+			    android:padding = "5dp"
+				android:textSize = "16sp"
 				android:textAppearance="?android:attr/textAppearanceMedium"
 				android:background="@drawable/button_stili"
-				android:id="@+id/btn_auth_form" />
-			<Button
-				android:text="Зарегистрироваться"
-				android:layout_width="fill_parent"
-				android:layout_height="45dp"
-				android:layout_marginTop="20dp"
-				android:textAppearance="?android:attr/textAppearanceMedium"
-				android:background="@drawable/button_stili"
-				android:layout_below="@+id/btn_auth_form"
-				android:id="@+id/btn_reg_form" />
-
-                <Button
-				android:text="Рассчитать стоимость"
-				android:layout_width="fill_parent"
-				android:layout_height="45dp"
-				android:layout_marginTop="20dp"
-				android:textAppearance="?android:attr/textAppearanceMedium"
-				android:background="@drawable/button_stili"
-				android:layout_below="@+id/btn_reg_form"
-				android:id="@+id/btn_calculate" />
-        
-      
-	</RelativeLayout>
+				android:id="@+id/btn_calculate" />              
+	      </LinearLayout>
     </RelativeLayout>
         </ScrollView>
 

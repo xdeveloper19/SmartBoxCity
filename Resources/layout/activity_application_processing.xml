@@ -462,14 +462,13 @@
                     android:layout_toLeftOf="@+id/r_cargo_insurance"
                     
                 />              
-               <RadioButton 
-                      android:id="@+id/r_cargo_insurance"
+               <CheckBox 
+                      android:id="@+id/chek_cargo_insurance"
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_alignParentRight = "true"
                       android:layout_below = "@+id/s_hazard_class"
                       android:padding="8dp"
-                      
                 />                           
                 </RelativeLayout>
             <RelativeLayout

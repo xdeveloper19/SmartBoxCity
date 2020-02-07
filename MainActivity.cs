@@ -24,11 +24,13 @@ using System.Text;
 using SmartBoxCity.Model.AuthViewModel;
 using Newtonsoft.Json;
 using SmartBoxCity.Repository;
+using SmartBoxCity.Activity.Menu;
+using SmartBoxCity.Activity.Registration;
 
 namespace SmartBoxCity
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity, NavigationView.IOnNavigationItemSelectedListener
+    public class MainActivity : AppCompatActivity //NavigationView.IOnNavigationItemSelectedListener
     {
         private int MY_PERMISSIONS_REQUEST_CAMERA = 100;
         private View exit { get; set; }
@@ -47,16 +49,27 @@ namespace SmartBoxCity
             string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
 
+            //FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
             FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-            
+
+            if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+            {
+                UserActivity content2 = new UserActivity();
+                transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+            }
+            else
+            {
+                ContentMainActivity content = new ContentMainActivity();
+                transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+            }
 
             navigation.NavigationItemSelected += (sender, e) =>
             {
                 FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
                 switch (e.Item.ItemId)
                 {
-                    case Resource.Id.navigation_home:
 
+                    case Resource.Id.navigation_home:
                         if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
                         {
                             UserActivity content2 = new UserActivity();
@@ -67,16 +80,22 @@ namespace SmartBoxCity
                             ContentMainActivity content = new ContentMainActivity();
                             transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
                         }
-                        
+
+
                         break;
                     case Resource.Id.title_about_us:
-
+                        Activity_About_As content3 = new Activity_About_As();
+                        transaction2.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
                         Toast.MakeText(this, "Страница: О нас.", ToastLength.Long).Show();
                         break;
                     case Resource.Id.title_reviews:
+                        Activity_Reviews content5 = new Activity_Reviews();
+                        transaction2.Replace(Resource.Id.framelayout, content5).AddToBackStack(null).Commit();
                         Toast.MakeText(this, "Страница: Отзывы.", ToastLength.Long).Show();
                         break;
                     case Resource.Id.title_contacts:
+                        Activity_List_Contacts content4 = new Activity_List_Contacts();
+                        transaction2.Replace(Resource.Id.framelayout, content4).AddToBackStack(null).Commit();
                         Toast.MakeText(this, "Страница: Контакты.", ToastLength.Long).Show();
                         break;
                 }
@@ -89,25 +108,25 @@ namespace SmartBoxCity
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
             drawer.AddDrawerListener(toggle);
             toggle.SyncState();
-            NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);
-            var account = navigationView.Menu.FindItem(Resource.Id.nav_auth);
-            var exit1 = navigationView.Menu.FindItem(Resource.Id.nav_exit);
-            if (CrossSettings.Current.GetValueOrDefault("isAuth","") == "true")
-            {
-                UserActivity content = new UserActivity();
-                transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                account.SetTitle(StaticUser.FirstName + " " + StaticUser.LastName);
-                exit1.SetVisible(true);
-            }
-            else
-            {
-                ContentMainActivity home = new ContentMainActivity();
-                transaction1.Replace(Resource.Id.framelayout, home).AddToBackStack(null).Commit();
-                exit1.SetVisible(false);
-                account.SetTitle("Войти");
-            }
+            //NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);// !
+            //var account = navigationView.Menu.FindItem(Resource.Id.nav_auth);
+            //var exit1 = navigationView.Menu.FindItem(Resource.Id.nav_exit);
+            //if (CrossSettings.Current.GetValueOrDefault("isAuth","") == "true")
+            //{
+            //    UserActivity content = new UserActivity();
+            //    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+            //    account.SetTitle(StaticUser.FirstName + " " + StaticUser.LastName);
+            //    exit1.SetVisible(true);
+            //}
+            //else
+            //{
+            //    ContentMainActivity home = new ContentMainActivity();
+            //    transaction1.Replace(Resource.Id.framelayout, home).AddToBackStack(null).Commit();
+            //    exit1.SetVisible(false);
+            //    account.SetTitle("Войти");
+            //}
             
-            navigationView.SetNavigationItemSelectedListener(this);
+            //navigationView.SetNavigationItemSelectedListener(this);
         }
 
         public override void OnBackPressed()
@@ -147,81 +166,99 @@ namespace SmartBoxCity
                 .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
         }
 
-        public bool OnNavigationItemSelected(IMenuItem item)
-        {
-            int id = item.ItemId;
-            //MenuItem register = item.findItem(R.id.menuregistrar);
-            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+        //public bool OnNavigationItemSelected(IMenuItem item)
+        //{
+        //    int id = item.ItemId;
+        //    //MenuItem register = item.findItem(R.id.menuregistrar);
+        //    FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
             
-            if (id == Resource.Id.nav_auth)
-            {
-                if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
-                {
-                    UserActivity content2 = new UserActivity();
-                    transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
-                }
-                else
-                {
-                    AuthActivity home = new AuthActivity();
-                    transaction1.Replace(Resource.Id.framelayout, home).AddToBackStack(null).Commit();
-                }
+        //    if (id == Resource.Id.nav_auth)
+        //    {
+        //        if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+        //        {
+        //            UserActivity content2 = new UserActivity();
+        //            transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+        //        }
+        //        else
+        //        {
+        //            AuthActivity home = new AuthActivity();
+        //            transaction1.Replace(Resource.Id.framelayout, home).AddToBackStack(null).Commit();
+        //        }
                 
-            }
-            if (id == Resource.Id.nav_camera)
-            {
+        //    }
+        //    if(id == Resource.Id.nav_registration)
+        //    {
+        //        Android.App.AlertDialog.Builder alert = new Android.App.AlertDialog.Builder(this);
+        //        alert.SetTitle("Внимание !");
+        //        alert.SetMessage("Необходимо выбрать вид регистрации.");
+        //        alert.SetPositiveButton("Для физ.лица", (senderAlert, args) => {
+        //            Activity_Legal_Entity_Registration content3 = new Activity_Legal_Entity_Registration();
+        //            transaction1.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
+        //        });
+        //        alert.SetNegativeButton("Для юр.лица", (senderAlert, args) => {
+        //            Activity_Registration_Individual_Person content4 = new Activity_Registration_Individual_Person();
+        //            transaction1.Replace(Resource.Id.framelayout, content4).AddToBackStack(null).Commit();
+        //        });
+        //        Dialog dialog = alert.Create();
+        //        dialog.Show();
+        //    }
+        //    if (id == Resource.Id.nav_camera)
+        //    {
+
                 
-            }
-            else if (id == Resource.Id.nav_gallery)
-            {
-                if (CrossSettings.Current.GetValueOrDefault("isAuth","") == "true")
-                {
-                    UserActivity content = new UserActivity();
-                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                }
-            }
-            else if (id == Resource.Id.nav_slideshow)
-            {
-                if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
-                {
-                    AddOrderActivity content = new AddOrderActivity();
-                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                }   
-            }
-            else if (id == Resource.Id.nav_manage)
-            {
-                if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
-                {
-                    ListOrdersActivity content = new ListOrdersActivity();
-                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                }
-                else
-                {
-                    SearchOrderActivity content = new SearchOrderActivity();
-                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                }
-            }
-            else if (id == Resource.Id.nav_share)
-            {
+        //    }
+        //    else if (id == Resource.Id.nav_gallery)
+        //    {
+        //        if (CrossSettings.Current.GetValueOrDefault("isAuth","") == "true")
+        //        {
+        //            UserActivity content = new UserActivity();
+        //            transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+        //        }
+        //    }
+        //    else if (id == Resource.Id.nav_slideshow)
+        //    {
+        //        if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+        //        {
+        //            AddOrderActivity content = new AddOrderActivity();
+        //            transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+        //        }   
+        //    }
+        //    else if (id == Resource.Id.nav_manage)
+        //    {
+        //        if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+        //        {
+        //            ListOrdersActivity content = new ListOrdersActivity();
+        //            transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+        //        }
+        //        else
+        //        {
+        //            SearchOrderActivity content = new SearchOrderActivity();
+        //            transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+        //        }
+        //    }
+        //    else if (id == Resource.Id.nav_slideshow)
+        //    {
+        //        AddOrderActivity content = new AddOrderActivity();
+        //        transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+        //    }
+        //    else if (id == Resource.Id.nav_send)
+        //    {
 
-            }
-            else if (id == Resource.Id.nav_send)
-            {
-
-            }
-            else if (id == Resource.Id.nav_exit)
-            {
-                string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-                File.Delete(dir_path + "user_data.txt");
-                CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
+        //    }
+        //    else if (id == Resource.Id.nav_exit)
+        //    {
+        //        string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+        //        File.Delete(dir_path + "user_data.txt");
+        //        CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
                 
-                Intent content = new Intent(this, typeof(MainActivity));
-                StartActivity(content);
-            }
+        //        Intent content = new Intent(this, typeof(MainActivity));
+        //        StartActivity(content);
+        //    }
 
-            DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
-            drawer.CloseDrawer(GravityCompat.Start);
-            return true;
-        }
+        //    DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+        //    drawer.CloseDrawer(GravityCompat.Start);
+        //    return true;
+        //}
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
