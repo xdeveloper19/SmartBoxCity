@@ -383,7 +383,7 @@
                     android:gravity="left|center_vertical"
                     android:layout_below = "@+id/TextWeight"
                     android:padding="10dp"
-                    android:text="Кол-во контейнеров:"
+                    android:text="Кол-во мест:"
                     android:textSize="15sp"
                    
                     />
@@ -406,7 +406,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text = "Характеристика груза:"
+                    android:text = "Характер груза:"
                     android:id = "@+id/TextCargoCharacteristic"
                     android:gravity="left|center_vertical"
                     android:padding="10dp"
@@ -478,26 +478,27 @@
                 android:orientation="horizontal"
                 android:layout_below = "@id/fioBox1">
                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "Дополнительные услуги:"             
-                    android:padding="10dp"
-                    android:textSize="15sp"
-                    android:id = "@+id/TextAdditionalServices"
-                    android:layout_centerHorizontal = "true"
-                />
+                
 
                  <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text = "Контактное лицо*"
+                    android:text = "Назначить получателя"
                     android:id = "@+id/TextContactPerson"
                     android:gravity="left|center_vertical"
                     android:padding="10dp"
                     android:textSize="15sp"
                     android:layout_below = "@+id/TextAdditionalServices"
                 />
+
+                <CheckBox 
+                      android:id="@+id/chek_receiver"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_alignParentRight = "true"
+                      android:layout_below = "@+id/chek_cargo_insurance"
+                      android:padding="8dp"
+                /> 
 
                 <EditText
                         android:id="@+id/s_contact_person"
@@ -507,15 +508,16 @@
                         android:inputType="text"
                         android:layout_marginTop="6dp"
                         android:padding="8dp"
+                        android:hint="Введите e-mail получателя"
                         android:maxLength = "12"   
                         android:background = "@drawable/edittext_stili"
                         android:textSize="9sp"
-                        android:gravity="center"
+                        android:gravity="left"
                     />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text = "Телефон*"
+                    android:text = "Согласие на обработку персональных данных:"
                     android:id = "@+id/TextPhone"
                     android:gravity="left|center_vertical"
                     android:padding="10dp"
@@ -523,74 +525,112 @@
                     android:layout_below = "@+id/s_contact_person"
                 />
 
-                <EditText
-                        android:id="@+id/s_phone"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Согласен"
+                    android:id = "@+id/isArgued"
+                    android:gravity="left|center_vertical"
+                    android:padding="10dp"
+                    android:textSize="10sp"
+                    android:layout_below = "@+id/TextPhone"
+                />
+
+                <CheckBox
+                        android:id="@+id/check_argue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below = "@+id/TextPhone"
+                        android:layout_toEndOf="@+id/isArgued"
+                        android:padding="8dp"
+                        
+                       
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Не согласен"
+                    android:id = "@+id/isNotArgued"
+                    android:layout_toEndOf="@+id/check_argue"
+                    android:layout_marginLeft="10dp"
+                    android:padding="10dp"
+                    android:textSize="10sp"
+                    android:layout_below = "@+id/TextPhone"
+                />
+
+                <CheckBox
+                        android:id="@+id/check_argue1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below = "@+id/TextPhone"
-                        android:inputType="text"
-                        android:layout_marginTop="6dp"
+                        android:layout_toEndOf="@+id/isNotArgued"
                         android:padding="8dp"
-                        android:maxLength = "12"   
-                        android:background = "@drawable/edittext_stili"
-                        android:textSize="9sp"
-                        android:gravity="center"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "E-mail для уведомлений*"
-                    android:id = "@+id/TextEmailNotifications"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:textSize="15sp"
-                    android:layout_below = "@+id/s_phone"
-                />
-
-                <EditText
-                        android:id="@+id/s_email_notifications"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below = "@+id/TextEmailNotifications"
-                        android:inputType="text"
-                        android:layout_marginTop="6dp"
-                        android:padding="8dp"
-                        android:maxLength = "12"   
-                        android:background = "@drawable/edittext_stili"
-                        android:textSize="9sp"
-                        android:gravity="center"
+                        
+                       
                     />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text = "Комментарий к заказу*"
-                    android:id = "@+id/TextCommentOrder"
+                    android:text = "Договор оферты:"
+                    android:id = "@+id/TextOpherta"
                     android:gravity="left|center_vertical"
                     android:padding="10dp"
                     android:textSize="15sp"
-                    android:layout_below = "@+id/s_email_notifications"
+                    android:layout_below = "@+id/isArgued"
                 />
 
-                <EditText
-                        android:id="@+id/s_comment_order"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Согласен"
+                    android:id = "@+id/isArgued1"
+                    android:gravity="left|center_vertical"
+                    android:padding="10dp"
+                    android:textSize="10sp"
+                    android:layout_below = "@+id/TextOpherta"
+                />
+
+                <CheckBox
+                        android:id="@+id/check_opherta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below = "@+id/TextOpherta"
+                        android:layout_toEndOf="@+id/isArgued1"
+                        android:padding="8dp"
+                        
+                        
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Не согласен"
+                    android:id = "@+id/isNotArgued1"
+                    android:layout_toEndOf="@+id/check_opherta"
+                    android:padding="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="10sp"
+                    android:layout_below = "@+id/TextOpherta"
+                />
+
+                <CheckBox
+                        android:id="@+id/check_argue2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below = "@+id/TextCommentOrder"
-                        android:inputType="text"
-                        android:layout_marginTop="6dp"
+                        android:layout_below = "@+id/TextOpherta"
+                        android:layout_toEndOf="@+id/isNotArgued1"
                         android:padding="8dp"
-                        android:maxLength = "12"   
-                        android:background = "@drawable/edittext_stili"
-                        android:textSize="9sp"
-                        android:gravity="center"
+                        
+                        
                     />
                 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id = "@+id/RequestForma"
-                    android:layout_below = "@+id/s_comment_order"
+                    android:layout_below = "@+id/isNotArgued1"
                     android:layout_marginTop="6dp"
                     android:background = "@drawable/activity_stili"
                     

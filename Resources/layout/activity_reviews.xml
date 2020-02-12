@@ -30,7 +30,7 @@
                android:id ="@+id/EditTextTop"
             />
             <TextView
-                android:text="Пока нет ни одного отзыва !"
+                android:text="Пока нет ни одного отзыва!"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

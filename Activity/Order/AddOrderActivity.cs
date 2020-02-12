@@ -86,9 +86,9 @@ namespace SmartBoxCity.Activity.Order
                 s_sum_seats = view.FindViewById<EditText>(Resource.Id.s_sum_seats);
                 s_order_cost = view.FindViewById<EditText>(Resource.Id.s_order_cost);
                 s_contact_person = view.FindViewById<EditText>(Resource.Id.s_contact_person);
-                s_phone = view.FindViewById<EditText>(Resource.Id.s_phone);
-                s_email_notifications = view.FindViewById<EditText>(Resource.Id.s_email_notifications);
-                s_comment_order = view.FindViewById<EditText>(Resource.Id.s_comment_order);
+                //s_phone = view.FindViewById<EditText>(Resource.Id.s_phone);
+                //s_email_notifications = view.FindViewById<EditText>(Resource.Id.s_email_notifications);
+                //s_comment_order = view.FindViewById<EditText>(Resource.Id.s_comment_order);
                 s_cargo_characteristic = view.FindViewById<Spinner>(Resource.Id.s_cargo_characteristic);
                 s_hazard_class = view.FindViewById<Spinner>(Resource.Id.s_hazard_class);
                 s_loading_methods = view.FindViewById<Spinner>(Resource.Id.s_loading_methods);

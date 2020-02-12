@@ -26,6 +26,7 @@ using Newtonsoft.Json;
 using SmartBoxCity.Repository;
 using SmartBoxCity.Activity.Menu;
 using SmartBoxCity.Activity.Registration;
+using Android.Graphics.Drawables;
 
 namespace SmartBoxCity
 {
@@ -49,18 +50,40 @@ namespace SmartBoxCity
             string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
 
+
             //FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
             FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+            var btnAddOrder = navigation.Menu.FindItem(Resource.Id.title_about_us);
+            var btnOrders = navigation.Menu.FindItem(Resource.Id.title_reviews);
+            var btnExit = navigation.Menu.FindItem(Resource.Id.title_contacts);
 
             if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
             {
                 UserActivity content2 = new UserActivity();
                 transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+                
+                btnAddOrder.SetTitle("Заказать");
+                btnAddOrder.SetIcon(Resource.Drawable.ic_add_order);
+
+                btnOrders.SetTitle("Заказы");
+                btnOrders.SetIcon(Resource.Drawable.ic_orders);
+
+                btnExit.SetTitle("Выход");
+                btnExit.SetIcon(Resource.Drawable.ic_menu_exit);
             }
             else
             {
                 ContentMainActivity content = new ContentMainActivity();
                 transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+
+                btnAddOrder.SetTitle("О нас");
+                btnAddOrder.SetIcon(Resource.Drawable.ic_dashboard_black_24dp);
+
+                btnOrders.SetTitle("Отзывы");
+                btnOrders.SetIcon(Resource.Drawable.ic_notifications_black_24dp);
+
+                btnExit.SetTitle("Контакты");
+                btnExit.SetIcon(Resource.Drawable.ic_information);
             }
 
             navigation.NavigationItemSelected += (sender, e) =>
@@ -84,19 +107,50 @@ namespace SmartBoxCity
 
                         break;
                     case Resource.Id.title_about_us:
-                        Activity_About_As content3 = new Activity_About_As();
-                        transaction2.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
-                        Toast.MakeText(this, "Страница: О нас.", ToastLength.Long).Show();
+                        if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+                        {
+                            AddOrderActivity content = new AddOrderActivity();
+                            transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                        }
+                        else
+                        {
+                            Activity_About_As content3 = new Activity_About_As();
+                            transaction2.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
+                            Toast.MakeText(this, "Страница: О нас.", ToastLength.Long).Show();
+                        }
+                       
                         break;
                     case Resource.Id.title_reviews:
-                        Activity_Reviews content5 = new Activity_Reviews();
-                        transaction2.Replace(Resource.Id.framelayout, content5).AddToBackStack(null).Commit();
-                        Toast.MakeText(this, "Страница: Отзывы.", ToastLength.Long).Show();
+                        if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+                        {
+                            ListOrdersActivity content1 = new ListOrdersActivity();
+                            transaction2.Replace(Resource.Id.framelayout, content1).AddToBackStack(null).Commit();
+                        }
+                        else
+                        {
+                            Activity_Reviews content5 = new Activity_Reviews();
+                            transaction2.Replace(Resource.Id.framelayout, content5).AddToBackStack(null).Commit();
+                            Toast.MakeText(this, "Страница: Отзывы.", ToastLength.Long).Show();
+                        }
+
+                        
                         break;
                     case Resource.Id.title_contacts:
-                        Activity_List_Contacts content4 = new Activity_List_Contacts();
-                        transaction2.Replace(Resource.Id.framelayout, content4).AddToBackStack(null).Commit();
-                        Toast.MakeText(this, "Страница: Контакты.", ToastLength.Long).Show();
+                        if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+                        {
+                            string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+                            File.Delete(dir_path + "user_data.txt");
+                            CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
+
+                            Intent content = new Intent(this, typeof(MainActivity));
+                            StartActivity(content);
+                        }
+                        else
+                        {
+                            Activity_List_Contacts content4 = new Activity_List_Contacts();
+                            transaction2.Replace(Resource.Id.framelayout, content4).AddToBackStack(null).Commit();
+                            Toast.MakeText(this, "Страница: Контакты.", ToastLength.Long).Show();
+                        }
                         break;
                 }
             };
@@ -105,9 +159,9 @@ namespace SmartBoxCity
             fab.Click += FabOnClick;
 
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
-            drawer.AddDrawerListener(toggle);
-            toggle.SyncState();
+            //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
+            //drawer.AddDrawerListener(toggle);
+            //toggle.SyncState();
             //NavigationView navigationView = FindViewById<NavigationView>(Resource.Id.nav_view);// !
             //var account = navigationView.Menu.FindItem(Resource.Id.nav_auth);
             //var exit1 = navigationView.Menu.FindItem(Resource.Id.nav_exit);

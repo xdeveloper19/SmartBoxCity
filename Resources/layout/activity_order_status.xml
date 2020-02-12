@@ -1,10 +1,10 @@
 ﻿<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
     android:id="@+id/order_status_layout"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -13,7 +13,7 @@
     tools:context=".ui.login.LoginActivity">
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"> 
+        android:layout_height="fill_parent">
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -21,358 +21,242 @@
             android:layout_marginRight = "8dp"
             >
 
-                <TextView
-                    android:id="@+id/textOrderNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="Заказ:"
-                    android:textSize="15sp"                  
-                 />
-                <TextView
-                    android:id="@+id/EditOrderNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/textOrderNumber"
-                    android:layout_toRightOf="@+id/textOrderNumber"
-                    android:padding="10dp"
-                    android:text="№ 3"
-                    android:textSize="15sp"                  
-                 />
-             <RelativeLayout
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:id = "@+id/relativeProgressBar"
-                 android:layout_toEndOf="@+id/EditOrderNumber"
-                  android:layout_toRightOf="@+id/EditOrderNumber">
-            <ProgressBar
-                    android:id="@+id/progressBarOrder"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal = "true"
-                    android:layout_marginTop = "13dp"
-                    android:indeterminate="false"
-                    android:max="7"
-                    android:minWidth="130dp"
-                    android:min="0"                  
-                    android:maxHeight="4dp"
-                    android:progress="1"
-             />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/linearPaymentStatus">
             <TextView
-                android:text="1"
+                android:id="@+id/textOrderNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left|center_vertical"
+                android:padding="10dp"
+                android:text="Заказ:"
+                android:textSize="15sp"
+                />
+
+            <EditText
+
+                android:id="@+id/EditOrderNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/textOrderNumber"
+                android:layout_toRightOf="@+id/textOrderNumber"
+
+                android:padding="12dp"
+                android:text = "ea55d401-e2cb-49ca-9db0-adeae9f74774"
+
+                android:background = "@drawable/edittext_stili"
+                android:textSize="9sp" />
+
+            <ProgressBar
+                android:id="@+id/progressBarOrder"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal = "true"
+                android:layout_marginTop = "20dp"
+                android:indeterminate="false"
+                
+                android:max="8"
+                android:layout_below="@+id/EditOrderNumber"
+                android:minWidth="130dp"
+                android:min="0"
+                android:maxHeight="4dp"
+                android:progress="1"
+                />
+
+            <TextView
+                android:id="@+id/textProgressOrderStage"
+
                 android:textSize = "10sp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below = "@+id/progressBarOrder"
                 android:layout_centerHorizontal = "true"
-                android:id="@+id/textProgressOrderStage" />
-                </RelativeLayout>
-             <RelativeLayout
+                android:text="1. Заявка"
+
+                android:textColor="@android:color/black"
+                />
+
+            <EditText
+                android:text="900 р."
+                android:padding="8dp"
+
+                android:background = "@drawable/edittext_stili"
+                android:layout_marginLeft="13dp"
+                android:textSize = "15sp"
+                android:layout_centerHorizontal = "true"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id = "@+id/linearPaymentStatus"
-                android:layout_centerHorizontal = "true"
-                android:layout_below = "@+id/relativeProgressBar"
-                android:orientation = "vertical">
-                 <TextView
-                    android:text="900 руб."
-                    android:textSize = "15sp"
-                    android:layout_centerHorizontal = "true"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_toEndOf="@+id/EditOrderNumber"
+                android:layout_toRightOf="@id/EditOrderNumber"
+                android:id="@+id/texPaymentStatus" />
+
+                <TextView
+                    android:id="@+id/textSmallStatus"
+
+                    android:textSize = "12sp"
+
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/texPaymentStatus" />
-                <Button
-                    android:text="Оплатить"
-                    android:background = "@drawable/button_stili"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:minWidth="25px"
-                    android:padding = "10dp"
-                    android:minHeight="25px"
                     android:layout_below = "@+id/texPaymentStatus"
-                    android:id = "@+id/btnPaymentStatus" />              
+                    android:layout_alignLeft="@+id/texPaymentStatus"
+                    android:layout_alignStart="@+id/texPaymentStatus"
+                    android:textAlignment="center"
+
+                    android:text="Оплачено"
+                    android:textColor="@android:color/holo_green_dark"
+                    />
             </RelativeLayout>
-            
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id = "@+id/relativGPSOrder"
+
                 android:layout_below = "@+id/linearPaymentStatus"
                 android:background = "@drawable/edittext_stili"
                 android:layout_marginTop = "10dp">
-               
-                
+
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id = "@+id/linearTextStateOrder"
-                    android:layout_below = "@+id/textOrderNumber"
+
                     android:orientation = "horizontal">
-                     <TextView
-                    android:id="@+id/textFrom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="Откуда:"
-                    android:textSize="15sp"                  
-                    />
-                     <TextView
-                    android:id="@+id/EditFrom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="Подпольный переулок, 1Б, Ростов-на-Дону, Ростовская область"
-                    android:textSize="15sp" 
-                    android:layout_alignParentRight = "true"
-                    />
-                    
+                    <TextView
+                        android:id="@+id/textFrom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:padding="10dp"
+                        android:text="Откуда:"
+                        android:textSize="15sp"
+                        />
+                    <TextView
+                        android:id="@+id/EditFrom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:padding="10dp"
+                        android:text="Подпольный переулок, 1Б, Ростов-на-Дону, Ростовская область"
+                        android:textSize="15sp"
+                        android:layout_alignParentRight = "true"
+                        />
+
+
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id = "@+id/linearValuesStateOrder"
-                    android:layout_below = "@+id/linearTextStateOrder"         
+                    android:layout_below = "@+id/linearTextStateOrder"
                     android:orientation = "horizontal">
-                   <TextView
-                    android:id="@+id/textTo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="Куда:"
-                    android:textSize="15sp"                  
-                    />
-                   
                     <TextView
-                    android:id="@+id/EditTo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="Крепостной переулок, 87, Ростов-на-Дону, Ростовская область"
-                    android:textSize="15sp"  
-                    android:layout_alignParentRight = "true"
-                    android:layout_marginLeft = "20dp"
-                    />            
+                        android:id="@+id/textTo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:padding="10dp"
+                        android:text="Куда:"
+                        android:textSize="15sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/EditTo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:padding="10dp"
+                        android:text="Крепостной переулок, 87, Ростов-на-Дону, Ростовская область"
+                        android:textSize="15sp"
+                        android:layout_alignParentRight = "true"
+                        android:layout_marginLeft = "20dp"
+                        />
+
                 </LinearLayout>
 
-            </RelativeLayout>
-              <fragment
-                    android:id="@+id/fragmentMap"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginTop = "10dp"
-                    android:layout_below="@+id/relativGPSOrder"
-                    android:layout_above="@+id/fragmentMainMenu"
-                    class="com.google.android.gms.maps.MapFragment"
-                    />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id = "@+id/linearValuesStateOrder1"
+                    android:layout_below = "@+id/linearValuesStateOrder"
+                    android:orientation = "horizontal">
+                    <TextView
+                        android:id="@+id/textWeight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:padding="10dp"
+                        android:layout_alignParentRight = "true"
+                        android:text="Вес, кг:"
+                        android:textSize="15sp"
+                        />
 
-            <RelativeLayout
+                    <TextView
+                        android:id="@+id/EditTo1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:padding="10dp"
+                        android:text="10"
+                        android:textSize="15sp"
+                        android:layout_alignParentRight = "true"
+                        android:layout_marginLeft = "20dp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id = "@+id/linearValuesStateOrder2"
+                    android:layout_below = "@+id/linearValuesStateOrder1"
+                    android:orientation = "horizontal">
+                    <TextView
+                        android:id="@+id/textWeight3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:padding="10dp"
+                        android:layout_alignParentRight = "true"
+                        android:text="ДхШхВ:"
+                        android:textSize="15sp"
+                        />
+
+                    <TextView
+                        android:id="@+id/EditTo12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="left|center_vertical"
+                        android:padding="10dp"
+                        android:text="0.80х1.20х1.00"
+                        android:textSize="15sp"
+                        android:layout_alignParentRight = "true"
+                        android:layout_marginLeft = "20dp"
+                        />
+
+                </LinearLayout>
+            </RelativeLayout>
+            <fragment
+                android:id="@+id/fragmentMap"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id = "@+id/relativParametrsOrder"
-                android:layout_below = "@+id/fragmentMap"
-                android:background = "@drawable/edittext_stili"
-                android:layout_marginTop = "10dp">
-                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "Параметры контенйнера"
-                    android:padding="10dp"
-                    android:textSize="20sp"
-                    android:id = "@+id/textParametrsOrder"
-                    android:layout_centerHorizontal = "true"
+                android:layout_height="200dp"
+                android:layout_marginTop = "10dp"
+                android:layout_below="@+id/relativGPSOrder"
+                android:layout_above="@+id/fragmentMainMenu"
+                class="com.google.android.gms.maps.MapFragment"
                 />
-               
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id = "@+id/linearTextParametrs"
-                    android:layout_below = "@+id/textParametrsOrder"
-                    android:orientation = "vertical">
-                   
-                     <TextView
-                    android:id="@+id/textTemparature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="Температура:"
-                    android:textSize="15sp"                  
-                    />
-                    <TextView
-                    android:id="@+id/textWeight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="Вес груза:"
-                    android:textSize="15sp"                  
-                    />
-                    <TextView
-                    android:id="@+id/textHumidity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="Влажность:"
-                    android:textSize="15sp"                  
-                    />
-                    <TextView
-                    android:id="@+id/textLenWidHeig"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="ДxШxВ:"
-                    android:textSize="15sp"                  
-                    />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id = "@+id/linearValuesParametrs"
-                    android:layout_below = "@+id/textParametrsOrder"         
-                    android:orientation = "vertical"
-                    android:layout_alignParentRight = "true">
-                    <TextView
-                    android:id="@+id/EditTemparature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="49 °C"
-                    android:textSize="15sp"    
-                    />
-                    <TextView
-                    android:id="@+id/EditWeight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="2500 кг"
-                    android:textSize="15sp"                  
-                    />
-                    <TextView
-                    android:id="@+id/EditHumidity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="30 %"
-                    android:textSize="15sp"                  
-                    /> 
-                     <TextView
-                    android:id="@+id/textLenWidHeig"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="0.80x1.20x1.00"
-                    android:textSize="15sp"                  
-                    />
-                </LinearLayout>
 
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop = "7dp"
-                android:id = "@+id/relativStateOrder"
-                android:layout_below = "@+id/relativParametrsOrder"
-                android:background = "@drawable/edittext_stili"
-                >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "Состояние контейнера"
-                    android:padding="10dp"
-                    android:textSize="20sp"
-                    android:id = "@+id/textStateOrder"
-                    android:layout_centerHorizontal = "true"
-                />
-               
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id = "@+id/linearTextStateOrder"
-                    android:layout_below = "@+id/textStateOrder"
-                    android:orientation = "vertical">
-                   
-                     <TextView
-                    android:id="@+id/textTemparature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="Метонахождение:"
-                    android:textSize="15sp"                  
-                    />
-                    <TextView
-                    android:id="@+id/textWeight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="Состояние контейнера:"
-                    android:textSize="15sp"                  
-                    />
-                    <TextView
-                    android:id="@+id/textHumidity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="Состояние дверей:"
-                    android:textSize="15sp"                  
-                    />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id = "@+id/linearValuesStateOrder"
-                    android:layout_below = "@+id/textStateOrder"         
-                    android:orientation = "vertical"
-                    android:layout_alignParentRight = "true">
-                    <TextView
-                    android:id="@+id/EditTemparature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="На автомобиле"
-                    android:textSize="15sp"                  
-                    />
-                    <TextView
-                    android:id="@+id/EditWeight"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="Разложен"
-                    android:textSize="15sp"                  
-                    />
-                    <TextView
-                    android:id="@+id/EditHumidity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:text="Закрыта"
-                    android:textSize="15sp"                  
-                    />                  
-                </LinearLayout>
 
-            </RelativeLayout>
-           
 
-</RelativeLayout>
-</ScrollView>
+        </RelativeLayout>
+    </ScrollView>
 </RelativeLayout>

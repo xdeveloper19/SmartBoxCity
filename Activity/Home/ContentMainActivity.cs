@@ -46,13 +46,14 @@ namespace SmartBoxCity.Activity.Home
                     try
                     {
                         Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-                        alert.SetTitle("Внимание !");
+                        AlertDialog.Builder alert = new AlertDialog.Builder(Context);
+                        alert.SetTitle("Внимание!");
                         alert.SetMessage("Для оформления заказа необходимо авторизироваться или зарегистрироваться.");
                         alert.SetPositiveButton("Регистрация", (senderAlert, args) =>
                         {
-                            Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Android.App.Application.Context);
-                            alert1.SetTitle("Внимание !");
+                            alert.Dispose();
+                            Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Context);
+                            alert1.SetTitle("Внимание!");
                             alert1.SetMessage("Необходимо выбрать вид регистрации.");
                             Android.App.FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
                             alert1.SetPositiveButton("Для физ.лица", (senderAlert1, args1) =>

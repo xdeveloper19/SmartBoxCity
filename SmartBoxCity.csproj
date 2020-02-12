@@ -37,6 +37,10 @@
     <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    <BundleAssemblies>false</BundleAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -68,6 +72,7 @@
     <Compile Include="Activity\Menu\Activity_Reviews.cs" />
     <Compile Include="Activity\Order\AddOrderActivity.cs" />
     <Compile Include="Activity\Order\CustomListAdapter.cs" />
+    <Compile Include="Activity\Order\ExpandableDataAdapter.cs" />
     <Compile Include="Activity\Order\ListOrdersActivity.cs" />
     <Compile Include="Activity\Order\OrderActivity.cs" />
     <Compile Include="Activity\Order\SearchOrderActivity.cs" />
@@ -77,6 +82,7 @@
     <Compile Include="Model\AuthViewModel\AuthModel.cs" />
     <Compile Include="Model\AuthViewModel\AuthResponseData.cs" />
     <Compile Include="Model\BaseResponseObject.cs" />
+    <Compile Include="Model\OrderViewModel\Data.cs" />
     <Compile Include="Model\OrderViewModel\OrderBookModel.cs" />
     <Compile Include="Model\ServiceResponseObject.cs" />
     <Compile Include="Repository\StaticUser.cs" />
@@ -251,6 +257,18 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\maphome.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_orders.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_add_order.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\list_data_item.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\list_group.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

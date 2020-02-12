@@ -14,6 +14,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Plugin.Settings;
+using SmartBoxCity.Model.OrderViewModel;
 using SmartBoxCity.Activity.Order;
 
 namespace SmartBoxCity.Activity.Home
@@ -80,32 +81,35 @@ namespace SmartBoxCity.Activity.Home
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-        { 
+        {
             var view = inflater.Inflate(Resource.Layout.activity_user, container, false);
 
-            Text3 = view.FindViewById<TextView>(Resource.Id.Text3);
+            //Text3 = view.FindViewById<TextView>(Resource.Id.Text3);
 
             //View exit = view.FindViewById<View>(Resource.Id.nav_exit);
-            
+            var listView = view.FindViewById<ExpandableListView>(Resource.Id.boxListView);
+            Data.SampleChildData();
+            listView.SetAdapter(new ExpandableDataAdapter(Context, Data.listDataHeader, Data.listDataChild));
+            var bool1 = listView.IsGroupExpanded(1);
+
             progressBar = view.FindViewById<ProgressBar>(Resource.Id.progressBar);
             status_view = view.FindViewById<TextView>(Resource.Id.status_view);
             btn_exit_ = view.FindViewById<Button>(Resource.Id.btn_exit_);
             btn_pay = view.FindViewById<Button>(Resource.Id.btn_pay);
             btn_lock_unlock_door = view.FindViewById<Button>(Resource.Id.btn_lock_unlock_door);
-            
+
             btn_pass_delivery_service = view.FindViewById<Button>(Resource.Id.btn_pass_delivery_service);
             s_user = view.FindViewById<EditText>(Resource.Id.s_user);
             container_name = view.FindViewById<EditText>(Resource.Id.container_name);
             s_cost = view.FindViewById<EditText>(Resource.Id.s_cost);
             s_payment = view.FindViewById<EditText>(Resource.Id.s_payment);
-            s_lock_unlock_door = view.FindViewById<EditText>(Resource.Id.s_lock_unlock_door);
-            s_pin_access_code = view.FindViewById<EditText>(Resource.Id.s_pin_access_code);
+            //s_lock_unlock_door = view.FindViewById<EditText>(Resource.Id.s_lock_unlock_door);
+
             s_weight = view.FindViewById<EditText>(Resource.Id.s_weight);
-            s_temperature = view.FindViewById<EditText>(Resource.Id.s_temperature);
-            s_light = view.FindViewById<EditText>(Resource.Id.s_light);
-            s_humidity = view.FindViewById<EditText>(Resource.Id.s_humidity);
-            s_longitude = view.FindViewById<EditText>(Resource.Id.s_longitude);
-            s_latitude = view.FindViewById<EditText>(Resource.Id.s_latitude);
+            //s_temperature = view.FindViewById<EditText>(Resource.Id.s_temperature);
+            //s_light = view.FindViewById<EditText>(Resource.Id.s_light);
+            //s_humidity = view.FindViewById<EditText>(Resource.Id.s_humidity);
+
             preloader = view.FindViewById<ProgressBar>(Resource.Id.preloader);
 
             //MapFragment mapFragment = (MapFragment)FragmentManager.FindFragmentById(Resource.Id.fragmentMap);
@@ -115,27 +119,14 @@ namespace SmartBoxCity.Activity.Home
             container_name.LongClickable = false;
             s_user.Focusable = false;
             s_user.LongClickable = false;
-            s_latitude.Focusable = false;
-            s_latitude.LongClickable = false;
-            s_longitude.Focusable = false;
-            s_longitude.LongClickable = false;
+
             s_payment.Focusable = false;
             s_payment.LongClickable = false;
             s_cost.Focusable = false;
             s_cost.LongClickable = false;
 
-            s_pin_access_code.Focusable = false;
-            s_pin_access_code.LongClickable = false;
-            s_lock_unlock_door.Focusable = false;
-            s_lock_unlock_door.LongClickable = false;
-            s_weight.Focusable = false;
-            s_weight.LongClickable = false;
-            s_temperature.Focusable = false;
-            s_temperature.LongClickable = false;
-            s_light.Focusable = false;
-            s_light.LongClickable = false;
-            s_humidity.Focusable = false;
-            s_humidity.LongClickable = false;
+
+
 
             string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
 
@@ -148,7 +139,7 @@ namespace SmartBoxCity.Activity.Home
             //fusedLocationProviderClient.RequestLocationUpdates(locationRequest,
             //    locationCallback, Looper.MyLooper());
 
-           
+
             //изменение состояния дверей
             btn_lock_unlock_door.Click += async delegate
             {
@@ -171,7 +162,7 @@ namespace SmartBoxCity.Activity.Home
                         toDownload[index] = e.IsChecked;
                     });
 
-                    
+
                     builder.SetNegativeButton("Отмена", delegate
                     {
                         //Some to do...
@@ -180,8 +171,8 @@ namespace SmartBoxCity.Activity.Home
                     {
                         if (toDownload[0] == true)
                         {
-                                //to do...
-                            }
+                            //to do...
+                        }
                         if (s_lock_unlock_door.Text == "заблокирована")
                             s_lock_unlock_door.Text = "разблокирована";
                         else
@@ -230,7 +221,7 @@ namespace SmartBoxCity.Activity.Home
                 File.Delete(dir_path + "user_data.txt");
                 ClearField();
                 CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
-                
+
                 Intent content = new Intent(Context, typeof(MainActivity));
                 StartActivity(content);
             };
@@ -267,7 +258,7 @@ namespace SmartBoxCity.Activity.Home
             //{
             //    ContainerResponse container = new ContainerResponse();
 
-                
+
 
             //    //пример чтения данных с файла
             //    string file_data_remember;
