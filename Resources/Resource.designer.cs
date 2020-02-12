@@ -3524,10 +3524,16 @@ namespace SmartBoxCity
 			public const int side_nav_bar = 2131230881;
 			
 			// aapt resource value: 0x7F0800A2
-			public const int tooltip_frame_dark = 2131230882;
+			public const int sot = 2131230882;
 			
 			// aapt resource value: 0x7F0800A3
-			public const int tooltip_frame_light = 2131230883;
+			public const int teststyle1 = 2131230883;
+			
+			// aapt resource value: 0x7F0800A4
+			public const int tooltip_frame_dark = 2131230884;
+			
+			// aapt resource value: 0x7F0800A5
+			public const int tooltip_frame_light = 2131230885;
 			
 			static Drawable()
 			{

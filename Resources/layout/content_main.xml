@@ -9,7 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/app_bar_main">
+    tools:showIn="@layout/app_bar_main"
+	android:background="@drawable/sot">
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -19,26 +20,28 @@
         android:minWidth = "25px"
         >
         
-    <RelativeLayout
-      
+    <RelativeLayout     
 		android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
-		android:orientation="vertical">
+		android:orientation="vertical"
+		>
           <TextView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textSize = "30sp"
-				android:gravity="center"
-				android:layout_marginTop = "100dp"
-				android:textColor = "#20B2AA"
+				android:layout_centerHorizontal = "true"
 				android:text = "SmartBoxCity"
+				android:textColor = "#FFFFFF"
+				android:background = "@drawable/teststyle1"
+				android:layout_marginTop = "100dp"				
                 android:id="@+id/title_bg"/> 
 		  <LinearLayout
 				android:layout_width="fill_parent"
 				android:layout_height="fill_parent"
 				android:orientation="vertical"
-				android:padding="32dp"				
-				android:background = "@drawable/activity_stili"
+				android:padding="32dp"
+				android:layout_marginTop = "-5dp"
+				android:background = "@drawable/teststyle1"
 				android:layout_below="@+id/title_bg"
 				android:id="@+id/main_form"
 				>
@@ -50,8 +53,8 @@
 				 android:textSize = "15sp"
 			     android:padding = "2dp"
 				 android:gravity="center"
-				 android:textStyle="bold"					
-				 android:background = "@drawable/edittext_stili"
+				 android:textStyle="bold"
+				 android:textColor = "#FFFFFF"
 				 android:text = "Инновационный проект для оптимизации рынка транспортно-логистических услуг в условиях урбанизированной среды."
 				/>
           <Button
@@ -60,9 +63,9 @@
 				android:layout_height="45dp"
 				android:layout_marginTop="20dp"
 			    android:padding = "5dp"
+				android:background = "@drawable/button_stili"
 				android:textSize = "16sp"
 				android:textAppearance="?android:attr/textAppearanceMedium"
-				android:background="@drawable/button_stili"
 				android:id="@+id/btn_calculate" />              
 	      </LinearLayout>
     </RelativeLayout>
