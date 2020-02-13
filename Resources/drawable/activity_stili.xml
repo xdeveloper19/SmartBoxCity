@@ -5,15 +5,13 @@
     android:thickness="0dp"
 
     android:shape="rectangle">
-  <stroke android:width="3dp"
-
-      android:color="#C8C8C8"/>
-  <corners android:radius="7dp" />
+  
+  
   <gradient
 
-      android:startColor="#FFFFFF"
+      android:startColor="@color/material_blue_grey_800"
 
-      android:endColor="#D3D3D3"
+      android:endColor="@color/material_blue_grey_950"
 
       android:type="linear"
 

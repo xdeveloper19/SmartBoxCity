@@ -13,6 +13,7 @@
 
 	<TextView
 		android:text="Вход"
+		android:textColor="@android:color/white"
         android:layout_marginTop="28dp"
 		android:textAppearance="?android:attr/textAppearanceLarge"
 		android:layout_width="fill_parent"
@@ -22,6 +23,7 @@
 		android:id="@+id/textlogin"
     />
 	<TextView
+		android:textColor="@android:color/white"
 		android:text="Введите логин и пароль, чтобы войти"
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:layout_width="fill_parent"
@@ -39,50 +41,49 @@
 		android:layout_below="@+id/textlogin_desc"
 		android:id="@+id/containerAuth">
 
-		<TextView 
-			android:text="Email" 
-			android:textAppearance="?android:attr/textAppearanceSmallInverse" 
-			android:textColor="?android:attr/textColorSecondary" 
-			android:layout_width="fill_parent" 
-			android:layout_height="20dp" 
-			android:layout_marginBottom="5dp" 
-			android:layout_below="@+id/containerAuth" 
-			android:id="@+id/label_login"/>
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="10dp"
-            android:layout_below="@+id/label_login"
-            android:id="@+id/s_login"
-			android:padding = "7dp"
-			android:background = "@drawable/edittext_stili"
-            android:hint="Логин"/>
+		
+		<android.support.design.widget.TextInputLayout
+			android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+			style="@style/LoginTextInputLayoutStyle"
+			android:id="@+id/s_login_layout">
+			<EditText
+				android:layout_width="fill_parent"
+				android:layout_height="50dp"
+				android:layout_marginBottom="10dp"
+				android:singleLine="true"
+				android:id="@+id/s_login"
+				android:padding = "7dp"
+				android:textColor="@android:color/white"
+				android:hint="Логин"/>
+		</android.support.design.widget.TextInputLayout>
 
-		<TextView 
-			android:text="Пароль" 
-			android:textAppearance="?android:attr/textAppearanceSmallInverse" 
-			android:textColor="?android:attr/textColorSecondary" 
-			android:layout_width="fill_parent" 
-			android:layout_height="20dp" 
-			android:layout_marginBottom="5dp" 
-			android:layout_below="@+id/s_login" 
-			android:id="@+id/label_pass"/>
-        <EditText
+		
+		<android.support.design.widget.TextInputLayout
+			android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+			android:id="@+id/s_pas_layout"
+			style="@style/LoginTextInputLayoutStyle"
+			android:layout_below="@+id/s_login_layout">
+			<EditText
             android:inputType="textPassword"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:layout_below="@+id/label_pass"
+            android:singleLine="true"
             android:id="@+id/s_pass"
 			android:padding = "7dp"
-			android:background = "@drawable/edittext_stili"
+			android:textColor="@android:color/white"
             android:hint="Пароль"/>
+		</android.support.design.widget.TextInputLayout>
+        
 
 		<CheckBox
 			android:text="Запомнить"
+			android:textColor="@android:color/white"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="20dp"
-			android:layout_below="@+id/s_pass"
+			android:layout_below="@+id/s_pas_layout"
 			android:id="@+id/is_remember"/>
 
 		<Button
@@ -90,6 +91,7 @@
 			android:layout_width="fill_parent"
 			android:layout_height="45dp"
 			android:layout_marginTop="20dp"
+			
 			android:layout_below="@+id/is_remember"
 			android:background="@drawable/button_stili"
 			android:id="@+id/btn_auth" />
@@ -100,13 +102,15 @@
 			android:layout_height="40dp" 
 			android:layout_centerHorizontal = "true"
 			android:orientation="horizontal" 
+			android:layout_marginTop="30dp"
 			android:layout_alignParentBottom="true"
-			android:layout_below="@+id/label_middle_name" 
+			android:layout_below="@+id/btn_auth" 
 			android:id="@+id/container_middle_name" > 
 			<TextView 
-				android:hint="Нет профиля ?  "
+				android:text="Нет профиля ?  "
+				android:textColor="@android:color/white"
 				android:textAppearance="?android:attr/textAppearanceSmall"
-				android:textColor="@color/colorPrimary"	
+				
 				android:gravity="right"
 				android:layout_width="wrap_content" 
 				android:layout_height="50dp"
@@ -118,7 +122,7 @@
 				android:layout_width="0dp" 
 				android:layout_weight=".55" 
 				android:layout_height="50dp"
-				android:textColor="@color/colorMainBlue"	
+				android:textColor="#FFA07A"	
 				android:background="@android:color/transparent" 
 				android:layout_below="@+id/btn_auth"
 				android:id="@+id/btn_register" /> 
