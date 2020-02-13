@@ -31,7 +31,7 @@
                 android:textSize = "30sp"
 				android:layout_centerHorizontal = "true"
 				android:text = "SmartBoxCity"
-				android:textColor = "#FFFFFF"
+				android:textColor ="@color/material_grey_800"
 				android:background = "@drawable/teststyle1"
 				android:layout_marginTop = "100dp"				
                 android:id="@+id/title_bg"/> 
@@ -54,7 +54,7 @@
 			     android:padding = "2dp"
 				 android:gravity="center"
 				 android:textStyle="bold"
-				 android:textColor = "#FFFFFF"
+				 android:textColor = "@color/material_grey_800"
 				 android:text = "Инновационный проект для оптимизации рынка транспортно-логистических услуг в условиях урбанизированной среды."
 				/>
           <Button

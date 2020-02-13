@@ -9,9 +9,9 @@
   
   <gradient
 
-      android:startColor="@color/material_blue_grey_800"
+      android:startColor="#778899"
 
-      android:endColor="@color/material_blue_grey_950"
+      android:endColor="@color/material_grey_800"
 
       android:type="linear"
 
