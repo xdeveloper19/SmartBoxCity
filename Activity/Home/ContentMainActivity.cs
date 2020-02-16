@@ -37,7 +37,14 @@ namespace SmartBoxCity.Activity.Home
             try
             {
                 btn_calculate = view.FindViewById<Button>(Resource.Id.btn_calculate);
-               
+                Button btn_auth1 = view.FindViewById<Button>(Resource.Id.btn_auth1);
+
+                btn_auth1.Click += (s, e) =>
+                {
+                    Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                    AuthActivity content3 = new AuthActivity();
+                    transaction1.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
+                };
 
                 // Переход к форме регистрации.
                 btn_calculate.Click += (s, e) =>

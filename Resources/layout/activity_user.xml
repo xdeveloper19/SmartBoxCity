@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main"
-    android:background = "@drawable/activity_stili"
+    android:background = "#C5BAB2"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -38,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:background = "#F8F6F6">
+                    >
                     
 
                     <TextView
@@ -131,22 +131,15 @@
                         android:textSize="12sp"
                         android:textColor="@android:color/black"
                         />
-
-                    <Button
-                        android:id="@+id/btn_exit_"
-                        android:layout_width="wrap_content"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_below = "@+id/status_view"
-                        android:background="@drawable/button_stili"
-                        android:padding = "5dp"
-                        android:layout_toEndOf="@+id/s_user"
-                        android:layout_toRightOf="@+id/s_user"
-                        android:text="Сделать фото"
-                        android:textSize="8sp"
-                        />
+                    
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="24dp"
+                        android:layout_below="@+id/status_view"
+                        android:text=""
+                        android:background="@android:color/white"
+                    />
+                   
 
 
 
@@ -323,6 +316,19 @@
 
                
             </android.support.v7.widget.CardView>
+
+             <Button
+                        android:id="@+id/btn_exit_"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_below = "@+id/cardView3"
+                        android:background="@drawable/button_stili"
+                        android:padding = "5dp"
+                        android:layout_marginTop="20dp"
+                        android:text="Сделать фото"
+                        android:textSize="13sp"
+                        />
 
         </RelativeLayout>
     </ScrollView>
