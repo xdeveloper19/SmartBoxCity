@@ -37,49 +37,9 @@
                     android:id="@+id/fioBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/textUser"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="left|center_vertical"
-                        android:padding="10dp"
-                        android:text="Вы вошли как:"
-                        android:textSize="15sp"
-
-                        />
-
-                    <EditText
-                        android:id="@+id/s_user"
-                        android:layout_width="83dp"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/textUser"
-                        android:layout_toRightOf="@+id/textUser"
-                        android:inputType="text"
-                        android:layout_marginTop="8dp"
-                        android:padding="8dp"
-                        android:background = "@drawable/edittext_stili"
-                        android:text="Клиент"
-                        android:textSize="9sp"
-                        android:gravity="center"
-                        />
-
-
-                    <Button
-                        android:id="@+id/btn_exit_"
-                        android:layout_width="wrap_content"
-                        android:layout_height="25dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/button_stili"
-                        android:padding = "5dp"
-                        android:layout_toEndOf="@+id/s_user"
-                        android:layout_toRightOf="@+id/s_user"
-                        android:text="Сделать фото"
-                        android:textSize="8sp"
-                        />
+                    android:orientation="horizontal"
+                    android:background = "#F8F6F6">
+                    
 
                     <TextView
                         android:id="@+id/text1"
@@ -91,6 +51,7 @@
                         android:padding="10dp"
                         android:text="Заказ:"
                         android:textSize="15sp"
+                        android:textStyle = "italic"
                         />
 
                     <EditText
@@ -138,6 +99,7 @@
                         android:padding="10dp"
                         android:text="Статус:"
                         android:textSize="15sp"
+                        android:textStyle = "italic"
                         />
 
                     <ProgressBar
@@ -170,7 +132,21 @@
                         android:textColor="@android:color/black"
                         />
 
-
+                    <Button
+                        android:id="@+id/btn_exit_"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_below = "@+id/status_view"
+                        android:background="@drawable/button_stili"
+                        android:padding = "5dp"
+                        android:layout_toEndOf="@+id/s_user"
+                        android:layout_toRightOf="@+id/s_user"
+                        android:text="Сделать фото"
+                        android:textSize="8sp"
+                        />
 
 
 
@@ -221,6 +197,7 @@
                 android:id="@+id/cardView3"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="4dp"
+                android:background = "#F8F6F6"
                 android:layout_marginTop="15dp"
                 android:layout_below="@+id/cardView2"
                 android:layout_gravity="center_horizontal">

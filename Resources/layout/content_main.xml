@@ -31,43 +31,22 @@
                 android:textSize = "30sp"
 				android:layout_centerHorizontal = "true"
 				android:text = "SmartBoxCity"
-				android:textColor ="@color/material_grey_800"
-				android:background = "@drawable/teststyle1"
-				android:layout_marginTop = "100dp"				
+				android:textColor ="#FBF8F8"
+				android:layout_marginTop = "150dp"	
+				android:textStyle = "italic"
                 android:id="@+id/title_bg"/> 
-		  <LinearLayout
-				android:layout_width="fill_parent"
-				android:layout_height="fill_parent"
-				android:orientation="vertical"
-				android:padding="32dp"
-				android:layout_marginTop = "-5dp"
-				android:background = "@drawable/teststyle1"
-				android:layout_below="@+id/title_bg"
-				android:id="@+id/main_form"
-				>
-                
-		  <TextView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-				 android:id = "@+id/Text"
-				 android:textSize = "15sp"
-			     android:padding = "2dp"
-				 android:gravity="center"
-				 android:textStyle="bold"
-				 android:textColor = "@color/material_grey_800"
-				 android:text = "Инновационный проект для оптимизации рынка транспортно-логистических услуг в условиях урбанизированной среды."
-				/>
-          <Button
-				android:text="Оформить заказ"
-				android:layout_width="fill_parent"
-				android:layout_height="45dp"
-				android:layout_marginTop="20dp"
-			    android:padding = "5dp"
+
+		  <Button
+				android:text="Предварительный расчет стоимости перевозки груза"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+                android:layout_margin = "50dp"
+				android:textColor = "#FBF8F8"
+                android:layout_below = "@+id/title_bg"
 				android:background = "@drawable/button_stili"
 				android:textSize = "16sp"
 				android:textAppearance="?android:attr/textAppearanceMedium"
-				android:id="@+id/btn_calculate" />              
-	      </LinearLayout>
+				android:id="@+id/btn_calculate" />      
     </RelativeLayout>
         </ScrollView>
 

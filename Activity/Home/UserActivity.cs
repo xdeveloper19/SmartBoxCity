@@ -37,8 +37,6 @@ namespace SmartBoxCity.Activity.Home
 
         private Button btn_pass_delivery_service;
 
-        private EditText s_user;
-
         private EditText container_name;
 
         private EditText s_cost;
@@ -82,7 +80,7 @@ namespace SmartBoxCity.Activity.Home
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var view = inflater.Inflate(Resource.Layout.activity_user, container, false);
+            var view = inflater.Inflate(Resource.Layout.activity_user, container, false);/// ошибка при нажати на кнопку "назад" на лефоне(Binary XML file line #1: Binary XML file line #1: Error inflating class fragment' )
 
             //Text3 = view.FindViewById<TextView>(Resource.Id.Text3);
 
@@ -99,7 +97,6 @@ namespace SmartBoxCity.Activity.Home
             btn_lock_unlock_door = view.FindViewById<Button>(Resource.Id.btn_lock_unlock_door);
 
             btn_pass_delivery_service = view.FindViewById<Button>(Resource.Id.btn_pass_delivery_service);
-            s_user = view.FindViewById<EditText>(Resource.Id.s_user);
             container_name = view.FindViewById<EditText>(Resource.Id.container_name);
             s_cost = view.FindViewById<EditText>(Resource.Id.s_cost);
             s_payment = view.FindViewById<EditText>(Resource.Id.s_payment);
@@ -117,8 +114,6 @@ namespace SmartBoxCity.Activity.Home
 
             container_name.Focusable = false;
             container_name.LongClickable = false;
-            s_user.Focusable = false;
-            s_user.LongClickable = false;
 
             s_payment.Focusable = false;
             s_payment.LongClickable = false;
@@ -444,7 +439,6 @@ namespace SmartBoxCity.Activity.Home
 
         void ClearField()
         {
-            s_user.Text = "";
             container_name.Text = "";
             s_cost.Text = "";
             s_payment.Text = "";

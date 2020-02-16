@@ -84,7 +84,6 @@ namespace SmartBoxCity.Activity.Order
                 s_height = view.FindViewById<EditText>(Resource.Id.s_height);
                 s_size = view.FindViewById<EditText>(Resource.Id.s_size);
                 s_sum_seats = view.FindViewById<EditText>(Resource.Id.s_sum_seats);
-                s_order_cost = view.FindViewById<EditText>(Resource.Id.s_order_cost);
                 s_contact_person = view.FindViewById<EditText>(Resource.Id.s_contact_person);
                 //s_phone = view.FindViewById<EditText>(Resource.Id.s_phone);
                 //s_email_notifications = view.FindViewById<EditText>(Resource.Id.s_email_notifications);

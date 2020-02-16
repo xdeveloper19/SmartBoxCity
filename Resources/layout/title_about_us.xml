@@ -26,6 +26,7 @@
                android:layout_height="wrap_content"
                android:text = "Инженерно-консультационный центр «Мысль» НГТУ"
                android:gravity = "center"
+                android:textStyle = "italic"
                 android:textColor = "#FFFFFF"
                android:padding = "10dp"
                android:id ="@+id/EditTextTop"
@@ -41,33 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/imagmap2" />
-                <TextView
-                    android:text="@string/textAboutAs1"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background = "@drawable/teststyle1"
-                    android:minWidth="25px"
-                    android:textColor = "#FFFFFF"
-                    android:padding = "10dp"
-                    android:layout_marginTop = "7dp"
-                    android:minHeight="25px"
-                    android:textSize = "14sp"
-                    android:id="@+id/textView1" />
-                
-                <TextView
-                    android:text="@string/textAboutAs2"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:layout_width="match_parent"
-                    android:textSize = "14sp"
-                    android:minWidth="25px"
-                    android:textColor = "#FFFFFF"
-                    android:padding = "10dp"
-                    android:layout_marginTop = "7dp"
-                    android:background = "@drawable/teststyle1"
-                    android:minHeight="25px"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView3" />
+
                 
             </LinearLayout>
 

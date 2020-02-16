@@ -9,6 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background = "#C5BAB2"
     tools:context=".ui.login.LoginActivity">
     <ScrollView
         android:layout_width="fill_parent"
@@ -17,13 +18,27 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginRight = "8dp"
+            android:layout_marginRight = "8dp"           
             >
+            <android.support.v7.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cardViewgGeneralDataEntity"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="4dp"
+                android:layout_gravity="center_horizontal"
+                
+               >
+
             <RelativeLayout
                 android:id="@+id/fioBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="16dp"  
                 >
                
                 <TextView
@@ -31,366 +46,280 @@
                     android:layout_height="wrap_content"
                     android:text = "Регистрация"
                     android:padding="10dp"
-                    android:textSize="15sp"
+                    android:textColor = "#F3B487"
+                    android:textSize="17sp"
+                    android:textStyle = "italic"
                     android:id = "@+id/textHeading"
                     android:layout_centerHorizontal = "true"
                 />
-               
-                <TextView
-                    android:id="@+id/textfrom"
-                    android:layout_width="wrap_content"
+            <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
+                    style="@style/LoginTextInputLayoutStyle"
                     android:layout_below = "@+id/textHeading"
-                    android:padding="10dp"
-                    android:text="Email:"
-                    android:textSize="15sp"
-                   
-                    />
-
-                <EditText
-                    android:id="@+id/s_edit_from"
+                    android:id="@+id/s_email_entity_layout">
+                     <EditText
+                        android:id="@+id/s_email_entity"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:inputType="text"
+                        android:singleLine="true"
+                        android:padding="8dp"
+                        android:textSize = "14sp"
+                        android:textColor="#716E6D"
+                        android:layout_marginBottom="10dp"
+                        android:hint = "Email"
+                        />
+                </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_below = "@+id/s_email_entity_layout"
+                android:id="@+id/s_phone_entity_layout">
+                 <EditText
+                    android:id="@+id/s_phone_individual"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/textfrom"
-                    android:layout_toRightOf="@+id/textfrom"
-                    android:layout_below = "@+id/textHeading"
+                    android:layout_height="40dp"
                     android:inputType="text"
-                    android:layout_marginTop="8dp"
+                    android:singleLine="true"
+                    android:textSize = "14sp"
                     android:padding="8dp"
-                    android:background = "@drawable/edittext_stili"
-                    android:textSize="9sp"
-                    android:gravity="center"
+                    android:textColor="#716E6D"
+                    android:layout_marginBottom="10dp"
+                    android:hint = "Телефон"
                     />
-                <TextView
-                    android:id="@+id/textWhere"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:layout_below = "@+id/textfrom"
-                    android:padding="10dp"
-                    android:text="Телефон:"
-                    android:textSize="15sp"
-                   
-                    />
-
-                <EditText
-                    android:id="@+id/s_edit_where"
+                 </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_below = "@+id/s_phone_entity_layout"
+                android:id="@+id/s_pass_entity_layout">
+                 <EditText
+                    android:id="@+id/s_pass_entity"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/textWhere"
-                    android:layout_toRightOf="@+id/textWhere"
-                    android:layout_below = "@+id/s_edit_from"
+                    android:layout_height="40dp"
                     android:inputType="text"
-                    android:layout_marginTop="13dp"
+                    android:singleLine="true"
                     android:padding="8dp"
-                    android:background = "@drawable/edittext_stili"
-                    android:textSize="9sp"
-                    android:gravity="center"
+                    android:textSize = "14sp"
+                    android:textColor="#716E6D"
+                    android:layout_marginBottom="10dp"
+                    android:hint = "Пароль"
                     />
-                <TextView
-                    android:id="@+id/TextShipmentTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:layout_below = "@+id/textWhere"
-                    android:padding="10dp"
-                    android:text="Пароль:"
-                    android:textSize="15sp"
-                   
-                    />
-
-                <EditText
-                    android:id="@+id/s_shipment_time"
+                 </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_below = "@+id/s_pass_entity_layout"
+                android:id="@+id/s_pass_confirmation_entity_layout">
+                 <EditText
+                    android:id="@+id/s_pass_confirmation_entity"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/TextShipmentTime"
-                    android:layout_toRightOf="@+id/TextShipmentTime"
-                    android:layout_below = "@+id/s_edit_where"
+                    android:layout_height="40dp"
                     android:inputType="text"
-                    android:layout_marginTop="12dp"
+                    android:singleLine="true"
+                    android:textSize = "14sp"
                     android:padding="8dp"
-                    android:background = "@drawable/edittext_stili"
-                    android:textSize="9sp"
-                    android:gravity="center"
-                    />
-                <TextView
-                    android:id="@+id/TextShippingDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:layout_below = "@+id/TextShipmentTime"
-                    android:padding="10dp"
-                    android:text="Подтвердите пароль:"
-                    android:textSize="15sp"
-                   
-                    />
-
-                <EditText
-                    android:id="@+id/s_shipping_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/TextShippingDate"
-                    android:layout_toRightOf="@+id/TextShippingDate"
-                    android:layout_below = "@+id/s_shipment_time"
-                    android:inputType="text"
-                    android:layout_marginTop="12dp"
-                    android:padding="8dp"
-                    android:background = "@drawable/edittext_stili"
-                    android:textSize="9sp"
-                    android:gravity="center"
-                    />
+                    android:textColor="#716E6D"
+                    android:layout_marginBottom="10dp"
+                    android:hint = "Подтвердите пароль"/>
+            </android.support.design.widget.TextInputLayout>
 
               </RelativeLayout>
+                </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop = "10dp"
+                android:layout_below = "@+id/cardViewgGeneralDataEntity"
+                android:id="@+id/cardViewSpecialDataEntity"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="4dp"
+                android:layout_gravity="center_horizontal">
             <RelativeLayout
                 android:id="@+id/fioBox1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_below = "@+id/fioBox"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="16dp"   
                 >
-               
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text = "Данные организации"
                     android:padding="10dp"
-                    android:textSize="15sp"
+                    android:textSize="17sp"
+                    android:textStyle ="italic"
+                    android:textColor = "#F3B487"
                     android:id = "@+id/textHeading"
                     android:layout_centerHorizontal = "true"
                 />
                
-                <TextView
-                    android:id="@+id/textfrom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:layout_below = "@+id/textHeading"
-                    android:padding="10dp"
-                    android:text="Наименование:"
-                    android:textSize="15sp"
-                   
-                    />
-
-                <EditText
-                    android:id="@+id/s_edit_from"
+        <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_below = "@+id/textHeading"
+                android:id="@+id/s_nomination_entity_layout">
+                 <EditText
+                    android:id="@+id/s_nomination_entity"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/textfrom"
-                    android:layout_toRightOf="@+id/textfrom"
-                    android:layout_below = "@+id/textHeading"
+                    android:layout_height="40dp"
                     android:inputType="text"
-                    android:layout_marginTop="8dp"
+                    android:singleLine="true"
                     android:padding="8dp"
-                    android:background = "@drawable/edittext_stili"
-                    android:textSize="9sp"
-                    android:gravity="center"
-                    />
-                <TextView
-                    android:id="@+id/textWhere"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:layout_below = "@+id/textfrom"
-                    android:padding="10dp"
-                    android:text="Юридический адрес:"
-                    android:textSize="15sp"
-                   
-                    />
-
-                <EditText
-                    android:id="@+id/s_edit_where"
+                    android:textSize = "14sp"
+                    android:textColor="#ED8D48"
+                    android:layout_marginBottom="10dp"
+                    android:hint = "Наименование"/>
+            </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_below = "@+id/s_nomination_entity_layout"
+                android:id="@+id/s_legal_address_entity_layout">
+                 <EditText
+                    android:id="@+id/s_legal_address_entity"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/textWhere"
-                    android:layout_toRightOf="@+id/textWhere"
-                    android:layout_below = "@+id/s_edit_from"
+                    android:layout_height="40dp"
                     android:inputType="text"
-                    android:layout_marginTop="13dp"
+                    android:singleLine="true"
                     android:padding="8dp"
-                    android:background = "@drawable/edittext_stili"
-                    android:textSize="9sp"
-                    android:gravity="center"
-                    />
-
-                <TextView
-                    android:id="@+id/TextINNKPP"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:layout_below = "@+id/textWhere"
-                    android:padding="10dp"
-                    android:text="ИНН/КПП:"
-                    android:textSize="15sp"
-                   
-                    />
-
-                <EditText
-                    android:id="@+id/s_inn_kpp"
+                    android:textSize = "14sp"
+                    android:textColor="#ED8D48"
+                    android:layout_marginBottom="10dp"
+                    android:hint = "Юридический адрес"/>
+            </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_below = "@+id/s_legal_address_entity_layout"
+                android:id="@+id/s_INN_KPP_entity_layout">
+                 <EditText
+                    android:id="@+id/s_INN_KPP_entity"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/TextINNKPP"
-                    android:layout_toRightOf="@+id/TextINNKPP"
-                    android:layout_below = "@+id/textWhere"
+                    android:layout_height="40dp"
                     android:inputType="text"
-                    android:layout_marginTop="12dp"
+                    android:singleLine="true"
                     android:padding="8dp"
-                    android:background = "@drawable/edittext_stili"
-                    android:textSize="9sp"
-                    android:gravity="center"
-                    />
-                <TextView
-                    android:id="@+id/TextOGRN"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:layout_below = "@+id/TextINNKPP"
-                    android:padding="10dp"
-                    android:text="ОГРН:"
-                    android:textSize="15sp"
-                   
-                    />
-
-                <EditText
-                    android:id="@+id/s_OGRN"
+                    android:textSize = "14sp"
+                    android:textColor="#ED8D48"
+                    android:layout_marginBottom="10dp"
+                    android:hint = "ИНН/КПП"/>
+            </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_below = "@+id/s_INN_KPP_entity_layout"
+                android:id="@+id/s_OGRN_entity_layout">
+                 <EditText
+                    android:id="@+id/s_OGRN_entity"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/TextOGRN"
-                    android:layout_toRightOf="@+id/TextOGRN"
-                    android:layout_below = "@+id/TextINNKPP"
+                    android:layout_height="40dp"
                     android:inputType="text"
-                    android:layout_marginTop="12dp"
+                    android:singleLine="true"
                     android:padding="8dp"
-                    android:background = "@drawable/edittext_stili"
-                    android:textSize="9sp"
-                    android:gravity="center"
-                    />
-
-                <TextView
-                    android:id="@+id/TextBank"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:layout_below = "@+id/TextOGRN"
-                    android:padding="10dp"
-                    android:text="Банк:"
-                    android:textSize="15sp"
-                   
-                    />
-
-                <EditText
-                    android:id="@+id/s_bank"
+                    android:textSize = "14sp"
+                    android:textColor="#ED8D48"
+                    android:layout_marginBottom="10dp"
+                    android:hint = "ОГРН"/>
+            </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_below = "@+id/s_OGRN_entity_layout"
+                android:id="@+id/s_bank_entity_layout">
+                 <EditText
+                    android:id="@+id/s_bank_entity"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/TextBank"
-                    android:layout_toRightOf="@+id/TextBank"
-                    android:layout_below = "@+id/TextOGRN"
+                    android:layout_height="40dp"
                     android:inputType="text"
-                    android:layout_marginTop="12dp"
+                    android:singleLine="true"
                     android:padding="8dp"
-                    android:background = "@drawable/edittext_stili"
-                    android:textSize="9sp"
-                    android:gravity="center"
-                    />
-                <TextView
-                    android:id="@+id/TextPaymentaccount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:layout_below = "@+id/TextBank"
-                    android:padding="10dp"
-                    android:text="Расчётный счёт:"
-                    android:textSize="15sp"
-                   
-                    />
-
-                <EditText
-                    android:id="@+id/s_payment_account"
+                    android:textSize = "14sp"
+                    android:textColor="#ED8D48"
+                    android:layout_marginBottom="10dp"
+                    android:hint = "Банк"/>
+            </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_below = "@+id/s_bank_entity_layout"
+                android:id="@+id/s_payment_account_layout">
+                 <EditText
+                    android:id="@+id/s_payment_account_entity"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/TextPaymentaccount"
-                    android:layout_toRightOf="@+id/TextPaymentaccount"
-                    android:layout_below = "@+id/TextBank"
+                    android:layout_height="40dp"
                     android:inputType="text"
-                    android:layout_marginTop="12dp"
+                    android:singleLine="true"
                     android:padding="8dp"
-                    android:background = "@drawable/edittext_stili"
-                    android:textSize="9sp"
-                    android:gravity="center"
-                    />
-                <TextView
-                    android:id="@+id/TextCorrespondentAccount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:layout_below = "@+id/TextPaymentaccount"
-                    android:padding="10dp"
-                    android:text="Корреспондентский счёт:"
-                    android:textSize="15sp"
-                   
-                    />
-
-                <EditText
-                    android:id="@+id/s_correspondent_account"
+                    android:textSize = "14sp"
+                    android:textColor="#ED8D48"
+                    android:layout_marginBottom="10dp"
+                    android:hint = "Расчётный счёт"/>
+            </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_below = "@+id/s_payment_account_layout"
+                android:id="@+id/s_correspondent_account_entity_layout">
+                 <EditText
+                    android:id="@+id/s_correspondent_account_entity"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/TextCorrespondentAccount"
-                    android:layout_toRightOf="@+id/TextCorrespondentAccount"
-                    android:layout_below = "@+id/TextPaymentaccount"
+                    android:layout_height="40dp"
                     android:inputType="text"
-                    android:layout_marginTop="12dp"
+                    android:singleLine="true"
                     android:padding="8dp"
-                    android:background = "@drawable/edittext_stili"
-                    android:textSize="9sp"
-                    android:gravity="center"
-                    />
-                <TextView
-                    android:id="@+id/TextBIK"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="left|center_vertical"
-                    android:layout_below = "@+id/TextCorrespondentAccount"
-                    android:padding="10dp"
-                    android:text="БИК"
-                    android:textSize="15sp"
-                   
-                    />
-
-                <EditText
-                    android:id="@+id/s_bik"
+                    android:textSize = "14sp"
+                    android:textColor="#ED8D48"
+                    android:layout_marginBottom="10dp"
+                    android:hint = "Корреспондентский счёт"/>
+            </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_below = "@+id/s_correspondent_account_entity_layout"
+                android:id="@+id/s_BIK_entity_layout">
+                 <EditText
+                    android:id="@+id/s_BIK_entity"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/TextBIK"
-                    android:layout_toRightOf="@+id/TextBIK"
-                    android:layout_below = "@+id/TextCorrespondentAccount"
+                    android:layout_height="40dp"
                     android:inputType="text"
-                    android:layout_marginTop="12dp"
+                    android:singleLine="true"
                     android:padding="8dp"
-                    android:background = "@drawable/edittext_stili"
-                    android:textSize="9sp"
-                    android:gravity="center"
-                    />
-                <CheckBox
-                    android:id ="@+id/check_personal_data_processing"
-                    android:layout_below ="@+id/TextBIK"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text ="Согласие на обработку персональный данных"
-                    />
-                <Button
-                    android:id="@+id/btn_make_request"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/button_stili"
-                    android:layout_below = "@+id/check_personal_data_processing"
-                    android:layout_centerHorizontal ="true"
-                    android:padding = "5dp"
-                    android:text="Зарегистрироваться"
-                    android:textSize="8sp"
-                  />
+                    android:textSize = "14sp"
+                    android:textColor="#ED8D48"
+                    android:layout_marginBottom="10dp"
+                    android:hint = "БИК"/>
+            </android.support.design.widget.TextInputLayout>
 
               </RelativeLayout>
+            </android.support.v7.widget.CardView>
+            <Button
+                    android:id="@+id/btn_make_request"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/button_stili"
+                    android:textColor = "#FBF8F8"
+                    android:layout_below = "@+id/cardViewSpecialDataEntity"
+                    android:layout_centerHorizontal ="true"
+                    android:text="Зарегистрироваться"
+                    android:textSize="10sp"/>
+
         </RelativeLayout>
     </ScrollView>
     <ProgressBar

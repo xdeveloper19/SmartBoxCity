@@ -51,7 +51,6 @@ namespace SmartBoxCity
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
 
 
-            //FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
             FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
             var btnAddOrder = navigation.Menu.FindItem(Resource.Id.title_about_us);
             var btnOrders = navigation.Menu.FindItem(Resource.Id.title_reviews);
@@ -183,17 +182,21 @@ namespace SmartBoxCity
             //navigationView.SetNavigationItemSelectedListener(this);
         }
 
+        public interface IBackButtonListener
+        {
+            void OnBackPressed();
+        }
         public override void OnBackPressed()
         {
-            DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
-            if(drawer.IsDrawerOpen(GravityCompat.Start))
+            // Ignoring stuff about DrawerLayout, etc for demo purposes.
+            var currentFragment = SupportFragmentManager.FindFragmentById(Resource.Id.framelayout);
+            var listener = currentFragment as IBackButtonListener;
+            if (listener != null)
             {
-                drawer.CloseDrawer(GravityCompat.Start);
+                listener.OnBackPressed();
+                return;
             }
-            else
-            {
-                base.OnBackPressed();
-            }
+            base.OnBackPressed();
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

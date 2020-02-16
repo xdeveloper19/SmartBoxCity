@@ -11,6 +11,7 @@
   <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
     <item name="boxStrokeColor">#FFA07A</item>
     <item name="boxStrokeWidth">2dp</item>
+    
   </style>
   
     <style name="AppTheme.NoActionBar">

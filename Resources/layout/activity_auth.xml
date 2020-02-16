@@ -1,5 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
-<RelativeLayout
+﻿<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
@@ -18,6 +17,7 @@
 		android:textAppearance="?android:attr/textAppearanceLarge"
 		android:layout_width="fill_parent"
 		android:gravity="center"
+		android:textStyle = "italic"
 		android:layout_height="30dp"
 		android:layout_marginBottom="20dp"
 		android:id="@+id/textlogin"
@@ -37,44 +37,44 @@
 	<RelativeLayout
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:padding="30dip"
+		android:padding="30dp"
 		android:layout_below="@+id/textlogin_desc"
 		android:id="@+id/containerAuth">
 
-		
-		<android.support.design.widget.TextInputLayout
-			android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-			style="@style/LoginTextInputLayoutStyle"
-			android:id="@+id/s_login_layout">
-			<EditText
-				android:layout_width="fill_parent"
-				android:layout_height="50dp"
-				android:layout_marginBottom="10dp"
-				android:singleLine="true"
-				android:id="@+id/s_login"
-				android:padding = "7dp"
-				android:textColor="@android:color/white"
-				android:hint="Логин"/>
-		</android.support.design.widget.TextInputLayout>
 
-		
-		<android.support.design.widget.TextInputLayout
-			android:layout_width="match_parent"
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-			android:id="@+id/s_pas_layout"
-			style="@style/LoginTextInputLayoutStyle"
-			android:layout_below="@+id/s_login_layout">
-			<EditText
-            android:inputType="textPassword"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:singleLine="true"
-            android:id="@+id/s_pass"
-			android:padding = "7dp"
-			android:textColor="@android:color/white"
-            android:hint="Пароль"/>
-		</android.support.design.widget.TextInputLayout>
+            style="@style/LoginTextInputLayoutStyle"
+            android:id="@+id/s_login_layout">
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:singleLine="true"
+                android:id="@+id/s_login"
+                android:padding = "7dp"
+                android:textColor="@android:color/white"
+                android:hint="Логин"/>
+        </android.support.design.widget.TextInputLayout>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/s_pas_layout"
+            style="@style/LoginTextInputLayoutStyle"
+            android:layout_below="@+id/s_login_layout">
+            <EditText
+                android:inputType="textPassword"
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:singleLine="true"
+                android:id="@+id/s_pass"
+                android:padding = "7dp"
+                android:textColor="@android:color/white"
+                android:hint="Пароль"/>
+        </android.support.design.widget.TextInputLayout>
         
 
 		<CheckBox
@@ -90,8 +90,8 @@
 			android:text="Войти"
 			android:layout_width="fill_parent"
 			android:layout_height="45dp"
-			android:layout_marginTop="20dp"
-			
+			android:layout_marginTop="20dp"		
+			android:textColor = "#FBF8F8"
 			android:layout_below="@+id/is_remember"
 			android:background="@drawable/button_stili"
 			android:id="@+id/btn_auth" />
