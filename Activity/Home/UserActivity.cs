@@ -82,8 +82,7 @@ namespace SmartBoxCity.Activity.Home
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            int i = 0;
-            if(i == 0)
+            if(CrossSettings.Current.GetValueOrDefault("isAuth", "") != "true")
             {
                 var view = inflater.Inflate(Resource.Layout.activity_not_found_order, container, false);
                 btn_add_order = view.FindViewById<Button>(Resource.Id.btn_add_order1);

@@ -52,11 +52,6 @@ namespace SmartBoxCity.Activity.Auth
         private Button btn_auth;
 
         /// <summary>
-        /// Конпка назад.
-        /// </summary>
-        private ImageButton btn_back_a;
-
-        /// <summary>
         /// Кнопка прокрутки.
         /// </summary>
         private ProgressBar preloader;
