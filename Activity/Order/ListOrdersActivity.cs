@@ -12,7 +12,7 @@ using SmartBoxCity.Model.OrderViewModel;
 
 namespace SmartBoxCity.Activity.Order
 {
-    public class ListOrdersActivity: Fragment
+    public class ListOrdersActivity : Fragment
     {
         private ListView lstOrder;
         private EditText editEnterOrder;
@@ -27,26 +27,35 @@ namespace SmartBoxCity.Activity.Order
         {
             var view = inflater.Inflate(Resource.Layout.activity_order_book, container, false);
             lstOrder = view.FindViewById<ListView>(Resource.Id.orderlistview);
-            
+
             //editEnterOrder.TextChanged += EtSearch_TextChanged;
             orderlist = new List<OrderBookModel>();
             OrderBookModel p1 = new OrderBookModel()
             {
                 Id = 1,
-                name = "Заказ №1",
-                Date = "12/11/2019"
+                Destination = "улица Шеболдаева, 24А, Ростов-на-Дону",
+                Inception = "улица Кошевого, 1, Новочеркасск",
+                Price = "650 руб",
+                OrderName = "Заказ SO4386943088",
+                Date = "9 февраля 16:34"
             };
             OrderBookModel p2 = new OrderBookModel()
             {
                 Id = 2,
-                name = "Заказ №2",
-                Date = "12/11/2029"
+                Destination = "Славный переулок, 5, Новошахтинск",
+                Inception = "Астаховский переулок, 84, Каменск-Шахтинский",
+                Price = "950 руб",
+                OrderName = "Заказ OP5887450402",
+                Date = "12 марта 11:34"
             };
             OrderBookModel p3 = new OrderBookModel()
             {
                 Id = 3,
-                name = "Заказ №3",
-                Date = "12/11/2039"
+                Destination = "Комитетская улица, 88, Новочеркасск",
+                Inception = "переулок Чапаева, 2, Шахты",
+                Price = "800 руб",
+                OrderName = "Заказ PR3921079101",
+                Date = "19 февраля 09:11"
             };
             orderlist.Add(p1);
             orderlist.Add(p2);

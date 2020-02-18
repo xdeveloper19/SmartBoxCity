@@ -15,6 +15,14 @@ namespace SmartBoxCity.Model.OrderViewModel
     public class OrderBookModel
     {
         public int Id { get; set; }
+
+        public string Inception { get; set; }
+
+        public string Destination { get; set; }
+
+        public string Price { get; set; }
+
+        public string OrderName { get; set; }
         public string name { get; set; }
         public string Date { get; set; }
     }

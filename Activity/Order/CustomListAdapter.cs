@@ -13,7 +13,7 @@ using SmartBoxCity.Model.OrderViewModel;
 
 namespace SmartBoxCity.Activity.Order
 {
-    public class CustomListAdapter: BaseAdapter<OrderBookModel>
+    public class CustomListAdapter : BaseAdapter<OrderBookModel>
     {
         Context context;
         List<OrderBookModel> orders;
@@ -37,8 +37,11 @@ namespace SmartBoxCity.Activity.Order
             if (view == null)
             {
                 view = LayoutInflater.From(context).Inflate(Resource.Layout.order_book_parameters, null);
-                view.FindViewById<TextView>(Resource.Id.txtName).Text = orders[position].name;
+                view.FindViewById<TextView>(Resource.Id.txtFrom).Text = orders[position].Inception;
+                view.FindViewById<TextView>(Resource.Id.txtWhere).Text = orders[position].Destination;
+                view.FindViewById<TextView>(Resource.Id.txtPrice).Text = orders[position].Price;
                 view.FindViewById<TextView>(Resource.Id.txtDate).Text = orders[position].Date;
+                view.FindViewById<TextView>(Resource.Id.txtOrderName).Text = orders[position].OrderName;
             }
             return view;
         }

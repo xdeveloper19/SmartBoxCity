@@ -547,84 +547,18 @@
                             android:padding="8dp"
                             android:textSize="11sp"
                         />
-                    </android.support.design.widget.TextInputLayout>
-                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "Договор оферты:"
-                    android:id = "@+id/TextOpherta"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:textSize="15sp"
-                    
-                    android:layout_below = "@+id/s_contact_person_layout"
-                />
+                    </android.support.design.widget.TextInputLayout>                              
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "Согласен"
-                    android:id = "@+id/isArgued"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    
-                    android:textSize="10sp"
-                    android:layout_below = "@+id/TextOpherta"
-                />
-
-                <CheckBox
-                        android:id="@+id/check_argue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below = "@+id/TextOpherta"
-                        android:layout_toEndOf="@+id/isArgued"
-                        android:padding="8dp"
-                        
-                       
-                    />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "Не согласен"
-                    
-                    android:id = "@+id/isNotArgued"
-                    android:layout_toEndOf="@+id/check_argue"
-                    android:layout_marginLeft="10dp"
-                    android:padding="10dp"
-                    android:textSize="10sp"
-                    android:layout_below = "@+id/TextOpherta"
-                />
-
-                <CheckBox
-                        android:id="@+id/check_argue1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below = "@+id/TextOpherta"
-                        android:layout_toEndOf="@+id/isNotArgued"
-                        android:padding="8dp"
-                        
-                       
-                    />
-
-                
-
-                
-
-                
                     <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text = "Способ погрузки:"
                     android:id = "@+id/TextLoadingMethods"
                     android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    
+                    android:padding="10dp"                   
                     android:textSize="15sp"
-                    android:layout_below = "@+id/isArgued"
+                    android:layout_below = "@+id/s_contact_person_layout"
                 />
-
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -637,14 +571,31 @@
                     android:layout_marginStart = "5dp"
                     android:layout_below = "@+id/TextLoadingMethods"
                     android:background = "@drawable/edittext_stili"/>
-
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation = "horizontal"
+                        android:layout_marginTop = "10dp"
+                        android:layout_below = "@+id/s_loading_methods"
+                        android:id = "@+id/check_argue_layout">
+                <CheckBox
+                        android:id="@+id/check_argue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"                  
+                />
                 <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_below="@+id/s_loading_methods"
-                        android:text=""
-                        android:background="@android:color/white"
-                    />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Согласие с договором офертой"
+                    android:id = "@+id/isArgued"
+                    android:layout_marginStart = "-20dp"
+                    android:layout_marginRight = "-20dp"
+                    android:padding="10dp"   
+                    android:textSize="10sp"
+                />
+               
+                </LinearLayout>
                  </RelativeLayout>
                 </android.support.v7.widget.CardView>
 
