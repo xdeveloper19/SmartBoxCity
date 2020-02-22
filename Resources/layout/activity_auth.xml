@@ -106,26 +106,7 @@
 			android:layout_alignParentBottom="true"
 			android:layout_below="@+id/btn_auth" 
 			android:id="@+id/container_middle_name" > 
-			<TextView 
-				android:text="Нет профиля ?  "
-				android:textColor="@android:color/white"
-				android:textAppearance="?android:attr/textAppearanceSmall"
-				
-				android:gravity="right"
-				android:layout_width="wrap_content" 
-				android:layout_height="50dp"
-				android:id="@+id/s_middle_name" /> 
-			<Button
-				android:text="Зарегистрируйтесь"
-				android:textAppearance="?android:attr/textAppearanceSmall" 
-				android:gravity="left"
-				android:layout_width="0dp" 
-				android:layout_weight=".55" 
-				android:layout_height="50dp"
-				android:textColor="#FFA07A"	
-				android:background="@android:color/transparent" 
-				android:layout_below="@+id/btn_auth"
-				android:id="@+id/btn_register" /> 
+			
 		</LinearLayout>
    </RelativeLayout>
 

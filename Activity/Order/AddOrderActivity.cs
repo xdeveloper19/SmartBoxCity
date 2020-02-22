@@ -117,44 +117,10 @@ namespace SmartBoxCity.Activity.Order
                 btn_make_request.Click += async delegate
                 {
                     Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                    if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
-                    {
-                        UserActivity content = new UserActivity();
-                        transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                    }
-                    else
-                    {
-                        AlertDialog.Builder alert = new AlertDialog.Builder(Context);
-                        alert.SetTitle("Внимание!");
-                        alert.SetMessage("Для оформления заказа необходимо авторизироваться или зарегистрироваться.");
-                        alert.SetPositiveButton("Регистрация", (senderAlert, args) =>
-                        {
-                            alert.Dispose();
-                            Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Context);
-                            alert1.SetTitle("Внимание!");
-                            alert1.SetMessage("Необходимо выбрать вид регистрации.");
-                            alert1.SetPositiveButton("Для физ.лица", (senderAlert1, args1) =>
-                            {
-                                Activity_Registration_Individual_Person content4 = new Activity_Registration_Individual_Person();
-                                transaction1.Replace(Resource.Id.framelayout, content4).AddToBackStack(null).Commit();
-                            });
-                            alert1.SetNegativeButton("Для юр.лица", (senderAlert1, args1) =>
-                            {
-                                Activity_Legal_Entity_Registration content3 = new Activity_Legal_Entity_Registration();
-                                transaction1.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
-                            });
-                            Dialog dialog1 = alert1.Create();
-                            dialog1.Show();
-                        });
-                        alert.SetNegativeButton("Авторизация", (senderAlert, args) =>
-                        {
-                            AuthActivity content3 = new AuthActivity();
-                            transaction1.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
-                        });
-                        Dialog dialog = alert.Create();
-                        dialog.Show();
-                    }                   
-                    //Toast.MakeText(Context, "Заявка оформлена", ToastLength.Long).Show();
+                    ActivityOrderPreis content = new ActivityOrderPreis();
+                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                    
+                    
                 };
             }
             catch (Exception ex)

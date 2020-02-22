@@ -8,6 +8,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Plugin.Settings;
 using SmartBoxCity.Model.OrderViewModel;
 
 namespace SmartBoxCity.Activity.Order
@@ -25,44 +26,60 @@ namespace SmartBoxCity.Activity.Order
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var view = inflater.Inflate(Resource.Layout.activity_order_book, container, false);
-            lstOrder = view.FindViewById<ListView>(Resource.Id.orderlistview);
+            View view;
+            if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+            {
+                view = inflater.Inflate(Resource.Layout.activity_not_found_book, container, false);
+                var btn_add_order1 = view.FindViewById<Button>(Resource.Id.btn_add_order1);
+                btn_add_order1.Click += async delegate
+                {
+                    Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                    AddOrderActivity content = new AddOrderActivity();
+                    transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                };
+                return view;
+            }
+            else
+            {
+                view = inflater.Inflate(Resource.Layout.activity_order_book, container, false);
+                lstOrder = view.FindViewById<ListView>(Resource.Id.orderlistview);
 
-            //editEnterOrder.TextChanged += EtSearch_TextChanged;
-            orderlist = new List<OrderBookModel>();
-            OrderBookModel p1 = new OrderBookModel()
-            {
-                Id = 1,
-                Destination = "улица Шеболдаева, 24А, Ростов-на-Дону",
-                Inception = "улица Кошевого, 1, Новочеркасск",
-                Price = "650 руб",
-                OrderName = "Заказ SO4386943088",
-                Date = "9 февраля 16:34"
-            };
-            OrderBookModel p2 = new OrderBookModel()
-            {
-                Id = 2,
-                Destination = "Славный переулок, 5, Новошахтинск",
-                Inception = "Астаховский переулок, 84, Каменск-Шахтинский",
-                Price = "950 руб",
-                OrderName = "Заказ OP5887450402",
-                Date = "12 марта 11:34"
-            };
-            OrderBookModel p3 = new OrderBookModel()
-            {
-                Id = 3,
-                Destination = "Комитетская улица, 88, Новочеркасск",
-                Inception = "переулок Чапаева, 2, Шахты",
-                Price = "800 руб",
-                OrderName = "Заказ PR3921079101",
-                Date = "19 февраля 09:11"
-            };
-            orderlist.Add(p1);
-            orderlist.Add(p2);
-            orderlist.Add(p3);
-            UpdateList();
-            lstOrder.ItemClick += ListOrders_ItemClick;
-            return view;
+                //editEnterOrder.TextChanged += EtSearch_TextChanged;
+                orderlist = new List<OrderBookModel>();
+                OrderBookModel p1 = new OrderBookModel()
+                {
+                    Id = 1,
+                    Destination = "улица Шеболдаева, 24А, Ростов-на-Дону",
+                    Inception = "улица Кошевого, 1, Новочеркасск",
+                    Price = "650 руб",
+                    OrderName = "Заказ SO4386943088",
+                    Date = "9 февраля 16:34"
+                };
+                OrderBookModel p2 = new OrderBookModel()
+                {
+                    Id = 2,
+                    Destination = "Славный переулок, 5, Новошахтинск",
+                    Inception = "Астаховский переулок, 84, Каменск-Шахтинский",
+                    Price = "950 руб",
+                    OrderName = "Заказ OP5887450402",
+                    Date = "12 марта 11:34"
+                };
+                OrderBookModel p3 = new OrderBookModel()
+                {
+                    Id = 3,
+                    Destination = "Комитетская улица, 88, Новочеркасск",
+                    Inception = "переулок Чапаева, 2, Шахты",
+                    Price = "800 руб",
+                    OrderName = "Заказ PR3921079101",
+                    Date = "19 февраля 09:11"
+                };
+                orderlist.Add(p1);
+                orderlist.Add(p2);
+                orderlist.Add(p3);
+                UpdateList();
+                lstOrder.ItemClick += ListOrders_ItemClick;
+                return view;
+            }
         }
 
         private void ListOrders_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
@@ -98,7 +115,7 @@ namespace SmartBoxCity.Activity.Order
         //}
         public override void OnResume()
         {
-            UpdateList();
+           // UpdateList();
             base.OnResume();
         }
 

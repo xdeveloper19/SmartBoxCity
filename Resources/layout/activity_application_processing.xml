@@ -594,6 +594,14 @@
                     android:padding="10dp"   
                     android:textSize="10sp"
                 />
+
+                        <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/isArgued"
+                        android:text=""
+                        android:background="@android:color/white"
+                    />
                
                 </LinearLayout>
                  </RelativeLayout>

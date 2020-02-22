@@ -72,6 +72,7 @@
     <Compile Include="Activity\Menu\Activity_Reviews.cs" />
     <Compile Include="Activity\Order\ActivityOrderPreis.cs" />
     <Compile Include="Activity\Order\AddOrderActivity.cs" />
+    <Compile Include="Activity\Order\BookNotFoundActivity.cs" />
     <Compile Include="Activity\Order\CustomListAdapter.cs" />
     <Compile Include="Activity\Order\ExpandableDataAdapter.cs" />
     <Compile Include="Activity\Order\ListOrdersActivity.cs" />
@@ -297,6 +298,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\greenMarker.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_not_found_book.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\order.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
