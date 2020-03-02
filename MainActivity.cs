@@ -58,17 +58,26 @@ namespace SmartBoxCity
 
             if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
             {
-                UserActivity content2 = new UserActivity();
-                transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+                if (CrossSettings.Current.GetValueOrDefault("role","") == "driver")
+                {
+                    Intent intent = new Intent(this, typeof(Activity.MainActivity2));
+                    StartActivity(intent);
+                }
+                else
+                {
+                    UserActivity content2 = new UserActivity();
+                    transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+
+                    btnAddOrder.SetTitle("Заказать");
+                    btnAddOrder.SetIcon(Resource.Drawable.ic_add_order);
+
+                    btnOrders.SetTitle("Заказы");
+                    btnOrders.SetIcon(Resource.Drawable.ic_orders);
+
+                    btnExit.SetTitle("Выход");
+                    btnExit.SetIcon(Resource.Drawable.ic_menu_exit);
+                }
                 
-                btnAddOrder.SetTitle("Заказать");
-                btnAddOrder.SetIcon(Resource.Drawable.ic_add_order);
-
-                btnOrders.SetTitle("Заказы");
-                btnOrders.SetIcon(Resource.Drawable.ic_orders);
-
-                btnExit.SetTitle("Выход");
-                btnExit.SetIcon(Resource.Drawable.ic_menu_exit);
             }
             else
             {

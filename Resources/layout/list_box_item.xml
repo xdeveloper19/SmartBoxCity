@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/BoxRow"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:layout_height="fill_parent"
+    >
+
+    <ImageView
+        android:layout_width="20dp"
+        android:id="@+id/img_label"
+        android:src="@drawable/business"
+        android:layout_height="20dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:id="@+id/txtSensor"
+        android:text="Вес, кг"
+        android:layout_marginTop="5dp"
+        android:textSize="10sp"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+         <TextView
+            android:layout_width="wrap_content"
+            android:text="101"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="1dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/txtValue"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edittext_stili"
+            android:textSize="10sp"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+   <ProgressBar
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/preloader"
+        />
+</LinearLayout>
+
+    

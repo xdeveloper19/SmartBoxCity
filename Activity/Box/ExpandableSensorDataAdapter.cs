@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SmartBoxCity.Model.OrderViewModel;
+
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Android.Support.V7.Widget;
+using SmartBoxCity.Model.BoxViewModel;
 
-namespace SmartBoxCity.Activity.Order
+namespace SmartBoxCity.Activity.Box
 {
-    public class ExpandableDataAdapter: BaseExpandableListAdapter
+    public class ExpandableSensorDataAdapter: BaseExpandableListAdapter
     {
-		readonly Context Context;
-		private Dictionary<string, List<Data>> _listDataChild;
-		public ExpandableDataAdapter(Context newContext, List<string> newList, Dictionary<string, List<Data>> childList) : base()
+		readonly Context _context;
+		private Dictionary<string, List<SensorData>> _listDataChild;
+		public ExpandableSensorDataAdapter(Context newContext, List<string> newList, Dictionary<string, List<SensorData>> childList) : base()
 		{
 			_listDataChild = childList;
-			Context = newContext;
+			_context = newContext;
 			_listDataHeader = newList;
 		}
 
@@ -33,11 +33,8 @@ namespace SmartBoxCity.Activity.Order
 
 			if (header == null)
 			{
-				header = LayoutInflater.From(Context).Inflate(Resource.Layout.list_group, null);
+				header = LayoutInflater.From(_context).Inflate(Resource.Layout.list_group, null);
 			}
-			//var cardView = header.FindViewById<CardView>(Resource.Id.cardViewBox);
-			//cardView.SetMinimumHeight(300);
-
 			string textGroup = (string)GetGroup(groupPosition);
 			header.FindViewById<TextView>(Resource.Id.DataHeader).Text = textGroup;
 
@@ -48,13 +45,6 @@ namespace SmartBoxCity.Activity.Order
 		{
 			base.OnGroupExpanded(groupPosition);
 		}
-
-		public override void OnGroupCollapsed(int groupPosition)
-		{
-			base.OnGroupCollapsed(groupPosition);
-		}
-
-		
 		public override View GetChildView(int groupPosition, int childPosition, bool isLastChild, View convertView, ViewGroup parent)
 		{
 			View row = convertView;
@@ -62,13 +52,13 @@ namespace SmartBoxCity.Activity.Order
 			string content = (string)GetChild(groupPosition, childPosition);
 			if (row == null)
 			{
-				row = LayoutInflater.From(Context).Inflate(Resource.Layout.list_data_item, null);
+				row = LayoutInflater.From(_context).Inflate(Resource.Layout.list_box_item, null);
 			}
 			//string newId = "", newValue = "";
 			//GetChildViewHelper(groupPosition, childPosition, out newId, out newValue);
-			row.FindViewById<TextView>(Resource.Id.s_sensor_data).Text = child.Value;
-			row.FindViewById<TextView>(Resource.Id.sensor_name).Text = child.SensorName;
-			row.FindViewById<TextView>(Resource.Id.units).Text = child.Unit;
+			row.FindViewById<TextView>(Resource.Id.txtSensor).Text = child.SensorName;
+			row.FindViewById<TextView>(Resource.Id.txtValue).Text = child.Value;
+			row.FindViewById<ImageView>(Resource.Id.img_label).SetImageResource(child.Icon);
 
 			return row;
 			//throw new NotImplementedException ();
@@ -76,7 +66,7 @@ namespace SmartBoxCity.Activity.Order
 
 		public override int GetChildrenCount(int groupPosition)
 		{
-			var result = new List<Data>();
+			var result = new List<SensorData>();
 			_listDataChild.TryGetValue(_listDataHeader[groupPosition], out result);
 			return result.Count;
 		}
@@ -101,7 +91,7 @@ namespace SmartBoxCity.Activity.Order
 
 		public override Java.Lang.Object GetChild(int groupPosition, int childPosition)
 		{
-			var result = new List<Data>();
+			var result = new List<SensorData>();
 			_listDataChild.TryGetValue(_listDataHeader[groupPosition], out result);
 			return result[childPosition];
 		}

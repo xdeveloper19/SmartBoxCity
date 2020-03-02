@@ -27,7 +27,7 @@ namespace SmartBoxCity.Activity.Order
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             View view;
-            if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+            if (CrossSettings.Current.GetValueOrDefault("isAuth", "") != "true")
             {
                 view = inflater.Inflate(Resource.Layout.activity_not_found_book, container, false);
                 var btn_add_order1 = view.FindViewById<Button>(Resource.Id.btn_add_order1);
@@ -121,7 +121,7 @@ namespace SmartBoxCity.Activity.Order
 
         public void UpdateList()
         {
-            CustomListAdapter adapter = new CustomListAdapter(Context, orderlist);
+            CustomListAdapter adapter = new CustomListAdapter(Context, orderlist, this.FragmentManager);
             lstOrder.Adapter = adapter;
         }
     }

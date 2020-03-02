@@ -1,0 +1,85 @@
+﻿<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/not_found_book_layout"
+	android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_main"
+    android:background = "#F9F6F6">
+
+      <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"> 
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight = "8dp"> 
+
+             <TextView
+                android:text="Выберите нужный пункт:"
+                android:layout_marginTop = "100dp"
+                android:textStyle = "bold"
+                android:background = "#F9F6F6"
+                android:layout_centerHorizontal = "true"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/TextViewMapHaupt" /> 
+            
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop = "150dp"
+                android:id="@+id/CardViewMainOrderStatus"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="4dp"
+                android:layout_gravity="center_horizontal">
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_margin = "10dp"
+                    android:minWidth="25px"
+                    android:minHeight="25px"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/LinearLayoutMainOrderStatus" >
+                    <Button
+                        android:text="Этапы выполнения заказа"
+                        android:background = "@drawable/button_stili"
+                        android:minWidth="25px"
+                        android:minHeight="25px"
+                        android:layout_marginTop = "10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/ButtonOrderAndItsStages" />
+                    
+                    <Button
+                        android:text="Местоположение"
+                        android:background = "@drawable/button_stili"
+                        android:layout_marginTop = "10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minWidth="25px"
+                        android:minHeight="25px"
+                        android:id="@+id/ButtonMap" />
+                   <Button
+                        android:text="События"
+                        android:background = "@drawable/button_stili"
+                        android:layout_marginTop = "10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minWidth="25px"
+                        android:minHeight="25px"                    
+                        android:id="@+id/ButtonEvents" />    
+                </LinearLayout>                              
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+      </ScrollView>
+</RelativeLayout>
+

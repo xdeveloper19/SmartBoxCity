@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.Gms.Location;
@@ -86,6 +85,7 @@ namespace SmartBoxCity.Activity.Home
             {
                 var view = inflater.Inflate(Resource.Layout.activity_not_found_order, container, false);
                 btn_add_order = view.FindViewById<Button>(Resource.Id.btn_add_order1);
+
                 btn_add_order.Click += async delegate
                 {
                     Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
@@ -223,7 +223,7 @@ namespace SmartBoxCity.Activity.Home
                 btn_pass_delivery_service.Click += async delegate
                 {
                     FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                    OrderActivity content = new OrderActivity();
+                    MainOrderStatusActivity content = new MainOrderStatusActivity();
                     transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
                 };
 

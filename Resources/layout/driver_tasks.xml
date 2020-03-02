@@ -1,0 +1,139 @@
+﻿<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    
+    android:id="@+id/driver_task_layout"
+	android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_driver"
+	android:background="@color/button_material_light">
+
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id = "@+id/scrollView1"
+        android:minHeight = "25px"
+        android:minWidth = "25px">
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+    <android.support.v7.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cardViewTask"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="4dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal">
+        
+                <RelativeLayout
+                    android:id="@+id/fioBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                android:padding="@dimen/abc_action_bar_content_inset_material"
+                    >
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    
+                    android:id="@+id/img_current_task"
+                    android:src="@drawable/map"/>
+                <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                    android:textSize="17sp"
+                    android:layout_marginLeft="4dp"
+                    android:textStyle="bold"
+                    android:layout_toRightOf="@+id/img_current_task"
+                    android:layout_marginBottom="10dp"
+            android:text = "Заказ "
+            android:id="@+id/txtHeader1"
+        />
+                    <TextView
+                        android:text="S012G3421201"
+                        
+                        android:layout_width="wrap_content"
+                        android:layout_weight=".55"
+                        android:layout_height="45dp"
+                        
+                        android:layout_marginLeft="5dp"
+                        android:paddingBottom="@dimen/abc_action_bar_content_inset_material"
+                        android:textSize="17sp"
+                        android:layout_marginBottom="0.0dp"
+                        android:id="@+id/btn_about_order"
+                        
+                        android:textColor="#FFA07A"
+                        android:layout_toRightOf="@+id/txtHeader1"
+                        />
+                    
+        <!--<View
+                    android:stateListAnimator="@null"
+                    android:background="?android:attr/colorBackgroundCacheHint"
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:id="@+id/view1"
+            android:layout_below="@+id/btn_about_order"
+            android:background="#CCCCCC"/>-->
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtTaskName"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/img_current_task"
+            android:text="Задача на перевозку пустого контейнера к клиенту от 08.02.2020 15:45:44"/>
+                <fragment
+                        android:id="@+id/fragmentMap3"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:layout_below="@+id/txtTaskName"
+               android:layout_marginTop="10dp"
+                        class="com.google.android.gms.maps.MapFragment"
+                        />
+            <Button
+                        android:id="@+id/btn_prime"
+                        android:layout_width="145dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below = "@+id/fragmentMap3"
+                        android:background="@drawable/button_stili"
+                        android:padding = "1dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Прервать"
+                        android:textSize="12sp"
+                        />
+
+            <Button
+                        android:id="@+id/btn_prime2"
+                        android:layout_width="145dp"
+                        android:layout_height="wrap_content"
+                       android:layout_alignParentRight="true"
+                        android:layout_below = "@+id/fragmentMap3"
+                        android:background="@drawable/button_primary"
+                        android:padding = "1dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Выполнил"
+                        android:textSize="12sp"
+                        />
+            </RelativeLayout>
+    </android.support.v7.widget.CardView>
+   </RelativeLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/preloader"
+        />
+</RelativeLayout>

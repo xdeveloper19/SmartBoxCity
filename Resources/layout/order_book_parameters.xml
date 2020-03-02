@@ -24,7 +24,7 @@
 				<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text = "Заказ №12209088"
+                    android:text = "Заказ С12209088"
                     android:layout_marginBottom="20dp"
                     android:textSize="20sp"
                     android:textColor="#FFA07A"

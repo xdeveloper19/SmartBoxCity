@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+  <item
+      android:id="@+id/tasks"
+      android:icon="@drawable/ic_tasks"
+      android:title="@string/title_tasks" />
+
+  <item
+      android:id="@+id/boxes"
+      android:icon="@drawable/ic_boxes"
+      android:title="@string/title_boxes" />
+  
+  <item
+      android:id="@+id/c_status"
+      android:icon="@drawable/ic_current_order"
+      android:title="@string/title_status" />
+
+  <item
+      android:id="@+id/alarms"
+      android:icon="@drawable/ic_notifications_black_24dp"
+      android:title="@string/title_alarms" />
+
+  <item
+      android:id="@+id/exit_driver"
+      android:icon="@drawable/ic_menu_exit"
+      android:title="@string/title_exit" />
+</menu>

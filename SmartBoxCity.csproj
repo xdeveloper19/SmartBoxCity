@@ -64,6 +64,12 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activity\Box\BoxListActivity.cs" />
+    <Compile Include="Activity\Box\BoxListAdapter.cs" />
+    <Compile Include="Activity\Box\ExpandableSensorDataAdapter.cs" />
+    <Compile Include="Activity\Driver\TaskActivity.cs" />
+    <Compile Include="Activity\Driver\TaskNotFoundActivity.cs" />
+    <Compile Include="Activity\MainActivity2.cs" />
     <Compile Include="Activity\Menu\Activity_About_As.cs" />
     <Compile Include="Activity\Auth\AuthActivity.cs" />
     <Compile Include="Activity\Home\ContentMainActivity.cs" />
@@ -74,9 +80,14 @@
     <Compile Include="Activity\Order\AddOrderActivity.cs" />
     <Compile Include="Activity\Order\BookNotFoundActivity.cs" />
     <Compile Include="Activity\Order\CustomListAdapter.cs" />
+    <Compile Include="Activity\Order\EventsActivity.cs" />
     <Compile Include="Activity\Order\ExpandableDataAdapter.cs" />
     <Compile Include="Activity\Order\ListOrdersActivity.cs" />
+    <Compile Include="Activity\Order\MainOrderStatusActivity.cs" />
+    <Compile Include="Activity\Order\MapActivity.cs" />
+    <Compile Include="Activity\Order\OnExpandedListenerService.cs" />
     <Compile Include="Activity\Order\OrderActivity.cs" />
+    <Compile Include="Activity\Order\OrderListStagesActivity.cs" />
     <Compile Include="Activity\Order\SearchOrderActivity.cs" />
     <Compile Include="Activity\Registration\Activity_Legal_Entity_Registration.cs" />
     <Compile Include="Activity\Registration\Activity_Registration_Individual_Person.cs" />
@@ -84,6 +95,8 @@
     <Compile Include="Model\AuthViewModel\AuthModel.cs" />
     <Compile Include="Model\AuthViewModel\AuthResponseData.cs" />
     <Compile Include="Model\BaseResponseObject.cs" />
+    <Compile Include="Model\BoxViewModel\BoxBookModel.cs" />
+    <Compile Include="Model\BoxViewModel\SensorData.cs" />
     <Compile Include="Model\OrderViewModel\Data.cs" />
     <Compile Include="Model\OrderViewModel\OrderBookModel.cs" />
     <Compile Include="Model\ServiceResponseObject.cs" />
@@ -147,6 +160,12 @@
     <PackageReference Include="Dexter">
       <Version>1.0.3</Version>
     </PackageReference>
+    <PackageReference Include="Karamunting.Android.Badoualy.StepperIndicator">
+      <Version>1.0.7</Version>
+    </PackageReference>
+    <PackageReference Include="Karamunting.Android.DevMike01.PageStepIndicator">
+      <Version>1.1.1</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
     </PackageReference>
@@ -195,7 +214,7 @@
     <AndroidResource Include="Resources\drawable\progress_bar_drawable.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\BoxViewModel\" />
+    <AndroidResource Include="Resources\layout\activity_map.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\contact_photo.png" />
@@ -304,6 +323,90 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\order.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\app_bar_driver.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\driver_navigation.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_tasks.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_boxes.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_current_order.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_driver.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\driver_not_found_tasks.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\maps.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\driver_tasks.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\button_primary.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\map.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\driver_container_book.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\box_book_parameters.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\opened_box.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\list_box_item.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\business.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\drop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\germet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\caution.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\alert.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\notification.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\padlock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\door.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\state.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\not_opened.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_events.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_main_order_status.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_order_stages.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

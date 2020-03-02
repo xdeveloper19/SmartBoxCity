@@ -1,0 +1,193 @@
+﻿<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background = "#F9F6F6"
+    android:id="@+id/order_status_layout"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".ui.login.LoginActivity">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight = "8dp">
+
+             <TextView
+                android:text="Местоположение"
+                android:background = "#F9F6F6"
+               android:layout_centerHorizontal = "true"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/TextViewMapHaupt" /> 
+            
+            <android.support.v7.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below = "@+id/TextViewMapHaupt"
+                android:layout_marginTop = "10dp"
+                android:id="@+id/CardViewMap">
+
+                <LinearLayout
+                    android:orientation = "vertical"
+                    android:layout_margin = "10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id = "@+id/LinearLayoutMap"
+                    android:layout_marginTop = "10dp">
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id = "@+id/LinearLayoutMap1"
+                        android:orientation = "horizontal">
+                        <TextView
+                            android:id="@+id/textFrom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:padding="5dp"
+                            android:text="Откуда:"
+                            android:textSize="10sp"
+                            />
+                        <TextView
+                            android:id="@+id/EditFrom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:padding="5dp"
+                            android:text="Подпольный переулок, 1Б, Ростов-на-Дону, Ростовская область"
+                            android:textSize="10sp"
+                            android:layout_alignParentRight = "true"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id = "@+id/LinearLayoutMap2"
+                        android:orientation = "horizontal">
+                        <TextView
+                            android:id="@+id/textTo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:padding="5dp"
+                            android:text="Куда:"
+                            android:textSize="10sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/EditTo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:padding="5dp"
+                            android:text="Крепостной переулок, 87, Ростов-на-Дону, Ростовская область"
+                            android:textSize="10sp"
+                            android:layout_alignParentRight = "true"
+                            android:layout_marginLeft = "20dp"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id = "@+id/LinearLayoutMap3"
+                        android:orientation = "horizontal">
+                        <TextView
+                            android:id="@+id/textWeight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:padding="5dp"
+                            android:layout_alignParentRight = "true"
+                            android:text="Вес, кг:"
+                            android:textSize="10sp"
+                            />
+
+                       <TextView
+                            android:id="@+id/EditTo1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:padding="5dp"
+                            android:text="10"
+                            android:textSize="10sp"
+                            android:layout_alignParentRight = "true"
+                            android:layout_marginLeft = "20dp"
+                            />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id = "@+id/LinearLayoutMap4"
+                        android:orientation = "horizontal">
+                        <TextView
+                            android:id="@+id/textWeight3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:padding="5dp"
+                            android:layout_alignParentRight = "true"
+                            android:text="ДхШхВ:"
+                            android:textSize="10sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/EditTo12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:padding="5dp"
+                            android:text="0.80х1.20х1.00"
+                            android:textSize="10sp"
+                            android:layout_alignParentRight = "true"
+                            android:layout_marginLeft = "20dp"
+                            />         
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:minWidth="25px"
+                        android:minHeight="25px"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/LinearLayoutMap5">
+
+                        <TextView
+                            android:text="Карта"
+                            android:gravity = "center"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/textView1" />
+
+                        <fragment
+                            android:id="@+id/fragmentMap"
+                            android:layout_width="match_parent"
+                            android:layout_marginTop = "10dp"
+                            android:layout_height="200dp"
+                            class="com.google.android.gms.maps.MapFragment"/>
+                    
+                    
+                    </LinearLayout>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

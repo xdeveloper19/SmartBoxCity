@@ -1,0 +1,44 @@
+﻿
+<LinearLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"  
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+    android:orientation="vertical"
+	android:id="@+id/box_book_layout"
+	android:background="@color/button_material_light"
+    android:layout_height="match_parent">
+
+	<!--<android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            
+            android:layout_height="wrap_content"
+            style="@style/LoginTextInputLayoutStyle"
+            android:id="@+id/s_search_layout">
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:singleLine="true"
+                android:id="@+id/s_search"
+                android:padding = "8dp"
+                
+                android:hint="Введите ID контейнера для поиска"/>
+        </android.support.design.widget.TextInputLayout>
+-->
+        <SearchView
+            android:id="@+id/searchbar"
+            android:layout_marginTop="10dp"
+            android:queryHint="Введите ID контейнера для поиска"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        />
+
+		 <ListView
+			android:id="@+id/boxlistview" 
+            android:layout_marginTop="10dp"
+			android:layout_height="match_parent" 
+			android:layout_width="match_parent"> 
+		</ListView>
+</LinearLayout>

@@ -4,6 +4,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
     <string name="title_home">Главная</string>
+    <string name="title_tasks">Задачи</string>
+    <string name="title_boxes">Контейнеры</string>
+    <string name="title_status">Статус</string>
+    <string name="title_alarms">Тревоги</string>
+    <string name="title_exit">Выход</string>
     <string name="title_about_us">О нас</string>
     <string name="title_reviews">Отзывы</string>
     <string name="title_contacts">Контакты</string>

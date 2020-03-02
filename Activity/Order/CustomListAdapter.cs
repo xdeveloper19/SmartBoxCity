@@ -17,8 +17,10 @@ namespace SmartBoxCity.Activity.Order
     {
         Context context;
         List<OrderBookModel> orders;
-        public CustomListAdapter(Context Context, List<OrderBookModel> List)
+        Android.App.FragmentTransaction manager;
+        public CustomListAdapter(Context Context, List<OrderBookModel> List, FragmentManager Manager)
         {
+            this.manager = Manager.BeginTransaction();
             this.context = Context;
             this.orders = List;
         }
@@ -31,6 +33,7 @@ namespace SmartBoxCity.Activity.Order
             return orders[position].Id;
         }
 
+        
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             View view = convertView;
@@ -42,6 +45,14 @@ namespace SmartBoxCity.Activity.Order
                 view.FindViewById<TextView>(Resource.Id.txtPrice).Text = orders[position].Price;
                 view.FindViewById<TextView>(Resource.Id.txtDate).Text = orders[position].Date;
                 view.FindViewById<TextView>(Resource.Id.txtOrderName).Text = orders[position].OrderName;
+                var btn = view.FindViewById<Button>(Resource.Id.btn_alarms);
+
+                btn.Click += async delegate
+                {
+                    OrderActivity content = new OrderActivity();
+                    manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                };
+                   
             }
             return view;
         }

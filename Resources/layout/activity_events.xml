@@ -1,0 +1,199 @@
+﻿<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background = "#F9F6F6"
+    android:id="@+id/order_status_layout"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".ui.login.LoginActivity">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight = "8dp">
+            <TextView
+                android:textStyle = "normal"
+                android:text="События"
+                android:background = "#F9F6F6"
+                android:layout_centerHorizontal = "true"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/TextViewEventsHaupt" />           
+            
+            <android.support.v7.widget.CardView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below = "@+id/TextViewEventsHaupt"
+                android:id="@+id/CardViewEvents"
+                android:layout_marginTop = "10dp">
+
+                <LinearLayout
+                    android:orientation = "vertical"
+                    android:layout_margin = "10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id = "@+id/LinearLayoutEvents"
+                    android:layout_marginTop = "10dp">
+                    <TextView
+                        android:text="2020-02-08"
+                        android:textColor = "#212121"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView1" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:minWidth="25px"
+                        android:minHeight="25px"
+                        android:layout_marginTop = "10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/LinearLayoutEvents1">
+                        <ImageView
+                            android:background = "@drawable/caution"
+                            android:layout_width="32dp"
+                            android:layout_marginLeft = "10dp"
+                            android:layout_height="32dp"
+                            android:id="@+id/ImageViewEvent1" />
+                        <TextView
+                            android:textStyle = "bold"
+                            android:text="Завершение использования"
+                            android:layout_marginTop = "5dp"
+                            android:layout_marginLeft = "10dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/TextViewEvent1" />                       
+                        </LinearLayout>
+
+                    <TextView
+                            android:textStyle = "normal"
+                            android:text="(02:10:50)"
+                            android:layout_marginTop = "5dp"
+                            android:layout_marginLeft = "10dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/TextViewTime1" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:minWidth="25px"
+                        android:minHeight="25px"
+                        android:layout_marginTop = "10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/LinearLayoutEvents2">
+                         <ImageView
+                            android:background = "@drawable/caution"
+                            android:layout_marginLeft = "10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/ImageViewEvent2" />
+                        <TextView
+                            android:textStyle = "bold"
+                            android:text="Завершение использования"
+                            android:layout_marginTop = "5dp"
+                            android:layout_marginLeft = "10dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/TextViewEvent2" />
+                        </LinearLayout>
+
+                    <TextView
+                            android:textStyle = "normal"
+                            android:text="(02:08:35)"
+                            android:layout_marginTop = "5dp"
+                            android:layout_marginLeft = "10dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/TextViewTime11" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:minWidth="25px"
+                        android:minHeight="25px"
+                        android:layout_marginTop = "10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/LinearLayoutEvents3">
+                         <ImageView
+                            android:layout_marginLeft = "10dp"
+                            android:background = "@drawable/caution"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/ImageViewEvent3" />
+                        <TextView
+                            android:textStyle = "bold"
+                            android:text="Закрыт замок контейнера"
+                            android:layout_marginTop = "5dp"
+                            android:layout_marginLeft = "10dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/TextViewEvent3" />
+                        </LinearLayout>
+
+                    <TextView
+                            android:textStyle = "normal"
+                            android:text="(02:08:35)"
+                            android:layout_marginTop = "5dp"
+                            android:layout_marginLeft = "10dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/TextViewTime12" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:minWidth="25px"
+                        android:minHeight="25px"
+                        android:layout_marginTop = "10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/LinearLayoutEvents4">
+                         <ImageView
+                            android:layout_marginLeft = "10dp"
+                            android:background = "@drawable/caution"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/ImageViewEvent4" />
+                        <TextView
+                            android:textStyle = "bold"
+                            android:text="Открыт замок контейнера"
+                            android:layout_marginTop = "5dp"
+                            android:layout_marginLeft = "10dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/TextViewEvent4" />
+                        </LinearLayout> 
+                    
+                    <TextView
+                            android:textStyle = "normal"
+                            android:text="(02:08:31)"
+                            android:layout_marginTop = "5dp"
+                            android:layout_marginLeft = "10dp"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:id="@+id/TextViewTime13" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

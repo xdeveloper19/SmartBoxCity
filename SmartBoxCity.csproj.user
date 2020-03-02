@@ -4,6 +4,6 @@
     <SelectedDevice>HUAWEI JMM-L22</SelectedDevice>
     <AndroidDesignerPreferredTheme>AppTheme</AndroidDesignerPreferredTheme>
     <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
-    <DefaultDevice>pixel_2_pie_9_0_-_api_28</DefaultDevice>
+    <DefaultDevice>pixel_2_pie_8_1_-_api_27</DefaultDevice>
   </PropertyGroup>
 </Project>

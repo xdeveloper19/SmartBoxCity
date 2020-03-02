@@ -196,11 +196,12 @@ namespace SmartBoxCity.Activity.Auth
                                 file.Write(array, 0, array.Length);
                             }
 
-                           
+                            
                             preloader.Visibility = Android.Views.ViewStates.Invisible;
                             // Переход на страницу водителя.
                            
                             CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
+                            CrossSettings.Current.AddOrUpdateValue("role", o_user_data.Role);
                             Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                             
                             
