@@ -27,6 +27,7 @@ using SmartBoxCity.Repository;
 using SmartBoxCity.Activity.Menu;
 using SmartBoxCity.Activity.Registration;
 using Android.Graphics.Drawables;
+using SmartBoxCity.Service;
 
 namespace SmartBoxCity
 {
@@ -94,7 +95,7 @@ namespace SmartBoxCity
                 btnExit.SetIcon(Resource.Drawable.ic_information);
             }
 
-            navigation.NavigationItemSelected += (sender, e) =>
+            navigation.NavigationItemSelected += async (sender, e) =>
             {
                 FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
                 switch (e.Item.ItemId)
@@ -149,6 +150,12 @@ namespace SmartBoxCity
                             string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
                             File.Delete(dir_path + "user_data.txt");
                             CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
+
+                            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+                            {
+                                AuthService.InitializeClient(client);
+                                await AuthService.LogOut();
+                            }
 
                             Intent content = new Intent(this, typeof(MainActivity));
                             StartActivity(content);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 
 using Android.App;
@@ -18,12 +19,13 @@ namespace SmartBoxCity.Model
         /// <summary>
         /// Статус ответа.
         /// </summary>
-        public string Status { get; set; }
+        public HttpStatusCode Status { get; set; }
 
         /// <summary>
-        /// Сообщение ответа.
+        /// Сообщение.
         /// </summary>
         public string Message { get; set; }
+
 
         /// <summary>
         /// Информация о клиенте.

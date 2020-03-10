@@ -21,6 +21,7 @@ using SmartBoxCity.Activity.Registration;
 using SmartBoxCity.Model;
 using SmartBoxCity.Model.AuthViewModel;
 using SmartBoxCity.Repository;
+using SmartBoxCity.Service;
 
 namespace SmartBoxCity.Activity.Auth
 {
@@ -131,80 +132,42 @@ namespace SmartBoxCity.Activity.Auth
 
                     AuthModel auth = new AuthModel
                     {
-                        Email = s_login.Text,
-                        Password = s_pass.Text,
+                        Login = s_login.Text,
+                        Password = s_pass.Text
                     };
 
-
-
-                    var myHttpClient = new HttpClient();
-                    var _authHeader = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", auth.Email, auth.Password))));
-
-                    myHttpClient.DefaultRequestHeaders.Authorization = _authHeader;
-
-                    var uri = new Uri("http://iot.tmc-centert.ru/api/auth/login?email=" + auth.Email + "&password=" + auth.Password);
-                
-                    // Поучаю ответ об авторизации [успех или нет]
-                    HttpResponseMessage response = await myHttpClient.PostAsync(uri.ToString(), new StringContent(JsonConvert.SerializeObject(auth), Encoding.UTF8, "application/json"));
-
-                    string s_result;
-                    using (HttpContent responseContent = response.Content)
+                    using (var client = ClientHelper.GetClient(auth.Login, auth.Password))
                     {
-                        s_result = await responseContent.ReadAsStringAsync();
-                    }
-
-                    ServiceResponseObject<AuthResponseData> o_data = JsonConvert.DeserializeObject<ServiceResponseObject<AuthResponseData>>(s_result);
-
-
-                    //ClearField();
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        if (o_data.Status == "0")
+                        AuthService.InitializeClient(client);
+                        var o_data = await AuthService.Login(auth);
+                        
+                        if (o_data.Status == HttpStatusCode.OK)
                         {
+                            //o_data.Message = "Успешно авторизован!";
                             Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
+                             AuthResponseData o_user_data = new AuthResponseData();
+                             o_user_data = o_data.ResponseData;
 
-                            AuthResponseData o_user_data = new AuthResponseData();
-                            o_user_data = o_data.ResponseData;
+                             if (is_remember.Checked == true)
+                             {
+                                 CrossSettings.Current.AddOrUpdateValue("check", "1");
+                                 CrossSettings.Current.AddOrUpdateValue("login", s_login.Text);
+                                 CrossSettings.Current.AddOrUpdateValue("password", s_pass.Text);
+                             }
+                             else
+                             {
+                                 CrossSettings.Current.AddOrUpdateValue("check", "0");
+                             }
 
-                            if (is_remember.Checked == true)
-                            {
-                                CrossSettings.Current.AddOrUpdateValue("check", "1");
-                                CrossSettings.Current.AddOrUpdateValue("login", s_login.Text);
-                                CrossSettings.Current.AddOrUpdateValue("password", s_pass.Text);
-                            }
-                            else
-                            {
-                                CrossSettings.Current.AddOrUpdateValue("check", "0");
-                            }
+                            //StaticUser.Email = s_login.Text;
+                            //StaticUser.AddInfoAuth(o_user_data);
 
-                            StaticUser.Email = s_login.Text;
-                            StaticUser.AddInfoAuth(o_user_data);
 
-                            //пример ContainerSelection
-
-                            //using (FileStream fs = new FileStream(dir_path + "user_data.txt", FileMode.OpenOrCreate))
-                            //{
-                            //    await System.Text.Json.JsonSerializer.SerializeAsync<AuthResponseData>(fs, o_user_data);
-                            //}
-                            string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-
-                            using (FileStream file = new FileStream(dir_path + "user_data.txt", FileMode.OpenOrCreate, FileAccess.Write))
-                            {
-                                // преобразуем строку в байты
-                                byte[] array = Encoding.Default.GetBytes(JsonConvert.SerializeObject(o_user_data));// 0 связан с запоминанием 
-                                                                                                                   // запись массива байтов в файл
-                                file.Write(array, 0, array.Length);
-                            }
-
-                            
                             preloader.Visibility = Android.Views.ViewStates.Invisible;
-                            // Переход на страницу водителя.
-                           
                             CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
-                            CrossSettings.Current.AddOrUpdateValue("role", o_user_data.Role);
+                            CrossSettings.Current.AddOrUpdateValue("token", o_user_data.Token);
+                            CrossSettings.Current.AddOrUpdateValue("role", "user");
                             Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                            
-                            
                             Intent main = new Intent(Context, typeof(MainActivity));
                             StartActivity(main);
                         }
@@ -212,6 +175,12 @@ namespace SmartBoxCity.Activity.Auth
                         {
                             Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
                         }
+                    }
+
+                    using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token","")))
+                    {
+                        AuthService.InitializeClient(client);
+                        await AuthService.Login(CrossSettings.Current.GetValueOrDefault("token", ""));
                     }
                 }
                 catch (Exception ex)

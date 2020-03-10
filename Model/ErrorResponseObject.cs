@@ -10,10 +10,10 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-namespace SmartBoxCity.Model.AuthViewModel
+namespace SmartBoxCity.Model
 {
-    public class AuthResponseData: BaseResponseObject
+    public class ErrorResponseObject: BaseResponseObject
     {
-        public string Token { get; set; }
+        public List<string> Errors { get; set; }
     }
 }

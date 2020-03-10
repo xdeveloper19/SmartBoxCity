@@ -17,16 +17,11 @@ namespace SmartBoxCity.Model.AuthViewModel
         /// <summary>
         /// Логин клиента.
         /// </summary>
-        public string Email { get; set; }
+        public string Login { get; set; }
 
         /// <summary>
         /// Пароль клиента.
         /// </summary>
         public string Password { get; set; }
-
-        /// <summary>
-        /// Роль клиента.
-        /// </summary>
-        public string RoleName { get; set; }
     }
 }

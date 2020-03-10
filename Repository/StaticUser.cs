@@ -64,13 +64,13 @@ namespace SmartBoxCity.Repository
         /// Добавляю информацию о клиенте
         /// </summary>
         /// <param name="o_auth">Объект авторизации/регистрации</param>
-        public static void AddInfoAuth(AuthResponseData o_auth)
-        {
-            UserId = o_auth.UserId;
-            UserName = o_auth.UserName;
-            FirstName = o_auth.FirstName;
-            LastName = o_auth.LastName;
-            UserRole = o_auth.Role;
-        }
+        //public static void AddInfoAuth(AuthResponseData o_auth)
+        //{
+        //    UserId = o_auth.UserId;
+        //    UserName = o_auth.UserName;
+        //    FirstName = o_auth.FirstName;
+        //    LastName = o_auth.LastName;
+        //    UserRole = o_auth.Role;
+        //}
     }
 }

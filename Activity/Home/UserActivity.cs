@@ -15,6 +15,7 @@ using Android.Widget;
 using Plugin.Settings;
 using SmartBoxCity.Model.OrderViewModel;
 using SmartBoxCity.Activity.Order;
+using SmartBoxCity.Service;
 
 namespace SmartBoxCity.Activity.Home
 {
@@ -231,7 +232,6 @@ namespace SmartBoxCity.Activity.Home
                 {
                     File.Delete(dir_path + "user_data.txt");
                     CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
-
                     Intent content = new Intent(Context, typeof(MainActivity));
                     StartActivity(content);
                 };
