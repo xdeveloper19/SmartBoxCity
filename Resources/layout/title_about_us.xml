@@ -11,7 +11,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main"
-    android:background="#778899"
+    android:background="#C5BAB2"
     android:id="@+id/about_us_layout">
 
 
@@ -31,20 +31,14 @@
                android:padding = "10dp"
                android:id ="@+id/EditTextTop"
             />
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:text="Small Text"
+                android:textColor = "#3F3838"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id = "@+id/linearlayout1"
-                android:orientation = "vertical"
-                android:layout_below = "@+id/EditTextTop">
-                 <ImageView
-                    android:src="@drawable/map2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/imagmap2" />
-
-                
-            </LinearLayout>
+                android:layout_below = "@+id/EditTextTop"
+                android:id="@+id/TextAboutUs" />
+            
 
         </RelativeLayout>
         </ScrollView>

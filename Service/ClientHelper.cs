@@ -16,6 +16,17 @@ namespace SmartBoxCity.Service
     public static class ClientHelper
     {
         public const string URL = "http://smartboxcity.ru:8003/";
+
+        public static HttpClient GetClient()
+        {
+            
+            var client = new HttpClient()
+            { 
+                BaseAddress = new Uri(URL)
+                //Set some other client defaults like timeout / BaseAddress
+            };
+            return client;
+        }
         public static HttpClient GetClient(string username, string password)
         {
             var authValue = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{username}:{password}")));

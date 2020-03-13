@@ -26,12 +26,11 @@
                 android:id="@+id/cardViewgGeneralDataIndividual"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="4dp"
-                android:layout_gravity="center_horizontal"
-                
-               >
+                android:layout_gravity="center_horizontal">                
+               
 
             <RelativeLayout
-                android:id="@+id/fioBox"
+                android:id="@+id/fioBoxIndividual"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -95,6 +94,26 @@
                 android:layout_height="wrap_content"
                 style="@style/LoginTextInputLayoutStyle"
                 android:layout_below = "@+id/s_phone_individual_layout"
+                android:id="@+id/s_login_individual_layout">
+                    <EditText
+                    android:id="@+id/s_login_individual"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:padding="8dp"
+                    android:textSize = "14sp"
+                    android:textColor="#716E6D"
+                    android:layout_marginBottom="10dp"
+                    android:hint = "Логин"
+                    />
+                  </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/LoginTextInputLayoutStyle"
+                android:layout_below = "@+id/s_login_individual_layout"
                 android:id="@+id/s_pass_individual_layout">
                  <EditText
                     android:id="@+id/s_pass_individual"
@@ -140,7 +159,7 @@
                 app:cardElevation="4dp"
                 android:layout_gravity="center_horizontal">
             <RelativeLayout
-                android:id="@+id/fioBox1"
+                android:id="@+id/fioBoxIndividual1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -287,6 +306,22 @@
                     android:layout_marginBottom="10dp"
                     android:hint = "Код подразделения"/>
             </android.support.design.widget.TextInputLayout>
+            <CheckBox
+                android:text="Согласие на обработку персональных данных"
+                android:textColor = "#6D6969"
+                android:textSize = "10sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/check_personal_data_processing_individual"
+                android:layout_below = "@+id/s_department_code_individual_layout"/>
+            <CheckBox
+                android:text="Согласие с договором офертой"
+                android:textColor = "#6D6969"
+                android:textSize = "10sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/check_contract_oferta_individual"
+                android:layout_below = "@+id/check_personal_data_processing_individual"/>
 
               </RelativeLayout>
             </android.support.v7.widget.CardView>

@@ -23,4 +23,9 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <color name="bgscreen1">#f64c73</color>
+    <color name="bgscreen2">#20d2bb</color>
+    <color name="bgscreen3">#3395ff</color>
+    <color name="bgscreen4">#c873f4</color>
+
 </resources>

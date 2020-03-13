@@ -44,7 +44,7 @@ namespace SmartBoxCity.Activity.Order
             {
                 AlertDialog.Builder alert = new AlertDialog.Builder(Context);
                 alert.SetTitle("Внимание!");
-                alert.SetMessage("Для оформления заказа необходимо авторизироваться или зарегистрироваться.");
+                alert.SetMessage("Для оформления заказа необходимо войти или зарегистрироваться.");
                 alert.SetPositiveButton("Регистрация", (senderAlert, args) =>
                 {
                     alert.Dispose();
@@ -64,7 +64,7 @@ namespace SmartBoxCity.Activity.Order
                     Dialog dialog1 = alert1.Create();
                     dialog1.Show();
                 });
-                alert.SetNegativeButton("Авторизация", (senderAlert, args) =>
+                alert.SetNegativeButton("Вход", (senderAlert, args) =>
                 {
                     AuthActivity content3 = new AuthActivity();
                     transaction1.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();

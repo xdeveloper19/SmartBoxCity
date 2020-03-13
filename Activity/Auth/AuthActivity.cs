@@ -166,7 +166,7 @@ namespace SmartBoxCity.Activity.Auth
                             preloader.Visibility = Android.Views.ViewStates.Invisible;
                             CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
                             CrossSettings.Current.AddOrUpdateValue("token", o_user_data.Token);
-                            CrossSettings.Current.AddOrUpdateValue("role", "user");
+                            CrossSettings.Current.AddOrUpdateValue("role", o_user_data.Role);
                             Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                             Intent main = new Intent(Context, typeof(MainActivity));
                             StartActivity(main);
