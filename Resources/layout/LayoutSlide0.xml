@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+    android:background="@drawable/activity_stili">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="-50dp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Шаг 1"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:textSize="25dp"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:text="Расчет стоимости переревозки"
+            android:textStyle="bold"
+            android:textSize="17dp" />
+        <Button
+            android:layout_width="300dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/btn_cost"
+            android:text="Предварительный расчет стоимости перевозки груза"
+            android:textColor="@android:color/white"
+            android:background="@drawable/button_stili"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:text="Калькулятор стоимости перевозки"
+            android:textStyle="bold"
+            android:textSize="17dp" />
+    </LinearLayout>
+</RelativeLayout>

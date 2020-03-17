@@ -32,17 +32,17 @@ namespace SmartBoxCity.Activity.Home
         TextView[] dots;
         public int[] layouts;
         Button btnNext, btnSkip;
-        LayoutManager layoutManager;
+        RefLayoutManager layoutManager;
         //private Button btn_calculate;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            layoutManager = new LayoutManager(this);
+            layoutManager = new RefLayoutManager(Context);
             if (!layoutManager.isFirstTimeLauch())
             {
                 lauchHomeScreen();
-                Finish();
+                //Finish();
             }
         }
 
@@ -55,10 +55,13 @@ namespace SmartBoxCity.Activity.Home
 
                 layouts = new int[]
                 {
+                     Resource.Layout.LayoutStart,
+                     Resource.Layout.LayoutSlide0,
                      Resource.Layout.LayoutSlide1,
                      Resource.Layout.LayoutSlide2,
                      Resource.Layout.LayoutSlide3,
-                     Resource.Layout.LayoutSlide4
+                     Resource.Layout.LayoutSlide4,
+                     Resource.Layout.LayoutSlide5
                 };
 
                 viewPager = view.FindViewById<ViewPager>(Resource.Id.viewPager);
@@ -76,88 +79,31 @@ namespace SmartBoxCity.Activity.Home
 
                 btnNext.Click += (sender, e) =>
                 {
-                    int current = GetItem(+1);
-                    if (current < layouts.Length)
-                        //move to next screen
-                        viewPager.CurrentItem = current;
-                    else
-                    {
-                        //lauch main screen here
-                        Intent intent = new Intent(this, typeof(ContentMainActivity));
-                        StartActivity(intent);
+                    //int current = GetItem(+1);
+                    //if (current < layouts.Length)
+                    //    //move to next screen
+                    //    viewPager.CurrentItem = current;
+                    //else
+                    //{
 
-                    }
+                    //}
+                    Android.App.FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
+                    //lauch main screen here
+                    MainPageActivity content = new MainPageActivity();
+                    transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
                 };
 
                 btnSkip.Click += (sender, e) =>
                 {
-                    Intent intent = new Intent(this, typeof(MainPageActivity));
-                    StartActivity(intent);
+                    Android.App.FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
+                    //lauch main screen here
+                    ContentMainActivity content = new ContentMainActivity();
+                    transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
                     //Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                     //ContentMainActivity content4 = new ContentMainActivity();
                     //transaction1.Replace(Resource.Id.framelayout, content4).AddToBackStack(null).Commit();
                 };
-
-
-                //btn_calculate = view.FindViewById<Button>(Resource.Id.btn_calculate);
-                //Button btn_auth1 = view.FindViewById<Button>(Resource.Id.btn_auth1);
-
-                //btn_auth1.Click += (s, e) =>
-                //{
-                //    Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                //    AuthActivity content3 = new AuthActivity();
-                //    transaction1.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
-                //};
-
-                //// Переход к форме регистрации.
-                //btn_calculate.Click += (s, e) =>
-                //{
-                //    //set alert for executing the task
-                //    try
-                //    {
-                //        Android.App.FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
-                //        AddOrderActivity content = new AddOrderActivity();
-                //        transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                //        //Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                //        //AlertDialog.Builder alert = new AlertDialog.Builder(Context);
-                //        //alert.SetTitle("Внимание!");
-                //        //alert.SetMessage("Для оформления заказа необходимо авторизироваться или зарегистрироваться.");
-                //        //alert.SetPositiveButton("Регистрация", (senderAlert, args) =>
-                //        //{
-                //        //    alert.Dispose();
-                //        //    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Context);
-                //        //    alert1.SetTitle("Внимание!");
-                //        //    alert1.SetMessage("Необходимо выбрать вид регистрации.");
-                //        //    Android.App.FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
-                //        //    alert1.SetPositiveButton("Для физ.лица", (senderAlert1, args1) =>
-                //        //    {
-                //        //        Activity_Registration_Individual_Person content4 = new Activity_Registration_Individual_Person();
-                //        //        transaction2.Replace(Resource.Id.framelayout, content4).AddToBackStack(null).Commit();
-                //        //    });
-                //        //    alert1.SetNegativeButton("Для юр.лица", (senderAlert1, args1) =>
-                //        //    {
-                //        //        Activity_Legal_Entity_Registration content3 = new Activity_Legal_Entity_Registration();
-                //        //        transaction2.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
-                //        //    });
-                //        //    Dialog dialog1 = alert1.Create();
-                //        //    dialog1.Show();
-                //        //});
-                //        //alert.SetNegativeButton("Авторизация", (senderAlert, args) =>
-                //        //{
-                //        //    AuthActivity content3 = new AuthActivity();
-                //        //    transaction1.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
-                //        //});
-                //        //Dialog dialog = alert.Create();
-                //        //dialog.Show();
-                //    }
-                //    catch (Exception ex)
-                //    {
-                //        Toast.MakeText(Context, "" + ex.Message, ToastLength.Long).Show();
-                //    }
-                //};
-
-                // Переход к форме авторизация
-
+         
             }
             catch (Exception ex)
             {
@@ -194,14 +140,14 @@ namespace SmartBoxCity.Activity.Home
             dots = new TextView[layouts.Length];
 
 
-            string[] colorsActive = { "#d1395c", "#14a895", "#2278d4", "#a854d4" };
-            string[] colorsInactive = { "#f98da5", "#8cf9eb", "#93c6fd", "#e4b5fc" };
+            string[] colorsActive = { "#d1395c", "#14a895", "#2278d4", "#a854d4", "#a854d4", "#a854d4" ,"#a854d4" };
+            string[] colorsInactive = { "#f98da5", "#8cf9eb", "#93c6fd", "#e4b5fc", "#a854d4", "#a854d4","#a854d4" };
 
 
             dotsLayout.RemoveAllViews();
             for (int i = 0; i < dots.Length; i++)
             {
-                dots[i] = new TextView(this);
+                dots[i] = new TextView(Context);
                 dots[i].Text = (Html.FromHtml("•")).ToString();
                 dots[i].TextSize = 35;
                 dots[i].SetTextColor(Color.ParseColor(colorsActive[currentPage]));
@@ -222,9 +168,11 @@ namespace SmartBoxCity.Activity.Home
         private void lauchHomeScreen()
         {
             layoutManager.setFirstTimeLauch(false);
-            Intent intent = new Intent(this, typeof(ContentMainActivity));
-            StartActivity(intent);
-            Finish();
+            Android.App.FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
+            //lauch main screen here
+            ContentMainActivity content = new ContentMainActivity();
+            transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+            //Finish();
         }
 
 

@@ -1,0 +1,68 @@
+﻿<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"  
+    android:orientation="vertical"  
+    android:layout_width="match_parent"  
+    android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingTop="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp">
+
+    <TextView
+        android:text="Выполнение задач"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView2" />
+
+    <View
+        android:background = "#ABA7A7"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop = "10dp"
+    />
+    <TextView
+        android:text="Вы действительно хотите прервать выполнение задачи ?\n\nПричина:"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginTop = "10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView1" />
+
+    <RadioGroup
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/RadioGroupTaskDriver">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Неисправность"
+            android:id="@+id/rbnt_malfunction_task" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Отдых"
+            android:id="@+id/rbnt_relaxation_task" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Закончил смену"
+            android:id="@+id/rbnt_finished_shift_task" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Свой вариант"
+            android:id="@+id/rbnt_other_task" />
+    </RadioGroup> 
+    
+    <EditText  
+        android:id="@+id/edit_text_other_task"  
+        android:layout_width="match_parent"  
+        android:layout_height="wrap_content"/>
+          
+</LinearLayout>  

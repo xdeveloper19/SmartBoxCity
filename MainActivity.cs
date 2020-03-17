@@ -50,7 +50,8 @@ namespace SmartBoxCity
 
             string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
-
+            FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
+            fab.Click += FabOnClick;
 
             FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
             var btnAddOrder = navigation.Menu.FindItem(Resource.Id.title_about_us);
@@ -77,6 +78,8 @@ namespace SmartBoxCity
 
                     btnExit.SetTitle("Выход");
                     btnExit.SetIcon(Resource.Drawable.ic_menu_exit);
+
+                    fab.SetVisibility(ViewStates.Visible);
                 }
                 
             }
@@ -93,6 +96,8 @@ namespace SmartBoxCity
 
                 btnExit.SetTitle("Контакты");
                 btnExit.SetIcon(Resource.Drawable.ic_information);
+
+                fab.SetVisibility(ViewStates.Invisible);
             }
 
             navigation.NavigationItemSelected += async (sender, e) =>
@@ -170,8 +175,7 @@ namespace SmartBoxCity
                 }
             };
 
-            FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
-            fab.Click += FabOnClick;
+            
 
             DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);

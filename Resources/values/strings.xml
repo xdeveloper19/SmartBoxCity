@@ -56,9 +56,9 @@
       <item>Механизированный</item>
     </string-array>
 
-  <string name="next">NEXT</string>
-  <string name="skip">SKIP</string>
-  <string name="start">GOT IT</string>
+  <string name="next">пропустить</string>
+  <string name="skip">назад</string>
+  <string name="start">понятно</string>
   
   <string name="slide_1_title">Save Money</string>
   <string name="slide_1_desc">How to Integrate Intro-Sliders into your Android Application</string>
