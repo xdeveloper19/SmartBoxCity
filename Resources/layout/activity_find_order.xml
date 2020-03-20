@@ -6,12 +6,13 @@
     xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:id="@+id/find_order_layout"
+	android:background = "@drawable/activity_stili"
     android:layout_height="match_parent">
 	<EditText
-	android:id="@+id/s_EnterOrder"
-	android:layout_height="wrap_content"
-	android:layout_width="match_parent"
-	android:inputType="textAutoComplete"
-	android:hint="Введите номер заказа"
-	android:layout_margin="5dp"/>
+		android:id="@+id/s_EnterOrder"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		android:inputType="textAutoComplete"
+		android:hint="Введите номер заказа"
+		android:layout_margin="5dp"/>
 </LinearLayout>

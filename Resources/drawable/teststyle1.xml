@@ -1,23 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-  <item
-      android:bottom="1dp"
-      android:left="-2dp"
-      android:right="-2dp"
-      android:top="-2dp">
-    <shape android:shape="rectangle" >
-      <stroke
-          android:width="3dp"
-          android:color="#E0FFFF" />
-      <corners android:topLeftRadius = "10dp"  android:topRightRadius = "10dp"/>
-      <gradient android:startColor="#FFFFFF" android:endColor="#FFFFFF" />
-      <solid android:color="#FFA07A" />
-
-      <padding android:left="10dp"
-          android:right="10dp"
-          android:top="10dp"
-          android:bottom="10dp" />
+  <item>
+    <shape android:shape="oval">
+      <gradient android:startColor="#00FF00" android:endColor="#9FF38C" android:type="radial" android:gradientRadius="15"/>
+      <size android:width="20dip" android:height="20dip" />
     </shape>
   </item>
-
 </selector>

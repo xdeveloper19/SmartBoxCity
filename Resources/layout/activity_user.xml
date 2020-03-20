@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main"
-    android:background = "#C5BAB2"
+    android:background = "@drawable/activity_stili"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -40,84 +40,70 @@
                     android:orientation="horizontal"
                     >
                     
-
-                    <TextView
-                        android:id="@+id/text1"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="left|center_vertical"
-                        android:layout_below="@+id/textUser"
-                        android:layout_marginTop="0dp"
-                        android:padding="10dp"
-                        android:text="Заказ:"
-                        android:textSize="15sp"
-                        android:textStyle = "italic"
-                        />
+                        android:id ="@+id/LinearLayoutUser1"
+                        android:orientation = "horizontal">                 
 
-                    <EditText
-                        android:id="@+id/container_name"
-                        android:layout_width="230dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/s_user"
-                        android:layout_toEndOf="@+id/text1"
-                        android:layout_toRightOf="@+id/text1"
-                        android:gravity="center"
-                        android:inputType="text"
-                        android:text = "ea55d401-e2cb-49ca-9db0-adeae9f74774"
-                        android:layout_marginTop="11dp"
-                        android:padding="8dp"
-                        android:background = "@drawable/edittext_stili"
-                        android:textSize="9sp" />
+                        <TextView
+                            android:id="@+id/text1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:layout_marginTop="0dp"
+                            android:padding="10dp"
+                            android:layout_weight = "1"
+                            android:textColor = "#2C4C46"
+                            android:text="Заказ:"
+                            android:textSize="15sp"
+                            android:textStyle = "normal"
+                            />
 
+                        <EditText
+                            android:id="@+id/container_name"
+                            android:layout_width="230dp"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_marginRight = "20dp"
+                            android:layout_weight = "1"
+                            android:inputType="text"
+                            android:textColor = "#475B57"
+                            android:text = "ea55d401-e2cb-49ca-9db0-adeae9f74774"
+                            android:padding="8dp"
+                            android:background = "@drawable/edittext_stili"
+                            android:textSize="9sp" />
 
-
-
-                    <Button
-                        android:text="Подробно о заказе"
-                        android:layout_width="wrap_content"
-                        android:layout_height="28dp"
-                        android:textSize="8sp"
-                        android:id="@+id/btn_pass_delivery_service"
-                        android:layout_below = "@+id/container_name"
-                        android:layout_alignParentRight = "true"
-                        android:layout_marginTop = "9dp"
-                        android:background="@drawable/button_stili"
-                        android:padding = "5dp"
-                        android:layout_marginLeft="15dp"
-                        android:layout_toEndOf="@+id/progressBar"
-                        android:layout_toRightOf="@+id/progressBar"
-                        />
-
+                        </LinearLayout>                 
 
                     <TextView
                         android:id="@+id/status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
-                        android:layout_below="@+id/text1"
+                        android:layout_below="@+id/LinearLayoutUser1"
                         android:layout_marginTop="0dp"
                         android:padding="10dp"
+                        android:layout_centerHorizontal = "true"
                         android:text="Статус:"
-                        android:textSize="15sp"
-                        android:textStyle = "italic"
+                        android:textSize="16sp"
+                        android:textColor = "#2C4C46"
+                        android:textStyle = "normal"
                         />
 
                     <ProgressBar
                         android:id="@+id/progressBar"
                         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/container_name"
-
-                        android:layout_marginTop="18dp"
+                        android:layout_marginRight = "30dp"
+                        android:layout_marginLeft = "30dp"
+                        android:layout_below="@+id/LinearLayoutUser1"
+                        android:layout_centerHorizontal = "true"
+                        android:layout_marginTop="38dp"
                         android:indeterminate="false"
                         android:max="8"
-                        android:layout_toRightOf="@+id/status"
-                        android:layout_toEndOf="@+id/status"
-                        android:minWidth="130dp"
                         android:min="0"
-
-                        android:maxHeight="4dp"
                         android:progress="1"
                         />
 
@@ -125,27 +111,33 @@
                         android:id="@+id/status_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="70dp"
+                        android:layout_centerHorizontal = "true"
                         android:layout_below="@+id/progressBar"
                         android:text="1. Заявка"
                         android:textSize="12sp"
-                        android:textColor="@android:color/black"
+                        android:textColor = "#475B57"
                         />
                     
-                    <TextView
+                       <Button
+                        android:text="Подробно о заказе"
                         android:layout_width="match_parent"
-                        android:layout_height="24dp"
-                        android:layout_below="@+id/status_view"
-                        android:text=""
-                        android:background="@android:color/white"
-                    />
-                   
-
-
-
+                        android:layout_height="35dp"
+                        android:layout_marginRight = "20dp"
+                        android:layout_marginLeft = "20dp"                        android:textSize="10sp"
+                        android:layout_centerHorizontal = "true"
+                        android:id="@+id/btn_pass_delivery_service"
+                        android:layout_below = "@+id/status_view"
+                        android:layout_marginTop = "9dp"
+                        android:background="@drawable/button_stili"
+                        android:padding = "1dp"
+                        android:textColor = "#FBF8F8"
+                        />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_below = "@+id/btn_pass_delivery_service"/>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
-
 
             <android.support.v7.widget.CardView
                 android:layout_width="fill_parent"
@@ -160,13 +152,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="260dp"
                     android:orientation="horizontal"
-                    android:id = "@+id/fioBox1"
-                    >
+                    android:id = "@+id/fioBox1">                   
 
                     <TextView
                         android:id="@+id/Text1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor = "#2C4C46"
                         android:layout_marginTop="0dp"
                         android:padding="10dp"
                         android:layout_centerHorizontal = "true"
@@ -177,8 +169,7 @@
                         android:id="@+id/fragmentMap"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:layout_below="@+id/Text1"
-              
+                        android:layout_below="@+id/Text1"              
                         class="com.google.android.gms.maps.MapFragment"
                         />
                 </RelativeLayout>
@@ -190,7 +181,6 @@
                 android:id="@+id/cardView3"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="4dp"
-                android:background = "#F8F6F6"
                 android:layout_marginTop="15dp"
                 android:layout_below="@+id/cardView2"
                 android:layout_gravity="center_horizontal">
@@ -199,20 +189,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:id = "@+id/fioBox2"
-
-                    >
-
-
+                    android:id = "@+id/fioBox2">
+                    
                     <TextView
                         android:id="@+id/TEXT"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:padding="10dp"
                         android:gravity="left"
-
-
+                        android:textColor = "#2C4C46"
                         android:text="Стоимость:"
                         android:textSize="15sp" />
 
@@ -237,8 +222,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"
                         android:layout_marginLeft="10dp"
-
                         android:layout_marginTop="10dp"
+                        android:textColor = "#FBF8F8"
                         android:background="@drawable/button_stili"
                         android:padding = "5dp"
                         android:layout_toEndOf="@+id/s_cost"
@@ -254,6 +239,7 @@
                         android:textSize="15sp"
                         android:padding="10dp"
                         android:gravity="left"
+                        android:textColor = "#2C4C46"
                         android:layout_below="@+id/TEXT" />
 
                     <EditText
@@ -264,7 +250,6 @@
                         android:layout_below="@+id/s_cost"
                         android:layout_toRightOf = "@+id/TEXT1"
                         android:layout_toEndOf="@+id/TEXT1"
-
                         android:textSize="9sp"
                         android:layout_marginTop="8dp"
                         android:padding="8dp"
@@ -278,6 +263,7 @@
                         android:layout_height="28dp"
                         android:layout_below="@+id/s_cost"
                         android:layout_marginStart="10dp"
+                        android:textColor = "#FBF8F8"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="8dp"
                         android:background="@drawable/button_stili"
@@ -287,17 +273,14 @@
                         android:text="Открыть замок"
                         android:textSize="8sp" />
 
-            
-                    
-
-                   
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text = "Завершив погрузочные работы, передайте контейнер службе доставке"
                         android:layout_below = "@+id/btn_lock_unlock_door"
                         android:id = "@+id/TEXT6"
+                        android:layout_centerHorizontal = "true"
+                        android:textColor = "#2C4C46"
                         android:textSize="15sp"
                         android:padding="10dp"
                         android:gravity="left"
@@ -311,27 +294,27 @@
                         android:layout_height="match_parent"
                     />
 
-
                 </RelativeLayout>
-
                
             </android.support.v7.widget.CardView>
 
              <Button
-                        android:id="@+id/btn_exit_"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_below = "@+id/cardView3"
-                        android:background="@drawable/button_stili"
-                        android:padding = "5dp"
-                        android:layout_marginTop="20dp"
-                        android:text="Сделать фото"
-                        android:textSize="13sp"
-                        />
+                android:id="@+id/btn_exit_"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor = "#FBF8F8"
+                android:layout_below = "@+id/cardView3"
+                android:background="@drawable/button_stili"
+                android:padding = "5dp"
+                android:layout_marginTop="10dp"
+                android:text="Сделать фото"
+                android:textSize="13sp"
+             />
 
         </RelativeLayout>
     </ScrollView>
+
     <ProgressBar
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
@@ -340,6 +323,5 @@
         android:visibility="gone"
         android:id="@+id/preloader"
         />
-
 
 </RelativeLayout>

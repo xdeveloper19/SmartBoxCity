@@ -5,7 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:background = "#F9F6F6"
+    android:background = "@drawable/activity_stili"
     android:id="@+id/order_status_layout"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -25,8 +25,8 @@
 
              <TextView
                 android:text="Местоположение"
-                android:background = "#F9F6F6"
-               android:layout_centerHorizontal = "true"
+                android:textColor = "#2C4C46"
+                android:layout_centerHorizontal = "true"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,9 +52,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id = "@+id/LinearLayoutMap1"
+                        android:baselineAligned = "false"
                         android:orientation = "horizontal">
                         <TextView
                             android:id="@+id/textFrom"
+                            android:textColor = "#2C4C46"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="left|center_vertical"
@@ -64,6 +66,7 @@
                             />
                         <TextView
                             android:id="@+id/EditFrom"
+                            android:textColor = "#475B57"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="left|center_vertical"
@@ -78,9 +81,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id = "@+id/LinearLayoutMap2"
+                        android:baselineAligned = "false"
                         android:orientation = "horizontal">
                         <TextView
                             android:id="@+id/textTo"
+                            android:textColor = "#2C4C46"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="left|center_vertical"
@@ -95,6 +100,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="left|center_vertical"
                             android:padding="5dp"
+                            android:textColor = "#475B57"
                             android:text="Крепостной переулок, 87, Ростов-на-Дону, Ростовская область"
                             android:textSize="10sp"
                             android:layout_alignParentRight = "true"
@@ -107,9 +113,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id = "@+id/LinearLayoutMap3"
+                        android:baselineAligned = "false"
                         android:orientation = "horizontal">
                         <TextView
                             android:id="@+id/textWeight"
+                            android:textColor = "#2C4C46"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="left|center_vertical"
@@ -126,6 +134,7 @@
                             android:gravity="left|center_vertical"
                             android:padding="5dp"
                             android:text="10"
+                            android:textColor = "#475B57"
                             android:textSize="10sp"
                             android:layout_alignParentRight = "true"
                             android:layout_marginLeft = "20dp"
@@ -136,12 +145,14 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:baselineAligned = "false"
                         android:id = "@+id/LinearLayoutMap4"
                         android:orientation = "horizontal">
                         <TextView
                             android:id="@+id/textWeight3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor = "#2C4C46"
                             android:gravity="left|center_vertical"
                             android:padding="5dp"
                             android:layout_alignParentRight = "true"
@@ -155,27 +166,13 @@
                             android:layout_height="wrap_content"
                             android:gravity="left|center_vertical"
                             android:padding="5dp"
+                            android:textColor = "#475B57"
                             android:text="0.80х1.20х1.00"
                             android:textSize="10sp"
                             android:layout_alignParentRight = "true"
                             android:layout_marginLeft = "20dp"
                             />         
                     </LinearLayout>
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:minWidth="25px"
-                        android:minHeight="25px"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/LinearLayoutMap5">
-
-                        <TextView
-                            android:text="Карта"
-                            android:gravity = "center"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/textView1" />
 
                         <fragment
                             android:id="@+id/fragmentMap"
@@ -183,9 +180,7 @@
                             android:layout_marginTop = "10dp"
                             android:layout_height="200dp"
                             class="com.google.android.gms.maps.MapFragment"/>
-                    
-                    
-                    </LinearLayout>
+\
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </RelativeLayout>

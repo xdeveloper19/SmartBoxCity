@@ -18,7 +18,7 @@ namespace SmartBoxCity.Activity.Menu
 {
     public class Activity_List_Contacts : Fragment
     {
-        private EditText EditTextTopContact;
+        private TextView EditTextTopContact;
 
         private TextView TextContacts;
 
@@ -35,11 +35,9 @@ namespace SmartBoxCity.Activity.Menu
             try
             {
 
-                EditTextTopContact = view.FindViewById<EditText>(Resource.Id.EditTextTopContact);
+                EditTextTopContact = view.FindViewById<TextView>(Resource.Id.TextTopContact);
                 TextContacts = view.FindViewById<TextView>(Resource.Id.TextContacts);
                 ImageViewContacts = view.FindViewById<ImageView>(Resource.Id.ImageViewContacts);
-                EditTextTopContact.Focusable = false;
-                EditTextTopContact.LongClickable = false;
                 AboutMethod();
 
             }

@@ -18,7 +18,7 @@ namespace SmartBoxCity.Activity
 
     public class Activity_About_As : Fragment
     {
-        private EditText EditTextTop;
+        private TextView TextAboutUsTop;
 
         private TextView TextAboutUs;
         public override void OnCreate(Bundle savedInstanceState)
@@ -33,10 +33,8 @@ namespace SmartBoxCity.Activity
             try
             {
 
-                EditTextTop = view.FindViewById<EditText>(Resource.Id.EditTextTop);
+                TextAboutUsTop = view.FindViewById<TextView>(Resource.Id.TextAboutUsTop);
                 TextAboutUs = view.FindViewById<TextView>(Resource.Id.TextAboutUs);
-                EditTextTop.Focusable = false;
-                EditTextTop.LongClickable = false;
                 AboutMethod();
 
             }

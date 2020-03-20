@@ -13,14 +13,23 @@
         android:padding="10dp"
         android:gravity="center"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:text="Как происходит доставка?"
             android:layout_gravity="center"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor = "#475B57"
             android:textSize="25dp"
             android:layout_height="wrap_content"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop = "5dp"
+            android:layout_height="2dp"
+            android:layout_marginLeft = "10dp"
+            android:layout_marginRight = "10dp"
+            android:background = "#A2A5A4"
+            android:id = "@+id/ViewLayuotStart"/>
         
     </LinearLayout>
 </RelativeLayout>

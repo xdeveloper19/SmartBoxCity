@@ -16,13 +16,13 @@
             android:layout_width="wrap_content"
             android:text="Шаг 6"
             android:layout_gravity="center"
-            android:textColor="@android:color/white"
+            android:textColor = "#475B57"
             android:textSize="25dp"
             android:layout_height="wrap_content"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
+            android:textColor = "#475B57"
             android:textAlignment="center"
             android:text="Возвращение контейнера перевозчику"
             android:textStyle="bold"
@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor = "#475B57"
             android:text="После сообщения разгрузки автомобиль заберет контейнер"
             android:textStyle="bold"
             android:textSize="17dp" />

@@ -10,7 +10,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main"
-	android:background = "#F9F6F6">
+	android:background = "@drawable/activity_stili">
 
       <ScrollView
         android:layout_width="fill_parent"
@@ -23,7 +23,7 @@
             
             <TextView
                 android:text="Местоположение"
-                android:background = "#F9F6F6"
+                android:textColor = "#2C4C46"
                 android:layout_centerHorizontal = "true"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
@@ -60,14 +60,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="12dp"
-                            android:textStyle = "bold"
+                            android:textColor = "#2C4C46"
+                            android:textStyle = "normal"
                             android:text="Заказ:"
                             android:textSize="12sp"/>
                             
 
                         <TextView
                             android:id="@+id/EditOrderNumber"
-                            android:textStyle = "bold"
+                            android:textStyle = "normal"
+                            android:textColor = "#475B57"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="12dp"
@@ -89,7 +91,8 @@
                             android:padding="12dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textStyle = "bold"
+                            android:textStyle = "normal"
+                            android:textColor = "#2C4C46"
                             android:text="Статус :"/>
                         <TextView
                             android:text="Оплачено"
@@ -115,7 +118,8 @@
                             android:padding="12dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textStyle = "bold"
+                            android:textStyle = "normal"
+                            android:textColor = "#2C4C46"
                             android:text="Стоимость :"/>
                         <TextView
                             android:text = "900 руб."
@@ -126,11 +130,21 @@
                             android:id="@+id/texPaymentStatus" />                                                               
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_marginTop = "5dp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft = "10dp"
+                        android:layout_marginRight = "10dp"
+                        android:background = "#A2A5A4"
+                        android:id = "@+id/ViewOrderStages1"/>
+
                     <TextView
                         android:text="Этапы выполнения заказа"
                         android:textStyle = "normal"
                         android:textSize = "17sp"
-                        android:textColor = "#2C2C2C"
+                        android:layout_marginTop = "10dp"
+                        android:textColor = "#2C4C46"
                         android:gravity = "center"                       
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -384,6 +398,16 @@
                             android:layout_height="match_parent"
                             android:id="@+id/textView2" />
                     </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_marginTop = "10dp"
+                        android:layout_marginBottom = "5dp"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft = "80dp"
+                        android:layout_marginRight = "80dp"
+                        android:background = "#A2A5A4"
+                        android:id = "@+id/ViewOrderStages2"/>
                        
                 </LinearLayout>
             </android.support.v7.widget.CardView>

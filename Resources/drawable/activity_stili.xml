@@ -3,15 +3,14 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:thickness="0dp"
-
     android:shape="rectangle">
   
   
   <gradient
+      
+      android:startColor="#EBF4F7"
 
-      android:startColor="#778899"
-
-      android:endColor="@color/material_grey_800"
+      android:endColor="#DCF4FB"
 
       android:type="linear"
 

@@ -12,38 +12,38 @@
     tools:showIn="@layout/app_bar_main"
 	android:background="@drawable/activity_stili">
 
-<ImageView
-    android:layout_width="128dp"
-    android:layout_height="128dp"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="80dp"
+    <ImageView
+        android:layout_width="128dp"
+        android:layout_height="128dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
         android:id="@+id/img_order"
         android:src="@drawable/order"
-    />
+        />
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/img_order"
-    android:textSize="15sp"
-    android:textColor="@android:color/white"
-    android:paddingLeft="40dp"
-    android:id="@+id/add_order1"
-    android:paddingRight="40dp"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_order"
+        android:textSize="15sp"
+        android:textColor = "#475B57"
+        android:paddingLeft="40dp"
+        android:id="@+id/add_order1"
+        android:paddingRight="40dp"
         android:gravity="center"
-    android:text="Здесь будет отображаться архив сделанных ранее Ваших заказов"/>
+        android:text="Здесь будет отображаться архив сделанных ранее Ваших заказов"/>
 
-<Button
-				android:text="Добавить заказ"
-				android:layout_width="270dp"
-				android:layout_height="wrap_content"
-                android:id="@+id/btn_add_order1"
-                android:layout_centerInParent="true"
-				android:textColor = "#FBF8F8"
-                android:layout_marginTop="20dp"
-                android:layout_below = "@+id/add_order1"
-				android:background = "@drawable/button_stili"
-				android:textSize = "16sp"
-				android:textAppearance="?android:attr/textAppearanceMedium"
-				 />
+    <Button
+				    android:text="Добавить заказ"
+				    android:layout_width="270dp"
+				    android:layout_height="wrap_content"
+                    android:id="@+id/btn_add_order1"
+                    android:layout_centerInParent="true"
+				    android:textColor = "#FBF8F8"
+                    android:layout_marginTop="20dp"
+                    android:layout_below = "@+id/add_order1"
+				    android:background = "@drawable/button_stili"
+				    android:textSize = "16sp"
+				    android:textAppearance="?android:attr/textAppearanceMedium"
+				     />
 </RelativeLayout>

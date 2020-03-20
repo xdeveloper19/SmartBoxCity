@@ -27,12 +27,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/linearPaymentStatus">
 
-                
-                
-
             <TextView
                 android:id="@+id/textOrderNumber"
                 android:layout_width="wrap_content"
+                android:textColor = "#2C4C46"
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:padding="10dp"
@@ -47,10 +45,9 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/textOrderNumber"
                 android:layout_toRightOf="@+id/textOrderNumber"
-
                 android:padding="12dp"
+                android:textColor = "#475B57"
                 android:text = "ea55d401-e2cb-49ca-9db0-adeae9f74774"
-
                 android:background = "@drawable/edittext_stili"
                 android:textSize="9sp" />
                 
@@ -62,7 +59,6 @@
                 android:layout_centerHorizontal = "true"
                 android:layout_marginTop = "20dp"
                 android:indeterminate="false"
-                
                 android:max="8"
                 android:layout_below="@+id/EditOrderNumber"
                 android:minWidth="130dp"
@@ -73,7 +69,6 @@
 
             <TextView
                 android:id="@+id/textProgressOrderStage"
-
                 android:textSize = "10sp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_width="wrap_content"
@@ -81,17 +76,16 @@
                 android:layout_below = "@+id/progressBarOrder"
                 android:layout_centerHorizontal = "true"
                 android:text="1. Заявка"
-
-                android:textColor="@android:color/black"
+                android:textColor = "#475B57"
                 />
 
             <EditText
                 android:text="900 р."
                 android:padding="8dp"
-
                 android:background = "@drawable/edittext_stili"
                 android:layout_marginLeft="13dp"
                 android:textSize = "15sp"
+                android:textColor = "#475B57"
                 android:layout_centerHorizontal = "true"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
@@ -102,9 +96,7 @@
 
                 <TextView
                     android:id="@+id/textSmallStatus"
-
                     android:textSize = "12sp"
-
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -112,7 +104,6 @@
                     android:layout_alignLeft="@+id/texPaymentStatus"
                     android:layout_alignStart="@+id/texPaymentStatus"
                     android:textAlignment="center"
-
                     android:text="Оплачено"
                     android:textColor="@android:color/holo_green_dark"
                     />
@@ -122,24 +113,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id = "@+id/relativGPSOrder"
-
                 android:layout_below = "@+id/linearPaymentStatus"
                 android:background = "@drawable/edittext_stili"
                 android:layout_marginTop = "10dp">
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id = "@+id/linearTextStateOrder"
-
                     android:orientation = "horizontal">
+
                     <TextView
                         android:id="@+id/textFrom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
                         android:padding="10dp"
+                        android:textColor = "#2C4C46"
                         android:text="Откуда:"
                         android:textSize="15sp"
                         />
@@ -149,6 +139,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
                         android:padding="10dp"
+                        android:textColor = "#475B57"
                         android:text="Подпольный переулок, 1Б, Ростов-на-Дону, Ростовская область"
                         android:textSize="15sp"
                         android:layout_alignParentRight = "true"
@@ -163,8 +154,10 @@
                     android:id = "@+id/linearValuesStateOrder"
                     android:layout_below = "@+id/linearTextStateOrder"
                     android:orientation = "horizontal">
+
                     <TextView
                         android:id="@+id/textTo"
+                        android:textColor = "#2C4C46"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
@@ -179,6 +172,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
                         android:padding="10dp"
+                        android:textColor = "#475B57"
                         android:text="Крепостной переулок, 87, Ростов-на-Дону, Ростовская область"
                         android:textSize="15sp"
                         android:layout_alignParentRight = "true"
@@ -193,12 +187,14 @@
                     android:id = "@+id/linearValuesStateOrder1"
                     android:layout_below = "@+id/linearValuesStateOrder"
                     android:orientation = "horizontal">
+
                     <TextView
                         android:id="@+id/textWeight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
                         android:padding="10dp"
+                        android:textColor = "#2C4C46"
                         android:layout_alignParentRight = "true"
                         android:text="Вес, кг:"
                         android:textSize="15sp"
@@ -210,6 +206,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
                         android:padding="10dp"
+                        android:textColor = "#475B57"
                         android:text="10"
                         android:textSize="15sp"
                         android:layout_alignParentRight = "true"
@@ -224,8 +221,10 @@
                     android:id = "@+id/linearValuesStateOrder2"
                     android:layout_below = "@+id/linearValuesStateOrder1"
                     android:orientation = "horizontal">
+
                     <TextView
                         android:id="@+id/textWeight3"
+                        android:textColor = "#2C4C46"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
@@ -241,6 +240,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="left|center_vertical"
                         android:padding="10dp"
+                        android:textColor = "#475B57"
                         android:text="0.80х1.20х1.00"
                         android:textSize="15sp"
                         android:layout_alignParentRight = "true"
@@ -258,9 +258,6 @@
                 android:layout_above="@+id/fragmentMainMenu"
                 class="com.google.android.gms.maps.MapFragment"
                 />
-
-
-
 
         </RelativeLayout>
     </ScrollView>

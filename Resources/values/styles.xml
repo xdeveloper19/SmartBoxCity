@@ -5,13 +5,16 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">#FFA07A</item>
+        <item name="colorAccent">#7B9CEA</item>
     </style>
   
   <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-    <item name="boxStrokeColor">#FFA07A</item>
+    <item name="boxStrokeColor">#7B9CEA</item>
     <item name="boxStrokeWidth">2dp</item>
-    
+  </style> 
+  <style name="LoginTextInputLayoutStyleStart" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+    <item name="boxStrokeColor">#7B9CEA</item>
+    <item name="boxStrokeWidth">2dp</item>    
   </style>
   
     <style name="AppTheme.NoActionBar">
@@ -22,10 +25,5 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
-    <color name="bgscreen1">#f64c73</color>
-    <color name="bgscreen2">#20d2bb</color>
-    <color name="bgscreen3">#3395ff</color>
-    <color name="bgscreen4">#c873f4</color>
 
 </resources>

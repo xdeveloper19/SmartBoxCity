@@ -4,6 +4,7 @@
 	xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
 	android:layout_margin="10dp"
+	android:background = "@drawable/activity_stili"
     android:layout_height="match_parent">
 	
 
@@ -24,10 +25,10 @@
 				<TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text = "Заказ С12209088"
+                    android:text = "Заказ: С12209088"
                     android:layout_marginBottom="20dp"
                     android:textSize="20sp"
-                    android:textColor="#FFA07A"
+                    android:textColor = "#2C4C46"
                     android:id = "@+id/txtOrderName"
                     
                 />
@@ -75,7 +76,7 @@
 				<TextView
 					android:id="@+id/txtFrom"
 					android:layout_marginTop="7dp"
-					
+					android:textColor = "#475B57"
 				    android:text="улица Шеболдаева, 24А, Ростов-на-Дону"
 					android:layout_height="wrap_content"
 					android:layout_width="wrap_content"
@@ -100,23 +101,23 @@
 				<TextView
 					android:id="@+id/txtWhere"
 					android:layout_marginTop="7dp"
+					android:textColor = "#475B57"
 				    android:text="улица Кошевого, 1, Новочеркасск"
 					android:layout_height="wrap_content"
 					android:layout_width="wrap_content"
 					android:textSize="14sp"/>
 			</LinearLayout>
 			<Button
-                        android:id="@+id/btn_alarms"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        
-                        android:background="@drawable/button_stili"
-                        android:padding = "5dp"
-                        android:layout_marginTop="20dp"
-                        android:text="Посмотреть события"
-                        android:textSize="13sp"
-                        />
+                android:id="@+id/btn_alarms"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor = "#FBF8F8"    
+                android:background="@drawable/button_stili"
+                android:padding = "5dp"
+                android:layout_marginTop="20dp"
+                android:text="Посмотреть события"
+                android:textSize="13sp"/>                       
 				
 			</LinearLayout>
 

@@ -18,20 +18,28 @@
             android:text="SmartBoxCity"
             android:layout_gravity="center"
             android:textAlignment="center"
-            android:textColor="@android:color/white"
+            android:textColor="#70D8F4"
             android:textSize="37dp"
             android:layout_marginBottom="@dimen/abc_action_bar_content_inset_material"
             android:layout_height="wrap_content"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_marginTop = "5dp"
+            android:layout_height="2dp"
+            android:layout_marginLeft = "30dp"
+            android:layout_marginRight = "30dp"
+            android:background = "#BFE2ED"
+            android:id = "@+id/ViewLayuotLast"/>
         <Button
-            android:layout_width="240dp"
+            android:layout_width="match_parent"
             android:id="@+id/btn_cost"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:text="Предварительный расчет стоимости перевозки груза"
             android:textColor="@android:color/white"
             android:background="@drawable/button_stili"
             android:layout_height="wrap_content"/>
         <Button
-            android:layout_width="240dp"
+            android:layout_width="match_parent"
             android:layout_marginTop="20dp"
             android:text="Войти"
             android:id="@+id/btn_auth2"

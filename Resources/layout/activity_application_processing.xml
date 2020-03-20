@@ -8,7 +8,7 @@
     android:id="@+id/order_layout"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main"
-	android:background = "@color/button_material_light"
+	android:background = "@drawable/activity_stili"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -30,14 +30,13 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/cardView5"
                 app:cardElevation="4dp"
-                
                 android:layout_gravity="center_horizontal">
 
             <RelativeLayout
                 android:id="@+id/fioBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/abc_action_bar_content_inset_material"
+                android:paddingLeft="@dimen/abc_action_bar_content_inset_material"
                 android:paddingRight="@dimen/abc_action_bar_content_inset_material"
                 android:orientation="horizontal"
                 >
@@ -48,7 +47,7 @@
                     android:text = "Заявка на перевозку груза"
                     android:padding="10dp"
                     android:textSize="15sp"
-                    android:textColor="#FFA07A"
+                    android:textColor = "#2C4C46"
                     android:id = "@+id/textHeading"
                     android:layout_centerHorizontal = "true"
                 />
@@ -171,241 +170,221 @@
                     android:text = "Параметры груза"             
                     android:padding="10dp"
                     android:textSize="15sp"
-                        android:textColor="#FFA07A"
+                    android:textColor = "#2C4C46"
                     android:id = "@+id/textHeading1"
                     android:layout_centerHorizontal = "true"
                 />
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id = "@+id/s_length_linear_layout"
-                        android:orientation = "horizontal"
-                        android:layout_marginLeft = "30dp"
-                        android:layout_below = "@+id/textHeading1">
+                        android:orientation = "vertical"
+                        android:layout_centerHorizontal ="true"
+                        android:layout_below = "@+id/textHeading1"
+                        android:id = "@+id/LinaerLayoutСharacteristicsBox">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id = "@+id/s_length_linear_layout"
+                            android:orientation = "horizontal"
+                            android:layout_marginLeft = "30dp"
+                            android:layout_below = "@+id/textHeading1">
 
-                        <android.support.design.widget.TextInputLayout
-			            android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-			            style="@style/LoginTextInputLayoutStyle"
-			            android:id="@+id/s_length_layout">
+                            <android.support.design.widget.TextInputLayout
+			                    android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+			                    style="@style/LoginTextInputLayoutStyle"
+			                    android:id="@+id/s_length_layout">
                         
 
-                        <EditText
-                            android:id="@+id/s_length"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:hint="Длина"
-                            android:padding="8dp"
-                            android:textSize="11sp"
-                        />
-                    </android.support.design.widget.TextInputLayout>
+                                <EditText
+                                    android:id="@+id/s_length"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="text"
+                                    android:hint="Длина"
+                                    android:padding="8dp"
+                                    android:textSize="11sp"
+                                />
+                            </android.support.design.widget.TextInputLayout>
                 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "м"
-                    android:textSize="13sp"
-                    android:padding="8dp"          
-                    android:inputType="text"                    
-                    android:id = "@+id/mLenght"
-                />
-                </LinearLayout>
-                   
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id = "@+id/s_width_linear_layout"
-                        android:layout_marginStart = "20dp"
-                        android:layout_marginRight = "20dp"
-                        android:layout_toRightOf = "@+id/s_length_linear_layout"
-                        android:orientation = "horizontal"
-                        android:layout_below = "@+id/textHeading1">
-                    <android.support.design.widget.TextInputLayout
-			            android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-			            style="@style/LoginTextInputLayoutStyle"
-			            android:id="@+id/s_width_layout">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text = "м"
+                                android:textColor = "#475B57"
+                                android:textSize="13sp"
+                                android:padding="8dp"          
+                                android:inputType="text"                    
+                                android:id = "@+id/mLenght"
+                            />
+                            <android.support.design.widget.TextInputLayout
+			                    android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+			                    style="@style/LoginTextInputLayoutStyle"
+			                    android:id="@+id/s_width_layout">
 
-                        <EditText
-                            android:id="@+id/s_width"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:hint="Ширина"
-                            android:padding="8dp"
-                            android:textSize="11sp"
-                        />
-                    </android.support.design.widget.TextInputLayout>
+                                <EditText
+                                    android:id="@+id/s_width"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="text"
+                                    android:hint="Ширина"
+                                    android:padding="8dp"
+                                    android:textSize="11sp"
+                                />
+                        </android.support.design.widget.TextInputLayout>
                  
                 
-                <TextView
-                   android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "м"
-                    android:textSize="13sp"
-                    android:padding="8dp"                   
-                    android:inputType="text"
-                    android:layout_below = "@+id/textHeading1"
-                    android:id = "@+id/mWidth"
-                />
-                </LinearLayout>
-                   
-                 <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id = "@+id/s_height_linear_layout"
-                        android:orientation = "horizontal"
-                        android:layout_marginLeft = "30dp"
-                        android:layout_below = "@+id/s_length_linear_layout"              
-                        >
-                    <android.support.design.widget.TextInputLayout
-			            android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-			            style="@style/LoginTextInputLayoutStyle"
-			            android:id="@+id/s_height_layout">
-
-                        <EditText
-                            android:id="@+id/s_height"
-                            android:layout_width="100dp"
+                        <TextView
+                           android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text = "м"
+                            android:textSize="13sp"
+                            android:textColor = "#475B57"
+                            android:padding="8dp"                   
                             android:inputType="text"
-                            android:hint="Высота"
-                            android:padding="8dp"
-                            android:textSize="11sp"
+                            android:id = "@+id/mWidth"
                         />
-                    </android.support.design.widget.TextInputLayout>
-
-                
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "м"
-                    android:textSize="13sp"
-                    android:padding="8dp"
-                    android:inputType="text"                  
-                    android:layout_below = "@+id/mLenght"
-                    android:id = "@+id/mHeight"
-                />
-                </LinearLayout>
+                    </LinearLayout>
+                   
+                  
                    
                      <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id = "@+id/s_size_linear_layout"
-                        android:orientation = "horizontal"
-                        android:layout_marginStart = "20dp"
-                        android:layout_marginRight = "20dp"
-                        android:layout_toRightOf = "@+id/s_height_linear_layout"
-                        android:layout_below = "@+id/s_length_linear_layout"                        
-                        >
-                   
-                    <android.support.design.widget.TextInputLayout
-			            android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-			            style="@style/LoginTextInputLayoutStyle"
-			            android:id="@+id/s_size_layout"
-                        android:layout_toEndOf="@+id/mLenght"
-                        android:layout_below = "@+id/s_width_layout">
-
-                        <EditText
-                            android:id="@+id/s_size"
-                            android:layout_width="100dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:hint="Объём"
-                            android:padding="8dp"
-                            android:textSize="11sp"
-                        />
-                    </android.support.design.widget.TextInputLayout>
+                            android:id = "@+id/s_height_linear_layout"
+                            android:orientation = "horizontal"
+                            android:layout_marginLeft = "30dp"
+                            android:layout_below = "@+id/s_length_linear_layout">           
+                        
+                            <android.support.design.widget.TextInputLayout
+			                    android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+			                    style="@style/LoginTextInputLayoutStyle"
+			                    android:id="@+id/s_height_layout">
+
+                                <EditText
+                                    android:id="@+id/s_height"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="text"
+                                    android:hint="Высота"
+                                    android:padding="8dp"
+                                    android:textSize="11sp"
+                                />
+                            </android.support.design.widget.TextInputLayout>
+
                 
-                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "м³"                    
-                    android:textSize="13sp"
-                    android:padding="8dp"
-                    android:inputType="text"
-                    android:id = "@+id/mSize"
-                />
-                </LinearLayout>
-                   
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id = "@+id/s_weight_linear_layout"
-                        android:orientation = "horizontal"
-                        android:layout_below = "@+id/s_height_linear_layout"                        
-                        >
-                   
-                    <android.support.design.widget.TextInputLayout
-			            android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-			            style="@style/LoginTextInputLayoutStyle"
-			            android:id="@+id/s_weight_layout"
-                        android:layout_marginLeft="30dp"
-                        android:layout_below = "@+id/s_height_layout">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text = "м"
+                                android:textSize="13sp"
+                                android:textColor = "#475B57"
+                                android:padding="8dp"
+                                android:inputType="text"                  
+                                android:layout_below = "@+id/mLenght"
+                                android:id = "@+id/mHeight"
+                            />
+                            <android.support.design.widget.TextInputLayout
+			                    android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+			                    style="@style/LoginTextInputLayoutStyle"
+			                    android:id="@+id/s_size_layout"
+                                android:layout_toEndOf="@+id/mLenght"
+                                android:layout_below = "@+id/s_width_layout">
 
-                        <EditText
-                            android:id="@+id/s_weight"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:hint="Вес груза"
-                            android:padding="8dp"
-                            android:textSize="11sp"
-                        />
-                    </android.support.design.widget.TextInputLayout>
+                                <EditText
+                                    android:id="@+id/s_size"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="text"
+                                    android:hint="Объём"
+                                    android:padding="8dp"
+                                    android:textSize="11sp"
+                                />
+                            </android.support.design.widget.TextInputLayout>
                 
-                   <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text = "кг"
-                        android:textSize="13sp"
-                        android:padding="8dp"
-                        android:inputType="text"
-                        android:id = "@+id/mWeight"
-                    />
-
-                </LinearLayout>
+                             <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text = "м³"
+                                android:textColor = "#475B57"
+                                android:textSize="13sp"
+                                android:padding="8dp"
+                                android:inputType="text"
+                                android:id = "@+id/mSize"
+                            />
+                    </LinearLayout>                  
+                  
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id = "@+id/s_sum_seats_linear_layout"
-                        android:orientation = "horizontal"
-                        android:layout_marginStart = "17dp"
-                        android:layout_marginRight = "17dp"
-                        android:layout_toRightOf = "@+id/s_weight_linear_layout"
-                        android:layout_below = "@+id/s_height_linear_layout"                        
-                        >
-                   
-                     <android.support.design.widget.TextInputLayout
-			            android:layout_width="100dp"
-                        android:layout_height="wrap_content"
-			            style="@style/LoginTextInputLayoutStyle"
-			            android:id="@+id/s_sum_seats_layout">
-
-                        <EditText
-                            android:id="@+id/s_sum_seats"
-                            android:layout_width="100dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:hint="Кол-во мест"
-                            android:padding="8dp"
-                            android:textSize="11sp"
-                        />
-                    </android.support.design.widget.TextInputLayout>                            
-                </LinearLayout>
-               
+                            android:id = "@+id/s_weight_linear_layout"
+                            android:orientation = "horizontal"
+                            android:layout_below = "@+id/s_height_linear_layout">                      
+                        
+                   
+                            <android.support.design.widget.TextInputLayout
+			                    android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+			                    style="@style/LoginTextInputLayoutStyle"
+			                    android:id="@+id/s_weight_layout"
+                                android:layout_marginLeft="30dp"
+                                android:layout_below = "@+id/s_height_layout">
+
+                                <EditText
+                                    android:id="@+id/s_weight"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="text"
+                                    android:hint="Вес груза"
+                                    android:padding="8dp"
+                                    android:textSize="11sp"
+                                />
+                            </android.support.design.widget.TextInputLayout>
+                
+                           <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text = "кг"
+                                android:textColor = "#475B57"
+                                android:textSize="13sp"
+                                android:padding="8dp"
+                                android:inputType="text"
+                                android:id = "@+id/mWeight"
+                            />
+
+                             <android.support.design.widget.TextInputLayout
+			                    android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+			                    style="@style/LoginTextInputLayoutStyle"
+			                    android:id="@+id/s_sum_seats_layout">
+
+                                <EditText
+                                    android:id="@+id/s_sum_seats"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="text"
+                                    android:hint="Кол-во мест"
+                                    android:padding="8dp"
+                                    android:textSize="11sp"
+                                />
+                             </android.support.design.widget.TextInputLayout> 
+
+                    </LinearLayout>
+                    </LinearLayout>
+                    
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text = "Характер груза:"
                     android:id = "@+id/TextCargoCharacteristic"
                     android:gravity="left|center_vertical"
-                    android:padding="10dp"                    
+                    android:padding="10dp"
+                    android:textColor = "#2C4C46"
                     android:textSize="15sp"
-                    android:layout_below = "@+id/s_weight_linear_layout"
+                    android:layout_below = "@+id/LinaerLayoutСharacteristicsBox"
                 />
               
                 <Spinner
@@ -413,7 +392,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="9sp"
                     android:padding="4dp"
-                       
+                    android:background = "@drawable/edittext_stili"               
                     android:id = "@+id/s_cargo_characteristic"
                     android:entries="@array/array_cargo_characteristic"
                     android:layout_marginLeft = "5dp"
@@ -429,7 +408,7 @@
                     android:id = "@+id/TextHazardClass"
                     android:gravity="left|center_vertical"
                     android:padding="10dp"
-                        
+                    android:textColor = "#2C4C46"    
                     android:textSize="15sp"
                     android:layout_below = "@+id/s_cargo_characteristic"
                 />
@@ -446,35 +425,38 @@
                     android:layout_marginStart = "5dp"
                     android:layout_below = "@+id/TextHazardClass"
                     android:background = "@drawable/edittext_stili"/>
-
-                 <TextView
-                     android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text = "Страхование груза:"
-                    android:id = "@+id/TextCargoInsurance"
-                    android:gravity="left|center_vertical"
-                    android:padding="8dp"
-                        
-                    android:textSize="12sp"
+                    android:baselineAligned="false"
+                    android:orientation = "horizontal"
+                    android:layout_centerHorizontal = "true"
                     android:layout_below = "@+id/s_hazard_class"
+                    android:id = "@+id/LinearLayoutCargoInsurance">
+                     <TextView
+                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text = "Страхование груза:"
+                        android:id = "@+id/TextCargoInsurance"
+                        android:gravity="left|center_vertical"
+                        android:padding="8dp"
+                        android:textColor = "#475B57"    
+                        android:textSize="12sp"
+                        android:layout_weight = "1"
+                        android:layout_below = "@+id/s_hazard_class"
                     
-                />     
+                    />     
                             
-               <CheckBox 
-                      android:id="@+id/chek_cargo_insurance"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_alignParentRight = "true"
-                      android:layout_below = "@+id/s_hazard_class"
-                      android:padding="8dp"
-                />
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="30dp"
-                        android:layout_below="@+id/TextCargoInsurance"
-                        android:text=""
-                        android:background="@android:color/white"
+                   <CheckBox 
+                          android:id="@+id/chek_cargo_insurance"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_weight = "1"
+                          android:layout_alignParentRight = "true"
+                          android:layout_below = "@+id/s_hazard_class"
+                          android:padding="8dp"
                     />
+                </LinearLayout>
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
             
@@ -501,41 +483,46 @@
                     android:text = "Дополнительные сведения"             
                     android:padding="10dp"
                     android:textSize="15sp"
-                        android:textColor="#FFA07A"
+                    android:textColor = "#2C4C46"
                     android:id = "@+id/textHeading2"
                     android:layout_centerHorizontal = "true"
                 />
-
-                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "Назначить получателя"
-                    android:id = "@+id/TextContactPerson"
-                    android:gravity="left|center_vertical"
-                    android:padding="10dp"
-                    android:layout_below="@+id/textHeading2"
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation = "horizontal"
+                        android:layout_centerHorizontal = "true"
+                        android:layout_below = "@+id/textHeading2"
+                        android:id = "@+id/LinearLayoutContactPerson">
+                         <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text = "Назначить получателя"
+                            android:id = "@+id/TextContactPerson"
+                            android:gravity="left|center_vertical"
+                            android:padding="10dp"
+                            android:layout_below="@+id/textHeading2"
+                            android:textColor = "#475B57"
+                            android:textSize="12sp"
                    
-                    android:textSize="15sp"
-                   
-                />
+                        />
 
-                <CheckBox 
-                      android:layout_below="@+id/textHeading2"
-                      android:id="@+id/chek_receiver"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_alignParentRight = "true"
-                      
-                      android:padding="8dp"
-                /> 
+                        <CheckBox 
+                              android:layout_below="@+id/textHeading2"
+                              android:id="@+id/chek_receiver"
+                              android:layout_width="wrap_content"
+                              android:layout_height="wrap_content"
+                              android:layout_alignParentRight = "true"                      
+                              android:padding="8dp"
+                        /> 
+                 </LinearLayout>
                     <android.support.design.widget.TextInputLayout
 			            android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 			            style="@style/LoginTextInputLayoutStyle"
-			            android:id="@+id/s_contact_person_layout"
-                        
-                        
-                        android:layout_below = "@+id/TextContactPerson">
+			            android:id="@+id/s_contact_person_layout"                                               
+                        android:layout_below = "@+id/LinearLayoutContactPerson">
 
                         <EditText
                             android:id="@+id/s_contact_person"
@@ -553,6 +540,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text = "Способ погрузки:"
+                    android:textColor = "#2C4C46"
                     android:id = "@+id/TextLoadingMethods"
                     android:gravity="left|center_vertical"
                     android:padding="10dp"                   
@@ -576,54 +564,42 @@
                         android:layout_height="wrap_content"
                         android:orientation = "horizontal"
                         android:layout_marginTop = "10dp"
+                        android:layout_centerHorizontal = "true"
                         android:layout_below = "@+id/s_loading_methods"
                         android:id = "@+id/check_argue_layout">
-                <CheckBox
-                        android:id="@+id/check_argue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="8dp"                  
-                />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text = "Согласие с договором офертой"
-                    android:id = "@+id/isArgued"
-                    android:layout_marginStart = "-20dp"
-                    android:layout_marginRight = "-20dp"
-                    android:padding="10dp"   
-                    android:textSize="10sp"
-                />
-
+                
                         <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_below="@+id/isArgued"
-                        android:text=""
-                        android:background="@android:color/white"
-                    />
-               
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text = "Согласие с договором офертой"
+                            android:id = "@+id/isArgued"
+                            android:textColor = "#475B57"
+                            android:padding="10dp"   
+                            android:textSize="12sp"
+                        />
+                        <CheckBox
+                                android:id="@+id/check_argue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="8dp"                  
+                        />
                 </LinearLayout>
                  </RelativeLayout>
                 </android.support.v7.widget.CardView>
 
                  <Button
                     android:id="@+id/btn_make_request"
-                    android:layout_width="200dp"
-                    android:layout_height="25dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:background="#FFA07A"
-                    android:layout_below = "@+id/cardView7"
-                    
-                   android:layout_centerInParent="true"
+                    android:textColor = "#FFFFFF"
+                    android:background="@drawable/button_stili"
+                    android:layout_below = "@+id/cardView7"                    
+                    android:layout_centerInParent="true"
                     android:padding = "5dp"
                     android:text="Оформить заявку"                  
-                    android:textSize="8sp"
                   />
 
-                
-                
-                
         </RelativeLayout>
     </ScrollView>
     <ProgressBar

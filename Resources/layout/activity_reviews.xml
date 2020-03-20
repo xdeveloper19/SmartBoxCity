@@ -21,14 +21,25 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <EditText
+        <TextView
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:text = "Отзывы"
+               android:textColor = "#2C4C46"
+               android:textSize = "16dp"
                android:gravity = "center"
                android:padding = "10dp"
-               android:id ="@+id/EditTextTop"
+               android:id ="@+id/TextReviewsTop"
             />
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop = "3dp"
+                android:layout_height="2dp"
+                android:layout_marginLeft = "30dp"
+                android:layout_marginRight = "30dp"
+                android:background = "#A2A5A4"
+                android:layout_below = "@+id/TextReviewsTop"
+                android:id = "@+id/ViewReviews"/>
             <TextView
                 android:text="Пока нет ни одного отзыва!"
                 android:textAppearance="?android:attr/textAppearanceMedium"
@@ -36,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal = "true"
                 android:layout_marginTop = "250dp"
+                android:textColor = "#475B57"
                 android:id="@+id/textReviews" />
 
 </RelativeLayout>

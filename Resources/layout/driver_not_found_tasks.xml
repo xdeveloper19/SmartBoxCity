@@ -13,30 +13,27 @@
 	android:background="@drawable/activity_stili">
 
     <android.support.v7.widget.CardView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/cardView10"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="4dp"
-                android:layout_marginTop="10dp"
-               
-                android:layout_gravity="center_horizontal">
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cardView10"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="4dp"
+        android:layout_marginTop="10dp"              
+        android:layout_gravity="center_horizontal">
+
         <android.support.v7.widget.SwitchCompat
-    android:id="@+id/switch_compat"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
-    android:layout_centerVertical="true"
-    android:padding="16dp"
-    android:checked="true"
-    android:text="Свободен. У вас нет задач на перевозку груза."
-    
-    />
+            android:id="@+id/switch_compat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:padding="16dp"
+            android:textColor = "#475B57"
+            android:checked="true"
+            android:text="Свободен. У вас нет задач на перевозку груза."    
+        />
 
-        
-            
-
-        </android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
     
     <ImageView
         android:layout_width="128dp"
@@ -47,19 +44,16 @@
         android:src="@drawable/maps"
     />
 
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/img_no_tasks"
-    android:textSize="15sp"
-    android:textColor="@android:color/white"
-    android:paddingLeft="40dp"
-    android:id="@+id/txtNoTask"
-    android:paddingRight="40dp"
-        android:gravity="center"
-    android:text="Здесь будет отображаться текущий статус задачи. На данный момент у Вас нет задач."/>
-
-
-    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_no_tasks"
+        android:textSize="15sp"
+        android:textColor = "#475B57"
+        android:paddingLeft="40dp"
+        android:id="@+id/txtNoTask"
+        android:paddingRight="40dp"
+        android:layout_centerHorizontal = "true"
+        android:text="Здесь будет отображаться текущий статус задачи. На данный момент у Вас нет задач."/>
 
 </RelativeLayout> 

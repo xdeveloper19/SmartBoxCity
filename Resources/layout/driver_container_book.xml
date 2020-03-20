@@ -1,12 +1,11 @@
-﻿
-<LinearLayout 
+﻿<LinearLayout 
 	xmlns:android="http://schemas.android.com/apk/res/android"  
 	xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
     android:orientation="vertical"
 	android:id="@+id/box_book_layout"
-	android:background="@color/button_material_light"
+	android:background = "@drawable/activity_stili"
     android:layout_height="match_parent">
 
 	<!--<android.support.design.widget.TextInputLayout

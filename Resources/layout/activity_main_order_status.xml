@@ -11,7 +11,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main"
-    android:background = "#F9F6F6">
+    android:background = "@drawable/activity_stili">
 
       <ScrollView
         android:layout_width="fill_parent"
@@ -25,33 +25,36 @@
              <TextView
                 android:text="Выберите нужный пункт:"
                 android:layout_marginTop = "100dp"
-                android:textStyle = "bold"
-                android:background = "#F9F6F6"
+                android:textStyle = "normal"
+                android:textSize = "21dp"
+                android:textColor = "#2C4C46"
                 android:layout_centerHorizontal = "true"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/TextViewMapHaupt" /> 
-            
-            <android.support.v7.widget.CardView
+             <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop = "150dp"
-                android:id="@+id/CardViewMainOrderStatus"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="4dp"
-                android:layout_gravity="center_horizontal">
+                android:layout_marginTop = "3dp"
+                android:layout_height="2dp"
+                android:layout_marginLeft = "30dp"
+                android:layout_marginRight = "30dp"
+                android:background = "#A2A5A4"
+                android:layout_below = "@+id/TextViewMapHaupt"
+                android:id = "@+id/ViewOrderStatus1"/>
+            
                 <LinearLayout
                     android:orientation="vertical"
-                    android:layout_margin = "10dp"
-                    android:minWidth="25px"
-                    android:minHeight="25px"
+                    android:layout_marginTop = "15dp"
                     android:layout_width="match_parent"
+                    android:layout_centerHorizontal ="true"
                     android:layout_height="wrap_content"
+                    android:layout_below = "@+id/ViewOrderStatus1"
                     android:id="@+id/LinearLayoutMainOrderStatus" >
                     <Button
                         android:text="Этапы выполнения заказа"
                         android:background = "@drawable/button_stili"
+                        android:textColor = "#FBF8F8"
                         android:minWidth="25px"
                         android:minHeight="25px"
                         android:layout_marginTop = "10dp"
@@ -65,6 +68,7 @@
                         android:layout_marginTop = "10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor = "#FBF8F8"
                         android:minWidth="25px"
                         android:minHeight="25px"
                         android:id="@+id/ButtonMap" />
@@ -74,11 +78,22 @@
                         android:layout_marginTop = "10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor = "#FBF8F8"
                         android:minWidth="25px"
                         android:minHeight="25px"                    
                         android:id="@+id/ButtonEvents" />    
-                </LinearLayout>                              
-            </android.support.v7.widget.CardView>
+                </LinearLayout>   
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop = "15dp"
+                android:layout_height="2dp"
+                android:layout_marginLeft = "80dp"
+                android:layout_marginRight = "80dp"
+                android:background = "#A2A5A4"
+                android:layout_below = "@+id/LinearLayoutMainOrderStatus"
+                android:id = "@+id/ViewOrderStatus2"/>
+
         </RelativeLayout>
       </ScrollView>
 </RelativeLayout>

@@ -11,36 +11,45 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main"
-    android:background="#C5BAB2"
+    android:background="@drawable/activity_stili"
     android:id="@+id/about_us_layout">
 
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-           <EditText
+            android:layout_height="wrap_content"
+            android:orientation = "vertical">
+           <TextView
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:text = "Инженерно-консультационный центр «Мысль» НГТУ"
                android:gravity = "center"
-                android:textStyle = "italic"
-                android:textColor = "#FFFFFF"
+               android:textStyle = "normal"
+               android:textSize = "16dp"
+               android:textColor = "#2C4C46"
                android:padding = "10dp"
-               android:id ="@+id/EditTextTop"
+               android:id ="@+id/TextAboutUsTop"
             />
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop = "3dp"
+                android:layout_height="2dp"
+                android:layout_marginLeft = "30dp"
+                android:layout_marginRight = "30dp"
+                android:background = "#A2A5A4"
+                android:id = "@+id/ViewAboutUs"/>
             <TextView
-                android:text="Small Text"
-                android:textColor = "#3F3838"
+                android:text=""
+                android:textColor = "#475B57"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below = "@+id/EditTextTop"
                 android:id="@+id/TextAboutUs" />
             
 
-        </RelativeLayout>
+        </LinearLayout>
         </ScrollView>
 
     <ProgressBar

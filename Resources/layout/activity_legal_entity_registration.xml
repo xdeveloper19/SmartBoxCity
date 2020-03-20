@@ -9,7 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:background ="#C5BAB2"
+    android:background = "@drawable/activity_stili"
     tools:context=".ui.login.LoginActivity">
     <ScrollView
         android:layout_width="fill_parent"
@@ -44,8 +44,8 @@
                             android:text = "Контактное лицо"
                             android:padding="10dp"
                             android:textSize="17sp"
-                            android:textStyle ="italic"
-                            android:textColor = "#F3B487"
+                            android:textStyle ="normal"
+                            android:textColor = "#2C4C46"
                             android:id = "@+id/textHeading1"
                             android:layout_centerHorizontal = "true"
                         />
@@ -135,9 +135,9 @@
                     android:layout_height="wrap_content"
                     android:text = "Регистрация"
                     android:padding="10dp"
-                    android:textColor = "#F3B487"
+                    android:textColor = "#2C4C46"
                     android:textSize="17sp"
-                    android:textStyle = "italic"
+                    android:textStyle = "normal"
                     android:id = "@+id/textHeading"
                     android:layout_centerHorizontal = "true"
                 />
@@ -265,8 +265,8 @@
                             android:text = "Данные организации"
                             android:padding="10dp"
                             android:textSize="17sp"
-                            android:textStyle ="italic"
-                            android:textColor = "#F3B487"
+                            android:textStyle ="normal"
+                            android:textColor = "#2C4C46"
                             android:id = "@+id/textHeading2"
                             android:layout_centerHorizontal = "true"
                         />
@@ -456,7 +456,7 @@
 
                     <CheckBox
                         android:text="Согласие на обработку персональных данных"
-                        android:textColor = "#6D6969"
+                        android:textColor = "#475B57"
                         android:textSize = "10sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -464,7 +464,7 @@
                         android:layout_below = "@+id/s_BIK_entity_layout"/>
                     <CheckBox
                         android:text="Согласие с договором офертой"
-                        android:textColor = "#6D6969"
+                        android:textColor = "#475B57"
                         android:textSize = "10sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
