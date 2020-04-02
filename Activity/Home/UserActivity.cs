@@ -16,6 +16,7 @@ using Plugin.Settings;
 using SmartBoxCity.Model.OrderViewModel;
 using SmartBoxCity.Activity.Order;
 using SmartBoxCity.Service;
+using System.Net;
 
 namespace SmartBoxCity.Activity.Home
 {
@@ -78,6 +79,58 @@ namespace SmartBoxCity.Activity.Home
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            //не сохраняет значение 
+            var is_ordered = CrossSettings.Current.GetValueOrDefault("isOrdered", "");
+            if (is_ordered == "true")
+            {
+                MakeOrderModel model = new MakeOrderModel()
+                {
+                    destination_address = StaticOrder.Destination_address,
+                    for_date = StaticOrder.For_date,
+                    for_time = StaticOrder.For_time,
+                    height = StaticOrder.Height,
+                    inception_address = StaticOrder.Inception_address,
+                    cargo_class = StaticOrder.Cargo_class,
+                    cargo_loading = StaticOrder.Cargo_loading,
+                    cargo_type = StaticOrder.Cargo_type,
+                    destination_lat = StaticOrder.Destination_lat,
+                    destination_lng = StaticOrder.Destination_lng,
+                    inception_lat = StaticOrder.Inception_lat,
+                    inception_lng = StaticOrder.Inception_lng,
+                    insurance = StaticOrder.Insurance,
+                    receiver = StaticOrder.Receiver,
+                    length = StaticOrder.Length,
+                    qty = StaticOrder.Qty,
+                    weight = StaticOrder.Weight,
+                    width = StaticOrder.Width
+                };
+
+                AddOrder(model);
+            }
+           
+        }
+
+        public async void AddOrder(MakeOrderModel model)
+        {
+            var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", ""));
+              OrderService.InitializeClient(client);
+              var o_data = await OrderService.AddOrder(model);
+
+                if (o_data.Status == HttpStatusCode.OK)
+                {
+                    OrderSuccessResponse o_user_data = new OrderSuccessResponse();
+                    o_user_data = o_data.ResponseData;
+
+                    StaticOrder.Order_id = o_user_data.order_id;
+                    Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
+                }
+                else
+                {
+                    Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
+                }
+                CrossSettings.Current.AddOrUpdateValue("isOrdered", "false");
+            
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -95,7 +148,7 @@ namespace SmartBoxCity.Activity.Home
                 };
                 return view;
             }
-            else
+            else 
             {
                 var view = inflater.Inflate(Resource.Layout.activity_user, container, false);/// ошибка при нажати на кнопку "назад" на лефоне(Binary XML file line #1: Binary XML file line #1: Error inflating class fragment' )
 
@@ -136,10 +189,6 @@ namespace SmartBoxCity.Activity.Home
                 s_payment.LongClickable = false;
                 s_cost.Focusable = false;
                 s_cost.LongClickable = false;
-
-
-
-
                 string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
 
                 //BuildLocationRequest();
@@ -238,6 +287,7 @@ namespace SmartBoxCity.Activity.Home
                
                 return view;
             }
+            
             
             //public void OnMapReady(GoogleMap googleMap)
             //{

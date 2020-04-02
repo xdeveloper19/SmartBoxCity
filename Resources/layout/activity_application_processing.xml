@@ -136,9 +136,33 @@
                     </android.support.design.widget.TextInputLayout>
                 
                     <TextView
+                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text = "Доставить пустой контейнер к времени:"
+                        android:id = "@+id/TextDate"
+                        android:gravity="left|center_vertical"
+                        android:padding="8dp"
+                        android:textColor = "#475B57"    
+                        android:textSize="12sp"
+                        android:layout_weight = "1"
+                        android:layout_below = "@+id/s_shipping_date_layout"
+                    
+                    />   
+
+                    <CheckBox 
+                          android:id="@+id/chek_date"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:layout_weight = "1"
+                          android:layout_alignParentRight = "true"
+                          android:layout_below = "@+id/s_shipping_date_layout"
+                          android:padding="8dp"
+                    />
+
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="30dp"
-                        android:layout_below="@+id/s_shipping_date_layout"
+                        android:layout_below="@+id/TextDate"
                         android:text=""
                         android:background="@android:color/white"
                     />
@@ -430,7 +454,8 @@
                     android:layout_height="wrap_content"
                     android:baselineAligned="false"
                     android:orientation = "horizontal"
-                    android:layout_centerHorizontal = "true"
+                    android:gravity="left"
+                    
                     android:layout_below = "@+id/s_hazard_class"
                     android:id = "@+id/LinearLayoutCargoInsurance">
                      <TextView
@@ -456,7 +481,27 @@
                           android:layout_below = "@+id/s_hazard_class"
                           android:padding="8dp"
                     />
+
+                        
                 </LinearLayout>
+
+                    <android.support.design.widget.TextInputLayout
+			                    android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/LinearLayoutCargoInsurance"
+			                    style="@style/LoginTextInputLayoutStyle"
+			                    android:id="@+id/s_value_layout">
+                                
+                                <EditText
+                                    android:id="@+id/s_value"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="text"
+                                    android:hint="Объявленная ценность груза"
+                                    android:padding="8dp"
+                                    android:textSize="11sp"
+                                />
+                             </android.support.design.widget.TextInputLayout> 
                 </RelativeLayout>
             </android.support.v7.widget.CardView>
             
@@ -611,4 +656,3 @@
         android:id="@+id/preloader"
         />
 </RelativeLayout>
-

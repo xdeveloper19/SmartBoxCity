@@ -38,7 +38,7 @@ namespace SmartBoxCity.Activity.Home
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            layoutManager = new RefLayoutManager(Context);
+            layoutManager = new RefLayoutManager(Activity);
             if (!layoutManager.isFirstTimeLauch())
             {
                 lauchHomeScreen();
@@ -107,7 +107,7 @@ namespace SmartBoxCity.Activity.Home
             }
             catch (Exception ex)
             {
-                Toast.MakeText(Context, "" + ex.Message, ToastLength.Long).Show();
+                Toast.MakeText(Activity, "" + ex.Message, ToastLength.Long).Show();
             }
             return view;
         }
@@ -147,7 +147,7 @@ namespace SmartBoxCity.Activity.Home
             dotsLayout.RemoveAllViews();
             for (int i = 0; i < dots.Length; i++)
             {
-                dots[i] = new TextView(Context);
+                dots[i] = new TextView(Activity);
                 dots[i].Text = (Html.FromHtml("•")).ToString();
                 dots[i].TextSize = 35;
                 dots[i].SetTextColor(Color.ParseColor(colorsActive[currentPage]));

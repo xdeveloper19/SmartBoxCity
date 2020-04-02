@@ -43,7 +43,7 @@ namespace SmartBoxCity.Service
         // Auth with bearer token
         public static HttpClient GetClient(string token)
         {
-            var authValue = new AuthenticationHeaderValue("Bearer", token);
+            var authValue = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{token}:")));
 
             var client = new HttpClient()
             {

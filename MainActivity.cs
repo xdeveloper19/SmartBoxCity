@@ -103,6 +103,7 @@ namespace SmartBoxCity
             navigation.NavigationItemSelected += async (sender, e) =>
             {
                 FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
+               
                 switch (e.Item.ItemId)
                 {
 

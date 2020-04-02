@@ -15,7 +15,7 @@ using SmartBoxCity.Service;
 
 namespace SmartBoxCity.Activity
 {
-
+    
     public class Activity_About_As : Fragment
     {
         private TextView TextAboutUsTop;
