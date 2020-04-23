@@ -26,7 +26,7 @@ namespace SmartBoxCity.Activity.Order
             if (!PlacesApi.IsInitialized)
             {
                 string key = GetString(Resource.String.google_key);
-                PlacesApi.Initialize(Context, key);
+                PlacesApi.Initialize(Activity, key);
             }
 
             List<Place.Field> fields = new List<Place.Field>();
@@ -39,7 +39,7 @@ namespace SmartBoxCity.Activity.Order
 
             Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.Overlay, fields)
                 .SetCountry("RUS")
-                .Build(Context);
+                .Build(Activity);
 
             StartActivityForResult(intent, 0);
         }
@@ -97,7 +97,7 @@ namespace SmartBoxCity.Activity.Order
             }
             catch (Exception ex)
             {
-                Toast.MakeText(Context, ex.Message, ToastLength.Long).Show();
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
             }
            
         }

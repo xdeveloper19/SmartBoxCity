@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -117,7 +115,7 @@ namespace SmartBoxCity.Activity.Registration
                             o_user_data = o_data.ResponseData;
 
                             Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                            AlertDialog.Builder alert = new AlertDialog.Builder(Context);
+                            AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
                             alert.SetTitle("Согласие на обработку персональных данных");
                             alert.SetMessage(o_user_data.Agreement);
 
@@ -133,7 +131,7 @@ namespace SmartBoxCity.Activity.Registration
                         }
                         else
                         {
-                            Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
+                            Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                         }
                     };
                 }
@@ -154,7 +152,7 @@ namespace SmartBoxCity.Activity.Registration
                             o_user_data = o_data.ResponseData;
 
                             Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                            AlertDialog.Builder alert = new AlertDialog.Builder(Context);
+                            AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
                             alert.SetTitle("Согласие с договором офертой");
                             alert.SetMessage(o_user_data.Agreement);
 
@@ -171,7 +169,7 @@ namespace SmartBoxCity.Activity.Registration
                         }
                         else
                         {
-                            Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
+                            Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                         }
                     };
 
@@ -216,7 +214,7 @@ namespace SmartBoxCity.Activity.Registration
 
                             if (o_data.Status == HttpStatusCode.OK)
                             {
-                                Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
+                                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                                 RegisterResponseData o_user_data = new RegisterResponseData();
                                 o_user_data = o_data.ResponseData;
 
@@ -225,13 +223,13 @@ namespace SmartBoxCity.Activity.Registration
 
                                 CrossSettings.Current.AddOrUpdateValue("role", "client");
                                 Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                                Intent main = new Intent(Context, typeof(MainActivity));
+                                Intent main = new Intent(Activity, typeof(MainActivity));
                                 StartActivity(main);
                             }
 
                             else
                             {
-                                Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
+                                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                             }
 
                         };
@@ -239,7 +237,7 @@ namespace SmartBoxCity.Activity.Registration
 
                     else
                     {
-                        Toast.MakeText(Context, "Необходимо дать согласие на обработку " +
+                        Toast.MakeText(Activity, "Необходимо дать согласие на обработку " +
                             "персональных данных и согласиться с договором офертой", ToastLength.Long).Show();
                     }
 
@@ -247,7 +245,7 @@ namespace SmartBoxCity.Activity.Registration
 
                 else
                 {
-                    Toast.MakeText(Context, "Пароли не совпадают ", ToastLength.Long).Show();
+                    Toast.MakeText(Activity, "Пароли не совпадают ", ToastLength.Long).Show();
                 }       
                 
             };

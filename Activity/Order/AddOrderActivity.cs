@@ -91,7 +91,7 @@ namespace SmartBoxCity.Activity.Order
             if (!PlacesApi.IsInitialized)
             {
                 string key = GetString(Resource.String.google_key);
-                PlacesApi.Initialize(Context, key);
+                PlacesApi.Initialize(Activity, key);
             }
 
             
@@ -201,7 +201,7 @@ namespace SmartBoxCity.Activity.Order
                                 o_user_data = o_data.ResponseData;
 
                                 Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                                AlertDialog.Builder alert = new AlertDialog.Builder(Context);
+                                AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
                                 alert.SetTitle("Согласие с договором офертой");
                                 alert.SetMessage(o_user_data.Agreement);
 
@@ -218,7 +218,7 @@ namespace SmartBoxCity.Activity.Order
                             }
                             else
                             {
-                                Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
+                                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                             }
                         };
 
@@ -242,17 +242,17 @@ namespace SmartBoxCity.Activity.Order
                 #endregion
 
                 s_cargo_characteristic.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(Spinner_ItemSelected);
-                var adapter1 = ArrayAdapter.CreateFromResource(Context, Resource.Array.array_cargo_characteristic, Android.Resource.Layout.SimpleSpinnerItem);
+                var adapter1 = ArrayAdapter.CreateFromResource(Activity, Resource.Array.array_cargo_characteristic, Android.Resource.Layout.SimpleSpinnerItem);
                 adapter1.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
                 s_cargo_characteristic.Adapter = adapter1;
 
                 s_hazard_class.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(SpinnerClass_ItemSelected);
-                var adapter2 = ArrayAdapter.CreateFromResource(Context, Resource.Array.array_hazard_class, Android.Resource.Layout.SimpleSpinnerItem);
+                var adapter2 = ArrayAdapter.CreateFromResource(Activity, Resource.Array.array_hazard_class, Android.Resource.Layout.SimpleSpinnerItem);
                 adapter2.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
                 s_hazard_class.Adapter = adapter2;
 
                 s_loading_methods.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(SpinnerLoad_ItemSelected);
-                var adapter3 = ArrayAdapter.CreateFromResource(Context, Resource.Array.array_loading_methodsc, Android.Resource.Layout.SimpleSpinnerItem);
+                var adapter3 = ArrayAdapter.CreateFromResource(Activity, Resource.Array.array_loading_methodsc, Android.Resource.Layout.SimpleSpinnerItem);
                 adapter3.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
                 s_loading_methods.Adapter = adapter3;
 
@@ -269,7 +269,7 @@ namespace SmartBoxCity.Activity.Order
 
                     Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.Overlay, fields)
                 .SetCountry("RUS")
-                .Build(Context);
+                .Build(Activity);
 
                     myCity = "false";
 
@@ -282,7 +282,7 @@ namespace SmartBoxCity.Activity.Order
                 {
                     Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.Overlay, fields)
                 .SetCountry("RUS")
-                .Build(Context);
+                .Build(Activity);
                     myCity = "true";
                     StartActivityForResult(intent, 0);
                     //GooglePlacesResult fragment = new GooglePlacesResult();
@@ -295,71 +295,79 @@ namespace SmartBoxCity.Activity.Order
                 //событие расчета стоимости заказа
                 btn_make_request.Click += async delegate
                 {
-                    preloader.Visibility = Android.Views.ViewStates.Visible;
-                    //q_result = Int32.TryParse(s_sum_seats.Text, out quantity);
-                    //l_result = Double.TryParse(s_length.Text, out length);
-                    //width_result = Double.TryParse(s_width.Text, out width);
-                    //weight_result = Double.TryParse(s_weight.Text, out weight);
-                    //h_result = Double.TryParse(s_height.Text, out height);
-
-                    MakeOrderModel model = new MakeOrderModel()
+                    if (check_argue.Checked)
                     {
-                        destination_address = s_edit_where.Text,
-                        for_date = s_shipping_date.Text,
-                        for_time = s_shipment_time.Text,
-                        height = s_height.Text,
-                        inception_address = s_edit_from.Text,
-                        cargo_class = a_hazard_class,
-                        cargo_loading = a_loading_methodsc,
-                        cargo_type = a_cargo_characteristic,
-                        destination_lat = StaticOrder.Destination_lat,/*"47.232032",*/
-                        destination_lng = StaticOrder.Destination_lng,/*"39.731523",*/
-                        inception_lat = StaticOrder.Inception_lat,/*"47.243221",*/
-                        inception_lng = StaticOrder.Inception_lng,/*"39.668781",*/
-                        insurance = s_value.Text,
-                        receiver = s_contact_person.Text,
-                        length = s_length.Text,
-                        qty = s_sum_seats.Text,
-                        weight = s_weight.Text,
-                        width = s_width.Text
-                    };
+                        preloader.Visibility = Android.Views.ViewStates.Visible;
+                        //q_result = Int32.TryParse(s_sum_seats.Text, out quantity);
+                        //l_result = Double.TryParse(s_length.Text, out length);
+                        //width_result = Double.TryParse(s_width.Text, out width);
+                        //weight_result = Double.TryParse(s_weight.Text, out weight);
+                        //h_result = Double.TryParse(s_height.Text, out height);
 
-
-                    using (var client = ClientHelper.GetClient())
-                    {
-                        OrderService.InitializeClient(client);
-                        var o_data = await OrderService.GetOrderPrice(model);
-
-                        if (o_data.Status == HttpStatusCode.OK)
+                        MakeOrderModel model = new MakeOrderModel()
                         {
-                            //o_data.Message = "Успешно авторизован!";
-                            Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
+                            destination_address = s_edit_where.Text,
+                            for_date = s_shipping_date.Text,
+                            for_time = s_shipment_time.Text,
+                            height = s_height.Text,
+                            inception_address = s_edit_from.Text,
+                            cargo_class = a_hazard_class,
+                            cargo_loading = a_loading_methodsc,
+                            cargo_type = a_cargo_characteristic,
+                            destination_lat = StaticOrder.Destination_lat,/*"47.232032",*/
+                            destination_lng = StaticOrder.Destination_lng,/*"39.731523",*/
+                            inception_lat = StaticOrder.Inception_lat,/*"47.243221",*/
+                            inception_lng = StaticOrder.Inception_lng,/*"39.668781",*/
+                            insurance = s_value.Text,
+                            receiver = s_contact_person.Text,
+                            length = s_length.Text,
+                            qty = s_sum_seats.Text,
+                            weight = s_weight.Text,
+                            width = s_width.Text
+                        };
 
-                            AmountResponse order_data = new AmountResponse();
-                            order_data = o_data.ResponseData;
 
-                            StaticOrder.AddInfoOrder(model);
-                            StaticOrder.AddInfoAmount(order_data);
-
-                            preloader.Visibility = Android.Views.ViewStates.Invisible;
-
-                            CrossSettings.Current.AddOrUpdateValue("isOrdered","true");
-                            Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                            ActivityOrderPreis content = new ActivityOrderPreis();
-                            transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                        }
-                        else
+                        using (var client = ClientHelper.GetClient())
                         {
-                            Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
+                            OrderService.InitializeClient(client);
+                            var o_data = await OrderService.GetOrderPrice(model);
+
+                            if (o_data.Status == HttpStatusCode.OK)
+                            {
+                                //o_data.Message = "Успешно авторизован!";
+                                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+
+                                AmountResponse order_data = new AmountResponse();
+                                order_data = o_data.ResponseData;
+
+                                StaticOrder.AddInfoOrder(model);
+                                StaticOrder.AddInfoAmount(order_data);
+
+                                preloader.Visibility = Android.Views.ViewStates.Invisible;
+
+                                CrossSettings.Current.AddOrUpdateValue("isOrdered", "true");
+                                Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                                ActivityOrderPreis content = new ActivityOrderPreis();
+                                transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                            }
+                            else
+                            {
+                                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                            }
                         }
+                        
                     }
-                    
-                    
+                    else
+                    {
+                        Toast.MakeText(Activity, "Необходимо дать согласие с договором офертой ", ToastLength.Long).Show();
+                    }
+
+
                 };
             }
             catch (Exception ex)
             {
-                Toast.MakeText(Context, "" + ex.Message, ToastLength.Long).Show();
+                Toast.MakeText(Activity, "" + ex.Message, ToastLength.Long).Show();
             }
             return view;
         }
@@ -436,7 +444,7 @@ namespace SmartBoxCity.Activity.Order
             }
             catch (Exception ex)
             {
-                Toast.MakeText(Context, ex.Message, ToastLength.Long).Show();
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
             }
 
         }

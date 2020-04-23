@@ -123,11 +123,11 @@ namespace SmartBoxCity.Activity.Home
                     o_user_data = o_data.ResponseData;
 
                     StaticOrder.Order_id = o_user_data.order_id;
-                    Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
+                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                 }
                 else
                 {
-                    Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
+                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                 }
                 CrossSettings.Current.AddOrUpdateValue("isOrdered", "false");
             
@@ -157,7 +157,7 @@ namespace SmartBoxCity.Activity.Home
                 //View exit = view.FindViewById<View>(Resource.Id.nav_exit);
                 var listView = view.FindViewById<ExpandableListView>(Resource.Id.boxListView);
                 Data.SampleChildData();
-                listView.SetAdapter(new ExpandableDataAdapter(Context, Data.listDataHeader, Data.listDataChild));
+                listView.SetAdapter(new ExpandableDataAdapter(Activity, Data.listDataHeader, Data.listDataChild));
                 var bool1 = listView.IsGroupExpanded(1);
 
                 progressBar = view.FindViewById<ProgressBar>(Resource.Id.progressBar);
@@ -212,7 +212,7 @@ namespace SmartBoxCity.Activity.Home
                         Item.Add("Выгрузка завершена. Контейнер готов к отправке.");
 
 
-                        var builder = new Android.Support.V7.App.AlertDialog.Builder(Context);
+                        var builder = new Android.Support.V7.App.AlertDialog.Builder(Activity);
                         builder.SetTitle("Вы действительно хотите открыть замок контейнера?");
 
                         bool[] toDownload = { false };
@@ -245,7 +245,7 @@ namespace SmartBoxCity.Activity.Home
                     }
                     catch (Exception ex)
                     {
-                        Toast.MakeText(Context, "" + ex.Message, ToastLength.Long).Show();
+                        Toast.MakeText(Activity, "" + ex.Message, ToastLength.Long).Show();
                     }
 
                 };
@@ -259,13 +259,13 @@ namespace SmartBoxCity.Activity.Home
 
                         s_pin_access_code.Text = "1324";
                         s_payment.Text = "Оплачено";
-                        Toast.MakeText(Context, "Оплата произведена", ToastLength.Long).Show();
+                        Toast.MakeText(Activity, "Оплата произведена", ToastLength.Long).Show();
                         GetInfoAboutBox(dir_path);
 
                     }
                     else
                     {
-                        Toast.MakeText(Context, "Оплата уже была произведена", ToastLength.Long).Show();
+                        Toast.MakeText(Activity, "Оплата уже была произведена", ToastLength.Long).Show();
                     }
 
                 };
@@ -281,7 +281,7 @@ namespace SmartBoxCity.Activity.Home
                 {
                     File.Delete(dir_path + "user_data.txt");
                     CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
-                    Intent content = new Intent(Context, typeof(MainActivity));
+                    Intent content = new Intent(Activity, typeof(MainActivity));
                     StartActivity(content);
                 };
                

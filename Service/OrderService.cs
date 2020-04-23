@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
-using System.Web;
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Newtonsoft.Json;
 using SmartBoxCity.Model.AuthViewModel;
 using SmartBoxCity.Model;
@@ -35,13 +28,19 @@ namespace SmartBoxCity.Service
             _httpClient = client;
         }
 
+        /// <summary>
+        /// Получение предварительной стоимости заказа
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public static async Task<ServiceResponseObject<AmountResponse>> GetOrderPrice(MakeOrderModel model)
         {
             try
             {
+                #region Пример HttpWebRequest
                 //HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://smartboxcity.ru:8003/order/rate?inception_lat=" + model.inception_lat + "&inception_lng=" + model.inception_lng + "&destination_lat=" + model.destination_lat + "&destination_lng=" + model.destination_lng + "&weight=" + model.weight + "&qty=" + model.qty + "&cargo_type=" + model.cargo_type + "&cargo_class=" + model.cargo_class + "&insurance=" + model.insurance);
                 //request.Method = "GET";
-               
+
                 //var myHttpWebResponse = (HttpWebResponse)request.GetResponse();
 
                 //Stream responseStream = myHttpWebResponse.GetResponseStream();
@@ -54,6 +53,7 @@ namespace SmartBoxCity.Service
                 //responseStream.Close();
 
                 //myHttpWebResponse.Close();
+                #endregion
                 HttpResponseMessage response = await _httpClient.GetAsync($"order/rate?inception_lat={model.inception_lat}&inception_lng={model.inception_lng}&destination_lat={model.destination_lat}&destination_lng={model.destination_lng}&weight={model.weight}&qty={model.qty}&cargo_type={model.cargo_type}&cargo_class={model.cargo_class}&insurance={model.insurance}");
                 string s_result;
                 using (HttpContent responseContent = response.Content)
@@ -83,6 +83,12 @@ namespace SmartBoxCity.Service
             }
         }
 
+
+        /// <summary>
+        /// Оформление заявки на заказ
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public static async Task<ServiceResponseObject<OrderSuccessResponse>> AddOrder(MakeOrderModel model)
         {
             try
@@ -119,7 +125,7 @@ namespace SmartBoxCity.Service
                 }
 
                 var postData = newData.Remove(newData.Length - 1, 1);
-
+                #region Пример HttpWebRequest
                 //HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://smartboxcity.ru:8003/order?" + postData);
                 //request.Method = "GET";
                 //request.Credentials = new NetworkCredential(CrossSettings.Current.GetValueOrDefault("token", ""), "");
@@ -145,7 +151,7 @@ namespace SmartBoxCity.Service
 
                 //myHttpWebResponse.Close();
 
-               
+                #endregion
                 var authValue = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{CrossSettings.Current.GetValueOrDefault("token", "")}:")));
 
                 var client = new HttpClient()
@@ -183,5 +189,44 @@ namespace SmartBoxCity.Service
                 return o_data;
             }
         }
+
+
+        /// <summary>
+        /// Получение заказов
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<ServiceResponseObject<OrderSuccessResponse>> GetOrders()
+        {
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"orders");
+                string s_result;
+                using (HttpContent responseContent = response.Content)
+                {
+                    s_result = await responseContent.ReadAsStringAsync();
+                }
+
+                ServiceResponseObject<OrderSuccessResponse> o_data = new ServiceResponseObject<OrderSuccessResponse>();
+                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    ErrorResponseObject error = new ErrorResponseObject();
+                    error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                    o_data.Status = response.StatusCode;
+                    o_data.Message = error.Errors[0];
+                    return o_data;
+                }
+                var message = JsonConvert.DeserializeObject<OrderSuccessResponse>(s_result);
+                o_data.Message = "Успешно!";
+                o_data.Status = response.StatusCode;
+                return o_data;
+            }//can not access to close stream 
+            catch (Exception ex)
+            {
+                ServiceResponseObject<OrderSuccessResponse> o_data = new ServiceResponseObject<OrderSuccessResponse>();
+                o_data.Message = ex.Message;
+                return o_data;
+            }
+        }
+
     }
 }

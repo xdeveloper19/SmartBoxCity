@@ -45,9 +45,9 @@ namespace SmartBoxCity.Activity.Driver
 
             btn_interrupt.Click += async delegate
             {
-                LayoutInflater layoutInflater = LayoutInflater.From(Context);
+                LayoutInflater layoutInflater = LayoutInflater.From(Activity);
                 View view = layoutInflater.Inflate(Resource.Layout.driver_confirm_task, null);
-                AlertDialog.Builder alert = new AlertDialog.Builder(Context);
+                AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
                 alert.SetView(view);
                 #region Объявление переменных в диалоговом окне
                 var edit_text_other_task = view.FindViewById<EditText>(Resource.Id.edit_text_other_task);

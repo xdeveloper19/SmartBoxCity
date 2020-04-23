@@ -84,7 +84,7 @@ namespace SmartBoxCity.Activity.Order
 
         private void ListOrders_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            Toast.MakeText(Context, "Выбран заказ №" + e.Position.ToString(), ToastLength.Long).Show();
+            Toast.MakeText(Activity, "Выбран заказ №" + e.Position.ToString(), ToastLength.Long).Show();
         }
 
         //private void EtSearch_TextChanged(object sender, Android.Text.TextChangedEventArgs e)
@@ -99,7 +99,7 @@ namespace SmartBoxCity.Activity.Order
         //                lstSearch.Add(item);
         //            }
         //        }
-        //        CustomListAdapter adapter = new CustomListAdapter(Context, lstSearch);
+        //        CustomListAdapter adapter = new CustomListAdapter(Activity, lstSearch);
         //        lstOrder.Adapter = adapter;
         //    }
         //    else
@@ -121,7 +121,7 @@ namespace SmartBoxCity.Activity.Order
 
         public void UpdateList()
         {
-            CustomListAdapter adapter = new CustomListAdapter(Context, orderlist, this.FragmentManager);
+            CustomListAdapter adapter = new CustomListAdapter(Activity, orderlist, this.FragmentManager);
             lstOrder.Adapter = adapter;
         }
     }

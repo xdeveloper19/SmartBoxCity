@@ -40,7 +40,7 @@ namespace SmartBoxCity.Activity
             }
             catch (Exception ex)
             {
-                Toast.MakeText(Context, "" + ex.Message, ToastLength.Long).Show();
+                Toast.MakeText(Activity, "" + ex.Message, ToastLength.Long).Show();
             }
             return view;
         }
@@ -60,7 +60,7 @@ namespace SmartBoxCity.Activity
                 }
                 else
                 {
-                    Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
+                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                 }
             };
         }

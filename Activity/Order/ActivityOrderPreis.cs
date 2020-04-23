@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -77,11 +76,11 @@ namespace SmartBoxCity.Activity.Order
 
                             preloader.Visibility = Android.Views.ViewStates.Invisible;
                             StaticOrder.Order_id = o_user_data.order_id;
-                            Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
+                            Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                         }
                         else
                         {
-                            Toast.MakeText(Context, o_data.Message, ToastLength.Long).Show();
+                            Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                         }
                         CrossSettings.Current.AddOrUpdateValue("isOrdered", "true");
                     };
@@ -92,13 +91,13 @@ namespace SmartBoxCity.Activity.Order
                 else
                 {
                     Android.App.FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
-                    AlertDialog.Builder alert = new AlertDialog.Builder(Context);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
                     alert.SetTitle("Внимание!");
                     alert.SetMessage("Для оформления заказа необходимо войти или зарегистрироваться.");
                     alert.SetPositiveButton("Регистрация", (senderAlert, args) =>
                     {
                         alert.Dispose();
-                        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Context);
+                        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
                         alert1.SetTitle("Внимание!");
                         alert1.SetMessage("Необходимо выбрать вид регистрации.");
                         alert1.SetPositiveButton("Для физ.лица", (senderAlert1, args1) =>

@@ -32,7 +32,7 @@ namespace SmartBoxCity.Activity.Driver
                 if (btn_switch.Checked)
                 {
                     btn_switch.Text = "Свободен. У вас нет задач на перевозку груза.";
-                    AlertDialog.Builder alert = new AlertDialog.Builder(Context);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
                     alert.SetTitle("Подтверждение действия");
                     alert.SetMessage("Задачи Вам не будут распределяться. Вы действительно заняты?");
                     alert.SetPositiveButton("Ок", (senderAlert, args) =>
@@ -51,7 +51,7 @@ namespace SmartBoxCity.Activity.Driver
                 else
                 {
                     btn_switch.Text = "Занят. Задачи на перевозку вам не распределяются.";
-                    AlertDialog.Builder alert = new AlertDialog.Builder(Context);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
                     alert.SetTitle("Подтверждение действия");
                     alert.SetMessage("Вам будут распределяться задачи. Вы действительно освободились?");
                     alert.SetPositiveButton("Ок", (senderAlert, args) =>

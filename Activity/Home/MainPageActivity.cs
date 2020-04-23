@@ -51,7 +51,7 @@ namespace SmartBoxCity.Activity.Home
                 }
                 catch (Exception ex)
                 {
-                    Toast.MakeText(Context, "" + ex.Message, ToastLength.Long).Show();
+                    Toast.MakeText(Activity, "" + ex.Message, ToastLength.Long).Show();
                 }
 
             };

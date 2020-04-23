@@ -61,7 +61,7 @@ namespace SmartBoxCity.Activity.Box
 
         private void ListBoxes_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-            Toast.MakeText(Context, "Выбран контейнер №" + (e.Position + 1).ToString(), ToastLength.Long).Show();
+            Toast.MakeText(Activity, "Выбран контейнер №" + (e.Position + 1).ToString(), ToastLength.Long).Show();
         }
 
         public override void OnResume()
@@ -72,7 +72,7 @@ namespace SmartBoxCity.Activity.Box
 
         public void UpdateList()
         {
-            BoxListAdapter adapter = new BoxListAdapter(Context, boxlist, this.FragmentManager);
+            BoxListAdapter adapter = new BoxListAdapter(Activity, boxlist, this.FragmentManager);
             lstBox.Adapter = adapter;
         }
     }
