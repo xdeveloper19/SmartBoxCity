@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -9,7 +11,10 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Plugin.Settings;
+using SmartBoxCity.Model;
+using SmartBoxCity.Model.BoxViewModel;
 using SmartBoxCity.Model.OrderViewModel;
+using SmartBoxCity.Service;
 
 namespace SmartBoxCity.Activity.Order
 {
@@ -43,42 +48,115 @@ namespace SmartBoxCity.Activity.Order
             {
                 view = inflater.Inflate(Resource.Layout.activity_order_book, container, false);
                 lstOrder = view.FindViewById<ListView>(Resource.Id.orderlistview);
-
-                //editEnterOrder.TextChanged += EtSearch_TextChanged;
                 orderlist = new List<OrderBookModel>();
-                OrderBookModel p1 = new OrderBookModel()
-                {
-                    Id = 1,
-                    Destination = "улица Шеболдаева, 24А, Ростов-на-Дону",
-                    Inception = "улица Кошевого, 1, Новочеркасск",
-                    Price = "650 руб",
-                    OrderName = "Заказ SO4386943088",
-                    Date = "9 февраля 16:34"
-                };
-                OrderBookModel p2 = new OrderBookModel()
-                {
-                    Id = 2,
-                    Destination = "Славный переулок, 5, Новошахтинск",
-                    Inception = "Астаховский переулок, 84, Каменск-Шахтинский",
-                    Price = "950 руб",
-                    OrderName = "Заказ OP5887450402",
-                    Date = "12 марта 11:34"
-                };
-                OrderBookModel p3 = new OrderBookModel()
-                {
-                    Id = 3,
-                    Destination = "Комитетская улица, 88, Новочеркасск",
-                    Inception = "переулок Чапаева, 2, Шахты",
-                    Price = "800 руб",
-                    OrderName = "Заказ PR3921079101",
-                    Date = "19 февраля 09:11"
-                };
-                orderlist.Add(p1);
-                orderlist.Add(p2);
-                orderlist.Add(p3);
-                UpdateList();
-                lstOrder.ItemClick += ListOrders_ItemClick;
+                //начинай тестиьть
+
+                GetOrders();
+                
+                //editEnterOrder.TextChanged += EtSearch_TextChanged;
+               
+                //int i = 0;
+                //while(i<1)
+                //{
+                //    OrderResponse order = new OrderResponse();
+                //    order = o_date.Rusult;
+                //}
+                //AuthResponseData o_user_data = new AuthResponseData();
+                //o_user_data = o_data.ResponseData;
+                
                 return view;
+            }
+        }
+
+        private async void GetOrders()
+        {
+            var o_data1 = new ServiceResponseObject<SensorResponse>();
+            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            {
+                //надо было сначала клиента указать, а потом вызывать метод
+                //и обязательно с токеном
+                OrderService.InitializeClient(client);
+                o_data1 = await OrderService.GetSensorParameters();
+
+               
+                
+            }
+
+            var o_data = new ServiceResponseObject<ListResponse<OrderResponse, ArchiveResponse>>();
+            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            {
+                //надо было сначала клиента указать, а потом вызывать метод
+                //и обязательно с токеном
+                OrderService.InitializeClient(client);
+                o_data = await OrderService.GetOrders(client);
+
+                if (o_data.Status == HttpStatusCode.OK)
+                {
+                    //o_data.Message = "Успешно авторизован!";
+                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                    //StaticUser.Email = s_login.Text;
+                    //StaticUser.AddInfoAuth(o_user_data);
+
+                    //обязательно должен быть прогресс бар при обращении к серверу, типо такого
+                    //preloader.Visibility = Android.Views.ViewStates.Invisible;
+                    foreach (var order in o_data.ResponseData.ARCHIVE)
+                    {
+                        orderlist.Add(new OrderBookModel
+                        {
+                            Id = order.id,
+                            Destination = order.destination_address,
+                            Inception = order.inception_address,
+                            Price = order.payment_amount,
+                            OrderName = "Заказ " + order.id,
+                            Date = order.stage2_datetime.ToString()
+                        }
+                        );
+                    }
+
+                    foreach (var order in o_data.ResponseData.ARCHIVE)
+                    {
+                        orderlist.Add(new OrderBookModel
+                        {
+                            Id = order.id,
+                            Destination = order.destination_address,
+                            Inception = order.inception_address,
+                            Price = order.payment_amount,
+                            OrderName = "Заказ " + order.id,
+                            Date = order.stage2_datetime.ToString()
+                        }
+                        );
+                    }
+
+                    //OrderBookModel p2 = new OrderBookModel()
+                    //{
+                    //    Id = 2,
+                    //    Destination = "Славный переулок, 5, Новошахтинск",
+                    //    Inception = "Астаховский переулок, 84, Каменск-Шахтинский",
+                    //    Price = "950 руб",
+                    //    OrderName = "Заказ OP5887450402",
+                    //    Date = "12 марта 11:34"
+                    //};
+                    //OrderBookModel p3 = new OrderBookModel()
+                    //{
+                    //    Id = 3,
+                    //    Destination = "Комитетская улица, 88, Новочеркасск",
+                    //    Inception = "переулок Чапаева, 2, Шахты",
+                    //    Price = "800 руб",
+                    //    OrderName = "Заказ PR3921079101",
+                    //    Date = "19 февраля 09:11"
+                    //};
+                    //orderlist.Add(p1);
+                    //orderlist.Add(p2);
+                    //orderlist.Add(p3);
+                    UpdateList();
+                    lstOrder.ItemClick += ListOrders_ItemClick;
+                    
+                }
+                else
+                {
+                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();//"Unexpected character encountered while parsing value: {. Path 'ORDERS[0].last_stage_at', line 2, position 1086."
+
+                }
             }
         }
 
@@ -123,6 +201,7 @@ namespace SmartBoxCity.Activity.Order
         {
             CustomListAdapter adapter = new CustomListAdapter(Activity, orderlist, this.FragmentManager);
             lstOrder.Adapter = adapter;
-        }
+        }        
+
     }
 }

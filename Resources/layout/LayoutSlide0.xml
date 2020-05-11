@@ -35,14 +35,27 @@
             android:textColor="@android:color/white"
             android:background="@drawable/button_stili"
             android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:textAlignment="center"
-            android:textColor = "#475B57"
-            android:text="Калькулятор стоимости перевозки"
-            android:textStyle="bold"
-            android:textSize="17dp" />
+            android:paddingTop = "10dp"
+            android:paddingBottom = "10dp"
+            android:paddingLeft = "10dp"
+            android:paddingRight = "10dp"
+            android:id="@+id/ScrollViewSlide0" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft = "10dp"
+                android:paddingRight = "10dp"
+                android:layout_gravity = "center"
+                android:gravity = "center"
+                android:textColor = "#475B57"
+                android:text="@string/slide_0"
+                android:textStyle="normal"
+                android:textSize="17dp" />
+        </ScrollView>
+
+        
     </LinearLayout>
 </RelativeLayout>

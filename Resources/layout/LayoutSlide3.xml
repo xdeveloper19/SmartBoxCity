@@ -30,15 +30,26 @@
         <ImageView
             android:layout_width="256dp"
             android:layout_height="256dp"
-            android:src="@drawable/slide3" />
-        <TextView
-            android:layout_width="wrap_content"
+            android:src="@drawable/slide33" />
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:textAlignment="center"
-            android:textColor = "#475B57"
-            android:text="Выдача номера заказа (трек-номера) на мобильное приложение или смс сообщением"
-            android:textStyle="bold"
-            android:textSize="17dp" />
+            android:paddingTop = "10dp"
+            android:paddingBottom = "10dp"
+            android:paddingLeft = "10dp"
+            android:paddingRight = "10dp"
+            android:id="@+id/ScrollViewSlide3" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft = "10dp"
+                android:paddingRight = "10dp"
+                android:layout_gravity = "center"
+                android:gravity = "center"
+                android:textColor = "#475B57"
+                android:text="@string/slide_3"
+                android:textStyle="normal"
+                android:textSize="17dp" />
+        </ScrollView>
     </LinearLayout>
 </RelativeLayout>

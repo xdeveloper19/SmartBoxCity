@@ -17,64 +17,16 @@ using SmartBoxCity.Model.OrderViewModel;
 using SmartBoxCity.Activity.Order;
 using SmartBoxCity.Service;
 using System.Net;
+using SmartBoxCity.Model;
+using SmartBoxCity.Model.BoxViewModel;
 
 namespace SmartBoxCity.Activity.Home
 {
     public class UserActivity : Fragment
     {
-        private Button btn_exit_;
+        private ListView lstOrder;
 
-        private Button btn_change_order;
-
-        private Button btn_pay;
-
-        private Button btn_lock_unlock_door;
-
-        private Button btn_camera;
-
-        private Button btn_pass_delivery_order;
-
-        private Button btn_add_order;
-
-        private EditText s_situation_loaded_container;
-
-        private Button btn_pass_delivery_service;
-
-        private EditText container_name;
-
-        private EditText s_cost;
-
-        private TextView status;
-
-        private EditText s_pin_access_code;
-
-        private EditText s_lock_unlock_door;
-
-        private EditText s_weight;
-
-        private EditText s_temperature;
-
-        private ProgressBar progressBar;
-
-        private TextView status_view;
-
-        private EditText s_light;
-
-        private EditText s_humidity;
-
-        private TextView Text3;
-
-        private static EditText s_longitude;
-
-        private static EditText s_latitude;
-
-        private static EditText s_payment;
-
-        private ProgressBar preloader;
-
-        private RelativeLayout auth_container;
-
-        GoogleMap _googleMap;
+        public static List<OrderResponse> orderlist;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -110,210 +62,272 @@ namespace SmartBoxCity.Activity.Home
             }
            
         }
-
-        public async void AddOrder(MakeOrderModel model)
-        {
-            var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", ""));
-              OrderService.InitializeClient(client);
-              var o_data = await OrderService.AddOrder(model);
-
-                if (o_data.Status == HttpStatusCode.OK)
-                {
-                    OrderSuccessResponse o_user_data = new OrderSuccessResponse();
-                    o_user_data = o_data.ResponseData;
-
-                    StaticOrder.Order_id = o_user_data.order_id;
-                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                }
-                else
-                {
-                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                }
-                CrossSettings.Current.AddOrUpdateValue("isOrdered", "false");
-            
-        }
-
+        
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             if(CrossSettings.Current.GetValueOrDefault("isAuth", "") != "true")
             {
                 var view = inflater.Inflate(Resource.Layout.activity_not_found_order, container, false);
-                btn_add_order = view.FindViewById<Button>(Resource.Id.btn_add_order1);
-
-                btn_add_order.Click += async delegate
-                {
-                    Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
-                    AddOrderActivity content = new AddOrderActivity();
-                    transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                };
                 return view;
             }
             else 
             {
                 var view = inflater.Inflate(Resource.Layout.activity_user, container, false);/// ошибка при нажати на кнопку "назад" на лефоне(Binary XML file line #1: Binary XML file line #1: Error inflating class fragment' )
-
-                //Text3 = view.FindViewById<TextView>(Resource.Id.Text3);
-
-                //View exit = view.FindViewById<View>(Resource.Id.nav_exit);
-                var listView = view.FindViewById<ExpandableListView>(Resource.Id.boxListView);
-                Data.SampleChildData();
-                listView.SetAdapter(new ExpandableDataAdapter(Activity, Data.listDataHeader, Data.listDataChild));
-                var bool1 = listView.IsGroupExpanded(1);
-
-                progressBar = view.FindViewById<ProgressBar>(Resource.Id.progressBar);
-                status_view = view.FindViewById<TextView>(Resource.Id.status_view);
-                btn_exit_ = view.FindViewById<Button>(Resource.Id.btn_exit_);
-                btn_pay = view.FindViewById<Button>(Resource.Id.btn_pay);
-                btn_lock_unlock_door = view.FindViewById<Button>(Resource.Id.btn_lock_unlock_door);
-
-                btn_pass_delivery_service = view.FindViewById<Button>(Resource.Id.btn_pass_delivery_service);
-                container_name = view.FindViewById<EditText>(Resource.Id.container_name);
-                s_cost = view.FindViewById<EditText>(Resource.Id.s_cost);
-                s_payment = view.FindViewById<EditText>(Resource.Id.s_payment);
-                //s_lock_unlock_door = view.FindViewById<EditText>(Resource.Id.s_lock_unlock_door);
-
-                s_weight = view.FindViewById<EditText>(Resource.Id.s_weight);
-                //s_temperature = view.FindViewById<EditText>(Resource.Id.s_temperature);
-                //s_light = view.FindViewById<EditText>(Resource.Id.s_light);
-                //s_humidity = view.FindViewById<EditText>(Resource.Id.s_humidity);
-
-                preloader = view.FindViewById<ProgressBar>(Resource.Id.preloader);
-
-                //MapFragment mapFragment = (MapFragment)FragmentManager.FindFragmentById(Resource.Id.fragmentMap);
-                //mapFragment.GetMapAsync();
-
-                container_name.Focusable = false;
-                container_name.LongClickable = false;
-
-                s_payment.Focusable = false;
-                s_payment.LongClickable = false;
-                s_cost.Focusable = false;
-                s_cost.LongClickable = false;
+                lstOrder = view.FindViewById<ListView>(Resource.Id.CurrentOrderListView);
+                orderlist = new List<OrderResponse>();
                 string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-
-                //BuildLocationRequest();
-                //BuildLocationCallBack();
-
-                //fusedLocationProviderClient = LocationServices.GetFusedLocationProviderClient(this);
-
-                ////ResetUser();
-                //fusedLocationProviderClient.RequestLocationUpdates(locationRequest,
-                //    locationCallback, Looper.MyLooper());
+                GetOrders();
 
 
-                //изменение состояния дверей
-                btn_lock_unlock_door.Click += async delegate
-                {
+                //btn_state_sensors_user.Click += Btn_Show_State_Sensors;
 
-                    try
-                    {
-                        Android.Support.V7.App.AlertDialog alertDialog;
-                        List<string> Item = new List<string>();
-                        Item.Add("Выгрузка завершена. Контейнер готов к отправке.");
+                //btn_lock_unlock_castle.Click += async delegate
+                //{
 
-
-                        var builder = new Android.Support.V7.App.AlertDialog.Builder(Activity);
-                        builder.SetTitle("Вы действительно хотите открыть замок контейнера?");
-
-                        bool[] toDownload = { false };
-                        builder.SetMultiChoiceItems(Item.ToArray(), toDownload, (sender, e) =>
-                        {
-                            int index = e.Which;
-
-                            toDownload[index] = e.IsChecked;
-                        });
+                //    try
+                //    {
+                //        Android.Support.V7.App.AlertDialog alertDialog;
+                //        List<string> Item = new List<string>();
+                //        Item.Add("Выгрузка завершена. Контейнер готов к отправке.");
 
 
-                        builder.SetNegativeButton("Отмена", delegate
-                        {
-                            //Some to do...
-                        })
-                        .SetPositiveButton("Открыть", delegate
-                        {
-                            if (toDownload[0] == true)
-                            {
-                                //to do...
-                            }
-                            if (s_lock_unlock_door.Text == "заблокирована")
-                                s_lock_unlock_door.Text = "разблокирована";
-                            else
-                                s_lock_unlock_door.Text = "заблокирована";
-                        });
+                //        var builder = new Android.Support.V7.App.AlertDialog.Builder(Activity);
+                //        builder.SetTitle("Вы действительно хотите открыть замок контейнера?");
 
-                        alertDialog = builder.Create();
-                        alertDialog.Show();
-                    }
-                    catch (Exception ex)
-                    {
-                        Toast.MakeText(Activity, "" + ex.Message, ToastLength.Long).Show();
-                    }
+                //        bool[] toDownload = { false };
+                //        builder.SetMultiChoiceItems(Item.ToArray(), toDownload, (sender, e) =>
+                //        {
+                //            int index = e.Which;
 
-                };
+                //            toDownload[index] = e.IsChecked;
+                //        });
 
-                btn_pay.Click += async delegate
-                {
-                    if (s_payment.Text != "Оплачено")
-                    {
-                        progressBar.Progress = 8;
-                        status_view.Text = "8. Завершение использования";
 
-                        s_pin_access_code.Text = "1324";
-                        s_payment.Text = "Оплачено";
-                        Toast.MakeText(Activity, "Оплата произведена", ToastLength.Long).Show();
-                        GetInfoAboutBox(dir_path);
+                //        builder.SetNegativeButton("Отмена", delegate
+                //        {
+                //            //Some to do...
+                //        })
+                //        .SetPositiveButton("Открыть", delegate
+                //        {
+                //            if (toDownload[0] == true)
+                //            {
+                //                //to do...
+                //            }
+                //            //if (s_lock_unlock_castle.Text == "заблокирована")
+                //            //    s_lock_unlock_castle.Text = "разблокирована";
+                //            //else
+                //            //    s_lock_unlock_castle.Text = "заблокирована";
+                //        });
 
-                    }
-                    else
-                    {
-                        Toast.MakeText(Activity, "Оплата уже была произведена", ToastLength.Long).Show();
-                    }
+                //        alertDialog = builder.Create();
+                //        alertDialog.Show();
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        Toast.MakeText(Activity, "" + ex.Message, ToastLength.Long).Show();
+                //    }
 
-                };
+                //};
 
-                btn_pass_delivery_service.Click += async delegate
-                {
-                    FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                    MainOrderStatusActivity content = new MainOrderStatusActivity();
-                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                };
+                //btn_pay.Click += async delegate
+                //{
+                //    try
+                //    {
+                //        if (s_payment.Text != "Оплачено")
+                //        {
+                //            progressBar.Progress = 8;
+                //            status_view.Text = "8. Завершение использования";
 
-                btn_exit_.Click += async delegate
-                {
-                    File.Delete(dir_path + "user_data.txt");
-                    CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
-                    Intent content = new Intent(Activity, typeof(MainActivity));
-                    StartActivity(content);
-                };
+                //            //s_pin_access_code.Text = "1324";
+                //            s_payment.Text = "Оплачено";
+                //            Toast.MakeText(Activity, "Оплата произведена", ToastLength.Long).Show();
+                //            GetInfoAboutBox(dir_path);
+
+                //        }
+                //        else
+                //        {
+                //            Toast.MakeText(Activity, "Оплата уже была произведена", ToastLength.Long).Show();
+                //        }
+                //    }
+                //    catch(Exception ex)
+                //    {
+                //        Toast.MakeText(Activity, "" + ex.Message, ToastLength.Long).Show();
+                //    }
+                //};
+
+                //btn_pass_delivery_service.Click += async delegate
+                //{
+                //    FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                //    MainOrderStatusActivity content = new MainOrderStatusActivity();
+                //    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                //};
+
+                //btn_exit_.Click += async delegate
+                //{
+                //    File.Delete(dir_path + "user_data.txt");
+                //    CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
+                //    Intent content = new Intent(Activity, typeof(MainActivity));
+                //    StartActivity(content);
+                //};
                
                 return view;
-            }
-            
-            
-            //public void OnMapReady(GoogleMap googleMap)
+            }                        
+        }
+
+        private async void GetOrders()
+        {
+            //var o_data1 = new ServiceResponseObject<SensorResponse>();
+            //using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
             //{
-            //    _googleMap = googleMap;////11111
-
-            //    MarkerOptions markerOptions = new MarkerOptions();
-            //    LatLng location = new LatLng(45.343434, 46.454545);
-            //    markerOptions.SetPosition(location);
-            //    markerOptions.SetTitle("Я здесь");
-            //    googleMap.AddMarker(markerOptions);
-
-            //    CameraPosition.Builder builder = CameraPosition.InvokeBuilder();
-            //    builder.Target(location);
-            //    builder.Zoom(18);
-            //    builder.Bearing(0);
-            //    builder.Tilt(65);
-
-            //    CameraPosition cameraPosition = builder.Build();
-            //    CameraUpdate cameraUpdate = CameraUpdateFactory.NewCameraPosition(cameraPosition);
-
-            //    googleMap.UiSettings.ZoomControlsEnabled = true;
-            //    googleMap.UiSettings.CompassEnabled = true;
-            //    googleMap.MoveCamera(cameraUpdate);
+            //    OrderService.InitializeClient(client);
+            //    o_data1 = await OrderService.GetSensorParameters();
             //}
 
+            var o_data = new ServiceResponseObject<ListResponse<OrderResponse, ArchiveResponse>>();
+            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            {
+                OrderService.InitializeClient(client);
+                o_data = await OrderService.GetOrders(client);
+
+                if (o_data.Status == HttpStatusCode.OK)
+                {
+                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                    foreach (var order in o_data.ResponseData.ORDERS)
+                    {
+                        orderlist.Add(new OrderResponse
+                        {
+                            id = order.id,
+                            inception_address = order.id,
+                            inception_lat = order.inception_lat,
+                            cargo_class = order.cargo_class,
+                            distance = order.distance,
+                            insurance = order.insurance,
+                            stage2_datetime = order.stage2_datetime,
+                            stage5_datetime = order.stage5_datetime,
+                            payment_id = order.payment_id,
+                            order_stage_id = order.order_stage_id,
+                            created_at = order.created_at,
+                            payment_amount = order.payment_amount,
+                            payment_status = order.payment_status,
+                            order_stage_name = order.order_stage_name,
+                            last_stage_at = order.last_stage_at,
+                            container_id = order.container_id,
+                            sensors_status = order.sensors_status,
+                            event_count = order.event_count,
+                        }
+                        );
+                    }
+                    UpdateList();
+                    lstOrder.ItemClick += ListOrders_ItemClick;
+                }
+                else
+                {
+                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();//"Unexpected character encountered while parsing value: <. Path '', line 0, position 0."
+
+                }
+            }
         }
+
+        private void ListOrders_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        {
+            Toast.MakeText(Activity, "Выбран заказ №" + e.Position.ToString(), ToastLength.Long).Show();
+        }
+
+        private void UpdateList()
+        {
+            AdapterUserActivity adapter = new AdapterUserActivity(Activity, orderlist, this.FragmentManager);
+            lstOrder.Adapter = adapter;
+        }
+
+        public async void AddOrder(MakeOrderModel model)
+        {
+            var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", ""));
+            OrderService.InitializeClient(client);
+            var o_data = await OrderService.AddOrder(model);
+
+            if (o_data.Status == HttpStatusCode.OK)
+            {
+
+                OrderSuccessResponse o_user_data = new OrderSuccessResponse();
+                o_user_data = o_data.ResponseData;
+                StaticOrder.Order_id = o_user_data.order_id;
+                //AlertDialog.Builder alert = new AlertDialog.Builder(Context);
+                //alert.SetTitle("Предупреждение.");
+                //alert.SetMessage("Заказ оформлен успешно !");
+                //alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
+                //{
+                //});
+                //Dialog dialog = alert.Create();
+                //dialog.Show();
+                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+            }
+            else
+            {
+                //AlertDialog.Builder alert = new AlertDialog.Builder(Context);
+                //alert.SetTitle("Внимание!");
+                //alert.SetMessage("Не получилось оформить заказ.\nПричина: " + o_data.Message + 
+                //    "\nДля повторного оформления заказа зайдите в раздел 'Заказать'.");
+                //alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
+                //{
+                //});
+                //Dialog dialog = alert.Create();
+                //dialog.Show();
+                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+            }
+            CrossSettings.Current.AddOrUpdateValue("isOrdered", "false");
+
+        }
+        //private async void GetSensorParameters()
+        //{
+        //    var o_data = new ServiceResponseObject<SensorResponse>();
+        //    using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+        //    {
+        //        //надо было сначала клиента указать, а потом вызывать метод
+        //        //и обязательно с токеном
+        //        OrderService.InitializeClient(client);
+        //        o_data = await OrderService.GetSensorParameters();
+
+        //        if (o_data.Status == HttpStatusCode.OK)
+        //        {
+        //            //o_data.Message = "Успешно авторизован!";
+        //            Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+
+        //        }
+        //        else
+        //        {
+        //            Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+
+        //        }
+        //    }
+        //}
+
+        //private void Btn_Show_State_Sensors(object sender, EventArgs e)
+        //{
+        //    //GetSensorParameters();
+        //    //    LayoutInflater layoutInflater = LayoutInflater.From(Activity);
+        //    //    View view = layoutInflater.Inflate(Resource.Layout.activity_create_task, null);
+        //    //    Android.App.AlertDialog.Builder alert = new Android.App.AlertDialog.Builder(this);
+        //    //    alert.SetView(view);
+        //    //    #region Объявление переменных в диалоговом окне
+        //    //    var EditName = view.FindViewById<EditText>(Resource.Id.EditCreateTaskName);
+        //    //    var EditTime = view.FindViewById<EditText>(Resource.Id.EditCreateTaskTime);
+        //    //    var EditNote = view.FindViewById<EditText>(Resource.Id.EditCreateTaskNote);
+        //    //    var RatingImportance = view.FindViewById<RatingBar>(Resource.Id.RatingCreateTaskImportance);
+        //    //    var CheckBoxkReminder = view.FindViewById<CheckBox>(Resource.Id.CheckBoxCreateTaskReminder);
+        //    //    #endregion
+
+        //    //    alert.SetCancelable(false)
+        //    //    .SetPositiveButton("Создать", delegate
+        //    //    {
+        //    //    })
+        //    //    .SetNegativeButton("Отмена", delegate
+        //    //    {
+        //    //        alert.Dispose();
+        //    //    });
+        //    //    Dialog dialog = alert.Create();
+        //    //    dialog.Show();
+        //}
+
         public async void GetInfoAboutBox(string dir_path)
         {
             //try
@@ -430,77 +444,6 @@ namespace SmartBoxCity.Activity.Home
             //}
 
         }
-
-
-        FusedLocationProviderClient fusedLocationProviderClient;
-            LocationRequest locationRequest;
-            LocationCallback locationCallback;
-            private UserActivity activityUserBoxy;
-        //private void BuildLocationCallBack()
-        //{
-        //    locationCallback = new AuthLocationCallBack(activityUserBoxy);
-        //}
-
-        //private void BuildLocationRequest()
-        //{
-        //    locationRequest = new LocationRequest();
-        //    locationRequest.SetPriority(LocationRequest.PriorityBalancedPowerAccuracy);
-        //    locationRequest.SetInterval(1000);
-        //    locationRequest.SetFastestInterval(3000);
-        //    locationRequest.SetSmallestDisplacement(10f);
-        //}
-
-
-        //internal class AuthLocationCallBack : LocationCallback // !!!!
-        //{
-        //    private UserActivity activityUserBoxy;
-
-        //    public AuthLocationCallBack(UserActivity activityUserBoxy)
-        //    {
-        //        this.activityUserBoxy = activityUserBoxy;
-        //    }
-
-        //    public override async void OnLocationResult(LocationResult result)
-        //    {
-        //        base.OnLocationResult(result);
-
-        //        //    StaticBox.Latitude = result.LastLocation.Latitude;
-        //        //    StaticBox.Longitude = result.LastLocation.Longitude;
-
-        //        //    s_longitude.Text = result.LastLocation.Latitude.ToString();
-        //        //    s_latitude.Text = result.LastLocation.Longitude.ToString();
-
-        //        //    BoxLocation gpsLocation = new BoxLocation
-        //        //    {
-        //        //        id = StaticBox.SmartBoxId,
-        //        //        lat1 = StaticBox.Latitude,
-        //        //        lon1 = StaticBox.Longitude,                   
-        //        //    };
-
-
-
-        //        //    var myHttpClient = new HttpClient();
-        //        //    var uri = new Uri("http://iot-tmc-cen.1gb.ru/api/container/setcontainerlocation?id=" + gpsLocation.id + "&lat1=" + gpsLocation.lat1 + "&lon1=" + gpsLocation.lon1);
-        //        //    //json структура.
-        //        //    var formContent = new FormUrlEncodedContent(new Dictionary<string, string>
-        //        //{
-        //        //    { "Id", gpsLocation.id },
-        //        //    { "Lon1", gpsLocation.lon1.ToString()},
-        //        //    { "Lat1", gpsLocation.lat1.ToString()},              
-        //        //});
-
-        //        //    HttpResponseMessage response = await myHttpClient.PostAsync(uri.ToString(), formContent);
-        //        //    AuthApiData<BaseResponseObject> o_data = new AuthApiData<BaseResponseObject>();
-
-        //        //    string s_result;
-        //        //    using (HttpContent responseContent = response.Content)
-        //        //    {
-        //        //        s_result = await responseContent.ReadAsStringAsync();
-        //        //    }
-
-        //        //    o_data = JsonConvert.DeserializeObject<AuthApiData<BaseResponseObject>>(s_result);
-        //    }
-        //}
+      
     }
-  
 }

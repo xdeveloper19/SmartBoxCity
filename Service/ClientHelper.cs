@@ -10,6 +10,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Plugin.Settings;
 
 namespace SmartBoxCity.Service
 {
@@ -43,14 +44,15 @@ namespace SmartBoxCity.Service
         // Auth with bearer token
         public static HttpClient GetClient(string token)
         {
-            var authValue = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{token}:")));
+            var authValue = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{CrossSettings.Current.GetValueOrDefault("token", "")}:")));
 
             var client = new HttpClient()
             {
                 DefaultRequestHeaders = { Authorization = authValue },
-                BaseAddress = new Uri(URL)
+                BaseAddress = new Uri("https://smartboxcity.ru/")
                 //Set some other client defaults like timeout / BaseAddress
             };
+
             return client;
         }
     }

@@ -6,17 +6,14 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:background = "@drawable/activity_stili"
-    android:id="@+id/order_status_layout"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".ui.login.LoginActivity">
-
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -36,26 +33,22 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below = "@+id/TextViewMapHaupt"
-                android:layout_marginTop = "10dp"
-                android:id="@+id/CardViewMap">
+                android:layout_marginTop = "10dp">
 
                 <LinearLayout
                     android:orientation = "vertical"
                     android:layout_margin = "10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id = "@+id/LinearLayoutMap"
                     android:layout_marginTop = "10dp">
 
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id = "@+id/LinearLayoutMap1"
                         android:baselineAligned = "false"
                         android:orientation = "horizontal">
                         <TextView
-                            android:id="@+id/textFrom"
                             android:textColor = "#2C4C46"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -65,7 +58,7 @@
                             android:textSize="10sp"
                             />
                         <TextView
-                            android:id="@+id/EditFrom"
+                            android:id="@+id/MapEditFrom"
                             android:textColor = "#475B57"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -80,11 +73,9 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id = "@+id/LinearLayoutMap2"
                         android:baselineAligned = "false"
                         android:orientation = "horizontal">
                         <TextView
-                            android:id="@+id/textTo"
                             android:textColor = "#2C4C46"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -95,7 +86,7 @@
                             />
 
                         <TextView
-                            android:id="@+id/EditTo"
+                            android:id="@+id/MapEditTo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="left|center_vertical"
@@ -112,11 +103,9 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id = "@+id/LinearLayoutMap3"
                         android:baselineAligned = "false"
                         android:orientation = "horizontal">
                         <TextView
-                            android:id="@+id/textWeight"
                             android:textColor = "#2C4C46"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -128,7 +117,7 @@
                             />
 
                        <TextView
-                            android:id="@+id/EditTo1"
+                            android:id="@+id/MapEditWeight"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="left|center_vertical"
@@ -146,10 +135,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:baselineAligned = "false"
-                        android:id = "@+id/LinearLayoutMap4"
                         android:orientation = "horizontal">
                         <TextView
-                            android:id="@+id/textWeight3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textColor = "#2C4C46"
@@ -161,7 +148,7 @@
                             />
 
                         <TextView
-                            android:id="@+id/EditTo12"
+                            android:id="@+id/MapEditLenhWidHeig"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="left|center_vertical"
@@ -174,12 +161,12 @@
                             />         
                     </LinearLayout>
 
-                        <fragment
-                            android:id="@+id/fragmentMap"
-                            android:layout_width="match_parent"
-                            android:layout_marginTop = "10dp"
-                            android:layout_height="200dp"
-                            class="com.google.android.gms.maps.MapFragment"/>
+                    <fragment
+                        android:id="@+id/fragmentMap"
+                        android:layout_width="match_parent"
+                        android:layout_marginTop = "10dp"
+                        android:layout_height="200dp"
+                        class="com.google.android.gms.maps.MapFragment"/>
 \
                 </LinearLayout>
             </android.support.v7.widget.CardView>

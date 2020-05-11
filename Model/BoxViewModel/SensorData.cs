@@ -54,7 +54,7 @@ namespace SmartBoxCity.Model.BoxViewModel
 			lstCS.Add(new SensorData("Герметичность ", Resource.Drawable.germet, "герметичен"));
 			lstCS.Add(new SensorData("Двери", Resource.Drawable.door, "закрыт"));
 			lstCS.Add(new SensorData("Замок", Resource.Drawable.padlock, "закрыт"));
-			lstCS.Add(new SensorData("События", Resource.Drawable.caution,"0 штук"));
+			lstCS.Add(new SensorData("События", Resource.Drawable.@event,"0 штук"));
 			lstCS.Add(new SensorData("Тревога", Resource.Drawable.notification, "нет"));
 
 			// Header, Child data

@@ -30,7 +30,7 @@ namespace SmartBoxCity.Activity.Order
 
         public override long GetItemId(int position)
         {
-            return orders[position].Id;
+            return Convert.ToInt64(orders[position].Id);
         }
 
         

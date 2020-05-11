@@ -102,8 +102,9 @@ namespace SmartBoxCity.Activity.Home
                     //Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                     //ContentMainActivity content4 = new ContentMainActivity();
                     //transaction1.Replace(Resource.Id.framelayout, content4).AddToBackStack(null).Commit();
-                };
-         
+                };                
+                 
+
             }
             catch (Exception ex)
             {
@@ -125,6 +126,10 @@ namespace SmartBoxCity.Activity.Home
                 btnNext.Text = (GetString(Resource.String.start));
                 btnSkip.Visibility = ViewStates.Gone;
 
+            }
+            else if(e.Position == layouts[1])
+            {
+                
             }
             else
             {
@@ -189,11 +194,28 @@ namespace SmartBoxCity.Activity.Home
 
             public override Java.Lang.Object InstantiateItem(ViewGroup container, int position)
             {
-                layoutInflater = (LayoutInflater)Android.App.Application.Context.GetSystemService(Context.LayoutInflaterService);
-                View view = layoutInflater.Inflate(_layout[position], container, false);
-                container.AddView(view);
-
-                return view;
+                //if (_layout[position] == 1)
+                //{
+                //    layoutInflater = (LayoutInflater)Android.App.Application.Context.GetSystemService(Context.LayoutInflaterService);
+                //    View view = layoutInflater.Inflate(_layout[position], container, false);
+                //    var btn_cost = view.FindViewById<Button>(Resource.Id.btn_cost);
+                //    //btn_cost.Click += (sender, e) =>
+                //    //{
+                //    //    Android.App.FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
+                //    //    //lauch main screen here
+                //    //    MainPageActivity content = new MainPageActivity();
+                //    //    transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                //    //};
+                //    container.AddView(view);
+                //    return view;
+                //}
+                //else
+                //{
+                    layoutInflater = (LayoutInflater)Android.App.Application.Context.GetSystemService(Context.LayoutInflaterService);
+                    View view = layoutInflater.Inflate(_layout[position], container, false);
+                    container.AddView(view);
+                    return view;
+                //}
             }
 
             public override int Count

@@ -112,7 +112,7 @@ namespace SmartBoxCity.Activity.Order
             
             try
             {
-                #region Поиск элементов
+                #region Инициализаия переменных
                 Button btn_make_request = view.FindViewById<Button>(Resource.Id.btn_make_request);
                 s_edit_from = view.FindViewById<EditText>(Resource.Id.s_edit_from);
                 s_edit_where = view.FindViewById<EditText>(Resource.Id.s_edit_where);
@@ -144,10 +144,11 @@ namespace SmartBoxCity.Activity.Order
                     else
                         s_edit_from.Text = StaticOrder.Inception_address;
                 }
-
+                s_shipment_time.Focusable = false;
+                s_shipment_time.Clickable = false;
+                s_shipping_date.Focusable = false;
+                s_shipping_date.Clickable = false;
                 s_value.Enabled = false;
-                s_shipping_date.Enabled = false;
-                s_shipment_time.Enabled = false;
                 s_contact_person.Enabled = false;
                 s_edit_from.Focusable = false;
                 s_edit_where.Focusable = false;
@@ -204,10 +205,10 @@ namespace SmartBoxCity.Activity.Order
                                 AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
                                 alert.SetTitle("Согласие с договором офертой");
                                 alert.SetMessage(o_user_data.Agreement);
-
+                                check_argue.Checked = false;
                                 alert.SetPositiveButton("Принимаю", (senderAlert, args) =>
                                 {
-
+                                    check_argue.Checked = true;
                                 });
                                 alert.SetNegativeButton("Не принимаю", (senderAlert, args) =>
                                 {
@@ -223,6 +224,7 @@ namespace SmartBoxCity.Activity.Order
                         };
 
                     }
+                    
                 };
 
                 check_receiver.CheckedChange += (o, e) =>

@@ -68,8 +68,12 @@
     <Compile Include="Activity\Box\BoxListActivity.cs" />
     <Compile Include="Activity\Box\BoxListAdapter.cs" />
     <Compile Include="Activity\Box\ExpandableSensorDataAdapter.cs" />
+    <Compile Include="Activity\Driver\DriverContainerList.cs" />
     <Compile Include="Activity\Driver\TaskActivity.cs" />
     <Compile Include="Activity\Driver\TaskNotFoundActivity.cs" />
+    <Compile Include="Activity\Event\EventActivity.cs" />
+    <Compile Include="Activity\Event\EventListAdapter.cs" />
+    <Compile Include="Activity\Home\AdapterUserActivity.cs" />
     <Compile Include="Activity\Home\MainPageActivity.cs" />
     <Compile Include="Activity\Home\RefLayoutManager.cs" />
     <Compile Include="Activity\MainActivity2.cs" />
@@ -84,7 +88,6 @@
     <Compile Include="Activity\Order\BookNotFoundActivity.cs" />
     <Compile Include="Activity\Order\CustomListAdapter.cs" />
     <Compile Include="Activity\Order\EnterLocationActivity.cs" />
-    <Compile Include="Activity\Order\EventsActivity.cs" />
     <Compile Include="Activity\Order\ExpandableDataAdapter.cs" />
     <Compile Include="Activity\Order\GooglePlacesResult.cs" />
     <Compile Include="Activity\Order\ListOrdersActivity.cs" />
@@ -107,11 +110,16 @@
     <Compile Include="Model\BaseResponseObject.cs" />
     <Compile Include="Model\BoxViewModel\BoxBookModel.cs" />
     <Compile Include="Model\BoxViewModel\SensorData.cs" />
+    <Compile Include="Model\BoxViewModel\SensorResponse.cs" />
     <Compile Include="Model\ErrorResponseObject.cs" />
+    <Compile Include="Model\ListResponse.cs" />
     <Compile Include="Model\OrderViewModel\AmountResponse.cs" />
+    <Compile Include="Model\OrderViewModel\ArchiveResponse.cs" />
     <Compile Include="Model\OrderViewModel\Data.cs" />
+    <Compile Include="Model\OrderViewModel\EventModel.cs" />
     <Compile Include="Model\OrderViewModel\MakeOrderModel.cs" />
     <Compile Include="Model\OrderViewModel\OrderBookModel.cs" />
+    <Compile Include="Model\OrderViewModel\OrderResponse.cs" />
     <Compile Include="Model\OrderViewModel\OrderSuccessResponse.cs" />
     <Compile Include="Repository\StaticOrder.cs" />
     <Compile Include="Model\ServiceResponseObject.cs" />
@@ -263,9 +271,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\progress_bar_drawable.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_map.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\contact_photo.png" />
@@ -430,9 +435,6 @@
     <AndroidResource Include="Resources\drawable\germet.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\caution.png" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\alert.png" />
   </ItemGroup>
   <ItemGroup>
@@ -481,19 +483,7 @@
     <AndroidResource Include="Resources\layout\LayoutSlide5.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\slide1.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\slide11.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\slide2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\slide3.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\slide4.jpg" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\LayoutLast.xml" />
@@ -509,6 +499,45 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_google_result.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\slide44.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\slide33.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\slide22.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\EventCardView.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\event.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\ContainerCardView.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\photo_create.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\vidoe_move.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\layout_stily1.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\ShowStateSensors.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\verticalprogressbar.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_user_CardView.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_map.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

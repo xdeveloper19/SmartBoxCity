@@ -31,14 +31,25 @@
             android:layout_width="256dp"
             android:layout_height="256dp"
             android:src="@drawable/slide11" />
-        <TextView
-            android:layout_width="wrap_content"
+        <ScrollView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:textAlignment="center"
-            android:textColor = "#475B57"
-            android:text="Подача контейнера к заказчику (грузоотправителю) под погрузку"
-            android:textStyle="bold"
-            android:textSize="17dp" />
+            android:paddingTop = "10dp"
+            android:paddingBottom = "10dp"
+            android:paddingLeft = "10dp"
+            android:paddingRight = "10dp"
+            android:id="@+id/ScrollViewSlide1" >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft = "10dp"
+                android:paddingRight = "10dp"
+                android:layout_gravity = "center"
+                android:gravity = "center"
+                android:textColor = "#475B57"
+                android:text="@string/slide_1"
+                android:textStyle="normal"
+                android:textSize="17dp" />
+        </ScrollView>
     </LinearLayout>
 </RelativeLayout>

@@ -13,8 +13,6 @@
     tools:showIn="@layout/app_bar_main"
     android:background = "@drawable/activity_stili"
     android:id="@+id/reviewslayout">
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

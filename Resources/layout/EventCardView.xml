@@ -1,0 +1,51 @@
+﻿<FrameLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id = "@+id/CardViewEvent"
+        card_view:cardElevation="4dp"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardCornerRadius="5dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:layout_margin = "10dp">
+
+            <ImageView
+                android:src="@drawable/event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight = "10dp"
+                android:layout_marginBottom = "5dp"
+                android:layout_alignParentLeft = "true"
+                android:id="@+id/EventCardImageView" />
+            <TextView
+                android:text="Завершение использования"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf = "@+id/EventCardImageView"
+                android:id="@+id/EventCardTextName" />         
+            <TextView
+                android:text="(02:10:50)"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below = "@+id/EventCardImageView"
+                android:id="@+id/EventCardTextTime" />    
+            <TextView
+                android:text="2020-02-08"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below = "@+id/EventCardImageView"
+                android:layout_alignParentRight = "true"
+                android:id="@+id/EventCardTextDate" />          
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</FrameLayout>

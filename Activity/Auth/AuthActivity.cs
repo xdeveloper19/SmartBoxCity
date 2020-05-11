@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -69,6 +68,7 @@ namespace SmartBoxCity.Activity.Auth
 
             //btn_register = view.FindViewById<Button>(Resource.Id.btn_register);
             btn_auth = view.FindViewById<Button>(Resource.Id.btn_auth);
+            
             //btn_back_a = view.FindViewById<ImageButton>(Resource.Id.btn_back_a);
 
             s_login = view.FindViewById<EditText>(Resource.Id.s_login);
@@ -134,7 +134,7 @@ namespace SmartBoxCity.Activity.Auth
                             CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
                             CrossSettings.Current.AddOrUpdateValue("token", o_user_data.Token);
                             CrossSettings.Current.AddOrUpdateValue("role", o_user_data.Role);
-                            Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                            //Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                             Intent main = new Intent(Activity, typeof(MainActivity));
                             StartActivity(main);
                         }

@@ -46,7 +46,8 @@ namespace SmartBoxCity.Activity
                         transaction2.Replace(Resource.Id.frameDriverlayout, content).AddToBackStack(null).Commit();
                         break;
                     case Resource.Id.c_status:
-                      
+                        DriverContainerList content3 = new DriverContainerList();
+                        transaction2.Replace(Resource.Id.frameDriverlayout, content3).AddToBackStack(null).Commit();
                         break;
                     case Resource.Id.alarms:
                         
