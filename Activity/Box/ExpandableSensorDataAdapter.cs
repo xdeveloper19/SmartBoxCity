@@ -9,7 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using SmartBoxCity.Model.BoxViewModel;
+using SmartBoxCity.Service;
 
 namespace SmartBoxCity.Activity.Box
 {

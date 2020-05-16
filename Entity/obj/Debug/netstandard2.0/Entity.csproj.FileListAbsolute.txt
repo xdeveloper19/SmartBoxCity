@@ -1,0 +1,7 @@
+C:\Users\User\source\repos\SmartBoxCity\Entity\obj\Debug\netstandard2.0\Entity.AssemblyInfoInputs.cache
+C:\Users\User\source\repos\SmartBoxCity\Entity\obj\Debug\netstandard2.0\Entity.AssemblyInfo.cs
+C:\Users\User\source\repos\SmartBoxCity\Entity\bin\Debug\netstandard2.0\Entity.deps.json
+C:\Users\User\source\repos\SmartBoxCity\Entity\bin\Debug\netstandard2.0\Entity.dll
+C:\Users\User\source\repos\SmartBoxCity\Entity\bin\Debug\netstandard2.0\Entity.pdb
+C:\Users\User\source\repos\SmartBoxCity\Entity\obj\Debug\netstandard2.0\Entity.dll
+C:\Users\User\source\repos\SmartBoxCity\Entity\obj\Debug\netstandard2.0\Entity.pdb

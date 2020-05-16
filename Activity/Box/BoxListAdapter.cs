@@ -8,8 +8,9 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Entity.Model.BoxViewModel;
 using SmartBoxCity.Activity.Order;
-using SmartBoxCity.Model.BoxViewModel;
+using SmartBoxCity.Service;
 using static Android.Widget.ExpandableListView;
 
 namespace SmartBoxCity.Activity.Box

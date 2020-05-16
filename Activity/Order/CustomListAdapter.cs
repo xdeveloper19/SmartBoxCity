@@ -9,7 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using SmartBoxCity.Model.OrderViewModel;
+using Entity.Model.OrderViewModel.OrderInfoViewModel;
 
 namespace SmartBoxCity.Activity.Order
 {
@@ -30,7 +30,7 @@ namespace SmartBoxCity.Activity.Order
 
         public override long GetItemId(int position)
         {
-            return Convert.ToInt64(orders[position].Id);
+            return position;//Convert.ToInt64(orders[position].Id);
         }
 
         
@@ -38,22 +38,21 @@ namespace SmartBoxCity.Activity.Order
         {
             View view = convertView;
             if (view == null)
-            {
                 view = LayoutInflater.From(context).Inflate(Resource.Layout.order_book_parameters, null);
-                view.FindViewById<TextView>(Resource.Id.txtFrom).Text = orders[position].Inception;
-                view.FindViewById<TextView>(Resource.Id.txtWhere).Text = orders[position].Destination;
-                view.FindViewById<TextView>(Resource.Id.txtPrice).Text = orders[position].Price;
-                view.FindViewById<TextView>(Resource.Id.txtDate).Text = orders[position].Date;
-                view.FindViewById<TextView>(Resource.Id.txtOrderName).Text = orders[position].OrderName;
-                var btn = view.FindViewById<Button>(Resource.Id.btn_alarms);
 
-                btn.Click += async delegate
-                {
-                    OrderActivity content = new OrderActivity();
-                    manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                };
-                   
-            }
+            view.FindViewById<TextView>(Resource.Id.txtFrom).Text = orders[position].Inception;
+            view.FindViewById<TextView>(Resource.Id.txtWhere).Text = orders[position].Destination;
+            view.FindViewById<TextView>(Resource.Id.txtPrice).Text = orders[position].Price;
+            view.FindViewById<TextView>(Resource.Id.txtDate).Text = orders[position].Date;
+            view.FindViewById<TextView>(Resource.Id.txtOrderName).Text = orders[position].OrderName;
+            var btn = view.FindViewById<Button>(Resource.Id.btn_alarms);
+
+            btn.Click += async delegate
+            {
+                OrderActivity content = new OrderActivity();
+                manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+            };
+
             return view;
         }
     }

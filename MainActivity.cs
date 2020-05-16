@@ -21,13 +21,13 @@ using SmartBoxCity.Activity.Auth;
 using SmartBoxCity.Activity.Home;
 using SmartBoxCity.Activity.Order;
 using System.Text;
-using SmartBoxCity.Model.AuthViewModel;
 using Newtonsoft.Json;
-using SmartBoxCity.Repository;
 using SmartBoxCity.Activity.Menu;
 using SmartBoxCity.Activity.Registration;
 using Android.Graphics.Drawables;
 using SmartBoxCity.Service;
+using WebService;
+using WebService.Account;
 
 namespace SmartBoxCity
 {

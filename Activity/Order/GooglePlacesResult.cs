@@ -9,8 +9,8 @@ using Android.Runtime;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using Entity.Repository;
 using Google.Places;
-using SmartBoxCity.Model.OrderViewModel;
 
 namespace SmartBoxCity.Activity.Order
 {

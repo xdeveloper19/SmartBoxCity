@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.29519.87
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartBoxCity", "SmartBoxCity.csproj", "{5CF74A4A-BD95-451D-B8DA-00C1A99C4C68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebService", "WebService\WebService.csproj", "{B9CD99D3-5F08-4B81-9FC0-9966C0E37005}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csproj", "{919EC8BF-8AA1-4E6D-B7F6-D2BD46D1FBC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +21,14 @@ Global
 		{5CF74A4A-BD95-451D-B8DA-00C1A99C4C68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CF74A4A-BD95-451D-B8DA-00C1A99C4C68}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5CF74A4A-BD95-451D-B8DA-00C1A99C4C68}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B9CD99D3-5F08-4B81-9FC0-9966C0E37005}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9CD99D3-5F08-4B81-9FC0-9966C0E37005}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9CD99D3-5F08-4B81-9FC0-9966C0E37005}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9CD99D3-5F08-4B81-9FC0-9966C0E37005}.Release|Any CPU.Build.0 = Release|Any CPU
+		{919EC8BF-8AA1-4E6D-B7F6-D2BD46D1FBC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{919EC8BF-8AA1-4E6D-B7F6-D2BD46D1FBC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{919EC8BF-8AA1-4E6D-B7F6-D2BD46D1FBC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{919EC8BF-8AA1-4E6D-B7F6-D2BD46D1FBC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

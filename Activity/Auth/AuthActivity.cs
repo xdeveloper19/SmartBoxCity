@@ -13,14 +13,14 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
+using Entity.Model.AccountViewModel.AuthViewModel;
 using Newtonsoft.Json;
 using Plugin.Settings;
 using SmartBoxCity.Activity.Home;
 using SmartBoxCity.Activity.Registration;
-using SmartBoxCity.Model;
-using SmartBoxCity.Model.AuthViewModel;
-using SmartBoxCity.Repository;
 using SmartBoxCity.Service;
+using WebService;
+using WebService.Account;
 
 namespace SmartBoxCity.Activity.Auth
 {
@@ -112,7 +112,7 @@ namespace SmartBoxCity.Activity.Auth
                         {
                             //o_data.Message = "Успешно авторизован!";
                             Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                             AuthResponseData o_user_data = new AuthResponseData();
+                            AuthResponse o_user_data = new AuthResponse();
                              o_user_data = o_data.ResponseData;
 
                              if (is_remember.Checked == true)

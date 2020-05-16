@@ -10,8 +10,10 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using SmartBoxCity.Model.AuthViewModel;
+using Entity.Model;
+using Entity.Model.AccountViewModel.AuthViewModel;
 using SmartBoxCity.Service;
+using WebService;
 
 namespace SmartBoxCity.Activity
 {
@@ -49,12 +51,12 @@ namespace SmartBoxCity.Activity
         {
             using (var client = ClientHelper.GetClient())
             {
-                HomeService.InitializeClient(client);
-                var o_data = await HomeService.About();
+                WebService.Home.HomeService.InitializeClient(client);
+                var o_data = await WebService.Home.HomeService.About();
 
                 if (o_data.Status == HttpStatusCode.OK)
                 {
-                    RegisterResponseData o_user_data = new RegisterResponseData();
+                    SuccessResponse o_user_data = new SuccessResponse();
                     o_user_data = o_data.ResponseData;
                     TextAboutUs.Text = o_user_data.Message;
                 }

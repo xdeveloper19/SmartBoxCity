@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using SmartBoxCity.Model.OrderViewModel;
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -10,14 +9,15 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.Support.V7.Widget;
+using SmartBoxCity.Service;
 
 namespace SmartBoxCity.Activity.Order
 {
     public class ExpandableDataAdapter: BaseExpandableListAdapter
     {
 		readonly Context Context;
-		private Dictionary<string, List<Data>> _listDataChild;
-		public ExpandableDataAdapter(Context newContext, List<string> newList, Dictionary<string, List<Data>> childList) : base()
+		private Dictionary<string, List<OrderData>> _listDataChild;
+		public ExpandableDataAdapter(Context newContext, List<string> newList, Dictionary<string, List<OrderData>> childList) : base()
 		{
 			_listDataChild = childList;
 			Context = newContext;
@@ -76,7 +76,7 @@ namespace SmartBoxCity.Activity.Order
 
 		public override int GetChildrenCount(int groupPosition)
 		{
-			var result = new List<Data>();
+			var result = new List<OrderData>();
 			_listDataChild.TryGetValue(_listDataHeader[groupPosition], out result);
 			return result.Count;
 		}
@@ -101,7 +101,7 @@ namespace SmartBoxCity.Activity.Order
 
 		public override Java.Lang.Object GetChild(int groupPosition, int childPosition)
 		{
-			var result = new List<Data>();
+			var result = new List<OrderData>();
 			_listDataChild.TryGetValue(_listDataHeader[groupPosition], out result);
 			return result[childPosition];
 		}

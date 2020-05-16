@@ -70,6 +70,7 @@
     <Compile Include="Activity\Box\ExpandableSensorDataAdapter.cs" />
     <Compile Include="Activity\Driver\DriverContainerList.cs" />
     <Compile Include="Activity\Driver\TaskActivity.cs" />
+    <Compile Include="Activity\Driver\TaskListAdapter.cs" />
     <Compile Include="Activity\Driver\TaskNotFoundActivity.cs" />
     <Compile Include="Activity\Event\EventActivity.cs" />
     <Compile Include="Activity\Event\EventListAdapter.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Activity\Order\GooglePlacesResult.cs" />
     <Compile Include="Activity\Order\ListOrdersActivity.cs" />
     <Compile Include="Activity\Order\MainOrderStatusActivity.cs" />
+    <Compile Include="Activity\Order\ManageOrderActivity.cs" />
     <Compile Include="Activity\Order\MapActivity.cs" />
     <Compile Include="Activity\Order\OnExpandedListenerService.cs" />
     <Compile Include="Activity\Order\OrderActivity.cs" />
@@ -100,37 +102,13 @@
     <Compile Include="Activity\Registration\Activity_Legal_Entity_Registration.cs" />
     <Compile Include="Activity\Registration\Activity_Registration_Individual_Person.cs" />
     <Compile Include="MainActivity.cs" />
-    <Compile Include="Model\AuthViewModel\AgreementResponseData.cs" />
-    <Compile Include="Model\AuthViewModel\AuthModel.cs" />
-    <Compile Include="Model\AuthViewModel\AuthResponseData.cs" />
-    <Compile Include="Model\AuthViewModel\ContactsResponseData.cs" />
-    <Compile Include="Model\AuthViewModel\RegisterIndividualModel.cs" />
-    <Compile Include="Model\AuthViewModel\RegisterLegalModul.cs" />
-    <Compile Include="Model\AuthViewModel\RegisterResponseData.cs" />
-    <Compile Include="Model\BaseResponseObject.cs" />
-    <Compile Include="Model\BoxViewModel\BoxBookModel.cs" />
-    <Compile Include="Model\BoxViewModel\SensorData.cs" />
-    <Compile Include="Model\BoxViewModel\SensorResponse.cs" />
-    <Compile Include="Model\ErrorResponseObject.cs" />
-    <Compile Include="Model\ListResponse.cs" />
-    <Compile Include="Model\OrderViewModel\AmountResponse.cs" />
-    <Compile Include="Model\OrderViewModel\ArchiveResponse.cs" />
-    <Compile Include="Model\OrderViewModel\Data.cs" />
-    <Compile Include="Model\OrderViewModel\EventModel.cs" />
-    <Compile Include="Model\OrderViewModel\MakeOrderModel.cs" />
-    <Compile Include="Model\OrderViewModel\OrderBookModel.cs" />
-    <Compile Include="Model\OrderViewModel\OrderResponse.cs" />
-    <Compile Include="Model\OrderViewModel\OrderSuccessResponse.cs" />
-    <Compile Include="Repository\StaticOrder.cs" />
-    <Compile Include="Model\ServiceResponseObject.cs" />
-    <Compile Include="Repository\StaticUser.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\AuthService.cs" />
-    <Compile Include="Service\ClientHelper.cs" />
     <Compile Include="Service\DatePickerFragment.cs" />
     <Compile Include="Service\HomeService.cs" />
-    <Compile Include="Service\OrderService.cs" />
+    <Compile Include="Service\OrderAdapter.cs" />
+    <Compile Include="Service\OrderData.cs" />
+    <Compile Include="Service\SensorData.cs" />
     <Compile Include="Service\TimePickerFragment.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -538,6 +516,22 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_map.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Entity\Entity.csproj">
+      <Project>{919ec8bf-8aa1-4e6d-b7f6-d2bd46d1fbc2}</Project>
+      <Name>Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="WebService\WebService.csproj">
+      <Project>{b9cd99d3-5f08-4b81-9fc0-9966c0e37005}</Project>
+      <Name>WebService</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\task_book_parameter.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_order_management.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

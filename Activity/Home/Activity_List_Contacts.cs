@@ -11,8 +11,9 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using SmartBoxCity.Model.AuthViewModel;
+using Entity.Model.HomeViewModel;
 using SmartBoxCity.Service;
+using WebService;
 
 namespace SmartBoxCity.Activity.Menu
 {
@@ -51,12 +52,12 @@ namespace SmartBoxCity.Activity.Menu
         {
             using (var client = ClientHelper.GetClient())
             {
-                HomeService.InitializeClient(client);
-                var o_data = await HomeService.ContactUs();
+                WebService.Home.HomeService.InitializeClient(client);
+                var o_data = await WebService.Home.HomeService.ContactUs();
 
                 if (o_data.Status == HttpStatusCode.OK)
                 {
-                    ContactsResponseData o_user_data = new ContactsResponseData();
+                    ContactsResponse o_user_data = new ContactsResponse();
                     o_user_data = o_data.ResponseData;
                     TextContacts.Text = o_user_data.Message;
                     var src = Android.Net.Uri.Parse(o_user_data.Image);

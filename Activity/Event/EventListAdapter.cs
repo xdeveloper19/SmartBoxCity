@@ -9,7 +9,8 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using SmartBoxCity.Model.OrderViewModel;
+using Entity.Model.OrderViewModel.OrderInfoViewModel;
+
 
 namespace SmartBoxCity.Activity.Event
 {

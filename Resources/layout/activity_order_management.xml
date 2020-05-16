@@ -1,0 +1,345 @@
+﻿<LinearLayout
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:background = "@drawable/activity_stili">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:text="Управление заказом"
+        android:textSize="20dp"
+        android:textColor="@color/textclient"/>
+     <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="5dp"
+        android:background="#BFE2ED"/>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardElevation="4dp"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardCornerRadius="5dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation = "vertical">           
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_margin = "10dp">          
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation = "horizontal"
+                    android:id = "@+id/OrderManagementLinearId"
+                    android:layout_marginBottom = "8dp"
+                    android:baselineAligned="true">
+                    <TextView
+                        android:text="Заказ :"
+                        android:layout_weight="1"
+                        android:gravity = "center"  
+                        android:textSize="18dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor = "@color/textclient" />
+                    <TextView
+                        android:text="CB4213768272"
+                        android:textColor="@color/colorMainBlue"
+                        android:layout_weight="1"
+                        android:textSize="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity = "center"              
+                        android:id="@+id/OrderManagementTextIdValue" />
+                </LinearLayout>  
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/OrderManagementLinearId"
+                    android:background="@color/colorMainLightBlue"/>
+
+                <TextView
+                    android:text="Датчики"
+                    android:layout_marginTop="8dp"
+                    android:textSize="18dp"
+                    android:textColor = "@color/textclient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal = "true"
+                    android:layout_below = "@+id/OrderManagementLinearId"
+                    android:id="@+id/OrderManagementTextSensorsCenter" />
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_stili"
+                    android:padding = "5dp"
+                    android:id="@+id/OrderManagementScrollSensors"
+                    android:layout_below = "@+id/OrderManagementTextSensorsCenter">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:orientation = "horizontal">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation = "vertical">
+                                <TextView
+                                    android:text="Батарея, %"
+                                    android:layout_gravity="center"
+                                    android:textColor = "@color/textclient"
+                                    android:textSize="15dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content" />
+                                <TextView
+                                    android:textSize="13dp"
+                                    android:textColor="@color/colorMainLightBlue"
+                                    android:background="@drawable/button_stili"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:id="@+id/OrderManagementTexBattery"/>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft = "14dp"
+                                android:orientation = "vertical">
+                                <TextView
+                                    android:text="Вес, кг"
+                                    android:textSize="15dp"
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor = "@color/textclient"/>
+                                <TextView
+                                    android:textSize="13dp"
+                                    android:textColor="@color/colorMainLightBlue"
+                                    android:background="@drawable/button_stili"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:id="@+id/OrderManagementTexWeight" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft = "14dp"
+                                android:orientation = "vertical">
+                                <TextView
+                                    android:text="Температура, C°"
+                                    android:layout_gravity="center"
+                                    android:textSize="15dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor = "@color/textclient"/>
+                                <TextView
+                                    android:textColor="@color/colorMainLightBlue"
+                                    android:background="@drawable/button_stili"
+                                    android:textSize="13dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity = "center"
+                                    android:id="@+id/OrderManagementTextTemperature" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft = "14dp"
+                                android:orientation = "vertical">
+                                <TextView
+                                    android:text="Влажность, %"
+                                    android:textSize="15dp"
+                                    android:layout_gravity="center"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor = "@color/textclient" />
+                                <TextView                                  
+                                    android:textColor="@color/colorMainLightBlue"
+                                    android:background="@drawable/button_stili"
+                                    android:textSize="13dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity = "center"
+                                    android:id="@+id/OrderManagementTextHumidity" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft = "14dp"
+                                android:orientation = "vertical">
+                                <TextView
+                                    android:text="Освещенность, лм"
+                                    android:layout_gravity="center"
+                                    android:textSize="15dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor = "@color/textclient" />
+                                <TextView
+                                    android:textColor="@color/colorMainLightBlue"
+                                    android:background="@drawable/button_stili"
+                                    android:textSize="13dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity = "center"
+                                    android:id="@+id/OrderManagementTextIllumination" />
+                            </LinearLayout>                   
+                    </LinearLayout>
+                </HorizontalScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/OrderManagementScrollSensors"
+                    android:id="@+id/OrderManagementLinearOrderState"
+                    android:orientation="horizontal">               
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation = "vertical"
+                        android:layout_alignParentRight = "true">
+                        <TextView
+                            android:text="Состояние"
+                            android:textSize="15dp"
+                            android:textColor = "@color/textclient"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity = "center"/>
+                        <TextView
+                            android:text="Сложен"
+                            android:textSize="13dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity = "center"            
+                            android:id="@+id/OrderManagementTextState" />
+                    </LinearLayout>
+                     <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation = "vertical">
+                        <TextView
+                            android:text="Ролета"
+                            android:textSize="15dp"
+                            android:textColor = "@color/textclient"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity = "center"/>
+                        <TextView
+                            android:text="Закрыта"
+                            android:textSize="13dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity = "center"            
+                            android:id="@+id/OrderManagementTextRoleta" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation = "vertical">
+                        <TextView
+                            android:text="Замок"
+                            android:textSize="15dp"
+                            android:textColor = "@color/textclient"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity = "center"/>
+                        <TextView
+                            android:text="Закрыт"
+                            android:textSize="13dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity = "center"            
+                            android:id="@+id/OrderManagementTextCastle" />
+                    </LinearLayout>
+                   
+                </LinearLayout>
+                
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop = "10dp"
+                    android:layout_marginRight = "20dp"
+                    android:orientation = "vertical"
+                    android:layout_centerHorizontal = "true"
+                    android:id = "@+id/OrderManagementLinearEvents"
+                    android:layout_below = "@+id/OrderManagementLinearOrderState">
+                    <TextView
+                        android:text="События"
+                        android:textSize="18dp"
+                        android:textColor = "@color/textclient"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity = "center"
+                        android:minWidth="25px"
+                        android:minHeight="25px"/>
+                    <TextView
+                        android:text="151 штука"
+                        android:textColor="@color/colorMainBlue"
+                        android:textSize="13dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity = "center"            
+                        android:id="@+id/OrderManagementTextEvents" />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_below="@+id/OrderManagementLinearEvents"
+                    android:background="@color/colorMainLightBlue"/>
+            </RelativeLayout>
+             <!--
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation = "horizontal">
+                 <Button
+                    android:textColor="@color/colorMainLightBlue"
+                    android:background="@drawable/button_stili"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize = "10dp"
+                    android:text = "Разложить"
+                    android:layout_weight = "1"/>
+                 <Button
+                    android:textColor="@color/colorMainLightBlue"
+                    android:background="@drawable/button_stili"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Разложить"
+                    android:layout_weight = "1"
+                    android:textSize = "10dp"/>
+                 <Button
+                    android:textColor="@color/colorMainLightBlue"
+                    android:background="@drawable/button_stili"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight = "1"
+                    android:textSize = "10dp"/>
+                 <Button
+                    android:textColor="@color/colorMainLightBlue"
+                    android:background="@drawable/button_stili"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight = "1"
+                    android:textSize = "10dp"/>
+            </LinearLayout> 
+-->
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

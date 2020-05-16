@@ -10,11 +10,15 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Entity.Model;
+using Entity.Model.BoxResponse;
+using Entity.Model.OrderResponse;
+using Entity.Model.OrderViewModel.OrderInfoViewModel;
+using EntityLibrary.Model.OrderResponse;
 using Plugin.Settings;
-using SmartBoxCity.Model;
-using SmartBoxCity.Model.BoxViewModel;
-using SmartBoxCity.Model.OrderViewModel;
 using SmartBoxCity.Service;
+using WebService;
+using WebService.Client;
 
 namespace SmartBoxCity.Activity.Order
 {
@@ -70,25 +74,25 @@ namespace SmartBoxCity.Activity.Order
 
         private async void GetOrders()
         {
-            var o_data1 = new ServiceResponseObject<SensorResponse>();
-            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
-            {
-                //надо было сначала клиента указать, а потом вызывать метод
-                //и обязательно с токеном
-                OrderService.InitializeClient(client);
-                o_data1 = await OrderService.GetSensorParameters();
+            //var o_data1 = new ServiceResponseObject<SensorResponse>();
+            //using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            //{
+            //    //надо было сначала клиента указать, а потом вызывать метод
+            //    //и обязательно с токеном
+            //    OrderService.InitializeClient(client);
+            //    o_data1 = await OrderService.GetSensorParameters();
 
                
                 
-            }
+            //}
 
-            var o_data = new ServiceResponseObject<ListResponse<OrderResponse, ArchiveResponse>>();
+            var o_data = new ServiceResponseObject<ListResponse<OrderResponseData, ArchiveResponse>>();
             using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
             {
                 //надо было сначала клиента указать, а потом вызывать метод
                 //и обязательно с токеном
                 OrderService.InitializeClient(client);
-                o_data = await OrderService.GetOrders(client);
+                o_data = await OrderService.GetOrders();
 
                 if (o_data.Status == HttpStatusCode.OK)
                 {
@@ -106,26 +110,14 @@ namespace SmartBoxCity.Activity.Order
                             Id = order.id,
                             Destination = order.destination_address,
                             Inception = order.inception_address,
-                            Price = order.payment_amount,
+                            Price = order.payment_amount + " рублей",
                             OrderName = "Заказ " + order.id,
                             Date = order.stage2_datetime.ToString()
                         }
                         );
                     }
 
-                    foreach (var order in o_data.ResponseData.ARCHIVE)
-                    {
-                        orderlist.Add(new OrderBookModel
-                        {
-                            Id = order.id,
-                            Destination = order.destination_address,
-                            Inception = order.inception_address,
-                            Price = order.payment_amount,
-                            OrderName = "Заказ " + order.id,
-                            Date = order.stage2_datetime.ToString()
-                        }
-                        );
-                    }
+                    
 
                     //OrderBookModel p2 = new OrderBookModel()
                     //{

@@ -13,12 +13,19 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Plugin.Settings;
-using SmartBoxCity.Model.OrderViewModel;
 using SmartBoxCity.Activity.Order;
 using SmartBoxCity.Service;
 using System.Net;
-using SmartBoxCity.Model;
-using SmartBoxCity.Model.BoxViewModel;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Entity.Model.OrderViewModel.OrderInfoViewModel;
+using Entity.Repository;
+using Entity.Model.BoxResponse;
+using Entity.Model;
+using WebService.Client;
+using Entity.Model.OrderResponse;
+using WebService;
+using EntityLibrary.Model.OrderResponse;
 
 namespace SmartBoxCity.Activity.Home
 {
@@ -26,7 +33,7 @@ namespace SmartBoxCity.Activity.Home
     {
         private ListView lstOrder;
 
-        public static List<OrderResponse> orderlist;
+        public static List<OrderAdapter> orderlist;
 
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -60,21 +67,21 @@ namespace SmartBoxCity.Activity.Home
 
                 AddOrder(model);
             }
-           
+
         }
         
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            if(CrossSettings.Current.GetValueOrDefault("isAuth", "") != "true")
+            if (CrossSettings.Current.GetValueOrDefault("isAuth", "") != "true")
             {
                 var view = inflater.Inflate(Resource.Layout.activity_not_found_order, container, false);
                 return view;
             }
-            else 
+            else
             {
                 var view = inflater.Inflate(Resource.Layout.activity_user, container, false);/// ошибка при нажати на кнопку "назад" на лефоне(Binary XML file line #1: Binary XML file line #1: Error inflating class fragment' )
                 lstOrder = view.FindViewById<ListView>(Resource.Id.CurrentOrderListView);
-                orderlist = new List<OrderResponse>();
+                orderlist = new List<OrderAdapter>();
                 string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
                 GetOrders();
 
@@ -169,35 +176,32 @@ namespace SmartBoxCity.Activity.Home
                 //    Intent content = new Intent(Activity, typeof(MainActivity));
                 //    StartActivity(content);
                 //};
-               
+
                 return view;
-            }                        
+            }
         }
 
         private async void GetOrders()
         {
-            //var o_data1 = new ServiceResponseObject<SensorResponse>();
-            //using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
-            //{
-            //    OrderService.InitializeClient(client);
-            //    o_data1 = await OrderService.GetSensorParameters();
-            //}
-
-            var o_data = new ServiceResponseObject<ListResponse<OrderResponse, ArchiveResponse>>();
+            var o_data = new ServiceResponseObject<ListResponse<OrderResponseData, ArchiveResponse>>();
             using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
             {
                 OrderService.InitializeClient(client);
-                o_data = await OrderService.GetOrders(client);
+                o_data = await OrderService.GetOrders();
 
                 if (o_data.Status == HttpStatusCode.OK)
                 {
                     Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                    var number = 0;
+
                     foreach (var order in o_data.ResponseData.ORDERS)
                     {
-                        orderlist.Add(new OrderResponse
+                        number++;
+                        orderlist.Add(new OrderAdapter
                         {
                             id = order.id,
-                            inception_address = order.id,
+                            Id = number,
+                            inception_address = order.inception_address,
                             inception_lat = order.inception_lat,
                             cargo_class = order.cargo_class,
                             distance = order.distance,

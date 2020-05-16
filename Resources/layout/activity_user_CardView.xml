@@ -3,11 +3,14 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-	android:layout_margin="10dp"
     android:layout_height="match_parent">
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         app:cardCornerRadius="5dp"
         app:cardElevation="4dp"               
         android:layout_gravity="center_horizontal">
@@ -18,8 +21,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingBottom="@dimen/activity_vertical_margin">
-                    
-                    
+                                       
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,7 +32,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize = "16dp"
+                    android:textSize = "15dp"
                     android:gravity="center"
                     android:layout_weight = "1"
                     android:text="Заказ:"
@@ -43,9 +45,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="left"
                     android:layout_weight = "1"
-                    android:text = "CB4213768272"
                     android:textColor = "@color/colorMainBlue"
-                    android:textSize="20sp"
+                    android:textSize="17sp"
                 />
 
             </LinearLayout>                 
@@ -65,10 +66,10 @@
                 android:layout_below = "@+id/LinearLayoutUser1">
 
 
-                <ProgressBar
+               <ProgressBar
                     android:id="@+id/progressBar"
-                    android:progressDrawable = "@drawable/verticalprogressbar"
-                    android:background ="@drawable/verticalprogressbar"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    
                     android:layout_width="wrap_content"
                     android:layout_weight = "1"
                     android:layout_height="20dp"
@@ -88,7 +89,6 @@
                     android:gravity = "center"
                     android:textColor = "@color/textclient"
                     android:layout_below="@+id/progressBar"
-                    android:text="1. Заявка"
                     android:textSize="15sp"
                 />
             </LinearLayout>
@@ -109,7 +109,7 @@
                 android:id = "@+id/LayoutUserCost">
                 <TextView
                     android:text="Стоимость:"
-                    android:textSize = "16dp"
+                    android:textSize = "13dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity = "center_vertical"                            
@@ -125,27 +125,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation = "vertical"
-                    android:layout_weight = "1">
+                    android:layout_weight = "3">
                     <TextView
                         android:inputType="number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text = "900 руб."
                         android:textColor = "@color/colorMainBlue"
                         android:layout_weight = "1"
                         android:id="@+id/s_cost"
-                        android:textSize="20sp"
+                        android:textSize="15sp"
                         android:gravity="center"
                     />
                     <TextView
                         android:inputType="number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text = "Оплачно"
                         android:layout_weight = "1"
                         android:id="@+id/s_payment"
                         android:textColor = "#91F898"
-                        android:textSize="13sp"
+                        android:textSize="10sp"
                         android:gravity="center"
                     />
                 </LinearLayout>
@@ -157,11 +155,15 @@
                 <Button
                     android:text="Оплатить"
                     android:padding = "10dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_weight = "1"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="13sp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:background="#FFFFFF"
+                    android:background="@drawable/edittext_stili"
                     android:id="@+id/btn_pay" />                        
             </LinearLayout>
             <View
@@ -178,6 +180,7 @@
                 android:layout_below = "@id/LayoutUserCost">
                 <Button
                     android:text="Подробно о заказе"
+                    android:textSize="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:background = "@drawable/button_stili"
@@ -196,6 +199,7 @@
                         android:background = "@drawable/button_stili"
                         android:textColor = "@color/colorMainLightBlue"
                         android:padding = "5dp"
+                        android:textSize="10dp"
                         android:layout_weight = "1"
                         android:id="@+id/btn_make_photo" />
                     <Button
@@ -205,6 +209,7 @@
                         android:background = "@drawable/button_stili"
                         android:textColor = "@color/colorMainLightBlue"
                         android:padding = "5dp"
+                        android:textSize="10dp"
                         android:layout_weight = "1"
                         android:id="@+id/btn_make_video" />
                 </LinearLayout>
@@ -212,6 +217,7 @@
                     android:text="Управление заказом"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:textSize="10dp"
                     android:background = "@drawable/button_stili"
                     android:textColor = "@color/colorMainLightBlue"
                     android:layout_weight = "1"

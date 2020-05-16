@@ -9,12 +9,16 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Entity.Model.OrderResponse;
+using Entity.Model.OrderViewModel.OrderInfoViewModel;
+using Entity.Repository;
 using Plugin.Settings;
 using SmartBoxCity.Activity.Auth;
 using SmartBoxCity.Activity.Home;
 using SmartBoxCity.Activity.Registration;
-using SmartBoxCity.Model.OrderViewModel;
 using SmartBoxCity.Service;
+using WebService;
+using WebService.Client;
 
 namespace SmartBoxCity.Activity.Order
 {

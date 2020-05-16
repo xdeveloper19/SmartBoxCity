@@ -1,0 +1,75 @@
+﻿<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+	android:layout_margin="10dp"
+	android:background = "@drawable/activity_stili"
+    android:layout_height="match_parent">
+	
+
+		<android.support.v7.widget.CardView
+			android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="10dp"
+            android:layout_marginTop="15dp"
+			app:cardCornerRadius="2dp"
+            app:contentPadding="10dp"
+            android:layout_gravity="center_horizontal">
+            
+            
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:orientation="vertical"
+				android:padding="10dp">
+
+				<TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "Заказ: С12209088"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    android:textColor = "#2C4C46"
+                    android:id = "@+id/txtTaskName"
+                    
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+                android:background="@color/quantum_grey"
+                android:layout_height="2dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text = "г Ростов-на-Дону, ул Орбитальная, д 76. Доставить пустой контейнер."
+                    android:layout_marginBottom="20dp"
+                    android:textSize="13sp"
+                    android:textColor = "#2C4C46"
+                    android:id = "@+id/txtComment"
+                    
+                />
+
+				
+
+				
+			<Button
+                android:id="@+id/btn_info_order"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor = "#FBF8F8"    
+                android:background="@drawable/button_stili"
+                android:padding = "5dp"
+                android:layout_marginTop="5dp"
+                android:text="Подробно о заказе"
+                android:textSize="13sp"/>                       
+				
+			</LinearLayout>
+
+		</android.support.v7.widget.CardView>
+	
+</LinearLayout>

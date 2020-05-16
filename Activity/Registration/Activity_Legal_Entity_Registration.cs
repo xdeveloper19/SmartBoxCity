@@ -8,9 +8,13 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Entity.Model;
+using Entity.Model.AccountViewModel.AuthViewModel;
+using Entity.Model.HomeViewModel;
 using Plugin.Settings;
-using SmartBoxCity.Model.AuthViewModel;
 using SmartBoxCity.Service;
+using WebService;
+using WebService.Account;
 
 namespace SmartBoxCity.Activity.Registration
 {
@@ -105,13 +109,13 @@ namespace SmartBoxCity.Activity.Registration
                 {
                     using (var client = ClientHelper.GetClient())
                     {
-                        AuthService.InitializeClient(client);
-                        var o_data = await AuthService.Privacy();
+                        WebService.Home.HomeService.InitializeClient(client);
+                        var o_data = await WebService.Home.HomeService.Privacy();
 
 
                         if (o_data.Status == HttpStatusCode.OK)
                         {
-                            AgreementResponseData o_user_data = new AgreementResponseData();
+                            AgreementResponse o_user_data = new AgreementResponse();
                             o_user_data = o_data.ResponseData;
 
                             Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
@@ -143,12 +147,12 @@ namespace SmartBoxCity.Activity.Registration
                 {
                     using (var client = ClientHelper.GetClient())
                     {
-                        AuthService.InitializeClient(client);
-                        var o_data = await AuthService.Offer();
+                        WebService.Home.HomeService.InitializeClient(client);
+                        var o_data = await WebService.Home.HomeService.Offer();
 
                         if (o_data.Status == HttpStatusCode.OK)
                         {
-                            AgreementResponseData o_user_data = new AgreementResponseData();
+                            AgreementResponse o_user_data = new AgreementResponse();
                             o_user_data = o_data.ResponseData;
 
                             Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
@@ -185,7 +189,7 @@ namespace SmartBoxCity.Activity.Registration
                     if (check_contract_oferta_entity.Checked == true && check_personal_data_processing_entity.Checked == true)
                     {
 
-                        RegisterLegalModul register = new RegisterLegalModul
+                        RegisterLegalModel register = new RegisterLegalModel
                         {
                             Login = s_login.Text,
                             Password = s_password.Text,
@@ -215,7 +219,7 @@ namespace SmartBoxCity.Activity.Registration
                             if (o_data.Status == HttpStatusCode.OK)
                             {
                                 Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                                RegisterResponseData o_user_data = new RegisterResponseData();
+                                SuccessResponse o_user_data = new SuccessResponse();
                                 o_user_data = o_data.ResponseData;
 
                                 preloader.Visibility = Android.Views.ViewStates.Invisible;
