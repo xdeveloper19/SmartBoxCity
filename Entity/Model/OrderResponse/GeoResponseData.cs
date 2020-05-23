@@ -8,9 +8,9 @@ namespace Entity.Model.OrderResponse
     {
         public GeoResponseData()
         {
-            this.MAP_WAYPOINTS = new List<GeoLocation>();
+            this.MAP_WAYPOINTS = new List<GeoLocation<string>>();
         }
         public PartitialOrderResponse ORDER { get; set; }
-        public List<GeoLocation> MAP_WAYPOINTS { get; set; }
+        public List<GeoLocation<string>> MAP_WAYPOINTS { get; set; }
     }
 }

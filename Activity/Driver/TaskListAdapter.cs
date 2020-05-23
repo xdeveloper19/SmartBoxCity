@@ -48,8 +48,16 @@ namespace SmartBoxCity.Activity.Driver
 
             btn.Click += async delegate
             {
-                OrderActivity content = new OrderActivity();
-                manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                try
+                {
+                    MainOrderStatusActivity content = new MainOrderStatusActivity();
+                    manager.Replace(Resource.Id.frameDriverlayout, content).AddToBackStack(null).Commit();
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
+                }
+               
             };
 
             return view;

@@ -25,7 +25,6 @@ namespace SmartBoxCity.Activity.Order
     public class ListOrdersActivity : Fragment
     {
         private ListView lstOrder;
-        private EditText editEnterOrder;
         public static List<OrderBookModel> orderlist;
 
         public override void OnCreate(Bundle savedInstanceState)
@@ -56,9 +55,9 @@ namespace SmartBoxCity.Activity.Order
                 //начинай тестиьть
 
                 GetOrders();
-                
+
                 //editEnterOrder.TextChanged += EtSearch_TextChanged;
-               
+
                 //int i = 0;
                 //while(i<1)
                 //{
@@ -67,7 +66,7 @@ namespace SmartBoxCity.Activity.Order
                 //}
                 //AuthResponseData o_user_data = new AuthResponseData();
                 //o_user_data = o_data.ResponseData;
-                
+
                 return view;
             }
         }
@@ -82,8 +81,8 @@ namespace SmartBoxCity.Activity.Order
             //    OrderService.InitializeClient(client);
             //    o_data1 = await OrderService.GetSensorParameters();
 
-               
-                
+
+
             //}
 
             var o_data = new ServiceResponseObject<ListResponse<OrderResponseData, ArchiveResponse>>();
@@ -100,6 +99,15 @@ namespace SmartBoxCity.Activity.Order
                     Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                     //StaticUser.Email = s_login.Text;
                     //StaticUser.AddInfoAuth(o_user_data);
+                    if (o_data.ResponseData.ARCHIVE.Count == 0)
+                    {
+                       
+                        Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                        BookNotFoundActivity content = new BookNotFoundActivity();
+                        transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+
+                        return;
+                    }
 
                     //обязательно должен быть прогресс бар при обращении к серверу, типо такого
                     //preloader.Visibility = Android.Views.ViewStates.Invisible;
@@ -117,7 +125,7 @@ namespace SmartBoxCity.Activity.Order
                         );
                     }
 
-                    
+
 
                     //OrderBookModel p2 = new OrderBookModel()
                     //{
@@ -142,7 +150,7 @@ namespace SmartBoxCity.Activity.Order
                     //orderlist.Add(p3);
                     UpdateList();
                     lstOrder.ItemClick += ListOrders_ItemClick;
-                    
+
                 }
                 else
                 {
@@ -185,7 +193,7 @@ namespace SmartBoxCity.Activity.Order
         //}
         public override void OnResume()
         {
-           // UpdateList();
+            // UpdateList();
             base.OnResume();
         }
 
@@ -193,7 +201,7 @@ namespace SmartBoxCity.Activity.Order
         {
             CustomListAdapter adapter = new CustomListAdapter(Activity, orderlist, this.FragmentManager);
             lstOrder.Adapter = adapter;
-        }        
+        }
 
     }
 }

@@ -3,6 +3,7 @@ using Entity.Model.AccountViewModel.AuthViewModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,8 @@ namespace WebService.Account
         {
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync($"login?login={model.Login}&password={model.Password}");
+                var password = WebUtility.UrlEncode(model.Password);
+                HttpResponseMessage response = await _httpClient.GetAsync($"login?login={model.Login}&password={password}");
                 string s_result;
                 using (HttpContent responseContent = response.Content)
                 {

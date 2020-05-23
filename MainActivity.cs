@@ -64,6 +64,7 @@ namespace SmartBoxCity
                 {
                     Intent intent = new Intent(this, typeof(Activity.MainActivity2));
                     StartActivity(intent);
+                    this.Finish();
                 }
                 else
                 {

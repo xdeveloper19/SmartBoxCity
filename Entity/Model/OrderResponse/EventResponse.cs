@@ -9,11 +9,11 @@ namespace Entity.Model.OrderResponse
     /// </summary>
     public class EventResponse
     {
-        public string id { get; set; }
-        public string type { get; set; }
-        public string message { get; set; }
-        public object created_at { get; set; }
-        public string order_id { get; set; }
+        public DateTime created_at { get; set; }
         public string event_day { get; set; }
+        public string id { get; set; }
+        public string message { get; set; }
+        public string order_id { get; set; }
+        public string type { get; set; }
     }
 }

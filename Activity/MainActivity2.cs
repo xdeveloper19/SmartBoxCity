@@ -16,12 +16,14 @@ using Android.Widget;
 using Plugin.Settings;
 using SmartBoxCity.Activity.Box;
 using SmartBoxCity.Activity.Driver;
+using SmartBoxCity.Service;
 
 namespace SmartBoxCity.Activity
 {
     [Activity(Label = "SmartBoxCity")]
     public class MainActivity2: AppCompatActivity
     {
+        GPSService _gpsService;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -30,6 +32,10 @@ namespace SmartBoxCity.Activity
             //Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             //SetSupportActionBar(toolbar);
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation_driver);
+
+            FragmentTransaction transaction3 = this.FragmentManager.BeginTransaction();
+            TaskActivity content2 = new TaskActivity();
+            transaction3.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
 
             navigation.NavigationItemSelected += (sender, e) =>
             {
@@ -42,11 +48,11 @@ namespace SmartBoxCity.Activity
                         transaction2.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
                         break;
                     case Resource.Id.boxes:
-                        BoxListActivity content = new BoxListActivity();
+                        MainBoxStatusActivity content = new MainBoxStatusActivity();
                         transaction2.Replace(Resource.Id.frameDriverlayout, content).AddToBackStack(null).Commit();
                         break;
                     case Resource.Id.c_status:
-                        DriverContainerList content3 = new DriverContainerList();
+                        ManageBoxActivity content3 = new ManageBoxActivity();
                         transaction2.Replace(Resource.Id.frameDriverlayout, content3).AddToBackStack(null).Commit();
                         break;
                     case Resource.Id.alarms:
@@ -59,8 +65,13 @@ namespace SmartBoxCity.Activity
                         CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
                         CrossSettings.Current.AddOrUpdateValue("role","");
 
+                        _gpsService = new GPSService(this);
+                        //_gpsService.UpdateLocation();
+                        _gpsService.RemoveLocation();
+
                         Intent content1 = new Intent(this, typeof(MainActivity));
                         StartActivity(content1);
+                        this.Finish();
                         break;
                 }
             };

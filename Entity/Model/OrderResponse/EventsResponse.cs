@@ -8,9 +8,9 @@ namespace Entity.Model.OrderResponse
     {
         public EventsResponse()
         {
-            this.EVENTS = new List<EventResponse>();
+            this.EVENTS = new Dictionary<string, List<EventResponse>>();
         }
         public PartitialOrderResponse ORDER { get; set; }
-        public List<EventResponse> EVENTS { get; set; }
+        public Dictionary<string, List<EventResponse>> EVENTS { get; set; }
     }
 }

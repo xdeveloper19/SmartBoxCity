@@ -8,6 +8,7 @@ namespace Entity.Model.BoxViewModel
     {
         public int Id { get; set; }
         public int ImageView { get; set; }
+        public string AlarmDescription { get; set; }
         public string OrderId { get; set; }
         public string BoxId { get; set; }
     }

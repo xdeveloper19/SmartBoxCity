@@ -1,0 +1,90 @@
+﻿<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/driver_menu_layout"
+	android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:showIn="@layout/app_bar_main"
+    android:background = "@drawable/activity_stili">
+
+      <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"> 
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight = "8dp"> 
+
+             <TextView
+                android:text="Выберите нужный пункт:"
+                android:layout_marginTop = "100dp"
+                android:textStyle = "normal"
+                android:textSize = "21dp"
+                android:textColor = "#2C4C46"
+                android:layout_centerHorizontal = "true"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_title_box" /> 
+             <View
+                android:layout_width="match_parent"
+                android:layout_marginTop = "3dp"
+                android:layout_height="2dp"
+                android:layout_marginLeft = "30dp"
+                android:layout_marginRight = "30dp"
+                android:background = "#A2A5A4"
+                android:layout_below = "@+id/txt_title_box"
+                android:id = "@+id/view_box"/>
+            
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_marginTop = "15dp"
+                    android:layout_width="match_parent"
+                    android:layout_centerHorizontal ="true"
+                    android:layout_height="wrap_content"
+                    android:layout_below = "@+id/view_box"
+                    android:id="@+id/LinearLayoutMainBoxStatus" >
+                    <Button
+                        android:text="Контейнеры на машине"
+                        android:background = "@drawable/button_stili"
+                        android:textColor = "#FBF8F8"
+                        android:minWidth="25px"
+                        android:minHeight="25px"
+                        android:layout_marginTop = "10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/btn_boxes_car" />
+                    
+                    <Button
+                        android:text="Контейнеры на складе"
+                        android:background = "@drawable/button_stili"
+                        android:layout_marginTop = "10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor = "#FBF8F8"
+                        android:minWidth="25px"
+                        android:minHeight="25px"
+                        android:id="@+id/btn_boxes_depot" />
+                     
+                </LinearLayout>   
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop = "15dp"
+                android:layout_height="2dp"
+                android:layout_marginLeft = "80dp"
+                android:layout_marginRight = "80dp"
+                android:background = "#A2A5A4"
+                android:layout_below = "@+id/LinearLayoutMainBoxStatus"
+                android:id = "@+id/ViewBoxStatus2"/>
+
+        </RelativeLayout>
+      </ScrollView>
+</RelativeLayout>

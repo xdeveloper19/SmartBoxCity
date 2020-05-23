@@ -2,9 +2,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background = "@drawable/activity_stili"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
@@ -12,13 +12,13 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".ui.login.LoginActivity">
     <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:layout_height="match_parent">
         <RelativeLayout
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginRight = "8dp">
+            android:fitsSystemWindows="true">
 
              <TextView
                 android:text="Местоположение"
@@ -30,7 +30,7 @@
                 android:id="@+id/TextViewMapHaupt" /> 
             
             <android.support.v7.widget.CardView
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below = "@+id/TextViewMapHaupt"
                 android:layout_marginTop = "10dp">
@@ -42,132 +42,155 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop = "10dp">
 
-
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned = "false"
-                        android:orientation = "horizontal">
-                        <TextView
-                            android:textColor = "#2C4C46"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="left|center_vertical"
-                            android:padding="5dp"
-                            android:text="Откуда:"
-                            android:textSize="10sp"
-                            />
-                        <TextView
-                            android:id="@+id/MapEditFrom"
-                            android:textColor = "#475B57"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="left|center_vertical"
-                            android:padding="5dp"
-                            android:text="Подпольный переулок, 1Б, Ростов-на-Дону, Ростовская область"
-                            android:textSize="10sp"
-                            android:layout_alignParentRight = "true"
-                            />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned = "false"
-                        android:orientation = "horizontal">
-                        <TextView
-                            android:textColor = "#2C4C46"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="left|center_vertical"
-                            android:padding="5dp"
-                            android:text="Куда:"
-                            android:textSize="10sp"
-                            />
-
-                        <TextView
-                            android:id="@+id/MapEditTo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="left|center_vertical"
-                            android:padding="5dp"
-                            android:textColor = "#475B57"
-                            android:text="Крепостной переулок, 87, Ростов-на-Дону, Ростовская область"
-                            android:textSize="10sp"
-                            android:layout_alignParentRight = "true"
-                            android:layout_marginLeft = "20dp"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned = "false"
-                        android:orientation = "horizontal">
-                        <TextView
-                            android:textColor = "#2C4C46"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="left|center_vertical"
-                            android:padding="5dp"
-                            android:layout_alignParentRight = "true"
-                            android:text="Вес, кг:"
-                            android:textSize="10sp"
-                            />
-
-                       <TextView
-                            android:id="@+id/MapEditWeight"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="left|center_vertical"
-                            android:padding="5dp"
-                            android:text="10"
-                            android:textColor = "#475B57"
-                            android:textSize="10sp"
-                            android:layout_alignParentRight = "true"
-                            android:layout_marginLeft = "20dp"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:baselineAligned = "false"
-                        android:orientation = "horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textColor = "#2C4C46"
-                            android:gravity="left|center_vertical"
-                            android:padding="5dp"
-                            android:layout_alignParentRight = "true"
-                            android:text="ДхШхВ:"
-                            android:textSize="10sp"
-                            />
-
-                        <TextView
-                            android:id="@+id/MapEditLenhWidHeig"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="left|center_vertical"
-                            android:padding="5dp"
-                            android:textColor = "#475B57"
-                            android:text="0.80х1.20х1.00"
-                            android:textSize="10sp"
-                            android:layout_alignParentRight = "true"
-                            android:layout_marginLeft = "20dp"
-                            />         
-                    </LinearLayout>
-
-                    <fragment
-                        android:id="@+id/fragmentMap"
                         android:layout_width="match_parent"
-                        android:layout_marginTop = "10dp"
-                        android:layout_height="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:orientation = "horizontal">
+                        <TextView
+                            android:textColor = "@color/textclient"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:layout_weight="3"
+                            android:padding="1dp"
+                            android:text="Откуда:"
+                            android:textSize="12sp"
+                            />
+                        <TextView
+                            android:id="@+id/MapTextFrom"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:textSize="10sp"
+                            />
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background = "@color/colorMainLightBlue"
+                    />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:orientation = "horizontal">
+                         <TextView
+                            android:textColor = "@color/textclient"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="left|center_vertical"
+                            android:layout_weight="3"
+                            android:padding="1dp"
+                            android:text="Куда:"
+                            android:textSize="12sp"
+                            />
+                        <TextView
+                            android:id="@+id/MapTextTo"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="left|center_vertical"
+                            android:textSize="10sp"
+                            />
+
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background = "@color/colorMainLightBlue"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:orientation="horizontal">
+                        
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:gravity = "center"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">              
+                            <TextView
+                                android:textSize = "12dp"
+                                android:padding="6dp"
+                                android:gravity="right"
+                                android:layout_weight="1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textStyle = "normal"
+                                android:textColor="@color/textclient"
+                                android:text="Вес"/>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginLeft = "10dp"
+                                android:background="@color/colorMainLightBlue"/>
+                            <TextView
+                                android:textSize = "11dp"
+                                android:layout_margin="3dp" 
+                                android:textColor ="#FFFFFF"
+                                android:background="@drawable/button_stili"
+                                android:gravity="center"
+                                android:layout_weight="2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/MapTextWeight" />
+                      
+                        </LinearLayout>  
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorMainLightBlue"/>
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:gravity = "center"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                
+                            <TextView
+                                android:textSize = "12dp"
+                                android:padding="6dp"                                
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_weight="1"
+                                android:textColor="@color/textclient"
+                                android:text="ДхШхВ"/>
+                             <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginRight = "10dp"
+                                android:background="@color/colorMainLightBlue"/>
+                            <TextView
+                                android:textSize = "11dp"
+                                android:textColor ="#FFFFFF"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/button_stili"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/MapTextLenhWidHeig" />                                                               
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background = "@color/colorMainLightBlue"/>
+
+                    <com.google.android.gms.maps.MapView
+                        android:id="@+id/FragmentMapUser"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop = "10dp"                       
                         class="com.google.android.gms.maps.MapFragment"/>
-\
+                        
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </RelativeLayout>

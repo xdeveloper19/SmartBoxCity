@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -10,6 +9,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Entity.Model.OrderViewModel.OrderInfoViewModel;
+using Entity.Repository;
 
 namespace SmartBoxCity.Activity.Order
 {
@@ -33,7 +33,7 @@ namespace SmartBoxCity.Activity.Order
             return position;//Convert.ToInt64(orders[position].Id);
         }
 
-        
+
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
             View view = convertView;
@@ -49,7 +49,8 @@ namespace SmartBoxCity.Activity.Order
 
             btn.Click += async delegate
             {
-                OrderActivity content = new OrderActivity();
+                MainOrderStatusActivity content = new MainOrderStatusActivity();
+                StaticOrder.Order_id = orders[position].OrderName;
                 manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
             };
 

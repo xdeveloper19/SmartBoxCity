@@ -42,6 +42,7 @@
     <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
+    <MandroidI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -65,10 +66,13 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Activity\Box\BoxActivity.cs" />
     <Compile Include="Activity\Box\BoxListActivity.cs" />
     <Compile Include="Activity\Box\BoxListAdapter.cs" />
     <Compile Include="Activity\Box\ExpandableSensorDataAdapter.cs" />
+    <Compile Include="Activity\Box\MainBoxStatusActivity.cs" />
     <Compile Include="Activity\Driver\DriverContainerList.cs" />
+    <Compile Include="Activity\Driver\ManageBoxActivity.cs" />
     <Compile Include="Activity\Driver\TaskActivity.cs" />
     <Compile Include="Activity\Driver\TaskListAdapter.cs" />
     <Compile Include="Activity\Driver\TaskNotFoundActivity.cs" />
@@ -95,6 +99,7 @@
     <Compile Include="Activity\Order\MainOrderStatusActivity.cs" />
     <Compile Include="Activity\Order\ManageOrderActivity.cs" />
     <Compile Include="Activity\Order\MapActivity.cs" />
+    <Compile Include="Activity\Order\NotFoundOrdersActivity.cs" />
     <Compile Include="Activity\Order\OnExpandedListenerService.cs" />
     <Compile Include="Activity\Order\OrderActivity.cs" />
     <Compile Include="Activity\Order\OrderListStagesActivity.cs" />
@@ -105,7 +110,9 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\DatePickerFragment.cs" />
+    <Compile Include="Service\GPSService.cs" />
     <Compile Include="Service\HomeService.cs" />
+    <Compile Include="Service\MyLocationService.cs" />
     <Compile Include="Service\OrderAdapter.cs" />
     <Compile Include="Service\OrderData.cs" />
     <Compile Include="Service\SensorData.cs" />
@@ -532,6 +539,42 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_order_management.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\driver_box_management.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\driver_choice_box.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\modal_photo.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\modal_transmit_order.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\modal_video.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\driver_info_box.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\close_box.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\button_cancel.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\driver_menu_box.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\stagestylecurrent.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\stagestylefuture.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\stagestylepast.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

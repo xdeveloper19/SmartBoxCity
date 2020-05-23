@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Entity.Model
 {
-    public class GeoLocation
+    public class GeoLocation<T> 
     {
-        public string lat { get; set; }
-        public string lng { get; set; }
+        public T lat { get; set; }
+        public T lng { get; set; }
     }
 }

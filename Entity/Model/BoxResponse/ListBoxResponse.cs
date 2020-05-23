@@ -8,8 +8,10 @@ namespace Entity.Model.BoxResponse
     {
         public ListBoxResponse()
         {
-            this.CONTAINERS = new List<BoxResponse>();
+            this.CONTAINERS = new List<ContainerResponse>();
+            this.DEPOT_CONTAINERS = new List<ContainerResponse>();
         }
-        public List<BoxResponse> CONTAINERS { get; set; }
+        public List<ContainerResponse> CONTAINERS { get; set; }
+        public List<ContainerResponse> DEPOT_CONTAINERS { get; set; }
     }
 }

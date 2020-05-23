@@ -8,6 +8,6 @@ namespace Entity.Model
     {
         public string lat { get; set; }
         public string lng { get; set; }
-        public string gps_time { get; set; }
+        public DateTime gps_time { get; set; }
     }
 }

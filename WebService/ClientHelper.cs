@@ -15,7 +15,8 @@ namespace WebService
 
             var client = new HttpClient()
             {
-                BaseAddress = new Uri(URL)
+                BaseAddress = new Uri(URL),
+                Timeout = new TimeSpan(0,5,2)
                 //Set some other client defaults like timeout / BaseAddress
             };
             return client;
@@ -27,7 +28,8 @@ namespace WebService
             var client = new HttpClient()
             {
                 DefaultRequestHeaders = { Authorization = authValue },
-                BaseAddress = new Uri(URL)
+                BaseAddress = new Uri(URL),
+                Timeout = new TimeSpan(0, 5, 2)
                 //Set some other client defaults like timeout / BaseAddress
             };
             return client;
@@ -41,7 +43,8 @@ namespace WebService
             var client = new HttpClient()
             {
                 DefaultRequestHeaders = { Authorization = authValue },
-                BaseAddress = new Uri(URL)
+                BaseAddress = new Uri(URL),
+                Timeout = new TimeSpan(0, 5, 2)
                 //Set some other client defaults like timeout / BaseAddress
             };
 

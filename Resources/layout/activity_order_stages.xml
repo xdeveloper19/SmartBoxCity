@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/not_found_book_layout"
 	android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -18,11 +17,10 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginRight = "8dp">           
             
             <TextView
-                android:text="Местоположение"
+                android:text="Этапы заказа"
                 android:textColor = "#2C4C46"
                 android:layout_centerHorizontal = "true"
                 android:textAppearance="?android:attr/textAppearanceLarge"
@@ -41,8 +39,6 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_margin = "5dp"
-                    android:minWidth="25px"
-                    android:minHeight="25px"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/LinearLayoutOrderItsStagesHaupt">
@@ -50,355 +46,347 @@
                     <LinearLayout
                         android:orientation="horizontal"
                         android:gravity = "center"
-                        android:minWidth="25px"
-                        android:minHeight="25px"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/LinearLayoutOrderItsStages1" >
+                        android:layout_height="match_parent">
                         <TextView
-                            android:id="@+id/textOrderNumber"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="12dp"
-                            android:textColor = "#2C4C46"
+                            android:gravity="center"
+                            android:layout_weight="1"
+                            android:padding="12dp"              
+                            android:textAppearance="?android:attr/textAppearanceSmall"
                             android:textStyle = "normal"
                             android:text="Заказ:"
-                            android:textSize="12sp"/>
+                            android:textSize = "15dp"/>
                             
-
                         <TextView
-                            android:id="@+id/EditOrderNumber"
+                            android:id="@+id/OrderStageTxtId"
                             android:textStyle = "normal"
-                            android:textColor = "#475B57"
+                            android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_weight="1"
                             android:padding="12dp"
-                            android:text = "ea55d401-e2cb-49ca-9db0-adeae9f74774"
-                            android:textSize="9sp" />    
+                            android:textColor = "@color/colorMainBlue"
+                            android:textSize="17sp"/>    
                     </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft = "20dp"
+                        android:layout_marginRight = "20dp"
+                        android:background = "@color/colorMainLightBlue"/>
                     <LinearLayout
-                        android:orientation="horizontal"
-                        android:gravity = "center"
-                        android:minWidth="25px"
-                        android:minHeight="25px"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/LinearLayoutOrderItsStages2">
-                
-                        <TextView
-                            android:id="@+id/textSmallStatus"
-                            android:textSize = "12sp"
-                            android:padding="12dp"
+                        android:orientation="horizontal">
+                        
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:gravity = "center"
+                            android:layout_weight="1"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle = "normal"
-                            android:textColor = "#2C4C46"
-                            android:text="Статус :"/>
-                        <TextView
-                            android:text="Оплачено"
-                            android:textColor = "#19C109"
-                            android:padding="12dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/texPaymentStatus" />
+                            android:layout_height="wrap_content">              
+                            <TextView
+                                android:textSize = "14dp"
+                                android:padding="12dp"
+                                android:gravity="right"
+                                android:layout_weight="1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textStyle = "normal"
+                                android:textColor="@color/textclient"
+                                android:text="Статус"/>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginLeft = "20dp"
+                                android:background="@color/colorMainLightBlue"/>
+                            <TextView
+                                android:textSize = "11dp"
+                                android:textColor = "#19C109"
+                                android:layout_margin="3dp"                           
+                                android:gravity="center"
+                                android:layout_weight="2"
+                                android:padding="12dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/OrderStageTxtPaymentStatus" />
                       
-                    </LinearLayout>  
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:gravity = "center"
-                        android:minWidth="25px"
-                        android:minHeight="25px"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/LinearLayoutOrderItsStages3">
+                        </LinearLayout>  
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/colorMainLightBlue"/>
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:gravity = "center"
+                            android:layout_weight="1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
                 
-                        <TextView
-                            android:id="@+id/textSmallStatus"
-                            android:textSize = "12sp"
-                            android:padding="12dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle = "normal"
-                            android:textColor = "#2C4C46"
-                            android:text="Стоимость :"/>
-                        <TextView
-                            android:text = "900 руб."
-                            android:textColor ="#19C109"
-                            android:padding="12dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/texPaymentStatus" />                                                               
+                            <TextView
+                                android:textSize = "14dp"
+                                android:padding="12dp"                                
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:layout_weight="1"
+                                android:textColor="@color/textclient"
+                                android:text="Стоимость"/>
+                             <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginRight = "20dp"
+                                android:background="@color/colorMainLightBlue"/>
+                            <TextView
+                                android:textSize = "11dp"
+                                android:textColor ="#FFFFFF"
+                                android:layout_margin="5dp"
+                                android:background="@drawable/button_stili"
+                                android:layout_gravity="center"
+                                android:layout_weight="2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/OrderStageTxtCost" />                                                               
+                        </LinearLayout>
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_marginTop = "5dp"
                         android:layout_height="1dp"
-                        android:layout_marginLeft = "10dp"
-                        android:layout_marginRight = "10dp"
-                        android:background = "#A2A5A4"
-                        android:id = "@+id/ViewOrderStages1"/>
+                        android:layout_marginLeft = "20dp"
+                        android:layout_marginRight = "20dp"
+                        android:background = "@color/colorMainLightBlue"/>
 
                     <TextView
                         android:text="Этапы выполнения заказа"
                         android:textStyle = "normal"
                         android:textSize = "17sp"
                         android:layout_marginTop = "10dp"
-                        android:textColor = "#2C4C46"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:gravity = "center"                       
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/TextViewStagesHaupt" /> 
-
+                        android:layout_height="wrap_content"/> 
                     <LinearLayout
-                        android:orientation="horizontal"                       
-                        android:minWidth="25px"
-                        android:minHeight="25px"
-                        android:layout_marginTop = "10dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/LinearLayoutOrderItsStages4">
-                        <TextView
-                            android:background = "@drawable/teststyle1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/TextViewStep1" />
-                        <TextView
-                            android:text= "- Заявка"
-                            android:textStyle = "bold"
-                            android:textColor = "#19C109"
-                            android:layout_marginLeft = "10dp"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/textView2" />
+                        android:padding="10dp"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:orientation="horizontal"                       
+                            android:layout_marginTop = "10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:background = "@drawable/stagestylefuture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageRequest" />
+                            <TextView
+                                android:text= "- Заявка"
+                                android:textSize="13dp"
+                                android:textColor="#9FF38C"
+                                android:textStyle = "normal"
+                                android:layout_marginLeft = "10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageRequestValue" />
+                        </LinearLayout>
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="#A0A6A0"/>
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_marginTop = "2dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:background = "@drawable/stagestylefuture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageWaitTransport" />
+                            <TextView
+                                android:text="- Ожидание перевозки"
+                                android:textSize="13dp"
+                                android:textColor="@color/NameStageFuture"
+                                android:textStyle = "normal"
+                                android:layout_marginLeft = "10dp"                                
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageWaitTransportValue" />
+                        </LinearLayout>
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="#A0A6A0"/>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_marginTop = "2dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:background = "@drawable/stagestylefuture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageLading" />
+                            <TextView
+                                android:text=" - Погрузка"
+                                android:textSize="13dp"
+                                android:textStyle = "normal"
+                                android:textColor="@color/NameStageFuture"
+                                android:layout_marginLeft = "10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageLadingValue" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="#A0A6A0"/>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_marginTop = "2dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:background = "@drawable/stagestylefuture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageShipping" />
+                            <TextView
+                                android:text=" - Перевозка"
+                                android:textSize="13dp"
+                                android:textStyle = "normal"
+                                android:textColor="@color/NameStageFuture"
+                                android:layout_marginLeft = "10dp"                               
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageShippingValue" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="#A0A6A0"/>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_marginTop = "2dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:background = "@drawable/stagestylefuture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageWaitUnload" />
+                            <TextView
+                                android:text=" - Ожидание выгрузки"
+                                android:textSize="13dp"
+                                android:textStyle = "normal"
+                                android:textColor="@color/NameStageFuture"
+                                android:layout_marginLeft = "10dp"                               
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageWaitUnloadValue" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="#A0A6A0"/>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_marginTop = "2dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:background = "@drawable/stagestylefuture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageUnload" />
+                            <TextView
+                                android:text=" - Выгрузка"
+                                android:textSize="13dp"
+                                android:textColor="@color/NameStageFuture"
+                                android:textStyle = "normal"
+                                android:layout_marginLeft = "10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageUnloadValue" />
+                        </LinearLayout>
+
+                       <View
+                            android:layout_width="1dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="#A0A6A0"/>
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_marginTop = "2dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:background = "@drawable/stagestylefuture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageCompletion" />
+                            <TextView
+                                android:text=" - Завершение"
+                                android:textSize="13dp"
+                                android:textStyle = "normal"
+                                android:textColor="@color/NameStageFuture"
+                                android:layout_marginLeft = "10dp"                                
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageCompletionValue" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            android:background="#A0A6A0"/>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_marginTop = "2dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:background = "@drawable/stagestylefuture"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageEndCompletion" />
+                            <TextView
+                                android:text=" - Выполнен"
+                                android:textSize="13dp"
+                                android:textStyle = "normal"
+                                android:textColor="@color/NameStageFuture"
+                                android:layout_marginLeft = "10dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:id="@+id/StageEndCompletionValue" />
+                        </LinearLayout>
                     </LinearLayout>
-
-                    <TextView
-                        android:text="|"
-                        android:layout_marginTop = "10dp"
-                        android:layout_marginLeft = "8dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/TextViewDelimiter1" />
-
-                   <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_marginTop = "10dp"
-                        android:minWidth="25px"
-                        android:minHeight="25px"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/LinearLayoutOrderItsStages5">
-                        <TextView
-                            android:background = "@drawable/teststyle1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/TextViewStep1" />
-                        <TextView
-                            android:text="- Ожидание перевозки"
-                            android:textColor = "#19C109"
-                            android:textStyle = "bold"
-                            android:layout_marginLeft = "10dp"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/textView2" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:text="|"
-                        android:layout_marginTop = "10dp"
-                        android:layout_marginLeft = "8dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/TextViewDelimiter2" />
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:minWidth="25px"
-                        android:minHeight="25px"
-                        android:layout_marginTop = "10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/LinearLayoutOrderItsStages6">
-                        <TextView
-                            android:background = "@drawable/teststyle1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/TextViewStep1" />
-                        <TextView
-                            android:text=" - Погрузка"
-                            android:textStyle = "bold"
-                            android:layout_marginLeft = "10dp"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/textView2" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:text="|"
-                        android:layout_marginTop = "10dp"
-                        android:layout_marginLeft = "8dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/TextViewDelimiter3" />
-
-                   <LinearLayout
-                        android:orientation="horizontal"
-                        android:minWidth="25px"
-                        android:minHeight="25px"
-                        android:layout_marginTop = "10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/LinearLayoutOrderItsStages7">
-                        <TextView
-                            android:background = "@drawable/teststyle1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/TextViewStep1" />
-                        <TextView
-                            android:text=" - Перевозка"
-                            android:textStyle = "bold"
-                            android:layout_marginLeft = "10dp"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/textView2" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:text="|"
-                        android:layout_marginTop = "10dp"
-                        android:layout_marginLeft = "8dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/TextViewDelimiter4" />
-
-                   <LinearLayout
-                        android:orientation="horizontal"
-                        android:minWidth="25px"
-                        android:minHeight="25px"
-                        android:layout_marginTop = "10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/LinearLayoutOrderItsStages8">
-                        <TextView
-                            android:background = "@drawable/teststyle1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/TextViewStep1" />
-                        <TextView
-                            android:text=" - Ожидание выгрузки"
-                            android:textStyle = "bold"
-                            android:layout_marginLeft = "10dp"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/textView2" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:text="|"
-                        android:layout_marginTop = "10dp"
-                        android:layout_marginLeft = "8dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/TextViewDelimiter5" />
-
-                   <LinearLayout
-                        android:orientation="horizontal"
-                        android:minWidth="25px"
-                        android:minHeight="25px"
-                        android:layout_marginTop = "10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/LinearLayoutOrderItsStages9">
-                        <TextView
-                            android:background = "@drawable/teststyle1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/TextViewStep1" />
-                        <TextView
-                            android:text=" - Выгрузка"
-                            android:textStyle = "bold"
-                            android:layout_marginLeft = "10dp"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/textView2" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:text="|"
-                        android:layout_marginTop = "10dp"
-                        android:layout_marginLeft = "8dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/TextViewDelimiter6" />
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:minWidth="25px"
-                        android:minHeight="25px"
-                        android:layout_marginTop = "10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/LinearLayoutOrderItsStages10">
-                        <TextView
-                            android:background = "@drawable/teststyle1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/TextViewStep1" />
-                        <TextView
-                            android:text=" - Завершение"
-                            android:textStyle = "bold"
-                            android:layout_marginLeft = "10dp"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/textView2" />
-                    </LinearLayout>
-
-                    <TextView
-                        android:text="|"
-                        android:layout_marginTop = "10dp"
-                        android:layout_marginLeft = "8dp"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/TextViewDelimiter7" />
-
-                  <LinearLayout
-                        android:orientation="horizontal"
-                        android:minWidth="25px"
-                        android:minHeight="25px"
-                        android:layout_marginTop = "10dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/LinearLayoutOrderItsStages11">
-                        <TextView
-                            android:background = "@drawable/teststyle1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/TextViewStep1" />
-                        <TextView
-                            android:text=" - Выполнен"
-                            android:textStyle = "bold"
-                            android:layout_marginLeft = "10dp"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:id="@+id/textView2" />
-                    </LinearLayout>
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_marginTop = "10dp"
@@ -406,12 +394,9 @@
                         android:layout_height="1dp"
                         android:layout_marginLeft = "80dp"
                         android:layout_marginRight = "80dp"
-                        android:background = "#A2A5A4"
-                        android:id = "@+id/ViewOrderStages2"/>
-                       
+                        android:background = "@color/colorMainLightBlue"/>             
                 </LinearLayout>
             </android.support.v7.widget.CardView>
         </RelativeLayout>
       </ScrollView>
 </RelativeLayout>
-

@@ -194,6 +194,15 @@ namespace SmartBoxCity.Activity.Home
                     Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                     var number = 0;
 
+                    if (o_data.ResponseData.ORDERS.Count == 0)
+                    {
+                        Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                        NotFoundOrdersActivity content = new NotFoundOrdersActivity();
+                        transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+
+                        return;
+                    }
+
                     foreach (var order in o_data.ResponseData.ORDERS)
                     {
                         number++;

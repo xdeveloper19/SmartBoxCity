@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using Plugin.Settings;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -307,17 +309,33 @@ namespace WebService.Client
         /// Получение геоданных заказа.
         /// </summary>
         /// <returns></returns>
-        public static async Task<ServiceResponseObject<GeoResponseData>> GeoOrder()
+        public static async Task<ServiceResponseObject<GeoResponseData>> GeoOrder(string ORDER_ID)
         {
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync($"order/HI9139663364/geo");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://smartboxcity.ru:8003/order/" + ORDER_ID + "/geo");
+                request.Method = "GET";
+                request.Credentials = new NetworkCredential(CrossSettings.Current.GetValueOrDefault("token", ""), "");
 
-                string s_result;
-                using (HttpContent responseContent = response.Content)
-                {
-                    s_result = await responseContent.ReadAsStringAsync();
-                }
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                Stream responseStream = response.GetResponseStream();
+
+                StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+
+                string s_result = myStreamReader.ReadToEnd();
+
+                myStreamReader.Close();
+                responseStream.Close();
+
+                response.Close();
+                //HttpResponseMessage response = await _httpClient.GetAsync($"order/{ORDER_ID}/geo");
+
+                //string s_result;
+                //using (HttpContent responseContent = response.Content)
+                //{
+                //    s_result = await responseContent.ReadAsStringAsync();
+                //}
 
                 ServiceResponseObject<GeoResponseData> o_data =
                     new ServiceResponseObject<GeoResponseData>();
@@ -354,11 +372,11 @@ namespace WebService.Client
         /// События заказа.
         /// </summary>
         /// <returns></returns>
-        public static async Task<ServiceResponseObject<EventsResponse>> Events()
+        public static async Task<ServiceResponseObject<EventsResponse>> Events(string ORDER_ID)
         {
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync($"order/HI9139663364/events");
+                HttpResponseMessage response = await _httpClient.GetAsync($"order/{ORDER_ID}/events");
 
                 string s_result;
                 using (HttpContent responseContent = response.Content)

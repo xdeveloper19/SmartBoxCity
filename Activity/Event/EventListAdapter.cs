@@ -32,7 +32,7 @@ namespace SmartBoxCity.Activity.Event
 
         public override long GetItemId(int position)
         {
-            return events[position].Id;
+            return events[position].id;
         }
 
 
@@ -40,12 +40,12 @@ namespace SmartBoxCity.Activity.Event
         {
             View view = convertView;
             if (view == null)
-            {
                 view = LayoutInflater.From(context).Inflate(Resource.Layout.EventCardView, null);
-                view.FindViewById<TextView>(Resource.Id.EventCardTextName).Text = events[position].Name;
-                view.FindViewById<TextView>(Resource.Id.EventCardTextTime).Text = events[position].Time;
-                view.FindViewById<TextView>(Resource.Id.EventCardTextDate).Text = events[position].Date;
-            }
+
+            view.FindViewById<TextView>(Resource.Id.EventCardTextName).Text = events[position].Name;
+            view.FindViewById<TextView>(Resource.Id.EventCardTextTime).Text = events[position].Time;
+            view.FindViewById<TextView>(Resource.Id.EventCardTextDate).Text = events[position].Date;
+            
             return view;
         }
 

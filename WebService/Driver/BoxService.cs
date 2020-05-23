@@ -55,7 +55,8 @@ namespace WebService.Driver
                 o_data.Status = response.StatusCode;// а почему переменная container_id пустая
                 o_data.ResponseData = new ListBoxResponse
                 {
-                    CONTAINERS = box.CONTAINERS
+                    CONTAINERS = box.CONTAINERS,
+                    DEPOT_CONTAINERS = box.DEPOT_CONTAINERS
                 };
                 return o_data;
             }//can not access to close stream 
@@ -208,7 +209,7 @@ namespace WebService.Driver
         /// Передать контейнер другому водителю.
         /// </summary>
         /// <returns></returns>
-        public static async Task<ServiceResponseObject<SuccessResponse>> Detach(string CONTAINER_ID)
+        public static async Task<ServiceResponseObject<SuccessResponse>> TransmitDriver(string CONTAINER_ID)
         {
             try
             {

@@ -1,5 +1,7 @@
-﻿using Entity.Model.OrderResponse;
+﻿using Entity.Model;
+using Entity.Model.OrderResponse;
 using Entity.Model.OrderViewModel.OrderInfoViewModel;
+using EntityLibrary.Model.OrderResponse;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,6 +18,23 @@ namespace Entity.Repository
         /// Идентификатор заказа.
         /// </summary>
         public static string Order_id { get; set; }
+
+        /// <summary>
+        /// Геоданные заказа.
+        /// </summary>
+        public static List<GeoLocation<double>> way_points { get; set; }
+        /// <summary>
+        /// Количество событий.
+        /// </summary>
+        public static string Event_Count { get; set; }
+        /// <summary>
+        /// Статус оплаты.
+        /// </summary>
+        public static string Payment_Status { get; set; }
+        /// <summary>
+        /// Стоимость.
+        /// </summary>
+        public static string Payment_Amount { get; set; }
         /// <summary>
         /// Город отправления.
         /// </summary>
@@ -108,6 +127,16 @@ namespace Entity.Repository
         /// Почта получателя.
         /// </summary>
         public static string Receiver { get; set; }
+
+        /// <summary>
+        /// Идентификатор контейнера.
+        /// </summary>
+        public static string Container_Id { get; set; }
+        
+        /// <summary>
+        /// Номер текущего этапа заказа.
+        /// </summary>
+        public static string Order_Stage_Id { get; set; }
         /// <summary>
         /// Тип погрузки.
         /// </summary>
@@ -140,6 +169,35 @@ namespace Entity.Repository
             Cargo_loading = model.cargo_loading;
         }
 
+
+        /// <summary>
+        /// Добавление информации о заказе.
+        /// </summary>
+        /// <param name="model"></param>
+        public static void AddInfoOrder(OrderParameters response)
+        {
+            Inception_address = response.inception_address;
+            Inception_lat = response.inception_lat;
+            Inception_lng = response.inception_lng;
+            Destination_address = response.destination_address;
+            Destination_lat = response.destination_lat;
+            Destination_lng = response.destination_lng;
+            Length = response.length;
+            Width = response.width;
+            Height = response.height;
+            Weight = response.weight;
+            Qty = response.qty;
+            Cargo_type = response.cargo_type;
+            Cargo_class = response.cargo_class;
+            Insurance = response.insurance;
+            Container_Id = response.container_id;
+            Event_Count = response.event_count;
+            Payment_Amount = response.payment_amount;
+            Payment_Status = response.payment_status;
+            Order_id = response.id;
+            Order_Stage_Id = response.order_stage_id;
+        }
+
         /// <summary>
         /// Добавление информации о расчете доставки.
         /// </summary>
@@ -154,6 +212,25 @@ namespace Entity.Repository
             Insurance_amount = response.insurance_amount;
             Inception_city = response.inception_city;
             Destination_city = response.destination_city;
+        }
+
+
+        /// <summary>
+        /// Добавление геоданных заказа.
+        /// </summary>
+        /// <param name="wp"></param>
+        public static void AddWayPoints(List<GeoLocation<string>> wp)
+        {
+            way_points = new List<GeoLocation<double>>(wp.Capacity);
+
+            for (int i = 0; i < wp.Count; i++)
+            {
+                way_points.Add(new GeoLocation<double>
+                {
+                    lat = Convert.ToDouble(wp[i].lat.Replace(".", ",")),
+                    lng = Convert.ToDouble(wp[i].lng.Replace(".", ","))
+                });
+            }
         }
     }
 }

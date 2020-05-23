@@ -1,7 +1,10 @@
 ﻿using Entity.Model;
+using Entity.Model.TaskResponse;
 using Newtonsoft.Json;
+using Plugin.Settings;
 using System;
-using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +13,8 @@ namespace WebService.Driver
 {
     public class TaskService
     {
+        //eminem river
+        //Aka - Right now
         private static HttpClient _httpClient;
 
         /// <summary>
@@ -25,43 +30,68 @@ namespace WebService.Driver
         /// Получение задач.
         /// </summary>
         /// <returns></returns>
-        public static async Task<ServiceResponseObject<BaseResponseObject>> GetTasks()
+        public static async Task<ServiceResponseObject<ListTaskResponse>> GetTasks()
         {
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync($"tasks");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://smartboxcity.ru:8003/tasks");
+                request.Method = "GET";
+                request.Credentials = new NetworkCredential(CrossSettings.Current.GetValueOrDefault("token", ""), "");
 
-                string s_result;
-                using (HttpContent responseContent = response.Content)
-                {
-                    s_result = await responseContent.ReadAsStringAsync();
-                }
+                var response = (HttpWebResponse)request.GetResponse();
 
-                ServiceResponseObject<BaseResponseObject> o_data =
-                    new ServiceResponseObject<BaseResponseObject>();
+                Stream responseStream = response.GetResponseStream();
+
+
+
+                StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+
+                string s_result = myStreamReader.ReadToEnd();
+
+                myStreamReader.Close();
+                responseStream.Close();
+
+                response.Close();
+                //HttpResponseMessage response = await _httpClient.GetAsync($"tasks");
+
+                //string s_result;
+                //using (HttpContent responseContent = response.Content)
+                //{
+                //    s_result = await responseContent.ReadAsStringAsync();
+                //}
+
+                ServiceResponseObject<ListTaskResponse> o_data =
+                    new ServiceResponseObject<ListTaskResponse>();
 
                 if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
-                    //ErrorResponseObject error = new ErrorResponseObject();
-                    //error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
-                    //o_data.Status = response.StatusCode;
-                    //o_data.Message = error.Errors[0];
-                    //return o_data;
+                    ErrorResponseObject error = new ErrorResponseObject();
+                    error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                    o_data.Status = response.StatusCode;
+                    o_data.Message = error.Errors[0];
+                    return o_data;
                 }
-                //var order = JsonConvert.DeserializeObject<ListResponse<OrderResponse, ArchiveResponse>>(s_result);
+
+                var tasks = JsonConvert.DeserializeObject<ListTaskResponse>(s_result);
                 o_data.Message = "Успешно!";
                 o_data.Status = response.StatusCode;// а почему переменная container_id пустая
-                //o_data.ResponseData = new ListResponse<OrderResponse, ArchiveResponse>
-                //{
-                //    ORDERS = order.ORDERS,
-                //    ARCHIVE = order.ARCHIVE
-                //};
+                o_data.ResponseData = new ListTaskResponse
+                {
+                    DRIVER  = tasks.DRIVER,
+                    TASKS = tasks.TASKS,
+                    MAP_WAYPOINTS = tasks.MAP_WAYPOINTS,
+                    CONTAINERS = tasks.CONTAINERS
+                };
                 return o_data;
             }//can not access to close stream 
             catch (Exception ex)
             {
+                ServiceResponseObject<ListTaskResponse> o_data =
+                   new ServiceResponseObject<ListTaskResponse>();
 
-                return null;
+                o_data.Message = ex.Message;
+                o_data.Status = System.Net.HttpStatusCode.InternalServerError;
+                return o_data;
             }
         }
 
@@ -74,6 +104,24 @@ namespace WebService.Driver
         {
             try
             {
+                //HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://smartboxcity.ru:8003/task/" + task_id + "/done?container_id=" + box_id);
+                //request.Method = "GET";
+                //request.Credentials = new NetworkCredential(CrossSettings.Current.GetValueOrDefault("token", ""), "");
+
+                //var response = (HttpWebResponse)request.GetResponse();
+
+                //Stream responseStream = response.GetResponseStream();
+
+
+
+                //StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+
+                //string s_result = myStreamReader.ReadToEnd();
+
+                //myStreamReader.Close();
+                //responseStream.Close();
+
+                //response.Close();
                 HttpResponseMessage response = await _httpClient.GetAsync($"task/{task_id}/done?container_id={box_id}");
 
                 string s_result;
@@ -109,7 +157,7 @@ namespace WebService.Driver
                                     new ServiceResponseObject<SuccessResponse>();
                 o_data.ResponseData.Message = ex.Message;
                 o_data.Message = ex.Message;
-                o_data.Status = System.Net.HttpStatusCode.BadRequest;
+                o_data.Status = System.Net.HttpStatusCode.InternalServerError;
                 return o_data;
             }
         }
@@ -123,13 +171,31 @@ namespace WebService.Driver
         {
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync($"task/abort?busy_comment={comment}");
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://smartboxcity.ru:8003/task/abort?busy_comment=" + comment);
+                request.Method = "GET";
+                request.Credentials = new NetworkCredential(CrossSettings.Current.GetValueOrDefault("token", ""), "");
 
-                string s_result;
-                using (HttpContent responseContent = response.Content)
-                {
-                    s_result = await responseContent.ReadAsStringAsync();
-                }
+                var response = (HttpWebResponse)request.GetResponse();
+
+                Stream responseStream = response.GetResponseStream();
+
+
+
+                StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+
+                string s_result = myStreamReader.ReadToEnd();
+
+                myStreamReader.Close();
+                responseStream.Close();
+
+                response.Close();
+                //HttpResponseMessage response = await _httpClient.GetAsync($"task/abort?busy_comment={comment}");
+
+                //string s_result;
+                //using (HttpContent responseContent = response.Content)
+                //{
+                //    s_result = await responseContent.ReadAsStringAsync();
+                //}
 
                 ServiceResponseObject<SuccessResponse> o_data =
                     new ServiceResponseObject<SuccessResponse>();
@@ -156,9 +222,9 @@ namespace WebService.Driver
             {
                 ServiceResponseObject<SuccessResponse> o_data =
                                     new ServiceResponseObject<SuccessResponse>();
-                o_data.ResponseData.Message = ex.Message;
+                //o_data.ResponseData.Message = ex.Message;
                 o_data.Message = ex.Message;
-                o_data.Status = System.Net.HttpStatusCode.BadRequest;
+                o_data.Status = System.Net.HttpStatusCode.InternalServerError;
                 return o_data;
             }
         }

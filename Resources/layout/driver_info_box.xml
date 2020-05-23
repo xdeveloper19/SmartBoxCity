@@ -1,0 +1,382 @@
+﻿<LinearLayout
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin"
+    android:background = "@drawable/activity_stili">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+             <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:text="Информация о контейнере"
+                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/textclient"/>
+             <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="5dp"
+                android:background="#BFE2ED"/>
+             <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:cardElevation="4dp"
+                card_view:cardUseCompatPadding="true"
+                card_view:cardCornerRadius="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation = "vertical">           
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:layout_margin = "10dp">          
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation = "horizontal"
+                            android:id = "@+id/BoxLinearId"
+                            android:layout_marginBottom = "8dp"
+                            android:baselineAligned="true">
+                            <TextView
+                                android:text="Контейнер:"
+                                android:layout_weight="1"
+                                android:gravity = "center"  
+                                android:textSize="18dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor = "@color/textclient"/>
+                            <TextView
+                                android:textColor="@color/colorMainBlue"
+                                android:layout_weight="1"
+                                android:textSize="20dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity = "center"              
+                                android:id="@+id/BoxTextIdValue"/>
+                        </LinearLayout> 
+                        
+                        <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/edittext_stili"
+                            android:padding = "5dp"
+                            android:id="@+id/BoxScrollSensors"
+                            android:layout_below = "@+id/BoxLinearId">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:orientation = "horizontal">
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation = "vertical">
+                                        <TextView
+                                            android:text="Батарея, %"
+                                            android:layout_gravity="center"
+                                            android:textColor = "@color/textclient"
+                                            android:textSize="15dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content" />
+                                        <TextView
+                                            android:textSize="13dp"
+                                            android:textColor="@color/colorMainLightBlue"
+                                            android:background="@drawable/button_stili"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:id="@+id/BoxTexBattery"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft = "14dp"
+                                        android:orientation = "vertical">
+                                        <TextView
+                                            android:text="Вес, кг"
+                                            android:textSize="15dp"
+                                            android:layout_gravity="center"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor = "@color/textclient"/>
+                                        <TextView
+                                            android:textSize="13dp"
+                                            android:textColor="@color/colorMainLightBlue"
+                                            android:background="@drawable/button_stili"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:id="@+id/BoxTexWeight" />
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft = "14dp"
+                                        android:orientation = "vertical">
+                                        <TextView
+                                            android:text="Температура, C°"
+                                            android:layout_gravity="center"
+                                            android:textSize="15dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor = "@color/textclient"/>
+                                        <TextView
+                                            android:textColor="@color/colorMainLightBlue"
+                                            android:background="@drawable/button_stili"
+                                            android:textSize="13dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity = "center"
+                                            android:id="@+id/BoxTextTemperature" />
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft = "14dp"
+                                        android:orientation = "vertical">
+                                        <TextView
+                                            android:text="Влажность, %"
+                                            android:textSize="15dp"
+                                            android:layout_gravity="center"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor = "@color/textclient" />
+                                        <TextView                                  
+                                            android:textColor="@color/colorMainLightBlue"
+                                            android:background="@drawable/button_stili"
+                                            android:textSize="13dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity = "center"
+                                            android:id="@+id/BoxTextHumidity" />
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft = "14dp"
+                                        android:orientation = "vertical">
+                                        <TextView
+                                            android:text="Освещенность, лм"
+                                            android:layout_gravity="center"
+                                            android:textSize="15dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textColor = "@color/textclient" />
+                                        <TextView
+                                            android:textColor="@color/colorMainLightBlue"
+                                            android:background="@drawable/button_stili"
+                                            android:textSize="13dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity = "center"
+                                            android:id="@+id/BoxTextIllumination" />
+                                    </LinearLayout>                   
+                            </LinearLayout>
+                        </HorizontalScrollView>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/BoxScrollSensors"
+                            android:id="@+id/BoxLinearOrderState"
+                            android:orientation="horizontal">               
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation = "vertical"
+                                android:layout_alignParentRight = "true">
+                                <TextView
+                                    android:text="Замок"
+                                    android:textSize="15dp"
+                                    android:textColor = "@color/textclient"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity = "center"/>
+                                <TextView
+                                    android:textSize="13dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity = "center"            
+                                    android:id="@+id/BoxTextFold" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/edittext_stili"
+                                android:layout_weight="1"
+                                android:orientation = "vertical">
+                                <TextView
+                                    android:text="Состояние"
+                                    android:textSize="15dp"
+                                    android:padding="5dp"
+                                    android:layout_weight="1"
+                                    android:textColor = "@color/textclient"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity = "center"/>
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginRight="2dp"
+                                    android:background="@color/colorMainLightBlue"/>
+                                <TextView
+                                    android:textSize="12dp"
+                                    android:padding="3dp"
+                                    android:layout_weight="1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity = "center"            
+                                    android:id="@+id/BoxTextLock" />
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginRight="2dp"
+                                    android:background="@color/colorMainLightBlue"/>
+                                <Button                    
+                                    android:textSize="13dp"
+                                    android:textColor="@color/colorMainBlue"
+                                    android:padding="5dp"          
+                                    android:background="?android:attr/selectableItemBackground"
+                                    android:layout_gravity="center"                                    
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="30dp"
+                                    android:id="@+id/btn_fold" />
+                                
+                            </LinearLayout>                  
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation = "vertical">
+                                <TextView
+                                    android:text="Ролета"
+                                    android:textSize="15dp"
+                                    android:textColor = "@color/textclient"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity = "center"/>
+                                <TextView
+                                    android:textSize="13dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity = "center"            
+                                    android:id="@+id/BoxTextGate" />
+                            </LinearLayout>                           
+                        </LinearLayout>
+                
+
+                        
+                          <TextView
+                                android:text="Тревоги"
+                                android:textSize="18dp"
+                                android:layout_below="@+id/BoxLinearOrderState"
+                                android:id="@+id/txt_title_alarms"
+                                android:textColor = "@color/textclient"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent = "true"
+                                android:minWidth="25px"
+                                android:minHeight="25px"/>
+                         <HorizontalScrollView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/edittext_stili"
+                            android:padding = "5dp"
+                            android:id="@+id/BoxScrollAlarms"
+                            android:layout_below = "@+id/txt_title_alarms">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:id="@+id/BoxLinearAlarms"
+                                android:orientation = "horizontal">
+                                    
+                                    
+                            </LinearLayout>
+                        </HorizontalScrollView>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop = "10dp"
+                            android:layout_marginRight = "20dp"
+                            android:orientation = "vertical"
+                            android:layout_centerHorizontal = "true"
+                            android:id = "@+id/BoxLinearEvents"
+                            android:layout_below = "@+id/BoxScrollAlarms">
+                            <TextView
+                                android:text="События"
+                                android:textSize="18dp"
+                                android:textColor = "@color/textclient"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity = "center"
+                                android:minWidth="25px"
+                                android:minHeight="25px"/>
+                            <TextView
+                                android:textColor="@color/colorMainBlue"
+                                android:textSize="13dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity = "center"            
+                                android:id="@+id/BoxTextEvents" />
+                        </LinearLayout>
+                        
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation = "horizontal">
+                         <Button
+                            android:textColor="@color/colorMainLightBlue"
+                            android:background="@drawable/button_stili"
+                            android:id="@+id/BoxButtonPhoto"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize = "10dp"
+                            android:text = "Фото"
+                            android:layout_weight = "1"/>
+                         <Button
+                            android:textColor="@color/colorMainLightBlue"
+                            android:background="@drawable/button_stili"
+                            android:id="@+id/BoxButtonDetach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text = "Прикрепить/открепить"
+                            android:layout_weight = "1"
+                            android:textSize = "10dp"/>
+                         <Button
+                            android:textColor="@color/colorMainLightBlue"
+                            android:background="@drawable/button_stili"
+                            android:id="@+id/BoxButtonVideo"
+                            android:text = "Видео"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight = "1"
+                            android:textSize = "10dp"/>
+                       
+                    </LinearLayout> 
+
+                </LinearLayout>
+             </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
