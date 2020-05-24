@@ -179,8 +179,8 @@ namespace SmartBoxCity.Activity.Order
                     var length = double.Parse(o_data.ResponseData.ORDER.length, CultureInfo.InvariantCulture);
                     var width = double.Parse(o_data.ResponseData.ORDER.width, CultureInfo.InvariantCulture);
                     var height = double.Parse(o_data.ResponseData.ORDER.height, CultureInfo.InvariantCulture);
-                    var sum = length * width * height;
-                    LenhWidHeig.Text = sum.ToString();
+                    var sum = length.ToString() + "X" + width.ToString() + "X" + height.ToString();
+                    LenhWidHeig.Text = sum;
                 }
                 var way_points = o_data.ResponseData.MAP_WAYPOINTS;
                 StaticOrder.AddWayPoints(way_points);

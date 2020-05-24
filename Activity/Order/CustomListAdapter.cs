@@ -43,9 +43,18 @@ namespace SmartBoxCity.Activity.Order
             view.FindViewById<TextView>(Resource.Id.txtFrom).Text = orders[position].Inception;
             view.FindViewById<TextView>(Resource.Id.txtWhere).Text = orders[position].Destination;
             view.FindViewById<TextView>(Resource.Id.txtPrice).Text = orders[position].Price;
-            view.FindViewById<TextView>(Resource.Id.txtDate).Text = orders[position].Date;
+            var txt_date = view.FindViewById<TextView>(Resource.Id.txtDate);
             view.FindViewById<TextView>(Resource.Id.txtOrderName).Text = orders[position].OrderName;
             var btn = view.FindViewById<Button>(Resource.Id.btn_alarms);
+
+            string date = orders[position].Date;
+            string[] words = date.Split(' ');
+            txt_date.Text = "";
+
+            foreach (var word in words)
+            {
+                txt_date.Text += word + "\n";
+            }
 
             btn.Click += async delegate
             {

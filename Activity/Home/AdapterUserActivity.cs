@@ -87,6 +87,7 @@ namespace SmartBoxCity.Activity.Home
             var btn_make_photo = view.FindViewById<Button>(Resource.Id.btn_make_photo);
             var btn_make_video = view.FindViewById<Button>(Resource.Id.btn_make_video);
             var btn_order_management = view.FindViewById<Button>(Resource.Id.btn_order_management);
+
             btn_pass_delivery_service.Click += delegate
             {
                 try
@@ -104,7 +105,7 @@ namespace SmartBoxCity.Activity.Home
                 }
             };
 
-            btn_pay.Enabled = (orders[position].order_stage_id == Stages.WaitUnloading.ToString()) ? true : false;
+            btn_pay.Enabled = (orders[position].order_stage_id == "5") ? true : false;
 
             btn_pay.Click += delegate
             {
@@ -273,6 +274,7 @@ namespace SmartBoxCity.Activity.Home
                 ManageOrderService.InitializeClient(client);
                 var o_data = new ServiceResponseObject<SuccessResponse>();
                 o_data = await ManageOrderService.MakePayment(StaticOrder.Order_id);
+
                 if (o_data.Status == HttpStatusCode.OK)
                 {
                     alert.Dispose();
@@ -284,6 +286,10 @@ namespace SmartBoxCity.Activity.Home
                     });
                     Dialog dialog1 = alert1.Create();
                     dialog1.Show();
+
+                    
+                    UserActivity content = new UserActivity();
+                    manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
                 }
                 else
                 {

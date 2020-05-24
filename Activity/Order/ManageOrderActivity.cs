@@ -23,7 +23,7 @@ using WebService.Client;
 
 namespace SmartBoxCity.Activity.Order
 {
-    public enum Stages
+    public enum Stages: int
     {
         Request = 1,
         WaitLoading,
@@ -94,13 +94,6 @@ namespace SmartBoxCity.Activity.Order
 
             GetOrderParameters();
 
-            btn_Lock.Enabled = (StaticOrder.Order_Stage_Id == Stages.Request.ToString() || 
-                StaticOrder.Order_Stage_Id == Stages.Transportation.ToString() ||
-               StaticOrder.Order_Stage_Id == Stages.Finish.ToString() || 
-               StaticOrder.Order_Stage_Id == Stages.Completed.ToString()) ? false: true;
-
-            btn_Pay.Enabled = (StaticOrder.Order_Stage_Id == Stages.WaitUnloading.ToString()) ? true : false;
-
             btn_Lock.Click += delegate
             {
                 
@@ -120,7 +113,7 @@ namespace SmartBoxCity.Activity.Order
                 else if (btn_Lock.Text == "Закрыть")
                 {
                     alert.SetTitle("Закрытие замка");
-                    if (StaticOrder.Order_id == Stages.Loading.ToString())
+                    if (StaticOrder.Order_Stage_Id == "3")
                     {
                         LayoutInflater layoutInflater = LayoutInflater.From(Activity);
                         View dialogView = layoutInflater.Inflate(Resource.Layout.modal_transmit_order, null);
@@ -146,7 +139,7 @@ namespace SmartBoxCity.Activity.Order
                             Time.Click += Time_Click;
                         };
                     }
-                    else if (StaticOrder.Order_id == Stages.Unloading.ToString())
+                    else if (StaticOrder.Order_Stage_Id == "6")
                     {
                         LayoutInflater layoutInflater = LayoutInflater.From(Activity);
                         View dialogView = layoutInflater.Inflate(Resource.Layout.modal_transmit_order, null);
@@ -561,6 +554,14 @@ namespace SmartBoxCity.Activity.Order
                 {
                     Gate.Text = "Неизвестно";
                 }
+
+                btn_Lock.Enabled = (StaticOrder.Order_Stage_Id == "1" ||
+                StaticOrder.Order_Stage_Id == "4" ||
+                StaticOrder.Order_Stage_Id == "7" ||
+                StaticOrder.Order_Stage_Id == "5" ||
+                StaticOrder.Order_Stage_Id == "8") ? false : true;
+
+                btn_Pay.Enabled = (StaticOrder.Order_Stage_Id == "5") ? true : false;
 
             }
             else

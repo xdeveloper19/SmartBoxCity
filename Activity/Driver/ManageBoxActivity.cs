@@ -106,6 +106,9 @@ namespace SmartBoxCity.Activity.Driver
                 Lock.Text = (o_data.ResponseData.SENSORS_STATUS.Lock == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.Lock;
                 Fold.Text = (o_data.ResponseData.SENSORS_STATUS.fold == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.fold;
                 Events.Text = (o_data.ResponseData.ORDER.event_count == null) ? "неизвестно" : o_data.ResponseData.ORDER.event_count;
+
+                StaticOrder.AddInfoOrder(o_data.ResponseData.ORDER);
+                StaticBox.AddInfoSensors(o_data.ResponseData.SENSORS_STATUS);
                 //Weight.Text = o_data.ResponseData.SENSORS_STATUS.Weight;
                 //Temperature.Text = o_data.ResponseData.SENSORS_STATUS.Temperature;
                 //Battery.Text = o_data.ResponseData.SENSORS_STATUS.Battery;

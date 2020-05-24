@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Entity.Model.AlarmResponse;
 using System.Text;
 
 namespace Entity.Model.BoxResponse
@@ -9,7 +10,7 @@ namespace Entity.Model.BoxResponse
         public ContainerResponse()
         {
             this.sensors_status = new SensorResponse();
-            this.alarms_status = new List<AlarmResponse>();
+            this.alarms_status = new List<AlarmResponseData>();
         }
         public string id { get; set; }
         public string driver_id { get; set; }
@@ -20,6 +21,6 @@ namespace Entity.Model.BoxResponse
         public string order_id { get; set; }
         public SensorResponse sensors_status { get; set; }
         public int event_count { get; set; }
-        public List<AlarmResponse> alarms_status { get; set; }
+        public List<AlarmResponseData> alarms_status { get; set; }
     }
 }

@@ -71,6 +71,8 @@
     <Compile Include="Activity\Box\BoxListAdapter.cs" />
     <Compile Include="Activity\Box\ExpandableSensorDataAdapter.cs" />
     <Compile Include="Activity\Box\MainBoxStatusActivity.cs" />
+    <Compile Include="Activity\Driver\AlarmsActivity.cs" />
+    <Compile Include="Activity\Driver\AlarmsAdapter.cs" />
     <Compile Include="Activity\Driver\DriverContainerList.cs" />
     <Compile Include="Activity\Driver\ManageBoxActivity.cs" />
     <Compile Include="Activity\Driver\TaskActivity.cs" />
@@ -575,6 +577,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\stagestylepast.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\driver_list_alarms.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\driver_info_alarm.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

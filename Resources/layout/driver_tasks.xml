@@ -117,13 +117,17 @@
 
             
        </RelativeLayout>
+
+
         <ListView 
 		        android:id="@+id/tasklistview" 
                 android:layout_below = "@+id/firstTask"
                 android:layout_marginTop = "15dp"
+                android:nestedScrollingEnabled="true"
 		        android:layout_height="match_parent" 
 		        android:layout_width="match_parent"> 
 	    </ListView> 
+
 
     <ProgressBar
         android:layout_centerHorizontal="true"

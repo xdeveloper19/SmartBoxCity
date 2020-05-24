@@ -1,4 +1,5 @@
-﻿using Entity.Model.BoxResponse;
+﻿using Entity.Model.AlarmResponse;
+using Entity.Model.BoxResponse;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Entity.Repository
         public static bool isDepot;
 
         public static string id { get; set; }
-        public static List<AlarmResponse> alarms { get; set; }
+        public static List<AlarmResponseData> alarms { get; set; }
         public static string battery { get; set; }
         public static string weight { get; set; }
         public static string temperature { get; set; }
@@ -50,7 +51,7 @@ namespace Entity.Repository
             event_count = event_count2;
         }
 
-        public static void AddInfoAlarms(List<AlarmResponse> alms)
+        public static void AddInfoAlarms(List<AlarmResponseData> alms)
         {
             alarms = alms; 
         }

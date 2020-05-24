@@ -147,11 +147,7 @@ namespace SmartBoxCity.Activity.Box
                     alert.SetMessage("Вы действительно прикрепить контейнер?");
                     alert.SetPositiveButton("Продолжить", (senderAlert, args) =>
                     {
-                        //Detach(alert);
-
-                        FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                        MainBoxStatusActivity content2 = new MainBoxStatusActivity();
-                        transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
+                        Attach(alert);
                     });
                     alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                     {
@@ -176,16 +172,7 @@ namespace SmartBoxCity.Activity.Box
                     });
                     alert.SetPositiveButton("Продолжить", (senderAlert, args) =>
                     {
-                        if (toDownload[0] == true)
-                        {
-                            //to do...
-                        }
-                       
-                        //Detach(alert);
-
-                        FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                        MainBoxStatusActivity content2 = new MainBoxStatusActivity();
-                        transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
+                        Dettach(alert, toDownload[0]);
                     });
                     alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                     {
@@ -227,6 +214,69 @@ namespace SmartBoxCity.Activity.Box
             };
 
             return view;
+        }
+
+        private async void Dettach(AlertDialog.Builder alert, bool isChecked)
+        {
+            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            {
+                BoxService.InitializeClient(client);
+                var o_data = new ServiceResponseObject<SuccessResponse>();
+                o_data = await BoxService.Dettach(StaticBox.id, isChecked);
+
+                if (o_data.Status == HttpStatusCode.OK)
+                {
+                    alert.Dispose();
+                    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
+                    alert1.SetTitle("Открепить контейнер");
+                    alert1.SetMessage(o_data.ResponseData.Message);
+                    alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                    {
+                    });
+                    Dialog dialog1 = alert1.Create();
+                    dialog1.Show();
+
+                    FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                    MainBoxStatusActivity content2 = new MainBoxStatusActivity();
+                    transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
+                }
+                else
+                {
+                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                }
+            }
+        }
+
+        private async void Attach(AlertDialog.Builder alert)
+        {
+            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            {
+                BoxService.InitializeClient(client);
+                var o_data = new ServiceResponseObject<SuccessResponse>();
+                o_data = await BoxService.Attach(StaticBox.id);
+
+                if (o_data.Status == HttpStatusCode.OK)
+                {
+                    alert.Dispose();
+                    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
+                    alert1.SetTitle("Прикрепить контейнер");
+                    alert1.SetMessage(o_data.ResponseData.Message);
+                    alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                    {
+                    });
+                    Dialog dialog1 = alert1.Create();
+                    dialog1.Show();
+
+                    FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                    MainBoxStatusActivity content2 = new MainBoxStatusActivity();
+                    transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
+                }
+                else
+                {
+                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                }
+            }
+           
         }
 
         private async void MakeFold(AlertDialog.Builder alert)
@@ -288,31 +338,7 @@ namespace SmartBoxCity.Activity.Box
 
         }
 
-        private async void Detach(AlertDialog.Builder alert)
-        {
-            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
-            {
-                //ManageOrderService.InitializeClient(client);
-                //var o_data = new ServiceResponseObject<SuccessResponse>();
-                //o_data = await ManageOrderService.MakePayment(StaticOrder.Order_id);
-                //if (o_data.Status == HttpStatusCode.OK)
-                //{
-                //    alert.Dispose();
-                //    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
-                //    alert1.SetTitle("Внесение оплаты");
-                //    alert1.SetMessage(o_data.ResponseData.Message);
-                //    alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
-                //    {
-                //    });
-                //    Dialog dialog1 = alert1.Create();
-                //    dialog1.Show();
-                //}
-                //else
-                //{
-                //    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                //}
-            }
-        }
+      
         private async void GetVideo(AlertDialog.Builder alert)
         {
             using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))

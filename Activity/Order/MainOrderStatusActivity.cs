@@ -8,6 +8,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Plugin.Settings;
 
 namespace SmartBoxCity.Activity.Order
 {
@@ -36,19 +37,28 @@ namespace SmartBoxCity.Activity.Order
             ButtonOrderAndItsStages.Click += async delegate
             {
                 OrderListStagesActivity content1 = new OrderListStagesActivity();
-                transaction1.Replace(Resource.Id.framelayout, content1).AddToBackStack(null).Commit();
+                if (CrossSettings.Current.GetValueOrDefault("role", "") == "driver")
+                    transaction1.Replace(Resource.Id.frameDriverlayout, content1).AddToBackStack(null).Commit();
+                else
+                    transaction1.Replace(Resource.Id.framelayout, content1).AddToBackStack(null).Commit();
             };
 
             ButtonMap.Click += async delegate
             {
                 MapActivity content2 = new MapActivity();
-                transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+                if (CrossSettings.Current.GetValueOrDefault("role", "") == "driver")
+                    transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
+                else
+                    transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
             };
 
             ButtonEvents.Click += async delegate
             {
                 EventsActivity content3 = new EventsActivity();
-                transaction1.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
+                if (CrossSettings.Current.GetValueOrDefault("role", "") == "driver")
+                    transaction1.Replace(Resource.Id.frameDriverlayout, content3).AddToBackStack(null).Commit();
+                else
+                    transaction1.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
             };
 
             return view;

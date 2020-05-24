@@ -41,26 +41,26 @@ namespace SmartBoxCity.Activity.Box
         {
             View view = convertView;
             if (view == null)
-            {
                 view = LayoutInflater.From(_context).Inflate(Resource.Layout.box_book_parameters, null);
-                view.FindViewById<TextView>(Resource.Id.txtBoxName).Text = _boxes[position].BoxId;
-                view.FindViewById<TextView>(Resource.Id.txt123).Text = _boxes[position].OrderId;
-                view.FindViewById<ImageView>(Resource.Id.img_box).SetImageResource(_boxes[position].ImageView);
-                view.FindViewById<TextView>(Resource.Id.txt_alarm).Text = _boxes[position].AlarmDescription;
 
-                var btn_info_box = view.FindViewById<Button>(Resource.Id.btn_info_box);
-                btn_info_box.Click += delegate
-                {
-                    StaticBox.id = _boxes[position].BoxId;
-                    BoxActivity content2 = new BoxActivity();
-                    _manager.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
-                };
+            view.FindViewById<TextView>(Resource.Id.txtBoxName).Text = _boxes[position].BoxId;
+            view.FindViewById<TextView>(Resource.Id.txt123).Text = _boxes[position].OrderId;
+            view.FindViewById<ImageView>(Resource.Id.img_box).SetImageResource(_boxes[position].ImageView);
+            view.FindViewById<TextView>(Resource.Id.txt_alarm).Text = _boxes[position].AlarmDescription;
+
+            var btn_info_box = view.FindViewById<Button>(Resource.Id.btn_info_box);
+            btn_info_box.Click += delegate
+            {
+                StaticBox.id = _boxes[position].BoxId;
+                BoxActivity content2 = new BoxActivity();
+                _manager.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
+            };
                 //var listView = view.FindViewById<ExpandableListView>(Resource.Id.expandableListView2);
                 //SensorData.SampleChildData(view);
                 //listView.SetAdapter(new ExpandableSensorDataAdapter(_context, SensorData.listDataHeader, SensorData.listDataChild));
                 //listView.SetOnGroupClickListener(new Activity.Order.OnExpandedListenerService());
 
-            }
+            
             return view;
         }
 
