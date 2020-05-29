@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_marginTop="-50dp"
         android:padding="10dp"
         android:gravity="center"
         android:orientation="vertical">
@@ -30,6 +29,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_marginTop="20dp"
+            android:textSize="14dp"
             android:id="@+id/btn_cost"
             android:text="Предварительный расчет стоимости перевозки груза"
             android:textColor="@android:color/white"
@@ -38,22 +38,17 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop = "10dp"
-            android:paddingBottom = "10dp"
-            android:paddingLeft = "10dp"
-            android:paddingRight = "10dp"
             android:id="@+id/ScrollViewSlide0" >
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft = "10dp"
-                android:paddingRight = "10dp"
+                android:padding="10dp"
                 android:layout_gravity = "center"
                 android:gravity = "center"
                 android:textColor = "#475B57"
                 android:text="@string/slide_0"
                 android:textStyle="normal"
-                android:textSize="17dp" />
+                android:textSize="14dp" />
         </ScrollView>
 
         

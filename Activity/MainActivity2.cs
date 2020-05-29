@@ -13,6 +13,7 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using Entity.Repository;
 using Plugin.Settings;
 using SmartBoxCity.Activity.Box;
 using SmartBoxCity.Activity.Driver;
@@ -66,9 +67,12 @@ namespace SmartBoxCity.Activity
                         CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
                         CrossSettings.Current.AddOrUpdateValue("role","");
 
-                        _gpsService = new GPSService(this);
-                        //_gpsService.UpdateLocation();
-                        _gpsService.RemoveLocation();
+                        if (StaticDriver.busy == "0")
+                        {
+                            _gpsService = new GPSService(this);
+                            //_gpsService.UpdateLocation();
+                            _gpsService.RemoveLocation();
+                        }
 
                         Intent content1 = new Intent(this, typeof(MainActivity));
                         StartActivity(content1);

@@ -82,11 +82,9 @@ namespace SmartBoxCity.Activity.Box
                     int id = 1;
                     foreach (var box in containers)
                     {
-                        id++;
-                    
                         boxlist.Add(new BoxBookModel
                         {
-                            Id = id,
+                            Id = box.id,
                             ImageView = (box.sensors_status.fold == "0")?Resource.Drawable.opened_box: Resource.Drawable.close_box,
                             BoxId = "Контейнер: " + box.id,
                             AlarmDescription = (box.alarms_status.Count == 0)? "": "На контейнере обнаружена тревога!",

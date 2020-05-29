@@ -12,7 +12,9 @@ using Android.Views;
 using Android.Widget;
 using Entity.Model;
 using Entity.Model.AlarmViewModel;
+using Entity.Repository;
 using Plugin.Settings;
+using SmartBoxCity.Activity.Box;
 using WebService;
 using WebService.Driver;
 
@@ -45,7 +47,8 @@ namespace SmartBoxCity.Activity.Driver
             if (view == null)
                 view = LayoutInflater.From(_context).Inflate(Resource.Layout.driver_info_alarm, null);
 
-            view.FindViewById<TextView>(Resource.Id.txt_title_alarm).Text = _alarms[position].Container_id;
+            var txt_container = view.FindViewById<TextView>(Resource.Id.txt_title_alarm);
+            txt_container.Text = _alarms[position].Container_id;
             view.FindViewById<TextView>(Resource.Id.txt_alarm_description).Text = _alarms[position].Name;
             view.FindViewById<TextView>(Resource.Id.txt_alarm_date).Text = _alarms[position].Raised_At.ToString();
 
@@ -85,6 +88,13 @@ namespace SmartBoxCity.Activity.Driver
                         Toast.MakeText(Application.Context, o_data.Message, ToastLength.Long).Show();
                     }
                 }
+            };
+
+            txt_container.Click += delegate
+            {
+                BoxActivity content2 = new BoxActivity();
+                StaticBox.id = _alarms[position].Container_id;
+                _manager.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
             };
 
             return view;

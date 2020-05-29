@@ -151,8 +151,10 @@ namespace SmartBoxCity.Activity.Order
                         s_edit_from.Text = StaticOrder.Inception_address;
                 }
                 s_shipment_time.Focusable = false;
+                s_shipment_time.Enabled = false;
                 s_shipment_time.Clickable = false;
                 s_shipping_date.Focusable = false;
+                s_shipping_date.Enabled = false;
                 s_shipping_date.Clickable = false;
                 s_value.Enabled = false;
                 s_contact_person.Enabled = false;
@@ -191,7 +193,68 @@ namespace SmartBoxCity.Activity.Order
                 };
 
                 s_shipping_date.Click += S_shipping_date_Click;
-                s_shipment_time.Click += S_shipment_time_Click;
+                s_shipment_time.Click += delegate
+                {
+                    LayoutInflater layoutInflater = LayoutInflater.From(Activity);
+                    View view = layoutInflater.Inflate(Resource.Layout.modal_user_time, null);
+                    AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
+                    alert.SetView(view);
+
+                    #region Объявление переменных в диалоговом окне
+                    var rb_first = view.FindViewById<RadioButton>(Resource.Id.rb_first);
+                    var rb_second = view.FindViewById<RadioButton>(Resource.Id.rb_second);
+                    var rb_third = view.FindViewById<RadioButton>(Resource.Id.rb_third);
+                    var rb_vierth = view.FindViewById<RadioButton>(Resource.Id.rb_vierth);
+                    var rb_fifth = view.FindViewById<RadioButton>(Resource.Id.rb_fifth);
+                    var rb_sixth = view.FindViewById<RadioButton>(Resource.Id.rb_sixth);
+                    #endregion
+
+                    #region Обработка событий кнопок
+
+                    rb_first.Click += delegate
+                    {
+                        s_shipment_time.Text = rb_first.Text;
+                    };
+
+                    rb_second.Click += delegate
+                    {
+                        s_shipment_time.Text = rb_second.Text;
+                    };
+
+                    rb_third.Click += delegate
+                    {
+                        s_shipment_time.Text = rb_third.Text;
+                    };
+
+                    rb_vierth.Click += delegate
+                    {
+                        s_shipment_time.Text = rb_vierth.Text;
+                    };
+
+                    rb_fifth.Click += delegate
+                    {
+                        s_shipment_time.Text = rb_fifth.Text;
+                    };
+
+                    rb_sixth.Click += delegate
+                    {
+                        s_shipment_time.Text = rb_sixth.Text;
+                    };
+
+                    #endregion
+
+                    alert.SetCancelable(false)
+                    .SetPositiveButton("Выбрать", delegate
+                    {
+
+                    })
+                    .SetNegativeButton("Отмена", delegate
+                    {
+                        alert.Dispose();
+                    });
+                    Dialog dialog = alert.Create();
+                    dialog.Show();
+                };
 
                 check_argue.Click += async delegate
                 {
@@ -421,16 +484,7 @@ namespace SmartBoxCity.Activity.Order
             return view;
         }
 
-        private void S_shipment_time_Click(object sender, EventArgs e)
-        {
-            TimePickerFragment frag = TimePickerFragment.NewInstance(
-        delegate (DateTime time)
-        {
-            s_shipment_time.Text = time.ToShortTimeString();
-        });
-
-            frag.Show(FragmentManager, TimePickerFragment.TAG);
-        }
+       
 
         private void S_shipping_date_Click(object sender, EventArgs e)
         {

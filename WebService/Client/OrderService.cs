@@ -117,19 +117,39 @@ namespace WebService.Client
                 }
 
                 ServiceResponseObject<OrderObjectResponse<OrderParameters, SensorResponse, StageResponse>> o_data = new ServiceResponseObject<OrderObjectResponse<OrderParameters, SensorResponse, StageResponse>>();
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                switch (response.StatusCode)
                 {
-                    ErrorResponseObject error = new ErrorResponseObject();
-                    error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
-                    o_data.Status = response.StatusCode;
-                    o_data.Message = error.Errors[0];
-                    return o_data;
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var order = JsonConvert.DeserializeObject<OrderObjectResponse<OrderParameters, SensorResponse, StageResponse>>(s_result);
+                            o_data.Message = "Успешно!";
+                            o_data.Status = response.StatusCode;
+                            o_data.ResponseData = JsonConvert.DeserializeObject<OrderObjectResponse<OrderParameters, SensorResponse, StageResponse>>(s_result);
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
                 }
-                var order = JsonConvert.DeserializeObject<OrderObjectResponse<OrderParameters, SensorResponse, StageResponse>>(s_result);
-                o_data.Message = "Успешно!";
-                o_data.Status = response.StatusCode;
-                o_data.ResponseData = JsonConvert.DeserializeObject<OrderObjectResponse<OrderParameters, SensorResponse, StageResponse>>(s_result);
-                return o_data;
+               
             }//can not access to close stream 
             catch (Exception ex)
             {
@@ -224,22 +244,42 @@ namespace WebService.Client
                 }
 
                 ServiceResponseObject<OrderSuccessResponse> o_data = new ServiceResponseObject<OrderSuccessResponse>();
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                switch (response.StatusCode)
                 {
-                    ErrorResponseObject error = new ErrorResponseObject();
-                    error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
-                    o_data.Status = response.StatusCode;
-                    o_data.Message = error.Errors[0];
-                    return o_data;
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var message = JsonConvert.DeserializeObject<OrderSuccessResponse>(s_result);
+                            o_data.Message = "Заявка успешна оформлена!";
+                            o_data.ResponseData = new OrderSuccessResponse
+                            {
+                                order_id = message.order_id
+                            };
+                            o_data.Status = response.StatusCode;
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
                 }
-                var message = JsonConvert.DeserializeObject<OrderSuccessResponse>(s_result);
-                o_data.Message = "Заявка успешна оформлена!";
-                o_data.ResponseData = new OrderSuccessResponse
-                {
-                    order_id = message.order_id
-                };
-                o_data.Status = response.StatusCode;
-                return o_data;
+               
             }//can not access to close stream 
             catch (Exception ex)
             {
@@ -277,23 +317,43 @@ namespace WebService.Client
                 ServiceResponseObject<ListResponse<OrderResponseData, ArchiveResponse>> o_data =
                     new ServiceResponseObject<ListResponse<OrderResponseData, ArchiveResponse>>();
 
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                switch (response.StatusCode)
                 {
-                    ErrorResponseObject error = new ErrorResponseObject();
-                    error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
-                    o_data.Status = response.StatusCode;
-                    o_data.Message = error.Errors[0];
-                    return o_data;
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var order = JsonConvert.DeserializeObject<ListResponse<OrderResponseData, ArchiveResponse>>(s_result);
+                            o_data.Message = "Успешно!";
+                            o_data.Status = response.StatusCode;// а почему переменная container_id пустая
+                            o_data.ResponseData = new ListResponse<OrderResponseData, ArchiveResponse>
+                            {
+                                ORDERS = order.ORDERS,
+                                ARCHIVE = order.ARCHIVE
+                            };
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
                 }
-                var order = JsonConvert.DeserializeObject<ListResponse<OrderResponseData, ArchiveResponse>>(s_result);
-                o_data.Message = "Успешно!";
-                o_data.Status = response.StatusCode;// а почему переменная container_id пустая
-                o_data.ResponseData = new ListResponse<OrderResponseData, ArchiveResponse>
-                {
-                    ORDERS = order.ORDERS,
-                    ARCHIVE = order.ARCHIVE
-                };
-                return o_data;
+               
             }//can not access to close stream 
             catch (Exception ex)
             {
@@ -340,23 +400,43 @@ namespace WebService.Client
                 ServiceResponseObject<GeoResponseData> o_data =
                     new ServiceResponseObject<GeoResponseData>();
 
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                switch (response.StatusCode)
                 {
-                    ErrorResponseObject error = new ErrorResponseObject();
-                    error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
-                    o_data.Status = response.StatusCode;
-                    o_data.Message = error.Errors[0];
-                    return o_data;
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var order = JsonConvert.DeserializeObject<GeoResponseData>(s_result);
+                            o_data.Message = "Успешно!";
+                            o_data.Status = response.StatusCode;// а почему переменная container_id пустая
+                            o_data.ResponseData = new GeoResponseData
+                            {
+                                ORDER = order.ORDER,
+                                MAP_WAYPOINTS = order.MAP_WAYPOINTS
+                            };
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
                 }
-                var order = JsonConvert.DeserializeObject<GeoResponseData>(s_result);
-                o_data.Message = "Успешно!";
-                o_data.Status = response.StatusCode;// а почему переменная container_id пустая
-                o_data.ResponseData = new GeoResponseData
-                {
-                    ORDER = order.ORDER,
-                    MAP_WAYPOINTS = order.MAP_WAYPOINTS
-                };
-                return o_data;
+               
             }//can not access to close stream 
             catch (Exception ex)
             {
@@ -387,23 +467,43 @@ namespace WebService.Client
                 ServiceResponseObject<EventsResponse> o_data =
                     new ServiceResponseObject<EventsResponse>();
 
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                switch (response.StatusCode)
                 {
-                    ErrorResponseObject error = new ErrorResponseObject();
-                    error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
-                    o_data.Status = response.StatusCode;
-                    o_data.Message = error.Errors[0];
-                    return o_data;
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var order = JsonConvert.DeserializeObject<EventsResponse>(s_result);
+                            o_data.Message = "Успешно!";
+                            o_data.Status = response.StatusCode;// а почему переменная container_id пустая
+                            o_data.ResponseData = new EventsResponse
+                            {
+                                ORDER = order.ORDER,
+                                EVENTS = order.EVENTS
+                            };
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
                 }
-                var order = JsonConvert.DeserializeObject<EventsResponse>(s_result);
-                o_data.Message = "Успешно!";
-                o_data.Status = response.StatusCode;// а почему переменная container_id пустая
-                o_data.ResponseData = new EventsResponse
-                {
-                    ORDER = order.ORDER,
-                    EVENTS = order.EVENTS
-                };
-                return o_data;
+               
             }//can not access to close stream 
             catch (Exception ex)
             {

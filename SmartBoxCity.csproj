@@ -75,6 +75,7 @@
     <Compile Include="Activity\Driver\AlarmsAdapter.cs" />
     <Compile Include="Activity\Driver\DriverContainerList.cs" />
     <Compile Include="Activity\Driver\ManageBoxActivity.cs" />
+    <Compile Include="Activity\Driver\NotFoundAlarmsActivity.cs" />
     <Compile Include="Activity\Driver\TaskActivity.cs" />
     <Compile Include="Activity\Driver\TaskListAdapter.cs" />
     <Compile Include="Activity\Driver\TaskNotFoundActivity.cs" />
@@ -583,6 +584,15 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\driver_info_alarm.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\modal_user_time.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\driver_not_found_alarms.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\driver_header_task.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

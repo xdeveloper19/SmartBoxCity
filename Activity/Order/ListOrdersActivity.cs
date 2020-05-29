@@ -119,7 +119,7 @@ namespace SmartBoxCity.Activity.Order
                             Destination = order.destination_address,
                             Inception = order.inception_address,
                             Price = order.payment_amount + " рублей",
-                            OrderName = "Заказ " + order.id,
+                            OrderName = order.id,
                             Date = order.stage2_datetime.ToString()
                         }
                         );

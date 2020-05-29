@@ -33,7 +33,7 @@ namespace SmartBoxCity.Activity.Box
 
         public override long GetItemId(int position)
         {
-            return _boxes[position].Id;
+            return position;
         }
 
 
@@ -51,7 +51,7 @@ namespace SmartBoxCity.Activity.Box
             var btn_info_box = view.FindViewById<Button>(Resource.Id.btn_info_box);
             btn_info_box.Click += delegate
             {
-                StaticBox.id = _boxes[position].BoxId;
+                StaticBox.id = _boxes[position].Id;
                 BoxActivity content2 = new BoxActivity();
                 _manager.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
             };

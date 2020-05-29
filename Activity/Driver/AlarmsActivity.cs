@@ -77,7 +77,9 @@ namespace SmartBoxCity.Activity.Driver
                 else
                 {
                     Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();//"Unexpected character encountered while parsing value: {. Path 'ORDERS[0].last_stage_at', line 2, position 1086."
-
+                    FragmentTransaction transaction3 = this.FragmentManager.BeginTransaction();
+                    NotFoundAlarmsActivity content2 = new NotFoundAlarmsActivity();
+                    transaction3.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
                 }
             }
         }

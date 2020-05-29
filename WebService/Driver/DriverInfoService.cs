@@ -50,18 +50,38 @@ namespace WebService.Driver
                 }
 
                 ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                switch (response.StatusCode)
                 {
-                    ErrorResponseObject error = new ErrorResponseObject();
-                    error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
-                    o_data.Status = response.StatusCode;
-                    o_data.Message = error.Errors[0];
-                    return o_data;
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var message = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
+                            o_data.Message = message.Message;
+                            o_data.Status = response.StatusCode;
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
                 }
-                var message = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
-                o_data.Message = message.Message;
-                o_data.Status = response.StatusCode;
-                return o_data;
+               
             }
             catch (Exception ex)
             {
@@ -108,23 +128,43 @@ namespace WebService.Driver
                 ServiceResponseObject<SuccessResponse> o_data =
                     new ServiceResponseObject<SuccessResponse>();
 
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                switch (response.StatusCode)
                 {
-                    ErrorResponseObject error = new ErrorResponseObject();
-                    error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
-                    o_data.Status = response.StatusCode;
-                    o_data.Message = error.Errors[0];
-                    return o_data;
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var task = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
+                            o_data.Message = "Успешно!";
+                            o_data.Status = response.StatusCode;
+                            o_data.ResponseData = new SuccessResponse
+                            {
+                                Message = task.Message
+                            };
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
                 }
 
-                var task = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
-                o_data.Message = "Успешно!";
-                o_data.Status = response.StatusCode;
-                o_data.ResponseData = new SuccessResponse
-                {
-                    Message = task.Message
-                };
-                return o_data;
+                
             }//can not access to close stream 
             catch (Exception ex)
             {

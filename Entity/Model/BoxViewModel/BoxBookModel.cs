@@ -6,7 +6,7 @@ namespace Entity.Model.BoxViewModel
 {
     public class BoxBookModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public int ImageView { get; set; }
         public string AlarmDescription { get; set; }
         public string OrderId { get; set; }

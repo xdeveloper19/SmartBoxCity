@@ -53,7 +53,19 @@ namespace Entity.Repository
 
         public static void AddInfoAlarms(List<AlarmResponseData> alms)
         {
-            alarms = alms; 
+            alarms = new List<AlarmResponseData>(alms.Capacity);
+
+            for (int i = 0; i < alms.Count; i++)
+            {
+                alarms.Add(new AlarmResponseData
+                {
+                   acknowledged = alms[i].acknowledged,
+                   container_id = alms[i].container_id,
+                   id = alms[i].id,
+                   name = alms[i].name,
+                   raised_at = alms[i].raised_at
+                });
+            }
         }
     }
 }

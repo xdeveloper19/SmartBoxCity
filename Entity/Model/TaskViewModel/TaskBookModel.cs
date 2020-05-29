@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Entity.Model.TaskViewModel
 {
-    public class TaskBookModel
+    public class TaskBookModel: IViewItemType
     {
         public string order_id { get; set; }
 
@@ -13,5 +13,10 @@ namespace Entity.Model.TaskViewModel
         public string address { get; set; }
 
         public string title { get; set; }
+
+        public ViewType GetViewType()
+        {
+            return ViewType.List;
+        }
     }
 }

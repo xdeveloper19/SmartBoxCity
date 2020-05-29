@@ -69,12 +69,19 @@ namespace SmartBoxCity.Activity.Home
             }
 
         }
-        
+
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             if (CrossSettings.Current.GetValueOrDefault("isAuth", "") != "true")
             {
                 var view = inflater.Inflate(Resource.Layout.activity_not_found_order, container, false);
+                var btn_add_order = view.FindViewById<Button>(Resource.Id.btn_add_order1);
+                btn_add_order.Click += delegate
+                {
+                    FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                    AddOrderActivity content = new AddOrderActivity();
+                    transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                };
                 return view;
             }
             else
@@ -457,6 +464,5 @@ namespace SmartBoxCity.Activity.Home
             //}
 
         }
-      
     }
 }

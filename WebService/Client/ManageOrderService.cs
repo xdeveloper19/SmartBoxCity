@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,18 +55,38 @@ namespace WebService.Client
                 }
 
                 ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+
+                switch (response.StatusCode)
                 {
-                    ErrorResponseObject error = new ErrorResponseObject();
-                    error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
-                    o_data.Status = response.StatusCode;
-                    o_data.Message = error.Errors[0];
-                    return o_data;
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var message = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
+                            o_data.Message = message.Message;
+                            o_data.Status = response.StatusCode;
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
                 }
-                o_data.ResponseData = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
-                o_data.Message = "Успешно!";
-                o_data.Status = response.StatusCode;
-                return o_data;
             }
             catch (Exception ex)
             {
@@ -91,18 +112,37 @@ namespace WebService.Client
                 }
 
                 ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                switch (response.StatusCode)
                 {
-                    ErrorResponseObject error = new ErrorResponseObject();
-                    error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
-                    o_data.Status = response.StatusCode;
-                    o_data.Message = error.Errors[0];
-                    return o_data;
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var message = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
+                            o_data.Message = message.Message;
+                            o_data.Status = response.StatusCode;
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
                 }
-                o_data.ResponseData = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
-                o_data.Message = "Успешно!";
-                o_data.Status = response.StatusCode;
-                return o_data;
             }
             catch (Exception ex)
             {
@@ -128,18 +168,37 @@ namespace WebService.Client
                 }
 
                 ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                switch (response.StatusCode)
                 {
-                    ErrorResponseObject error = new ErrorResponseObject();
-                    error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
-                    o_data.Status = response.StatusCode;
-                    o_data.Message = error.Errors[0];
-                    return o_data;
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var message = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
+                            o_data.Message = message.Message;
+                            o_data.Status = response.StatusCode;
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
                 }
-                o_data.ResponseData = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
-                o_data.Message = "Успешно!";
-                o_data.Status = response.StatusCode;
-                return o_data;
             }
             catch (Exception ex)
             {
@@ -165,18 +224,37 @@ namespace WebService.Client
                 }
 
                 ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                switch (response.StatusCode)
                 {
-                    ErrorResponseObject error = new ErrorResponseObject();
-                    error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
-                    o_data.Status = response.StatusCode;
-                    o_data.Message = error.Errors[0];
-                    return o_data;
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var message = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
+                            o_data.Message = message.Message;
+                            o_data.Status = response.StatusCode;
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
                 }
-                o_data.ResponseData = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
-                o_data.Message = "Успешно!";
-                o_data.Status = response.StatusCode;
-                return o_data;
             }
             catch (Exception ex)
             {
@@ -202,18 +280,37 @@ namespace WebService.Client
                 }
 
                 ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                switch (response.StatusCode)
                 {
-                    ErrorResponseObject error = new ErrorResponseObject();
-                    error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
-                    o_data.Status = response.StatusCode;
-                    o_data.Message = error.Errors[0];
-                    return o_data;
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var message = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
+                            o_data.Message = message.Message;
+                            o_data.Status = response.StatusCode;
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
                 }
-                o_data.ResponseData = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
-                o_data.Message = "Успешно!";
-                o_data.Status = response.StatusCode;
-                return o_data;
             }
             catch (Exception ex)
             {
@@ -240,18 +337,37 @@ namespace WebService.Client
                 }
 
                 ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
-                if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                switch (response.StatusCode)
                 {
-                    ErrorResponseObject error = new ErrorResponseObject();
-                    error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
-                    o_data.Status = response.StatusCode;
-                    o_data.Message = error.Errors[0];
-                    return o_data;
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var message = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
+                            o_data.Message = message.Message;
+                            o_data.Status = response.StatusCode;
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
                 }
-                o_data.ResponseData = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
-                o_data.Message = "Успешно!";
-                o_data.Status = response.StatusCode;
-                return o_data;
             }
             catch (Exception ex)
             {

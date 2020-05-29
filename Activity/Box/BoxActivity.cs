@@ -74,6 +74,7 @@ namespace SmartBoxCity.Activity.Box
             BoxLinearAlarms = view.FindViewById<LinearLayout>(Resource.Id.BoxLinearAlarms);
 
             BoxButtonDetach.Text = (StaticBox.isDepot) ? "Прикрепить" : "Открепить";
+            btn_fold.Enabled = (StaticBox.isDepot) ? false : true;
             #endregion
 
             GetBoxParameters();
@@ -85,8 +86,8 @@ namespace SmartBoxCity.Activity.Box
                     // Add textview 1
                     var textview = new TextView(Activity)
                     {
-                        LayoutParameters = new LayoutParams(LayoutParams.WrapContent, 50),
-                        Text = alarm.name + "\n" + alarm.raised_at,
+                        LayoutParameters = new LayoutParams(LayoutParams.WrapContent, LayoutParams.WrapContent),
+                        Text = alarm.name + "\n" + alarm.raised_at.ToString(),
                         TextSize = 11,
                         Gravity = GravityFlags.Center
                     };
@@ -158,8 +159,8 @@ namespace SmartBoxCity.Activity.Box
                 else
                 {
                     AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
-                    alert.SetTitle("Открепить контейнер");
-                    alert.SetMessage("Вы действительно открепить контейнер?");
+                    alert.SetTitle("Вы действительно хотите открепить контейнер?");
+                    //alert.SetMessage("Вы действительно открепить контейнер?");
                     List<string> Item = new List<string>();
                     Item.Add("Создать задачу забрать контейнер для другого водителя.");
 
@@ -470,6 +471,7 @@ namespace SmartBoxCity.Activity.Box
                     else
                     {
                         BoxTextFold.Text = "Неизвестно";
+                        btn_fold.Text = "Неизвестно";
                     }
 
                     if (o_data.ResponseData.SENSORS_STATUS.gate == "1")
