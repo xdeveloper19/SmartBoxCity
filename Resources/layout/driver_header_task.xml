@@ -63,20 +63,13 @@
                                 android:text="Задача на перевозку пустого контейнера к клиенту от 08.02.2020 15:45:44"/>
 
                 
-                            <com.google.android.gms.maps.MapView
-                                android:id="@+id/fragmentMap3"
-                                android:layout_width="match_parent"
-                                android:layout_height="300dp"
-                                android:layout_below="@+id/txtTaskName"
-                                android:layout_marginTop="10dp"
-                                />
-                          
+                            
                             <Button
                                 android:id="@+id/btn_prime"
                                 android:layout_width="145dp"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentLeft="true"
-                                android:layout_below = "@+id/fragmentMap3"
+                                android:layout_below = "@+id/txtTaskName"
                                 android:background="@drawable/button_stili"
                                 android:padding = "1dp"
                                 android:textColor = "#FBF8F8"
@@ -90,7 +83,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentRight="true"
                                 android:textColor = "#FBF8F8"
-                                android:layout_below = "@+id/fragmentMap3"
+                                android:layout_below = "@+id/txtTaskName"
                                 android:background="@drawable/button_primary"
                                 android:padding = "1dp"
                                 android:layout_marginTop="10dp"

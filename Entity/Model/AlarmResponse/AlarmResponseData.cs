@@ -10,6 +10,6 @@ namespace Entity.Model.AlarmResponse
         public string id { get; set; }
         public string name { get; set; }
         public string container_id { get; set; }
-        public DateTime raised_at { get; set; }
+        public string raised_at { get; set; }
     }
 }

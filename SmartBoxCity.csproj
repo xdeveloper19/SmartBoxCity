@@ -58,6 +58,7 @@
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -75,6 +76,7 @@
     <Compile Include="Activity\Driver\AlarmsAdapter.cs" />
     <Compile Include="Activity\Driver\DriverContainerList.cs" />
     <Compile Include="Activity\Driver\ManageBoxActivity.cs" />
+    <Compile Include="Activity\Driver\MapActivity.cs" />
     <Compile Include="Activity\Driver\NotFoundAlarmsActivity.cs" />
     <Compile Include="Activity\Driver\TaskActivity.cs" />
     <Compile Include="Activity\Driver\TaskListAdapter.cs" />
@@ -186,11 +188,20 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
     </PackageReference>
+    <PackageReference Include="SlidingUpPanel">
+      <Version>1.1.0</Version>
+    </PackageReference>
     <PackageReference Include="System.Net.Http">
       <Version>4.3.4</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Arch.Lifecycle.Common">
+      <Version>1.1.1.3</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.Animated.Vector.Drawable">
+      <Version>28.0.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Support.Annotations">
       <Version>28.0.0.1</Version>
@@ -199,6 +210,9 @@
     <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.1" />
     <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.1" />
     <PackageReference Include="Xamarin.Android.Support.v4">
+      <Version>28.0.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Android.Support.Vector.Drawable">
       <Version>28.0.0.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Android.Volley">
@@ -280,9 +294,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\activity_order_book.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_order_status.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_information.xml" />
@@ -486,9 +497,6 @@
     <AndroidResource Include="Resources\layout\activity_enter_location.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\activity_google_result.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\drawable\slide44.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -502,9 +510,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\event.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\layout\ContainerCardView.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\photo_create.png" />
@@ -590,6 +595,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\driver_not_found_alarms.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\driver_map.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\button_main.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\driver_header_task.xml" />

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -22,10 +21,11 @@ namespace SmartBoxCity.Activity.Order
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var view = inflater.Inflate(Resource.Layout.activity_order_status, container, false);
+            //var view = inflater.Inflate(Resource.Layout.activity_order_status, container, false);
             //StepperIndicator stepper = view.FindViewById<StepperIndicator>(Resource.Id.sdsd);
-            
-            return view;
+
+            //return view;
+            return base.View;
         }
     }
 }

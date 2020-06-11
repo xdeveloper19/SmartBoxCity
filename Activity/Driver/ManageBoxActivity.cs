@@ -102,22 +102,52 @@ namespace SmartBoxCity.Activity.Driver
                 Battery.Text = (o_data.ResponseData.SENSORS_STATUS.battery == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.battery;
                 Illumination.Text = (o_data.ResponseData.SENSORS_STATUS.illumination == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.illumination;
                 Humidity.Text = (o_data.ResponseData.SENSORS_STATUS.humidity == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.humidity;
-                Gate.Text = (o_data.ResponseData.SENSORS_STATUS.gate == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.gate;
-                Lock.Text = (o_data.ResponseData.SENSORS_STATUS.Lock == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.Lock;
-                Fold.Text = (o_data.ResponseData.SENSORS_STATUS.fold == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.fold;
+                //Gate.Text = (o_data.ResponseData.SENSORS_STATUS.gate == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.gate;
+                //Lock.Text = (o_data.ResponseData.SENSORS_STATUS.Lock == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.Lock;
+                //Fold.Text = (o_data.ResponseData.SENSORS_STATUS.fold == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.fold;
                 Events.Text = (o_data.ResponseData.ORDER.event_count == null) ? "неизвестно" : o_data.ResponseData.ORDER.event_count;
 
                 StaticOrder.AddInfoOrder(o_data.ResponseData.ORDER);
                 StaticBox.AddInfoSensors(o_data.ResponseData.SENSORS_STATUS);
-                //Weight.Text = o_data.ResponseData.SENSORS_STATUS.Weight;
-                //Temperature.Text = o_data.ResponseData.SENSORS_STATUS.Temperature;
-                //Battery.Text = o_data.ResponseData.SENSORS_STATUS.Battery;
-                //Illumination.Text = o_data.ResponseData.SENSORS_STATUS.Illumination;
-                //Humidity.Text = o_data.ResponseData.SENSORS_STATUS.Humidity;
-                //Gate.Text = o_data.ResponseData.SENSORS_STATUS.Gate;
-                //Lock.Text = o_data.ResponseData.SENSORS_STATUS.Lock;
-                //Fold.Text = o_data.ResponseData.SENSORS_STATUS.Fold;
-                //Events.Text = o_data.ResponseData.ORDER.event_count;
+
+                if (o_data.ResponseData.SENSORS_STATUS.Lock == "1")
+                {
+                    Lock.Text = "Закрыт";
+                }
+                else if (o_data.ResponseData.SENSORS_STATUS.Lock == "0")
+                {
+                    Lock.Text = "Открыт";
+                }
+                else
+                {
+                    Lock.Text = "Неизвестно";
+                }
+
+                if (o_data.ResponseData.SENSORS_STATUS.fold == "1")
+                {
+                    Fold.Text = "Разложен";
+                }
+                else if (o_data.ResponseData.SENSORS_STATUS.fold == "0")
+                {
+                    Fold.Text = "Сложен";
+                }
+                else
+                {
+                    Fold.Text = "Неизвестно";
+                }
+
+                if (o_data.ResponseData.SENSORS_STATUS.gate == "1")
+                {
+                    Gate.Text = "Закрыта";
+                }
+                else if (o_data.ResponseData.SENSORS_STATUS.gate == "0")
+                {
+                    Gate.Text = "Открыта";
+                }
+                else
+                {
+                    Gate.Text = "Неизвестно";
+                }
             }
             else
             {

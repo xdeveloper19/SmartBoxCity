@@ -8,8 +8,8 @@ namespace Entity.Model.AlarmResponse
     {
         public ListAlarmResponse()
         {
-            this.ALARMS = new List<AlarmResponseData>();
+            this.ALARMS_STATUS = new List<AlarmResponseData>();
         }
-        public List<AlarmResponseData> ALARMS { get; set; }
+        public List<AlarmResponseData> ALARMS_STATUS { get; set; }
     }
 }

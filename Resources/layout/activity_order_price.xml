@@ -1,4 +1,4 @@
-﻿<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+﻿<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,95 +11,201 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main"
     android:background="@drawable/activity_stili">
-
     <android.support.v7.widget.CardView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/cardView9"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="4dp"
-                android:layout_marginTop="50dp"
-                android:layout_gravity="center_horizontal">
-        
-        <RelativeLayout
-            android:layout_width="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="4dp"
+        android:layout_gravity="center">         
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="20dp"
-                android:paddingRight="20dp">
+            android:padding="20dp"> 
             <TextView
-                    android:layout_width="wrap_content"
+                android:text="Расчёт доставки"
+                android:textColor = "#999898"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/TextMainOrderPrice"
+             />  
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_stili"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text = "Стоимость перевозки"
-                    android:padding="10dp"
-                    android:textSize="15sp"
-                    android:textColor = "#475B57"
-                    android:id = "@+id/textHeading2"
-                    android:gravity = "center"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text = "456 руб"
-            android:textColor = "#475B57"
-            android:padding="10dp"
-            android:textSize="40sp"
-            android:layout_centerInParent="true"
-            android:id = "@+id/price"                    
-            android:layout_below="@+id/textHeading2"
-        />
-
-            <TextView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text = "Доставка от 4 дней"     
-                 android:textColor = "#475B57"
-                 android:padding="10dp"
-                 android:textSize="20sp"
-                 android:layout_centerInParent="true"
-                 android:id = "@+id/h3"                    
-                 android:layout_below="@+id/price"
-            />
-
-            <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation = "horizontal">
+                    <TextView
+                        android:textColor = "@color/textclient"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:padding="1dp"
+                        android:text="Откуда:"
+                        android:textSize="12sp"
+                        />
+                    <TextView
+                        android:id="@+id/OrderPriceTextFrom"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background = "@color/colorMainLightBlue"
+                />
+               <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text = "*Указана ориентировачная стоимость в рублях"
-                    android:padding="10dp"
-                    android:textSize="10sp"
-                    
-                    android:id = "@+id/h4"
-                    
-            android:layout_below="@+id/h3"
-            />
-
-            <Button
-				android:text="Оформить заказ"
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-                android:id="@+id/btn_add_order3"
-                android:layout_centerInParent="true"
-				android:textColor = "#FBF8F8"
-                android:layout_marginTop="20dp"                
-                android:layout_below = "@+id/h4"
-				android:background = "@drawable/button_stili"
-				android:textSize = "12sp"
-				android:textAppearance="?android:attr/textAppearanceMedium"
-				 />   
-
-            <Button
-				android:text="Рассчитать стоимость снова"
-				android:textAppearance="?android:attr/textAppearanceSmall" 
-				android:layout_centerInParent="true"
-				android:layout_width="match_parent"
-				android:layout_height="50dp"
-                android:autoLink="web"
-				android:textColor="@color/material_grey_600"	
-				android:background="@android:color/white"
-				android:layout_below="@+id/btn_add_order3"
-				android:id="@+id/btn_add_order_again" /> 
-        </RelativeLayout>
+                    android:layout_margin="5dp"
+                    android:orientation = "horizontal">
+                    <TextView
+                        android:textColor = "@color/textclient"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:padding="1dp"
+                        android:text="Куда:"
+                        android:textSize="12sp"
+                        />
+                    <TextView
+                        android:id="@+id/OrderPriceTextTo"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background = "@color/colorMainLightBlue"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation = "horizontal">
+                    <TextView
+                        android:textColor = "@color/textclient"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:padding="1dp"
+                        android:text="Расстояние:"
+                        android:textSize="12sp"
+                        />
+                    <TextView
+                        android:id="@+id/OrderPriceTextDistance"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background = "@color/colorMainLightBlue"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation = "horizontal">
+                    <TextView
+                        android:textColor = "@color/textclient"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:padding="1dp"
+                        android:text="Цена страховки:"
+                        android:textSize="12sp"
+                        />
+                    <TextView
+                        android:id="@+id/OrderPriceTextInsurancePrice"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background = "@color/colorMainLightBlue"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation = "horizontal">
+                    <TextView
+                        android:textColor = "@color/textclient"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_weight="1"
+                        android:padding="1dp"
+                        android:text="Цена доставки:"
+                        android:textSize="12sp"
+                        />
+                    <TextView
+                        android:id="@+id/OrderPriceTextShippingCost"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textColor="@android:color/holo_green_light"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="13sp"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">                
+                <Button
+				    android:text="Рассчитать стоимость снова"
+				    android:textSize = "10dp" 
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+                    android:autoLink="web"
+				    android:textColor = "#FBF8F8"	
+				    android:background="@drawable/button_stili"
+				    android:id="@+id/OrderPriceBtnAddOrderAgain" /> 
+                <Button
+				    android:text="Оформить заказ"
+                    android:layout_weight = "1"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+                    android:id="@+id/OrderPriceBtnAddOrder"
+				    android:textColor = "#FBF8F8"               
+				    android:background="@drawable/button_primary"
+				    android:textSize = "10dp"
+		         />   
+             </LinearLayout>
+        </LinearLayout>
        
     </android.support.v7.widget.CardView>
 
@@ -112,4 +218,4 @@
 		android:id="@+id/loader"
 	/>
 
-</RelativeLayout>
+</LinearLayout>

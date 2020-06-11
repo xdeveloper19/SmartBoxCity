@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -57,7 +56,7 @@ namespace SmartBoxCity.Activity.Driver
                     //обязательно должен быть прогресс бар при обращении к серверу, типо такого
                     //preloader.Visibility = Android.Views.ViewStates.Invisible;
                                
-                    foreach (var alm in o_data.ResponseData.ALARMS)
+                    foreach (var alm in o_data.ResponseData.ALARMS_STATUS)
                     {
                         alarmlist.Add(new AlarmBookModel
                         {

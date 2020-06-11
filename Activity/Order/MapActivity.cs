@@ -12,8 +12,11 @@ using Android.Gms.Maps.Model;
 using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
+using Android.Text.Method;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
+using Cheesebaron.SlidingUpPanel;
 using Entity.Model;
 using Entity.Model.OrderResponse;
 using Entity.Repository;
@@ -23,6 +26,7 @@ namespace SmartBoxCity.Activity.Order
 {
     public class MapActivity: Fragment, IOnMapReadyCallback
     {
+        private const string SavedStateActionBarHidden = "saved_state_action_bar_hidden";
         private TextView txtFrom;
         private TextView txtTo;
         private TextView Weight;
@@ -117,7 +121,7 @@ namespace SmartBoxCity.Activity.Order
             mMapView.OnDestroy();
         }
 
-        public void OnLowMemory()
+        public override void OnLowMemory()
         {
             base.OnLowMemory();
             mMapView.OnLowMemory();
@@ -131,10 +135,36 @@ namespace SmartBoxCity.Activity.Order
             Weight = view.FindViewById<TextView>(Resource.Id.MapTextWeight);
             LenhWidHeig = view.FindViewById<TextView>(Resource.Id.MapTextLenhWidHeig);
 
+            var layout = view.FindViewById<SlidingUpPanelLayout>(Resource.Id.sliding_client_layout);
+            view.FindViewById<TextView>(Resource.Id.txt_info_order_new).MovementMethod = new LinkMovementMethod();
+
             var result = GetParameters();
 
             if (result.Result == SmartBoxCity.Activity.Driver.TaskStatus.OK)
             {
+                layout.AnchorPoint = 0.3f;
+                layout.PanelExpanded += (s, e) => Log.Info(Tag, "PanelExpanded");
+                layout.PanelCollapsed += (s, e) => Log.Info(Tag, "PanelCollapsed");
+                layout.PanelAnchored += (s, e) => Log.Info(Tag, "PanelAnchored");
+                layout.PanelSlide += (s, e) =>
+                {
+                    if (e.SlideOffset < 0.2)
+                    {
+                        //if (SupportActionBar.IsShowing)
+                        //    SupportActionBar.Hide();
+                    }
+                    else
+                    {
+                        //if (!SupportActionBar.IsShowing)
+                        //    SupportActionBar.Show();
+                    }
+                };
+
+                var actionBarHidden = savedInstanceState != null &&
+                                      savedInstanceState.GetBoolean(SavedStateActionBarHidden, false);
+                //if (actionBarHidden)
+                //    SupportActionBar.Hide();
+
                 MapsInitializer.Initialize(Activity);
                 mMapView = view.FindViewById<MapView>(Resource.Id.FragmentMapUser);
 

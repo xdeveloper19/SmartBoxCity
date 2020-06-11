@@ -23,13 +23,11 @@ using WebService.Driver;
 
 namespace SmartBoxCity.Activity.Driver
 {
-    public class TaskListAdapter: BaseAdapter<IViewItemType>, IOnMapReadyCallback
+    public class TaskListAdapter: BaseAdapter<IViewItemType>
     {
         Context context;
-        Bundle savedInstanceState;
+        //Bundle savedInstanceState;
         List<IViewItemType> tasks;
-        private GoogleMap GMap;
-        MapView mMapView;
         private LayoutInflater inflater;
         Android.App.FragmentTransaction manager;
 
@@ -37,12 +35,12 @@ namespace SmartBoxCity.Activity.Driver
 
         private Button btn_perform;
 
-        public TaskListAdapter(Context Context, List<IViewItemType> List, FragmentManager Manager, Bundle savedInstance)
+        public TaskListAdapter(Context Context, List<IViewItemType> List, FragmentManager Manager)
         {
             this.manager = Manager.BeginTransaction();
             this.context = Context;
             this.tasks = List;
-            this.savedInstanceState = savedInstance;
+            //this.savedInstanceState = savedInstance;
 
             inflater = (LayoutInflater)this.context.GetSystemService(Context.LayoutInflaterService);
         }
@@ -70,31 +68,9 @@ namespace SmartBoxCity.Activity.Driver
                     #region Объявление переменных в заголовке
                     var txt_order_id = view.FindViewById<TextView>(Resource.Id.btn_about_order);
                     var txt_title = view.FindViewById<TextView>(Resource.Id.txtTaskName);
-                    mMapView = view.FindViewById<MapView>(Resource.Id.fragmentMap3);
                     btn_perform = view.FindViewById<Button>(Resource.Id.btn_prime2);
                     btn_interrupt = view.FindViewById<Button>(Resource.Id.btn_prime);
                     #endregion
-
-                    MapsInitializer.Initialize(context);
-                    // HomeService.SetListViewHeightBasedOnChildren(lstTask);
-
-                    switch (GooglePlayServicesUtil.IsGooglePlayServicesAvailable(context))
-                    {
-                        case ConnectionResult.Success:
-                            Toast.MakeText(context, "SUCCESS", ToastLength.Long).Show();
-                            mMapView.OnCreate(savedInstanceState);
-                            mMapView.GetMapAsync(this);
-                            break;
-                        case ConnectionResult.ServiceMissing:
-                            Toast.MakeText(context, "ServiceMissing", ToastLength.Long).Show();
-                            break;
-                        case ConnectionResult.ServiceVersionUpdateRequired:
-                            Toast.MakeText(context, "Update", ToastLength.Long).Show();
-                            break;
-                        default:
-                            Toast.MakeText(context, GooglePlayServicesUtil.IsGooglePlayServicesAvailable(context), ToastLength.Long).Show();
-                            break;
-                    }
 
                     txt_order_id.Text = StaticTask.order_id;
                     txt_title.Text = StaticTask.title;
@@ -305,68 +281,6 @@ namespace SmartBoxCity.Activity.Driver
             }
         }
 
-        public void OnMapReady(GoogleMap googleMap)
-        {
-            this.GMap = googleMap;
-
-            LatLng location = new LatLng(StaticTask.way_points[0].lat, StaticTask.way_points[0].lng);
-            PolylineOptions rectOptions = new PolylineOptions()
-            {
-
-            };
-            rectOptions.Geodesic(true);
-            rectOptions.InvokeWidth(1);
-            rectOptions.InvokeColor(Color.Blue);
-
-            for (int i = 0; i < StaticTask.way_points.Count; i++)
-            {
-                var latitude = StaticTask.way_points[i].lat;
-                var longitude = StaticTask.way_points[i].lng;
-
-                LatLng new_location = new LatLng(
-                   latitude,
-                    longitude);
-
-                rectOptions.Add(new_location);
-
-                if (i == 0)
-                {
-                    MarkerOptions markerOpt1 = new MarkerOptions();
-                    //location = new LatLng(latitude, longitude);
-
-                    markerOpt1.SetPosition(new LatLng(latitude, longitude));
-                    markerOpt1.SetTitle("Start");
-                    markerOpt1.SetSnippet("Текущее положение");
-
-                    var bmDescriptor = BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueBlue);
-                    markerOpt1.InvokeIcon(bmDescriptor);
-
-                    googleMap.AddMarker(markerOpt1);
-
-                    continue;
-                }
-                MarkerOptions markerOptions = new MarkerOptions();
-
-                markerOptions.SetPosition(new_location);
-                markerOptions.SetTitle(i.ToString());
-                googleMap.AddMarker(markerOptions);
-
-            }
-
-            googleMap.AddPolyline(rectOptions);
-
-            CameraPosition.Builder builder = CameraPosition.InvokeBuilder();
-            builder.Target(location);
-            builder.Zoom(10);
-            builder.Bearing(0);
-            builder.Tilt(65);
-
-            CameraPosition cameraPosition = builder.Build();
-            CameraUpdate cameraUpdate = CameraUpdateFactory.NewCameraPosition(cameraPosition);
-
-            googleMap.UiSettings.ZoomControlsEnabled = true;
-            googleMap.UiSettings.CompassEnabled = true;
-            googleMap.MoveCamera(cameraUpdate);
-        }
+       
     }
 }

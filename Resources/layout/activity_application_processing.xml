@@ -279,8 +279,7 @@
                             <android.support.design.widget.TextInputLayout
 			                    android:layout_width="100dp"
                                 android:layout_height="wrap_content"
-			                    style="@style/LoginTextInputLayoutStyle"
-			                    android:id="@+id/s_height_layout">
+			                    style="@style/LoginTextInputLayoutStyle">
 
                                 <EditText
                                     android:id="@+id/s_height"
@@ -303,16 +302,11 @@
                                 android:textColor = "#475B57"
                                 android:padding="8dp"
                                 android:inputType="text"                  
-                                android:layout_below = "@+id/mLenght"
-                                android:id = "@+id/mHeight"
                             />
                             <android.support.design.widget.TextInputLayout
 			                    android:layout_width="100dp"
                                 android:layout_height="wrap_content"
-			                    style="@style/LoginTextInputLayoutStyle"
-			                    android:id="@+id/s_size_layout"
-                                android:layout_toEndOf="@+id/mLenght"
-                                android:layout_below = "@+id/s_width_layout">
+			                    style="@style/LoginTextInputLayoutStyle">
 
                                 <EditText
                                     android:id="@+id/s_size"
@@ -334,7 +328,6 @@
                                 android:textSize="13sp"
                                 android:padding="8dp"
                                 android:inputType="text"
-                                android:id = "@+id/mSize"
                             />
                     </LinearLayout>                  
                   

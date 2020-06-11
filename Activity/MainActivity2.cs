@@ -35,7 +35,7 @@ namespace SmartBoxCity.Activity
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation_driver);
 
             FragmentTransaction transaction3 = this.FragmentManager.BeginTransaction();
-            TaskActivity content2 = new TaskActivity();
+            MapActivity content2 = new MapActivity();
             transaction3.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
 
             navigation.NavigationItemSelected += (sender, e) =>
@@ -45,7 +45,7 @@ namespace SmartBoxCity.Activity
                 {
 
                     case Resource.Id.tasks:
-                        TaskActivity content2 = new TaskActivity();
+                        MapActivity content2 = new MapActivity();
                         transaction2.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
                         break;
                     case Resource.Id.boxes:

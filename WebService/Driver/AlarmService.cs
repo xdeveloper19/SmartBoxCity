@@ -105,7 +105,7 @@ namespace WebService.Driver
                             o_data.Status = System.Net.HttpStatusCode.OK;// а почему переменная container_id пустая
                             o_data.ResponseData = new ListAlarmResponse
                             {
-                                ALARMS = alarms.ALARMS
+                                ALARMS_STATUS = alarms.ALARMS_STATUS
                             };
                             return o_data;
                         }

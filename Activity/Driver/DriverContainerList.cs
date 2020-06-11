@@ -22,9 +22,10 @@ namespace SmartBoxCity.Activity.Driver
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var view = inflater.Inflate(Resource.Layout.ContainerCardView, container, false);
+            return base.View;
+            //var view = inflater.Inflate(Resource.Layout.ContainerCardView, container, false);
             
-            return view;
+            //return view;
         }
 
     }

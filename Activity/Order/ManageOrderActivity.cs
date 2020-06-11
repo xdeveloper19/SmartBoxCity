@@ -48,8 +48,8 @@ namespace SmartBoxCity.Activity.Order
         private TextView Fold;
         private TextView Events;
 
-        private EditText Date;
-        private EditText Time;
+        private Spinner Date;
+        private List<string> Time;
         private CheckBox checkBox;
         private bool check;
 
@@ -62,6 +62,7 @@ namespace SmartBoxCity.Activity.Order
         private Button btn_Video;
         private Button btn_Lock;
         private const string URL = "https://smartboxcity.ru/";
+        private string Date_str;
         #endregion
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -96,7 +97,7 @@ namespace SmartBoxCity.Activity.Order
 
             btn_Lock.Click += delegate
             {
-                
+
                 AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
                 if (btn_Lock.Text == "Открыть")
                 {
@@ -118,26 +119,26 @@ namespace SmartBoxCity.Activity.Order
                         LayoutInflater layoutInflater = LayoutInflater.From(Activity);
                         View dialogView = layoutInflater.Inflate(Resource.Layout.modal_transmit_order, null);
                         alert.SetView(dialogView);
-                        
-                        checkBox = dialogView.FindViewById<CheckBox>(Resource.Id.ManageOrderCheckBox);
-                        Date = dialogView.FindViewById<EditText>(Resource.Id.ManageOrderDate);
-                        Time = dialogView.FindViewById<EditText>(Resource.Id.ManageOrderTime);
 
+                        checkBox = dialogView.FindViewById<CheckBox>(Resource.Id.ManageOrderCheckBox);
+
+                        Date = dialogView.FindViewById<Spinner>(Resource.Id.ManageOrderSpinnerTime);
+                        CreateTimeArray();
+                        ArrayAdapter<string> adapter = new ArrayAdapter<string>(Activity, Android.Resource.Layout.SimpleSpinnerItem, Time);
+                        adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                        Date.Adapter = adapter;
+                        Date.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(SpinnerClass_ItemSelected);
                         Date.Visibility = ViewStates.Invisible;
-                        Time.Visibility = ViewStates.Invisible;
+
                         checkBox.Text = "Погрузка завершена. Контейнер готов к отправке.";
                         checkBox.Click += delegate
                         {
                             check = checkBox.Checked;
                             Date.Visibility = ViewStates.Visible;
-                            Time.Visibility = ViewStates.Visible;
                             Date.Focusable = false;
                             Date.Clickable = false;
-                            Time.Focusable = false;
-                            Time.Clickable = false;
-                            Date.Click += Date_Click;
-                            Time.Click += Time_Click;
                         };
+
                     }
                     else if (StaticOrder.Order_Stage_Id == "6")
                     {
@@ -146,23 +147,21 @@ namespace SmartBoxCity.Activity.Order
                         alert.SetView(dialogView);
 
                         checkBox = dialogView.FindViewById<CheckBox>(Resource.Id.ManageOrderCheckBox);
-                        Date = dialogView.FindViewById<EditText>(Resource.Id.ManageOrderDate);
-                        Time = dialogView.FindViewById<EditText>(Resource.Id.ManageOrderTime);
-
+                        Date = dialogView.FindViewById<Spinner>(Resource.Id.ManageOrderSpinnerTime);
+                        CreateTimeArray();
+                        ArrayAdapter<string> adapter = new ArrayAdapter<string>(Activity, Android.Resource.Layout.SimpleSpinnerItem, Time);
+                        adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                        Date.Adapter = adapter;
+                        Date.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(SpinnerClass_ItemSelected);
                         Date.Visibility = ViewStates.Invisible;
-                        Time.Visibility = ViewStates.Invisible;
+
                         checkBox.Text = "Разгрузка завершена. Контейнер готов к отправке.";
                         checkBox.Click += delegate
                         {
                             check = checkBox.Checked;
                             Date.Visibility = ViewStates.Visible;
-                            Time.Visibility = ViewStates.Visible;
                             Date.Focusable = false;
                             Date.Clickable = false;
-                            Time.Focusable = false;
-                            Time.Clickable = false;
-                            Date.Click += Date_Click;
-                            Time.Click += Time_Click;
                         };
                     }
                     alert.SetMessage("Вы действительно хотите закрыть замок контейнера?");
@@ -183,7 +182,7 @@ namespace SmartBoxCity.Activity.Order
                 Dialog dialog = alert.Create();
                 dialog.Show();
 
-               
+
                 // }                
             };
 
@@ -213,7 +212,7 @@ namespace SmartBoxCity.Activity.Order
                     Dialog dialog = alert.Create();
                     dialog.Show();
 
-                    
+
                 }
             };
 
@@ -251,24 +250,40 @@ namespace SmartBoxCity.Activity.Order
             return view;
         }
 
-        private void Time_Click(object sender, EventArgs e)
+        private void CreateTimeArray()
         {
-            TimePickerFragment frag = TimePickerFragment.NewInstance(
-            delegate (DateTime time)
+            Time = new List<string>();
+            DateTime nowTime = DateTime.Now;
+            int[] a = nowTime.ToShortTimeString().Split(':').
+              Where(x => !string.IsNullOrWhiteSpace(x)).
+              Select(x => int.Parse(x)).ToArray();
+            if (a[1] <= 30)
             {
-                Time.Text = time.ToShortTimeString();
-            });
-
-            frag.Show(FragmentManager, TimePickerFragment.TAG);
+                DateTime ModelTime = new DateTime(nowTime.Year, nowTime.Month, nowTime.Day, a[0], 00, 00);
+                for (int i = 2; i < 10; i += 2)
+                {
+                    string t = ModelTime.ToShortDateString() + " " + ModelTime.AddHours(i - 2).ToShortTimeString() + " - ";
+                    t += ModelTime.AddHours(i).ToShortTimeString();
+                    Time.Add(t);
+                }
+            }
+            else if (a[1] > 30)
+            {
+                a[0] += 1;
+                DateTime ModelTime = new DateTime(nowTime.Year, nowTime.Month, nowTime.Day, a[0], 30, 00);
+                for (int i = 2; i < 10; i += 2)
+                {
+                    string t = ModelTime.ToShortDateString() + " " + ModelTime.AddHours(i - 2).ToShortTimeString() + " - ";
+                    t += ModelTime.AddHours(i).ToShortTimeString();
+                    Time.Add(t);
+                }
+            }
         }
 
-        private void Date_Click(object sender, EventArgs e)
+        private void SpinnerClass_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
         {
-            DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
-            {
-                Date.Text = time.ToShortDateString();
-            });
-            frag.Show(FragmentManager, DatePickerFragment.TAG);
+            var spinner = sender as Spinner;
+            Date_str = spinner.GetItemAtPosition(e.Position).ToString();
         }
 
         private async void MakeLock(AlertDialog.Builder alert, bool checkBox)
@@ -313,7 +328,8 @@ namespace SmartBoxCity.Activity.Order
         {
             using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
             {
-                var o_data = await ManageOrderService.TransmitOrder(StaticOrder.Order_id, Date.Text, Time.Text);
+                string[] date = Date_str.Split(' ', '-');
+                var o_data = await ManageOrderService.TransmitOrder(StaticOrder.Order_id, date[0], date[1]);
                 if (o_data.Status == HttpStatusCode.OK)
                 {
                     alert.Dispose();
@@ -325,7 +341,7 @@ namespace SmartBoxCity.Activity.Order
                     });
                     Dialog dialog1 = alert1.Create();
                     dialog1.Show();
-                    
+
                 }
                 else
                 {
@@ -480,7 +496,7 @@ namespace SmartBoxCity.Activity.Order
 
                 StaticBox.AddInfoSensors(o_data.ResponseData.SENSORS_STATUS);
                 StaticOrder.AddInfoOrder(o_data.ResponseData.ORDER);
-                
+
                 Id.Text = (o_data.ResponseData.ORDER.id == null) ? "неизвестно" : o_data.ResponseData.ORDER.id;
                 Weight.Text = (o_data.ResponseData.SENSORS_STATUS.weight == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.weight;
                 Temperature.Text = (o_data.ResponseData.SENSORS_STATUS.temperature == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.temperature;

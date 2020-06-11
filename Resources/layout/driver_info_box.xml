@@ -347,7 +347,7 @@
                         android:orientation = "horizontal">
                          <Button
                             android:textColor="@color/colorMainLightBlue"
-                            android:background="@drawable/button_stili"
+                            android:background="@drawable/button_main"
                             android:id="@+id/BoxButtonPhoto"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -356,7 +356,7 @@
                             android:layout_weight = "1"/>
                          <Button
                             android:textColor="@color/colorMainLightBlue"
-                            android:background="@drawable/button_stili"
+                            android:background="@drawable/button_main"
                             android:id="@+id/BoxButtonDetach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -365,7 +365,7 @@
                             android:textSize = "10dp"/>
                          <Button
                             android:textColor="@color/colorMainLightBlue"
-                            android:background="@drawable/button_stili"
+                            android:background="@drawable/button_main"
                             android:id="@+id/BoxButtonVideo"
                             android:text = "Видео"
                             android:layout_width="wrap_content"

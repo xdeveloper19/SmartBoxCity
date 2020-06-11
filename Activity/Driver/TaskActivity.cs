@@ -69,7 +69,6 @@ namespace SmartBoxCity.Activity.Driver
                 //LayoutInflater layoutInflater = LayoutInflater.From(Activity);
                 //ViewGroup view_task = (ViewGroup)layoutInflater.Inflate(Resource.Layout.driver_header_task, null);
                 //lstTask.AddHeaderView(view_task);
-
                 bundle = savedInstanceState;
                 _gpsService = new GPSService(Activity);
                 _gpsService.UpdateLocation();
@@ -170,7 +169,7 @@ namespace SmartBoxCity.Activity.Driver
 
         public void UpdateList()
         {
-            TaskListAdapter adapter = new TaskListAdapter(Activity, tasklist, this.FragmentManager, bundle);
+            TaskListAdapter adapter = new TaskListAdapter(Activity, tasklist, this.FragmentManager);
             lstTask.Adapter = adapter;
         }
 

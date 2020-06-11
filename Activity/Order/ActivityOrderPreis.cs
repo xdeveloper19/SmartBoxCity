@@ -24,11 +24,13 @@ namespace SmartBoxCity.Activity.Order
 {
     class ActivityOrderPreis : Fragment
     {
-        private Button btn_add_order3;
-        private TextView price;
-        /// <summary>
-        /// Кнопка прокрутки.
-        /// </summary>
+        private TextView txt_From;
+        private TextView txt_To;
+        private TextView txt_Distance;
+        private TextView txt_Insurance_Price;
+        private TextView txt_Shipping_Cost;
+        private Button btn_add_order;
+        private Button btn_add_order_again;
         private ProgressBar preloader;
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -39,9 +41,20 @@ namespace SmartBoxCity.Activity.Order
         {
             var view = inflater.Inflate(Resource.Layout.activity_order_price, container, false);
             preloader = view.FindViewById<ProgressBar>(Resource.Id.loader);
-            price = view.FindViewById<TextView>(Resource.Id.price);
-            btn_add_order3 = view.FindViewById<Button>(Resource.Id.btn_add_order3);
-            btn_add_order3.Click += async delegate
+            txt_From = view.FindViewById<TextView>(Resource.Id.OrderPriceTextFrom);
+            txt_To = view.FindViewById<TextView>(Resource.Id.OrderPriceTextTo);
+            txt_Distance = view.FindViewById<TextView>(Resource.Id.OrderPriceTextDistance);
+            txt_Insurance_Price = view.FindViewById<TextView>(Resource.Id.OrderPriceTextInsurancePrice);
+            txt_Shipping_Cost = view.FindViewById<TextView>(Resource.Id.OrderPriceTextShippingCost);
+            btn_add_order = view.FindViewById<Button>(Resource.Id.OrderPriceBtnAddOrder);
+            btn_add_order_again = view.FindViewById<Button>(Resource.Id.OrderPriceBtnAddOrderAgain);
+
+            btn_add_order_again.Click += delegate
+            {
+
+            };
+
+            btn_add_order.Click += async delegate
             {
                 preloader.Visibility = Android.Views.ViewStates.Visible;
                 MakeOrderModel model = new MakeOrderModel()
@@ -126,7 +139,11 @@ namespace SmartBoxCity.Activity.Order
                     dialog.Show();
                 }
             };
-            price.Text = StaticOrder.Amount;
+            txt_Shipping_Cost.Text = StaticOrder.Amount;
+            txt_Insurance_Price.Text = StaticOrder.Insurance_amount + " ₽";
+            txt_Distance.Text = StaticOrder.Distance + " км";
+            txt_To.Text = StaticOrder.Destination_address;
+            txt_From.Text = StaticOrder.Inception_address;
             return view;
         }
     }

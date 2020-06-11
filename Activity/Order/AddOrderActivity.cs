@@ -160,6 +160,7 @@ namespace SmartBoxCity.Activity.Order
                 s_contact_person.Enabled = false;
                 s_edit_from.Focusable = false;
                 s_edit_where.Focusable = false;
+                s_size.Focusable = false;
 
                 #region Проверка отмеченных событий
                 chek_cargo_insurance.CheckedChange += (o, e) => {
@@ -329,6 +330,33 @@ namespace SmartBoxCity.Activity.Order
 
                 FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
 
+                s_size.Click += async delegate
+                {
+                    if (string.IsNullOrEmpty(s_length.Text) == false &&
+                    string.IsNullOrEmpty(s_width.Text) == false &&
+                    string.IsNullOrEmpty(s_height.Text) == false)
+                    {
+                        CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+                        ci.NumberFormat.CurrencyDecimalSeparator = ".";
+                        float size_calculation = float.Parse(s_length.Text, NumberStyles.Any, ci)
+                            * float.Parse(s_width.Text, NumberStyles.Any, ci)
+                            * float.Parse(s_height.Text, NumberStyles.Any, ci);
+                        s_size.Text = size_calculation.ToString();
+                    }
+                    else
+                    {
+                        AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
+                        alert.SetTitle("Внимание!");
+                        alert.SetMessage("Необходимо заполнить данные о длине, ширине и высоте груза !");
+                        alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
+                        {
+                        });
+                        Dialog dialog = alert.Create();
+                        dialog.Show();
+                    }
+
+                };
+
                 s_edit_from.Click += async delegate
                 {
                     //GooglePlacesResult fragment = new GooglePlacesResult();
@@ -384,10 +412,20 @@ namespace SmartBoxCity.Activity.Order
                             Dialog dialog = alert.Create();
                             dialog.Show();
                         }
+                        else if (s_size.Text == null)
+                        {
+                            AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
+                            alert.SetTitle("Внимание!");
+                            alert.SetMessage("Необходимо вычислить объём груза ! Для этого введите данные длины, ширины и высоты груза и нажмите на поле «Объём».");
+                            alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
+                            {
+                            });
+                            Dialog dialog = alert.Create();
+                            dialog.Show();
+                        }
                         else
                         {
                             preloader.Visibility = Android.Views.ViewStates.Visible;
-
 
                             //q_result = Int32.TryParse(s_sum_seats.Text, out quantity);
                             l_result = Double.TryParse(s_length.Text, out length);
@@ -465,7 +503,7 @@ namespace SmartBoxCity.Activity.Order
                             }
 
 
-                           
+
                         }
 
                     }
@@ -484,7 +522,7 @@ namespace SmartBoxCity.Activity.Order
             return view;
         }
 
-       
+
 
         private void S_shipping_date_Click(object sender, EventArgs e)
         {
@@ -582,6 +620,5 @@ namespace SmartBoxCity.Activity.Order
             check_argue.Checked = false;
             check_receiver.Checked = false;
         }
-
     }
 }
