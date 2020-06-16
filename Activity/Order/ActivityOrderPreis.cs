@@ -119,11 +119,13 @@ namespace SmartBoxCity.Activity.Order
                         alert1.SetMessage("Необходимо выбрать вид регистрации.");
                         alert1.SetPositiveButton("Для физ.лица", (senderAlert1, args1) =>
                         {
+                            CrossSettings.Current.AddOrUpdateValue("isOrdered", "true");
                             Activity_Registration_Individual_Person content4 = new Activity_Registration_Individual_Person();
                             transaction2.Replace(Resource.Id.framelayout, content4).AddToBackStack(null).Commit();
                         });
                         alert1.SetNegativeButton("Для юр.лица", (senderAlert1, args1) =>
                         {
+                            CrossSettings.Current.AddOrUpdateValue("isOrdered", "true");
                             Activity_Legal_Entity_Registration content3 = new Activity_Legal_Entity_Registration();
                             transaction2.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
                         });
@@ -132,6 +134,7 @@ namespace SmartBoxCity.Activity.Order
                     });
                     alert.SetNegativeButton("Вход", (senderAlert, args) =>
                     {
+                        CrossSettings.Current.AddOrUpdateValue("isOrdered", "true");
                         AuthActivity content3 = new AuthActivity();
                         transaction2.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
                     });

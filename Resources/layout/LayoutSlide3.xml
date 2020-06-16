@@ -4,41 +4,37 @@
     android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
     android:background="@drawable/activity_stili">
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="Шаг 4"
-            android:layout_gravity="center"
-            android:textColor = "#475B57"
-            android:textSize="25dp"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor = "#475B57"
-            android:text="Транспортировка контейнера"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:textSize="17dp" />
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/slide33" />
-        <ScrollView
+        android:layout_marginBottom="40dp">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop = "10dp"
-            android:paddingBottom = "10dp"
-            android:paddingLeft = "10dp"
-            android:paddingRight = "10dp"
-            android:id="@+id/ScrollViewSlide3" >
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Шаг 4"
+                android:layout_gravity="center"
+                android:textColor = "#475B57"
+                android:textSize="25dp"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor = "#475B57"
+                android:text="Транспортировка контейнера"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textSize="17dp" />
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:src="@drawable/slide3" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,6 +46,6 @@
                 android:text="@string/slide_3"
                 android:textStyle="normal"
                 android:textSize="14dp" />
-        </ScrollView>
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

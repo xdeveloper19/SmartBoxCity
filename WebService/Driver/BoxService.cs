@@ -136,7 +136,7 @@ namespace WebService.Driver
                             ErrorResponseObject error = new ErrorResponseObject();
                             error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
                             o_data.Status = response.StatusCode;
-                            o_data.Message = error.Errors[0];
+                            o_data.Message = "Ошибка 400";
                             return o_data;
                         }
                     case HttpStatusCode.InternalServerError:

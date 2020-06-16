@@ -1,0 +1,38 @@
+﻿<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+	android:padding="10dp"
+	android:background="@drawable/activity_stili">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:textColor = "#475B57"
+        android:text="Ошибка"
+    />
+     <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/errorsHandling"
+     />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:padding="10dp"
+        android:background="@drawable/edittext_stili"
+        android:textColor = "#475B57"
+        android:text="Что-то пошло не так. Перезапустите страницу или обратитесь в ценрт поддержики !"
+    />
+
+</LinearLayout>

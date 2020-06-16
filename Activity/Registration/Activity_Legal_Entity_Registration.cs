@@ -100,7 +100,7 @@ namespace SmartBoxCity.Activity.Registration
             check_personal_data_processing_entity = view.FindViewById<CheckBox>(Resource.Id.check_personal_data_processing_entity);
             check_contract_oferta_entity = view.FindViewById<CheckBox>(Resource.Id.check_contract_oferta_entity);
             preloader = view.FindViewById<ProgressBar>(Resource.Id.preloader);
-
+            
             #endregion
 
             check_personal_data_processing_entity.Click += async delegate
@@ -183,78 +183,100 @@ namespace SmartBoxCity.Activity.Registration
 
             btn_make_request.Click += async delegate
             {
-                if(s_password.Text == s_pass_confirmation.Text)
+                if (CheckingOnNullOrEmptyOfStrings())
                 {
-
-                    if (check_contract_oferta_entity.Checked == true && check_personal_data_processing_entity.Checked == true)
-                    {
-
-                        RegisterLegalModel register = new RegisterLegalModel
-                        {
-                            Login = s_login.Text,
-                            Password = s_password.Text,
-                            Email = s_email.Text,
-                            OrgPhone = s_orgPhone.Text,
-                            ClientType = "organization",
-                            ClientLastName = s_clientLastName.Text,
-                            ClientName = s_clientName.Text,
-                            ClientPatronymic = s_clientPatronymic.Text,
-                            OrgPostalAddress = s_orgPostalAddress.Text,
-                            OrgName = s_orgName.Text,
-                            OrgKpp = s_orgKpp.Text,
-                            OrgInn = s_orgInn.Text,
-                            OrgOgrn = s_orgOgrn.Text,
-                            OrgBank = s_orgBank.Text,
-                            OrgBankpayment = s_orgBankpayment.Text,
-                            OrgBankCorrespondent = s_orgBankCorrespondent.Text,
-                            OrgBankBik = s_orgBankBik.Text,
-                            OrgLegalAddress = s_orgLegalAddress.Text
-                        };
-
-                        using (var client = ClientHelper.GetClient())
-                        {
-                            AuthService.InitializeClient(client);
-                            var o_data = await AuthService.RegisterLegal(register);
-
-                            if (o_data.Status == HttpStatusCode.OK)
-                            {
-                                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                                SuccessResponse o_user_data = new SuccessResponse();
-                                o_user_data = o_data.ResponseData;
-
-                                preloader.Visibility = Android.Views.ViewStates.Invisible;
-                                CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
-
-                                CrossSettings.Current.AddOrUpdateValue("role", "client");
-                                Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                                Intent main = new Intent(Activity, typeof(MainActivity));
-                                StartActivity(main);
-                            }
-
-                            else
-                            {
-                                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                            }
-
-                        };
-                    }
-
-                    else
-                    {
-                        Toast.MakeText(Activity, "Необходимо дать согласие на обработку " +
-                            "персональных данных и согласиться с договором офертой", ToastLength.Long).Show();
-                    }
-
+                    Toast.MakeText(Activity, "Пожалуйста, заполните все поля. ", ToastLength.Long).Show();
                 }
-
                 else
                 {
-                    Toast.MakeText(Activity, "Пароли не совпадают ", ToastLength.Long).Show();
-                }       
-                
+
+                    if (s_password.Text == s_pass_confirmation.Text)
+                    {
+                        if (check_contract_oferta_entity.Checked == true && check_personal_data_processing_entity.Checked == true)
+                        {
+
+                            RegisterLegalModel register = new RegisterLegalModel
+                            {
+                                Login = s_login.Text,
+                                Password = s_password.Text,
+                                Email = s_email.Text,
+                                OrgPhone = s_orgPhone.Text,
+                                ClientType = "organization",
+                                ClientLastName = s_clientLastName.Text,
+                                ClientName = s_clientName.Text,
+                                ClientPatronymic = s_clientPatronymic.Text,
+                                OrgPostalAddress = s_orgPostalAddress.Text,
+                                OrgName = s_orgName.Text,
+                                OrgKpp = s_orgKpp.Text,
+                                OrgInn = s_orgInn.Text,
+                                OrgOgrn = s_orgOgrn.Text,
+                                OrgBank = s_orgBank.Text,
+                                OrgBankpayment = s_orgBankpayment.Text,
+                                OrgBankCorrespondent = s_orgBankCorrespondent.Text,
+                                OrgBankBik = s_orgBankBik.Text,
+                                OrgLegalAddress = s_orgLegalAddress.Text
+                            };
+
+                            using (var client = ClientHelper.GetClient())
+                            {
+                                AuthService.InitializeClient(client);
+                                var o_data = await AuthService.RegisterLegal(register);
+
+                                if (o_data.Status == HttpStatusCode.OK)
+                                {
+                                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                                    SuccessResponse o_user_data = new SuccessResponse();
+                                    o_user_data = o_data.ResponseData;
+
+                                    preloader.Visibility = Android.Views.ViewStates.Invisible;
+                                    CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
+
+                                    CrossSettings.Current.AddOrUpdateValue("role", "client");
+                                    Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                                    Intent main = new Intent(Activity, typeof(MainActivity));
+                                    StartActivity(main);
+                                }
+
+                                else
+                                {
+                                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                                }
+
+                            };
+                        }
+                        else
+                        {
+                            Toast.MakeText(Activity, "Необходимо дать согласие на обработку " +
+                                "персональных данных и согласиться с договором офертой", ToastLength.Long).Show();
+                        }
+
+                    }
+                    else
+                    {
+                        Toast.MakeText(Activity, "Пароли не совпадают ", ToastLength.Long).Show();
+                    }
+                }
             };
 
             return view;
+        }
+
+        private bool CheckingOnNullOrEmptyOfStrings()
+        {
+            if (String.IsNullOrEmpty(s_login.Text) || String.IsNullOrEmpty(s_password.Text)
+              || String.IsNullOrEmpty(s_pass_confirmation.Text) || String.IsNullOrEmpty(s_email.Text)
+              || String.IsNullOrEmpty(s_orgPostalAddress.Text) || String.IsNullOrEmpty(s_clientLastName.Text)
+              || String.IsNullOrEmpty(s_clientName.Text) || String.IsNullOrEmpty(s_clientPatronymic.Text)
+              || String.IsNullOrEmpty(s_orgPhone.Text) || String.IsNullOrEmpty(s_orgName.Text)
+              || String.IsNullOrEmpty(s_orgKpp.Text) || String.IsNullOrEmpty(s_orgInn.Text)
+              || String.IsNullOrEmpty(s_orgOgrn.Text) || String.IsNullOrEmpty(s_orgBank.Text)
+              || String.IsNullOrEmpty(s_orgBankpayment.Text) || String.IsNullOrEmpty(s_orgBankCorrespondent.Text)
+              || String.IsNullOrEmpty(s_orgBankBik.Text) || String.IsNullOrEmpty(s_orgLegalAddress.Text))
+            {
+                return true;
+            }
+            else
+                return false;
         }
     }
 }

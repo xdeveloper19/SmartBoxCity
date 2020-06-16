@@ -19,7 +19,7 @@ namespace WebService.Client
     public class OrderService
     {
         private static HttpClient _httpClient;
-
+        private const string URL = "https://smartboxcity.ru/";
         /// <summary>
         /// Инициализация экземпляра клиента
         /// </summary>
@@ -104,7 +104,7 @@ namespace WebService.Client
 
                 HttpClient client = new HttpClient
                 {
-                    BaseAddress = new Uri("https://smartboxcity.ru/"),
+                    BaseAddress = new Uri(URL),
                     DefaultRequestHeaders = { Authorization = authValue }
                 };
 
@@ -232,7 +232,7 @@ namespace WebService.Client
                 var client = new HttpClient()
                 {
                     DefaultRequestHeaders = { Authorization = authValue },
-                    BaseAddress = new Uri("https://smartboxcity.ru/order/add/")
+                    BaseAddress = new Uri(URL + "order/add/")
                     //Set some other client defaults like timeout / BaseAddress
                 };
 
@@ -303,7 +303,7 @@ namespace WebService.Client
 
                 HttpClient client = new HttpClient
                 {
-                    BaseAddress = new Uri("https://smartboxcity.ru/"),
+                    BaseAddress = new Uri(URL),
                     DefaultRequestHeaders = { Authorization = authValue }
                 };
                 HttpResponseMessage response = await client.GetAsync($"orders/?API");
@@ -443,7 +443,7 @@ namespace WebService.Client
                 ServiceResponseObject<GeoResponseData> o_data =
                     new ServiceResponseObject<GeoResponseData>();
                 o_data.Message = ex.Message;
-                return o_data;
+            return o_data;
             }
         }
 

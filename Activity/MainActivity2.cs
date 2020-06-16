@@ -62,21 +62,33 @@ namespace SmartBoxCity.Activity
                         break;
 
                     case Resource.Id.exit_driver:
-                        string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-                        File.Delete(dir_path + "user_data.txt");
-                        CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
-                        CrossSettings.Current.AddOrUpdateValue("role","");
-
-                        if (StaticDriver.busy == "0")
+                        Android.App.AlertDialog.Builder alert = new Android.App.AlertDialog.Builder(this);
+                        alert.SetTitle("Внимание!");
+                        alert.SetMessage("Вы действительно хотите выйти ?");
+                        alert.SetPositiveButton("Да", (senderAlert, args) =>
                         {
-                            _gpsService = new GPSService(this);
-                            //_gpsService.UpdateLocation();
-                            _gpsService.RemoveLocation();
-                        }
+                            string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+                            File.Delete(dir_path + "user_data.txt");
+                            CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
+                            CrossSettings.Current.AddOrUpdateValue("role", "");
 
-                        Intent content1 = new Intent(this, typeof(MainActivity));
-                        StartActivity(content1);
-                        this.Finish();
+                            if (StaticDriver.busy == "0")
+                            {
+                                _gpsService = new GPSService(this);
+                                //_gpsService.UpdateLocation();
+                                _gpsService.RemoveLocation();
+                            }
+
+                            Intent content1 = new Intent(this, typeof(MainActivity));
+                            StartActivity(content1);
+                            this.Finish();
+                        });
+                        alert.SetPositiveButton("Отмена", (senderAlert, args) =>
+                        {
+                        });
+                        Dialog dialog = alert.Create();
+                        dialog.Show();
+                       
                         break;
                 }
             };

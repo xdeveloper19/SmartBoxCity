@@ -61,10 +61,10 @@ namespace SmartBoxCity.Activity.Box
             BoxTextIllumination = view.FindViewById<TextView>(Resource.Id.BoxTextIllumination);
             BoxTextHumidity = view.FindViewById<TextView>(Resource.Id.BoxTextHumidity);
             BoxTextGate = view.FindViewById<TextView>(Resource.Id.BoxTextGate);
-            BoxTextFold= view.FindViewById<TextView>(Resource.Id.BoxTextFold);
+            BoxTextFold = view.FindViewById<TextView>(Resource.Id.BoxTextFold);
             BoxTextLock = view.FindViewById<TextView>(Resource.Id.BoxTextLock);
             BoxTextEvents = view.FindViewById<TextView>(Resource.Id.BoxTextEvents);
-          
+
             BoxButtonDetach = view.FindViewById<Button>(Resource.Id.BoxButtonDetach);
             BoxButtonVideo = view.FindViewById<Button>(Resource.Id.BoxButtonVideo);
             BoxButtonPhoto = view.FindViewById<Button>(Resource.Id.BoxButtonPhoto);
@@ -95,7 +95,7 @@ namespace SmartBoxCity.Activity.Box
                     BoxLinearAlarms.AddView(textview);
                 }
             }
-            
+
 
             btn_fold.Click += delegate
             {
@@ -124,7 +124,7 @@ namespace SmartBoxCity.Activity.Box
                     alert.SetPositiveButton("Разложить", (senderAlert, args) =>
                     {
                         MakeUnFold(alert);
-                        
+
                         FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                         BoxActivity content2 = new BoxActivity();
                         transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
@@ -276,7 +276,7 @@ namespace SmartBoxCity.Activity.Box
                     Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                 }
             }
-           
+
         }
 
         private async void MakeFold(AlertDialog.Builder alert)
@@ -306,7 +306,7 @@ namespace SmartBoxCity.Activity.Box
             }
         }
 
-       
+
 
         private async void MakeUnFold(AlertDialog.Builder alert)
         {
@@ -338,7 +338,7 @@ namespace SmartBoxCity.Activity.Box
 
         }
 
-      
+
         private async void GetVideo(AlertDialog.Builder alert)
         {
             using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
@@ -443,7 +443,7 @@ namespace SmartBoxCity.Activity.Box
                     BoxTextIllumination.Text = (o_data.ResponseData.SENSORS_STATUS.illumination == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.illumination;
                     BoxTextHumidity.Text = (o_data.ResponseData.SENSORS_STATUS.humidity == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.humidity;
                     BoxTextEvents.Text = (o_data.ResponseData.EVENT_COUNT == null) ? "неизвестно" : StaticBox.event_count + " шт.";
-                    
+
                     if (o_data.ResponseData.SENSORS_STATUS.Lock == "1")
                     {
                         BoxTextLock.Text = "Закрыт";
@@ -492,7 +492,7 @@ namespace SmartBoxCity.Activity.Box
                     Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                 }
             }
-                
+
         }
     }
 }

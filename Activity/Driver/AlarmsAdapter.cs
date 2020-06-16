@@ -66,7 +66,7 @@ namespace SmartBoxCity.Activity.Driver
                 btn_info_alarm.Text = "Признана";
                 btn_info_alarm.SetBackgroundResource(Resource.Drawable.button_primary);
             }
-               
+
 
             btn_info_alarm.Click += async delegate
             {
@@ -79,9 +79,15 @@ namespace SmartBoxCity.Activity.Driver
                     if (o_data.Status == HttpStatusCode.OK)
                     {
                         Toast.MakeText(Application.Context, o_data.Message, ToastLength.Long).Show();
-
-                        AlarmsActivity content2 = new AlarmsActivity();
-                        _manager.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
+                        try
+                        {
+                            AlarmsActivity content2 = new AlarmsActivity();
+                            _manager.Replace(Resource.Id.frameDriverlayout, content2).Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            Toast.MakeText(_context, ex.Message, ToastLength.Long).Show();
+                        }
                     }
                     else
                     {
@@ -92,9 +98,17 @@ namespace SmartBoxCity.Activity.Driver
 
             txt_container.Click += delegate
             {
-                BoxActivity content2 = new BoxActivity();
-                StaticBox.id = _alarms[position].Container_id;
-                _manager.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
+                try
+                {
+                    BoxActivity content2 = new BoxActivity();
+                    StaticBox.id = _alarms[position].Container_id;
+                    _manager.Replace(Resource.Id.frameDriverlayout, content2).Commit();
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(_context, ex.Message, ToastLength.Long).Show();
+                }
+               
             };
 
             return view;

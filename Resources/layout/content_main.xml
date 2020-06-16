@@ -1,4 +1,3 @@
-
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -31,7 +30,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
-        android:text="Пропутить"
+        android:text="Пропустить"
         android:textColor = "#2C4C46" />
     <Button
         android:id="@+id/btn_skip"

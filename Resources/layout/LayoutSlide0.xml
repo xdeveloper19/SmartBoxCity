@@ -1,44 +1,43 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+﻿<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
     android:background="@drawable/activity_stili">
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:padding="10dp"
-        android:gravity="center"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="Шаг 1"
+        android:layout_marginBottom="40dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:textColor = "#475B57"
-            android:textSize="25dp"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor = "#475B57"
-            android:text="Расчет стоимости переревозки"
-            android:textStyle="bold"
-            android:textSize="17dp" />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:textSize="14dp"
-            android:id="@+id/btn_cost"
-            android:text="Предварительный расчет стоимости перевозки груза"
-            android:textColor="@android:color/white"
-            android:background="@drawable/button_stili"
-            android:layout_height="wrap_content"/>
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ScrollViewSlide0" >
+            android:padding="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Шаг 1"
+                android:layout_gravity="center"
+                android:textColor = "#475B57"
+                android:textSize="25dp"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor = "#475B57"
+                android:text="Расчет стоимости переревозки"
+                android:textStyle="bold"
+                android:textSize="17dp" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:textSize="14dp"
+                android:id="@+id/Slide0BtnAddOrder"
+                android:text="Предварительный расчет стоимости перевозки груза"
+                android:textColor="@android:color/white"
+                android:background="@drawable/button_stili"
+                android:layout_height="wrap_content"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,8 +48,6 @@
                 android:text="@string/slide_0"
                 android:textStyle="normal"
                 android:textSize="14dp" />
-        </ScrollView>
-
-        
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>  
 </RelativeLayout>

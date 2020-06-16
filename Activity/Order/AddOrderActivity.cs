@@ -8,6 +8,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Text;
 using Android.Views;
 using Android.Widget;
 using Entity.Model.HomeViewModel;
@@ -26,6 +27,7 @@ using WebService.Client;
 
 namespace SmartBoxCity.Activity.Order
 {
+    [Activity(ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
     public class AddOrderActivity : Fragment
     {
         #region Переменные
@@ -89,35 +91,37 @@ namespace SmartBoxCity.Activity.Order
         private string a_hazard_class;
 
         private string a_loading_methodsc;
+        private bool sum_seats_result;
+        private double sum_seats;
         #endregion
-        public override void OnCreate(Bundle savedInstanceState)
+        public override void OnCreate(Bundle bundle)
         {
-            base.OnCreate(savedInstanceState);
+            base.OnCreate(bundle);
+            RetainInstance = true;
 
             if (!PlacesApi.IsInitialized)
             {
                 string key = GetString(Resource.String.google_key);
                 PlacesApi.Initialize(Activity, key);
             }
-
-
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var view = inflater.Inflate(Resource.Layout.activity_application_processing, container, false);
-
-            List<Place.Field> fields = new List<Place.Field>();
-
-            fields.Add(Place.Field.Id);
-            fields.Add(Place.Field.Name);
-            fields.Add(Place.Field.LatLng);
-            fields.Add(Place.Field.Address);
-
-
-
             try
             {
+                var view = inflater.Inflate(Resource.Layout.activity_application_processing, container, false);
+
+                List<Place.Field> fields = new List<Place.Field>();
+
+                fields.Add(Place.Field.Id);
+                fields.Add(Place.Field.Name);
+                fields.Add(Place.Field.LatLng);
+                fields.Add(Place.Field.Address);
+
+
+
+            
                 #region Инициализаия переменных
                 Button btn_make_request = view.FindViewById<Button>(Resource.Id.btn_make_request);
                 s_edit_from = view.FindViewById<EditText>(Resource.Id.s_edit_from);
@@ -313,6 +317,7 @@ namespace SmartBoxCity.Activity.Order
 
                 #endregion
 
+                
                 s_cargo_characteristic.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(Spinner_ItemSelected);
                 var adapter1 = ArrayAdapter.CreateFromResource(Activity, Resource.Array.array_cargo_characteristic, Android.Resource.Layout.SimpleSpinnerItem);
                 adapter1.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
@@ -514,16 +519,87 @@ namespace SmartBoxCity.Activity.Order
 
 
                 };
+
+                s_weight.TextChanged += OnWieghtChanged;
+                s_sum_seats.TextChanged += OnSumSeatsChanged;
+                return view;
             }
             catch (Exception ex)
             {
-                Toast.MakeText(Activity, "" + ex.Message, ToastLength.Long).Show();
+                var view = inflater.Inflate(Resource.Layout.activity_errors_handling, container, false);
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+                return view;
             }
-            return view;
+           
         }
 
+        private void OnSumSeatsChanged(object sender, TextChangedEventArgs e)
+        {
+            string messagif = "Максимальное кол-во мест: 5";
+            string messagelse = "Введено неверное значение кол-во мест.";
+            TryParseAndInputValidation(ref s_sum_seats, sum_seats_result, sum_seats, 5, messagif, messagelse);
+        }       
 
+        private void OnWieghtChanged(object sender, TextChangedEventArgs e)
+        {
+            string messagif = "Максимальный вес груза: 5000";
+            string messagelse = "Введено неверное значение веса груза.";
+            TryParseAndInputValidation(ref s_weight, weight_result, weight, 5000, messagif, messagelse);
+        }
+        private void TryParseAndInputValidation(ref EditText text, bool parse_result,
+           double valueDouble, double maxValue, string messagif, string messagelse)
+        {
+            parse_result = Double.TryParse(text.Text, out valueDouble);
+            if (parse_result)
+            {
+                if (valueDouble > maxValue)
+                {
+                    text.Text = maxValue.ToString();
+                    Toast.MakeText(Activity, messagif, ToastLength.Long).Show();
+                }
+            }
+            else 
+            {
+               switch(text.Text)
+               {
+                    case "0":
+                        text.Text = "";
+                        break;
+                    case "00":
+                        text.Text = "";
+                        break;
+                    case "000":
+                        text.Text = "";
+                        break;
+                    case ".":
+                        text.Text = "";
+                        break;
+               }
+               Toast.MakeText(Activity, messagelse, ToastLength.Long).Show();
+            }
+            if(!(String.IsNullOrEmpty(text.Text)))
+            {
+                if(text.Text[0] == '.' || text.Text[0] == '0')
+                {
+                    text.Text = "";
+                }
+            }          
+            else
+            {
+                Toast.MakeText(Activity, messagelse, ToastLength.Long).Show();
+            }
+        }
 
+        //EventHandler< TextChangedEventArgs> OnTextChanged(object sender, EventArgs e)
+        //{
+        //    String val = s_weight.Text; //Get Current Text
+
+        //    //if (val.Length > restrictCount)//If it is more than your character restriction
+        //    //{
+        //    //    val = val.Remove(val.Length - 1);// Remove Last character 
+        //    //    entry.Text = val; //Set the Old value
+        //    //}
+        //}
         private void S_shipping_date_Click(object sender, EventArgs e)
         {
             DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
@@ -590,6 +666,55 @@ namespace SmartBoxCity.Activity.Order
 
         }
 
+
+        //public override void OnViewStateRestored(Bundle savedInstanceState)
+        //{
+        //    base.OnViewStateRestored(savedInstanceState);
+        //    if(savedInstanceState != null)
+        //    {
+        //        s_edit_where.Text = savedInstanceState.GetString("s_edit_where");
+        //        s_shipping_date.Text = savedInstanceState.GetString("s_shipping_date");
+        //        s_shipment_time.Text = savedInstanceState.GetString("s_shipment_time");
+        //        s_height.Text = savedInstanceState.GetString("s_height");
+        //        a_hazard_class = savedInstanceState.GetString("a_hazard_class");
+        //        a_loading_methodsc = savedInstanceState.GetString("a_loading_methodsc");
+        //        a_cargo_characteristic = savedInstanceState.GetString("a_cargo_characteristic");
+        //        StaticOrder.Destination_lat = savedInstanceState.GetString("Destination_lat");
+        //        StaticOrder.Destination_lng = savedInstanceState.GetString("Destination_lng");
+        //        StaticOrder.Inception_lat = savedInstanceState.GetString("Inception_lat");
+        //        StaticOrder.Inception_lng = savedInstanceState.GetString("Inception_lng");
+        //        s_value.Text = savedInstanceState.GetString("s_value");
+        //        s_contact_person.Text = savedInstanceState.GetString("s_contact_person");
+        //        s_length.Text = savedInstanceState.GetString("s_length");
+        //        s_weight.Text = savedInstanceState.GetString("s_weight");
+        //        s_sum_seats.Text = savedInstanceState.GetString("s_sum_seats");
+        //        s_width.Text = savedInstanceState.GetString("s_width");
+        //        s_size.Text = savedInstanceState.GetString("s_size");
+        //    }           
+        //}
+        //public override void OnSaveInstanceState(Bundle outState)
+        //{
+        //    base.OnSaveInstanceState(outState);
+        //    outState.PutString("s_edit_where", s_edit_where.Text);
+        //    outState.PutString("s_shipping_date", s_shipping_date.Text);
+        //    outState.PutString("s_shipment_time", s_shipment_time.Text);
+        //    outState.PutString("s_height", s_height.Text);
+        //    outState.PutString("a_hazard_class", a_hazard_class);
+        //    outState.PutString("a_loading_methodsc", a_loading_methodsc);
+        //    outState.PutString("a_cargo_characteristic", a_cargo_characteristic);
+        //    outState.PutString("Destination_lat", StaticOrder.Destination_lat);
+        //    outState.PutString("Destination_lng", StaticOrder.Destination_lng);
+        //    outState.PutString("Inception_lat", StaticOrder.Inception_lat);
+        //    outState.PutString("Inception_lng", StaticOrder.Inception_lng);
+        //    outState.PutString("s_value", s_value.Text);
+        //    outState.PutString("s_contact_person", s_contact_person.Text);
+        //    outState.PutString("s_length", s_length.Text);
+        //    outState.PutString("s_sum_seats", s_sum_seats.Text);
+        //    outState.PutString("s_weight", s_weight.Text);
+        //    outState.PutString("s_width", s_width.Text);
+        //    outState.PutString("s_size", s_size.Text);
+        //}
+
         //protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         //{
         //    base.OnActivityResult(requestCode, resultCode, data);
@@ -598,27 +723,5 @@ namespace SmartBoxCity.Activity.Order
 
         //}
 
-        void ClearField()
-        {
-            a_cargo_characteristic = "";
-            a_hazard_class = "";
-            a_loading_methodsc = "";
-            s_edit_from.Text = "";
-            s_edit_where.Text = "";
-            s_shipment_time.Text = "";
-            s_shipping_date.Text = "";
-            s_length.Text = "";
-            s_width.Text = "";
-            s_weight.Text = "";
-            s_height.Text = "";
-            s_size.Text = "";
-            s_sum_seats.Text = "";
-            s_contact_person.Text = "";
-            s_value.Text = "";
-            chek_cargo_insurance.Checked = false;
-            check_date.Checked = false;
-            check_argue.Checked = false;
-            check_receiver.Checked = false;
-        }
     }
 }

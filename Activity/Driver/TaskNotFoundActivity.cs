@@ -52,10 +52,9 @@ namespace SmartBoxCity.Activity.Driver
                 // Perform action on clicks
                 if (btn_switch.Checked)
                 {
-                    btn_switch.Text = "Свободен. У вас нет задач на перевозку груза.";
                     AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
                     alert.SetTitle("Подтверждение действия");
-                    alert.SetMessage("Задачи Вам будут распределяться. Вы действительно освободились?");
+                    alert.SetMessage("Задачи Вам не будут распределяться. Вы действительно освободились?");
                     alert.SetPositiveButton("Ок", (senderAlert, args) =>
                     {
                         var result = FreeStatus();
@@ -68,7 +67,7 @@ namespace SmartBoxCity.Activity.Driver
                     });
                     alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                     {
-                        btn_switch.Text = "Занят. Задачи на перевозку вам не распределяются.";
+                        btn_switch.Text = "Свободен. У вас нет задач на перевозку груза.";
                         btn_switch.Checked = false;
                     });
                     Dialog dialog = alert.Create();

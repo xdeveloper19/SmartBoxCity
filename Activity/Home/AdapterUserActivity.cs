@@ -195,109 +195,128 @@ namespace SmartBoxCity.Activity.Home
         }
         private async void GetVideo(string id, AlertDialog.Builder alert)
         {
-            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            try
             {
-                ManageOrderService.InitializeClient(client);
-                var o_data = new ServiceResponseObject<SuccessResponse>();
-                o_data = await ManageOrderService.GetVideo(id);
-                if (o_data.Status == HttpStatusCode.OK)
+                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
                 {
-                    alert.Dispose();
-
-                    LayoutInflater layoutInflater = LayoutInflater.From(context);
-                    View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
-                    var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
-
-                    var src = Android.Net.Uri.Parse(URL + o_data.ResponseData.Message);
-                    img_get_video.SetVideoURI(src);
-                    img_get_video.Start();
-
-                    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
-                    alert1.SetTitle("Сделать видео");
-                    alert1.SetView(view);
-                    alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                    ManageOrderService.InitializeClient(client);
+                    var o_data = new ServiceResponseObject<SuccessResponse>();
+                    o_data = await ManageOrderService.GetVideo(id);
+                    if (o_data.Status == HttpStatusCode.OK)
                     {
-                    });
-                    Dialog dialog1 = alert1.Create();
-                    dialog1.Show();
-                }
-                else
-                {
-                    Toast.MakeText(context, o_data.Message, ToastLength.Long).Show();
+                        alert.Dispose();
+
+                        LayoutInflater layoutInflater = LayoutInflater.From(context);
+                        View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
+                        var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
+
+                        var src = Android.Net.Uri.Parse(URL + o_data.ResponseData.Message);
+                        img_get_video.SetVideoURI(src);
+                        img_get_video.Start();
+
+                        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
+                        alert1.SetTitle("Сделать видео");
+                        alert1.SetView(view);
+                        alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                        {
+                        });
+                        Dialog dialog1 = alert1.Create();
+                        dialog1.Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(context, o_data.Message, ToastLength.Long).Show();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Toast.MakeText(context, ex.Message, ToastLength.Long).Show();
+            }            
         }
 
         private async void GetPhoto(string id, AlertDialog.Builder alert)
         {
-            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            try
             {
-                ManageOrderService.InitializeClient(client);
-                var o_data = new ServiceResponseObject<SuccessResponse>();
-                o_data = await ManageOrderService.GetPhoto(id);
-
-                if (o_data.Status == HttpStatusCode.OK)
+                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
                 {
-                    alert.Dispose();
+                    ManageOrderService.InitializeClient(client);
+                    var o_data = new ServiceResponseObject<SuccessResponse>();
+                    o_data = await ManageOrderService.GetPhoto(id);
 
-                    LayoutInflater layoutInflater = LayoutInflater.From(context);
-                    View view = layoutInflater.Inflate(Resource.Layout.modal_photo, null);
-                    var img_get_photo = view.FindViewById<ImageView>(Resource.Id.img_get_photo);
-
-                    var src = Android.Net.Uri.Parse(URL + o_data.ResponseData.Message);
-                    img_get_photo.SetImageURI(src);
-
-                    var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.ResponseData.Message);
-                    img_get_photo.SetImageBitmap(imageBitmap);
-
-                    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
-                    alert1.SetView(view);
-                    ////
-                    alert1.SetCancelable(false);
-                    alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                    if (o_data.Status == HttpStatusCode.OK)
                     {
-                    });
-                    Dialog dialog1 = alert1.Create();
-                    dialog1.Show();
-                }
-                else
-                {
-                    Toast.MakeText(context, o_data.Message, ToastLength.Long).Show();
+                        alert.Dispose();
+
+                        LayoutInflater layoutInflater = LayoutInflater.From(context);
+                        View view = layoutInflater.Inflate(Resource.Layout.modal_photo, null);
+                        var img_get_photo = view.FindViewById<ImageView>(Resource.Id.img_get_photo);
+
+                        var src = Android.Net.Uri.Parse(URL + o_data.ResponseData.Message);
+                        img_get_photo.SetImageURI(src);
+
+                        var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.ResponseData.Message);
+                        img_get_photo.SetImageBitmap(imageBitmap);
+
+                        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
+                        alert1.SetView(view);
+                        ////
+                        alert1.SetCancelable(false);
+                        alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                        {
+                        });
+                        Dialog dialog1 = alert1.Create();
+                        dialog1.Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(context, o_data.Message, ToastLength.Long).Show();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Toast.MakeText(context, ex.Message, ToastLength.Long).Show();
+            }         
         }
 
         private async void MakePayment(AlertDialog.Builder alert)
         {
-            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            try
             {
-                ManageOrderService.InitializeClient(client);
-                var o_data = new ServiceResponseObject<SuccessResponse>();
-                o_data = await ManageOrderService.MakePayment(StaticOrder.Order_id);
-
-                if (o_data.Status == HttpStatusCode.OK)
+                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
                 {
-                    alert.Dispose();
-                    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
-                    alert1.SetTitle("Внесение оплаты");
-                    alert1.SetMessage(o_data.ResponseData.Message);
-                    alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                    ManageOrderService.InitializeClient(client);
+                    var o_data = new ServiceResponseObject<SuccessResponse>();
+                    o_data = await ManageOrderService.MakePayment(StaticOrder.Order_id);
+
+                    if (o_data.Status == HttpStatusCode.OK)
                     {
-                    });
-                    Dialog dialog1 = alert1.Create();
-                    dialog1.Show();
+                        alert.Dispose();
+                        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
+                        alert1.SetTitle("Внесение оплаты");
+                        alert1.SetMessage(o_data.ResponseData.Message);
+                        alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                        {
+                        });
+                        Dialog dialog1 = alert1.Create();
+                        dialog1.Show();
 
-                    
-                    UserActivity content = new UserActivity();
-                    manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                }
-                else
-                {
-                    Toast.MakeText(context, o_data.Message, ToastLength.Long).Show();
+
+                        UserActivity content = new UserActivity();
+                        manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                    }
+                    else
+                    {
+                        Toast.MakeText(context, o_data.Message, ToastLength.Long).Show();
+                    }
                 }
             }
-        }
-
-       
+            catch (Exception ex)
+            {
+                Toast.MakeText(context, ex.Message, ToastLength.Long).Show();
+            }          
+        }       
     }
 }

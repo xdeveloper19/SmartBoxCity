@@ -4,96 +4,102 @@
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="fill_parent"
 	android:layout_height="fill_parent"
-	android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_main"
 	android:background = "@drawable/activity_stili"
 	android:id="@+id/auth_layout">
+	<ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+		<RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+			<TextView
+				android:text="Вход"
+				android:textColor = "#2C4C46"
+				android:layout_marginTop="28dp"
+				android:textAppearance="?android:attr/textAppearanceLarge"
+				android:layout_width="fill_parent"
+				android:gravity="center"
+				android:textStyle = "normal"
+				android:layout_height="30dp"
+				android:layout_marginBottom="20dp"
+				android:id="@+id/textlogin"
+			/>
+			<TextView
+				android:textColor = "#475B57"
+				android:text="Введите логин и пароль, чтобы войти"
+				android:textAppearance="?android:attr/textAppearanceSmall"
+				android:layout_width="fill_parent"
+				android:gravity="center"
+				android:layout_height="20dp"
+				android:layout_below="@+id/textlogin"
+				android:id="@+id/textlogin_desc"/>
 
-	<TextView
-		android:text="Вход"
-		android:textColor = "#2C4C46"
-        android:layout_marginTop="28dp"
-		android:textAppearance="?android:attr/textAppearanceLarge"
-		android:layout_width="fill_parent"
-		android:gravity="center"
-		android:textStyle = "normal"
-		android:layout_height="30dp"
-		android:layout_marginBottom="20dp"
-		android:id="@+id/textlogin"
-    />
-	<TextView
-		android:textColor = "#475B57"
-		android:text="Введите логин и пароль, чтобы войти"
-		android:textAppearance="?android:attr/textAppearanceSmall"
-		android:layout_width="fill_parent"
-		android:gravity="center"
-		android:layout_height="20dp"
-		android:layout_below="@+id/textlogin"
-		android:id="@+id/textlogin_desc"/>
-
-	<RelativeLayout
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:padding="30dp"
-		android:layout_below="@+id/textlogin_desc"
-		android:id="@+id/containerAuth">
-
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/LoginTextInputLayoutStyle"
-            android:id="@+id/s_login_layout">
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="10dp"
-                android:singleLine="true"
-                android:id="@+id/s_login"
-                android:padding = "7dp"
-                android:hint="Логин"/>
-        </android.support.design.widget.TextInputLayout>
+			<RelativeLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="30dp"
+				android:layout_below="@+id/textlogin_desc"
+				android:id="@+id/containerAuth">
 
 
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/s_pas_layout"
-            style="@style/LoginTextInputLayoutStyle"
-            android:layout_below="@+id/s_login_layout">
-            <EditText
-                android:inputType="textPassword"
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:singleLine="true"
-                android:id="@+id/s_pass"
-                android:padding = "7dp"
-                android:hint="Пароль"/>
-        </android.support.design.widget.TextInputLayout>
+				<android.support.design.widget.TextInputLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					style="@style/LoginTextInputLayoutStyle"
+					android:id="@+id/s_login_layout">
+					<EditText
+						android:layout_width="fill_parent"
+						android:layout_height="50dp"
+						android:layout_marginBottom="10dp"
+						android:singleLine="true"
+						android:id="@+id/s_login"
+						android:padding = "7dp"
+						android:hint="Логин"/>
+				</android.support.design.widget.TextInputLayout>
+
+
+				<android.support.design.widget.TextInputLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/s_pas_layout"
+					style="@style/LoginTextInputLayoutStyle"
+					android:layout_below="@+id/s_login_layout">
+					<EditText
+						android:inputType="textPassword"
+						android:layout_width="fill_parent"
+						android:layout_height="50dp"
+						android:singleLine="true"
+						android:id="@+id/s_pass"
+						android:padding = "7dp"
+						android:hint="Пароль"/>
+				</android.support.design.widget.TextInputLayout>
         
 
-		<CheckBox
-			android:text="Запомнить"
-			android:textColor = "#475B57"
-			android:layout_width="fill_parent"
-			android:layout_height="wrap_content"
-			android:layout_marginTop="20dp"
-			android:layout_below="@+id/s_pas_layout"
-			android:id="@+id/is_remember"/>
+				<CheckBox
+					android:text="Запомнить"
+					android:textColor = "#475B57"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="20dp"
+					android:layout_below="@+id/s_pas_layout"
+					android:id="@+id/is_remember"/>
 
-		<Button
-			android:text="Войти"
-			android:layout_width="fill_parent"
-			android:layout_height="45dp"
-			android:layout_marginTop="20dp"		
-			android:textColor = "#FBF8F8"
-			android:layout_below="@+id/is_remember"
-			android:background="@drawable/button_stili"
-			android:id="@+id/btn_auth" />
+				<Button
+					android:text="Войти"
+					android:layout_width="fill_parent"
+					android:layout_height="45dp"
+					android:layout_marginTop="20dp"		
+					android:textColor = "#FBF8F8"
+					android:layout_below="@+id/is_remember"
+					android:background="@drawable/button_stili"
+					android:id="@+id/btn_auth" />
 		
-   </RelativeLayout>
-
+		    </RelativeLayout>
+		</RelativeLayout>
+	</ScrollView>
+	
 	<ProgressBar
 		android:layout_centerHorizontal="true"
 		android:layout_centerVertical="true"

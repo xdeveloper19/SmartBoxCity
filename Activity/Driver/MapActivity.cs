@@ -32,7 +32,7 @@ namespace SmartBoxCity.Activity.Driver
         private ListView lstTask;
         private GPSService _gpsService;
         public static List<IViewItemType> tasklist;
-        MapView mMapView;
+        MapView mMapView = null;
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -42,16 +42,17 @@ namespace SmartBoxCity.Activity.Driver
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            // Use this to return your custom view for this Fragment
-            var view =  inflater.Inflate(Resource.Layout.driver_map, container, false);
-            mMapView = view.FindViewById<MapView>(Resource.Id.fragmentMap3);
-            var layout = view.FindViewById<SlidingUpPanelLayout>(Resource.Id.sliding_layout);
-            view.FindViewById<TextView>(Resource.Id.txt_title_tasks).MovementMethod = new LinkMovementMethod();
+            var view = inflater.Inflate(Resource.Layout.driver_map, container, false);
             lstTask = view.FindViewById<ListView>(Resource.Id.tasklistview);
             var result = GetTasks();
 
             if (result.Result == TaskStatus.OK)
             {
+                // Use this to return your custom view for this Fragment
+                mMapView = view.FindViewById<MapView>(Resource.Id.fragmentMap3);
+                var layout = view.FindViewById<SlidingUpPanelLayout>(Resource.Id.sliding_layout);
+                view.FindViewById<TextView>(Resource.Id.txt_title_tasks).MovementMethod = new LinkMovementMethod();
+                lstTask = view.FindViewById<ListView>(Resource.Id.tasklistview);
 
                 _gpsService = new GPSService(Activity);
                 _gpsService.UpdateLocation();
@@ -104,9 +105,10 @@ namespace SmartBoxCity.Activity.Driver
             {
                 FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                 TaskNotFoundActivity content = new TaskNotFoundActivity();
-                transaction1.Replace(Resource.Id.frameDriverlayout, content).AddToBackStack(null).Commit();
+                transaction1.Replace(Resource.Id.frameDriverlayout, content);
+                transaction1.Commit();
             }
-            
+
             return view;
         }
 
@@ -249,7 +251,7 @@ namespace SmartBoxCity.Activity.Driver
                 markerOptions.SetPosition(new_location);
                 markerOptions.SetTitle(i.ToString());
                 googleMap.AddMarker(markerOptions);
-
+                mMapView.OnResume();
             }
 
             googleMap.AddPolyline(rectOptions);
@@ -271,25 +273,29 @@ namespace SmartBoxCity.Activity.Driver
         public override void OnResume()
         {
             base.OnResume();
-            mMapView.OnResume();
+            if (mMapView != null)
+                mMapView.OnResume();
         }
 
         public override void OnLowMemory()
         {
             base.OnLowMemory();
-            mMapView.OnLowMemory();
+            if (mMapView != null)
+                mMapView.OnLowMemory();
         }
 
         public override void OnPause()
         {
             base.OnPause();
-            mMapView.OnPause();
+            if (mMapView != null)
+                mMapView.OnPause();
         }
 
         public override void OnDestroy()
         {
             base.OnDestroy();
-            mMapView.OnDestroy();
+            if (mMapView != null)
+                mMapView.OnDestroy();
         }
     }
 }

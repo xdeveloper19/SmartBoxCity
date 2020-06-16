@@ -52,8 +52,16 @@ namespace SmartBoxCity.Activity.Box
             btn_info_box.Click += delegate
             {
                 StaticBox.id = _boxes[position].Id;
-                BoxActivity content2 = new BoxActivity();
-                _manager.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
+                try
+                {
+                    BoxActivity content2 = new BoxActivity();
+                    _manager.Replace(Resource.Id.frameDriverlayout, content2);
+                    _manager.Commit();
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(_context, ex.Message, ToastLength.Long).Show();
+                }
             };
                 //var listView = view.FindViewById<ExpandableListView>(Resource.Id.expandableListView2);
                 //SensorData.SampleChildData(view);

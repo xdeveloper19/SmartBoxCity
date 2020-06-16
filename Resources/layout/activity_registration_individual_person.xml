@@ -82,6 +82,7 @@
                     android:layout_height="40dp"
                     android:inputType="number"
                     android:singleLine="true"
+                    android:maxLines="11"
                     android:textSize = "14sp"
                     android:padding="8dp"
                     android:textColor="#716E6D"
@@ -194,7 +195,6 @@
                     android:singleLine="true"
                     android:padding="8dp"
                     android:textSize = "14sp"
-                    android:textColor="#ED8D48"
                     android:layout_marginBottom="10dp"
                     android:hint = "Фамилия"/>
             </android.support.design.widget.TextInputLayout>
@@ -212,7 +212,6 @@
                     android:singleLine="true"
                     android:padding="8dp"
                     android:textSize = "14sp"
-                    android:textColor="#ED8D48"
                     android:layout_marginBottom="10dp"
                     android:hint = "Имя"/>
             </android.support.design.widget.TextInputLayout>
@@ -230,7 +229,6 @@
                     android:singleLine="true"
                     android:padding="8dp"
                     android:textSize = "14sp"
-                    android:textColor="#ED8D48"
                     android:layout_marginBottom="10dp"
                     android:hint = "Отчество"/>
             </android.support.design.widget.TextInputLayout>
@@ -246,9 +244,10 @@
                     android:layout_height="40dp"
                     android:inputType="number"
                     android:singleLine="true"
+                    android:maxLines="4"
+                    android:maxLength="4"
                     android:padding="8dp"
                     android:textSize = "14sp"
-                    android:textColor="#ED8D48"
                     android:layout_marginBottom="10dp"
                     android:hint = "Серия паспорта"/>
             </android.support.design.widget.TextInputLayout>
@@ -263,10 +262,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:inputType="number"
+                    android:maxLines="6"
+                    android:maxLength="6"
                     android:singleLine="true"
                     android:padding="8dp"
                     android:textSize = "14sp"
-                    android:textColor="#ED8D48"
                     android:layout_marginBottom="10dp"
                     android:hint = "Номер паспорта"/>
             </android.support.design.widget.TextInputLayout>
@@ -284,7 +284,6 @@
                     android:singleLine="true"
                     android:padding="8dp"
                     android:textSize = "14sp"
-                    android:textColor="#ED8D48"
                     android:layout_marginBottom="10dp"
                     android:hint = "Дата рождения"/>
             </android.support.design.widget.TextInputLayout>
@@ -300,9 +299,10 @@
                     android:layout_height="40dp"
                     android:inputType="number"
                     android:singleLine="true"
+                    android:maxLines="6"
+                    android:maxLength="6"
                     android:padding="8dp"
                     android:textSize = "14sp"
-                    android:textColor="#ED8D48"
                     android:layout_marginBottom="10dp"
                     android:hint = "Код подразделения"/>
             </android.support.design.widget.TextInputLayout>
@@ -326,16 +326,16 @@
               </RelativeLayout>
             </android.support.v7.widget.CardView>
             <Button
-                    android:id="@+id/btn_make_request"
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/button_stili"
-                    android:textColor = "#FBF8F8"
-                    android:layout_below = "@+id/cardViewSpecialDataIndividual"
-                    android:layout_centerHorizontal ="true"
-                    android:text="Зарегистрироваться"
-                    android:textSize="10sp"
+                android:id="@+id/btn_make_request"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/button_stili"
+                android:textColor = "#FBF8F8"
+                android:layout_below = "@+id/cardViewSpecialDataIndividual"
+                android:layout_centerHorizontal ="true"
+                android:text="Зарегистрироваться"
+                android:textSize="10sp"
              />
 
         </RelativeLayout>

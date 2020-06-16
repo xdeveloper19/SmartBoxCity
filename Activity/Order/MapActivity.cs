@@ -27,6 +27,7 @@ namespace SmartBoxCity.Activity.Order
     public class MapActivity: Fragment, IOnMapReadyCallback
     {
         private const string SavedStateActionBarHidden = "saved_state_action_bar_hidden";
+        private Task<Driver.TaskStatus> result;
         private TextView txtFrom;
         private TextView txtTo;
         private TextView Weight;
@@ -36,158 +37,190 @@ namespace SmartBoxCity.Activity.Order
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
+            RetainInstance = true;
         }
 
         public void OnMapReady(GoogleMap googleMap)
         {
-            this.GMap = googleMap;
-
-            LatLng location = new LatLng(StaticOrder.way_points[0].lat, StaticOrder.way_points[0].lng);
-            PolylineOptions rectOptions = new PolylineOptions()
+            try
             {
+                this.GMap = googleMap;
 
-            };
-            rectOptions.Geodesic(true);
-            rectOptions.InvokeWidth(1);
-            rectOptions.InvokeColor(Color.Blue);
-
-            for (int i = 0; i < StaticOrder.way_points.Count; i++)
-            {
-                var latitude = StaticOrder.way_points[i].lat;
-                var longitude = StaticOrder.way_points[i].lng;
-
-                LatLng new_location = new LatLng(
-                   latitude,
-                    longitude);
-
-                rectOptions.Add(new_location);
-
-                if (i == 0)
+                LatLng location = new LatLng(StaticOrder.way_points[0].lat, StaticOrder.way_points[0].lng);
+                PolylineOptions rectOptions = new PolylineOptions()
                 {
-                    MarkerOptions markerOpt1 = new MarkerOptions();
-                    //location = new LatLng(latitude, longitude);
 
-                    markerOpt1.SetPosition(new LatLng(latitude, longitude));
-                    markerOpt1.SetTitle("Start");
-                    markerOpt1.SetSnippet("Текущее положение");
+                };
+                rectOptions.Geodesic(true);
+                rectOptions.InvokeWidth(1);
+                rectOptions.InvokeColor(Color.Blue);
 
-                    var bmDescriptor = BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueBlue);
-                    markerOpt1.InvokeIcon(bmDescriptor);
+                for (int i = 0; i < StaticOrder.way_points.Count; i++)
+                {
+                    var latitude = StaticOrder.way_points[i].lat;
+                    var longitude = StaticOrder.way_points[i].lng;
 
-                    googleMap.AddMarker(markerOpt1);
+                    LatLng new_location = new LatLng(
+                       latitude,
+                        longitude);
 
-                    continue;
+                    rectOptions.Add(new_location);
+
+                    if (i == 0)
+                    {
+                        MarkerOptions markerOpt1 = new MarkerOptions();
+                        //location = new LatLng(latitude, longitude);
+
+                        markerOpt1.SetPosition(new LatLng(latitude, longitude));
+                        markerOpt1.SetTitle("Start");
+                        markerOpt1.SetSnippet("Текущее положение");
+
+                        var bmDescriptor = BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueBlue);
+                        markerOpt1.InvokeIcon(bmDescriptor);
+
+                        googleMap.AddMarker(markerOpt1);
+
+                        continue;
+                    }
+                    MarkerOptions markerOptions = new MarkerOptions();
+
+                    markerOptions.SetPosition(new_location);
+                    markerOptions.SetTitle(i.ToString());
+                    googleMap.AddMarker(markerOptions);
+
                 }
-                MarkerOptions markerOptions = new MarkerOptions();
 
-                markerOptions.SetPosition(new_location);
-                markerOptions.SetTitle(i.ToString());
-                googleMap.AddMarker(markerOptions);
+                googleMap.AddPolyline(rectOptions);
 
+                CameraPosition.Builder builder = CameraPosition.InvokeBuilder();
+                builder.Target(location);
+                builder.Zoom(10);
+                builder.Bearing(0);
+                builder.Tilt(65);
+
+                CameraPosition cameraPosition = builder.Build();
+                CameraUpdate cameraUpdate = CameraUpdateFactory.NewCameraPosition(cameraPosition);
+
+                googleMap.UiSettings.ZoomControlsEnabled = true;
+                googleMap.UiSettings.CompassEnabled = true;
+                googleMap.MoveCamera(cameraUpdate);
             }
-
-            googleMap.AddPolyline(rectOptions);
-
-            CameraPosition.Builder builder = CameraPosition.InvokeBuilder();
-            builder.Target(location);
-            builder.Zoom(10);
-            builder.Bearing(0);
-            builder.Tilt(65);
-
-            CameraPosition cameraPosition = builder.Build();
-            CameraUpdate cameraUpdate = CameraUpdateFactory.NewCameraPosition(cameraPosition);
-
-            googleMap.UiSettings.ZoomControlsEnabled = true;
-            googleMap.UiSettings.CompassEnabled = true;
-            googleMap.MoveCamera(cameraUpdate);
+            catch (Exception ex)
+            {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+            }            
         }
 
         public override void OnSaveInstanceState(Bundle outState)
         {
             base.OnSaveInstanceState(outState);
-            mMapView.OnSaveInstanceState(outState);
+            if (result != null)
+            {
+                if (result.Result == Driver.TaskStatus.OK)
+                    mMapView.OnSaveInstanceState(outState);
+            }
         }
 
         public override void OnResume()
         {
-            mMapView.OnResume();
+            if (result != null)
+            {
+                if(result.Result == Driver.TaskStatus.OK)
+                    mMapView.OnResume();
+            }
             base.OnResume();
         }
 
         public override void OnDestroy()
         {
             base.OnDestroy();
-            mMapView.OnDestroy();
+            if (result != null)
+            {
+                if (result.Result == Driver.TaskStatus.OK)
+                    mMapView.OnDestroy();
+            }
         }
 
         public override void OnLowMemory()
         {
             base.OnLowMemory();
-            mMapView.OnLowMemory();
+            if (result != null)
+            {
+                if (result.Result == Driver.TaskStatus.OK)
+                    mMapView.OnLowMemory();
+            }
         }
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var view = inflater.Inflate(Resource.Layout.activity_map, container, false);
-
-            txtFrom = view.FindViewById<TextView>(Resource.Id.MapTextFrom);
-            txtTo = view.FindViewById<TextView>(Resource.Id.MapTextTo);
-            Weight = view.FindViewById<TextView>(Resource.Id.MapTextWeight);
-            LenhWidHeig = view.FindViewById<TextView>(Resource.Id.MapTextLenhWidHeig);
-
-            var layout = view.FindViewById<SlidingUpPanelLayout>(Resource.Id.sliding_client_layout);
-            view.FindViewById<TextView>(Resource.Id.txt_info_order_new).MovementMethod = new LinkMovementMethod();
-
             var result = GetParameters();
-
-            if (result.Result == SmartBoxCity.Activity.Driver.TaskStatus.OK)
+            if(result.Result == Driver.TaskStatus.OK)
             {
-                layout.AnchorPoint = 0.3f;
-                layout.PanelExpanded += (s, e) => Log.Info(Tag, "PanelExpanded");
-                layout.PanelCollapsed += (s, e) => Log.Info(Tag, "PanelCollapsed");
-                layout.PanelAnchored += (s, e) => Log.Info(Tag, "PanelAnchored");
-                layout.PanelSlide += (s, e) =>
+                var view = inflater.Inflate(Resource.Layout.activity_map, container, false);
+
+                txtFrom = view.FindViewById<TextView>(Resource.Id.MapTextFrom);
+                txtTo = view.FindViewById<TextView>(Resource.Id.MapTextTo);
+                Weight = view.FindViewById<TextView>(Resource.Id.MapTextWeight);
+                LenhWidHeig = view.FindViewById<TextView>(Resource.Id.MapTextLenhWidHeig);
+
+                var layout = view.FindViewById<SlidingUpPanelLayout>(Resource.Id.sliding_client_layout);
+                view.FindViewById<TextView>(Resource.Id.txt_info_order_new).MovementMethod = new LinkMovementMethod();
+
+
+
+                if (result.Result == SmartBoxCity.Activity.Driver.TaskStatus.OK)
                 {
-                    if (e.SlideOffset < 0.2)
+                    layout.AnchorPoint = 0.3f;
+                    layout.PanelExpanded += (s, e) => Log.Info(Tag, "PanelExpanded");
+                    layout.PanelCollapsed += (s, e) => Log.Info(Tag, "PanelCollapsed");
+                    layout.PanelAnchored += (s, e) => Log.Info(Tag, "PanelAnchored");
+                    layout.PanelSlide += (s, e) =>
                     {
-                        //if (SupportActionBar.IsShowing)
-                        //    SupportActionBar.Hide();
-                    }
-                    else
+                        if (e.SlideOffset < 0.2)
+                        {
+                            //if (SupportActionBar.IsShowing)
+                            //    SupportActionBar.Hide();
+                        }
+                        else
+                        {
+                            //if (!SupportActionBar.IsShowing)
+                            //    SupportActionBar.Show();
+                        }
+                    };
+
+                    var actionBarHidden = savedInstanceState != null &&
+                                          savedInstanceState.GetBoolean(SavedStateActionBarHidden, false);
+                    //if (actionBarHidden)
+                    //    SupportActionBar.Hide();
+
+                    MapsInitializer.Initialize(Activity);
+                    mMapView = view.FindViewById<MapView>(Resource.Id.FragmentMapUser);
+
+                    switch (GooglePlayServicesUtil.IsGooglePlayServicesAvailable(Activity))
                     {
-                        //if (!SupportActionBar.IsShowing)
-                        //    SupportActionBar.Show();
+                        case ConnectionResult.Success:
+                            Toast.MakeText(Activity, "SUCCESS", ToastLength.Long).Show();
+                            mMapView.OnCreate(savedInstanceState);
+                            mMapView.GetMapAsync(this);
+                            break;
+                        case ConnectionResult.ServiceMissing:
+                            Toast.MakeText(Activity, "ServiceMissing", ToastLength.Long).Show();
+                            break;
+                        case ConnectionResult.ServiceVersionUpdateRequired:
+                            Toast.MakeText(Activity, "Update", ToastLength.Long).Show();
+                            break;
+                        default:
+                            Toast.MakeText(Activity, GooglePlayServicesUtil.IsGooglePlayServicesAvailable(Activity), ToastLength.Long).Show();
+                            break;
                     }
-                };
-
-                var actionBarHidden = savedInstanceState != null &&
-                                      savedInstanceState.GetBoolean(SavedStateActionBarHidden, false);
-                //if (actionBarHidden)
-                //    SupportActionBar.Hide();
-
-                MapsInitializer.Initialize(Activity);
-                mMapView = view.FindViewById<MapView>(Resource.Id.FragmentMapUser);
-
-                switch (GooglePlayServicesUtil.IsGooglePlayServicesAvailable(Activity))
-                {
-                    case ConnectionResult.Success:
-                        Toast.MakeText(Activity, "SUCCESS", ToastLength.Long).Show();
-                        mMapView.OnCreate(savedInstanceState);
-                        mMapView.GetMapAsync(this);
-                        break;
-                    case ConnectionResult.ServiceMissing:
-                        Toast.MakeText(Activity, "ServiceMissing", ToastLength.Long).Show();
-                        break;
-                    case ConnectionResult.ServiceVersionUpdateRequired:
-                        Toast.MakeText(Activity, "Update", ToastLength.Long).Show();
-                        break;
-                    default:
-                        Toast.MakeText(Activity, GooglePlayServicesUtil.IsGooglePlayServicesAvailable(Activity), ToastLength.Long).Show();
-                        break;
                 }
-            }
 
-            return view;
+                return view;
+            }
+            else
+            {
+                var view = inflater.Inflate(Resource.Layout.activity_errors_handling, container, false);
+                return view;               
+            }            
         }
 
         private async Task<SmartBoxCity.Activity.Driver.TaskStatus> GetParameters()

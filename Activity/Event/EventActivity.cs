@@ -28,17 +28,26 @@ namespace SmartBoxCity.Activity.Order
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
+            RetainInstance = true;
         }
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var view = inflater.Inflate(Resource.Layout.activity_events, container, false);
+            try
+            {
+                var view = inflater.Inflate(Resource.Layout.activity_events, container, false);
 
-            lstEvent = view.FindViewById<ListView>(Resource.Id.eventlistview);
-            Eventlist = new List<EventModel>();
-            GetEvents();
+                lstEvent = view.FindViewById<ListView>(Resource.Id.eventlistview);
+                Eventlist = new List<EventModel>();
+                GetEvents();
 
-            return view;
+                return view;
+            }
+            catch (Exception ex)
+            {
+                var view = inflater.Inflate(Resource.Layout.activity_errors_handling, container, false);
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+                return view;
+            }        
         }
 
         private async void GetEvents()

@@ -83,8 +83,11 @@ namespace SmartBoxCity.Activity.Registration
             check_contract_oferta_individual = view.FindViewById<CheckBox>(Resource.Id.check_contract_oferta_individual);
             preloader = view.FindViewById<ProgressBar>(Resource.Id.preloader);
 
-            #endregion
+            s_date_birth_individual.Focusable = false;
+            s_date_birth_individual.Clickable = false;
 
+            #endregion
+            s_date_birth_individual.Click += S_date_birth_individual_Click;
             check_personal_data_processing_individual.Click += async delegate
             {
                 if (check_personal_data_processing_individual.Checked == true)
@@ -164,65 +167,96 @@ namespace SmartBoxCity.Activity.Registration
             
             btn_make_request.Click += async delegate
             {
-                if (s_pass_individual.Text == s_pass_confirmation_individual.Text)
+                if (CheckingOnNullOrEmptyOfStrings())
                 {
-                    if (check_contract_oferta_individual.Checked == true && check_personal_data_processing_individual.Checked == true)
-                    {
-                        RegisterIndividualModel register = new RegisterIndividualModel
-                        {
-                            Login = s_login_individual.Text,
-                            Password = s_pass_individual.Text,
-                            Email = s_email_individual.Text,
-                            Phone = s_phone_individual.Text,
-                            ClientType = "person",
-                            ClientLastName = s_surname_individual.Text,
-                            ClientName = s_name_individual.Text,
-                            ClientPatronymic = s_patronymic_individual.Text,
-                            ClientBirthday = s_date_birth_individual.Text,
-                            ClientPassportSerie = s_passport_series_individual.Text,
-                            ClientPassportId = s_passport_number_individual.Text,
-                            ClientPassportCode = s_department_code_individual.Text
-                        };
-
-                        using (var client = ClientHelper.GetClient())
-                        {
-                            AuthService.InitializeClient(client);
-                            var o_data = await AuthService.RegisterIndividual(register);
-
-                            if (o_data.Status == HttpStatusCode.OK)
-                            {
-                                //o_data.Message = "Успешно авторизован!";
-                                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                                SuccessResponse o_user_data = new SuccessResponse();
-                                o_user_data = o_data.ResponseData;
-
-                                preloader.Visibility = Android.Views.ViewStates.Invisible;
-                                CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
-
-                                CrossSettings.Current.AddOrUpdateValue("role", "user");
-                                Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                                Intent main = new Intent(Activity, typeof(MainActivity));
-                                StartActivity(main);
-                            }
-                            else
-                            {
-                                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                            }
-                        };
-                    }
-                    else
-                    {
-                        Toast.MakeText(Activity, "Необходимо дать согласие на обработку " +
-                            "персональных данных и согласиться с договором офертой", ToastLength.Long).Show();
-                    }
+                    Toast.MakeText(Activity, "Пожалуйста, заполните все поля. ", ToastLength.Long).Show();
                 }
                 else
                 {
-                    Toast.MakeText(Activity, "Пароли не совпадают ", ToastLength.Long).Show();
+
+                    if (s_pass_individual.Text == s_pass_confirmation_individual.Text)
+                    {
+                        if (check_contract_oferta_individual.Checked == true && check_personal_data_processing_individual.Checked == true)
+                        {
+                            RegisterIndividualModel register = new RegisterIndividualModel
+                            {
+                                Login = s_login_individual.Text,
+                                Password = s_pass_individual.Text,
+                                Email = s_email_individual.Text,
+                                Phone = s_phone_individual.Text,
+                                ClientType = "person",
+                                ClientLastName = s_surname_individual.Text,
+                                ClientName = s_name_individual.Text,
+                                ClientPatronymic = s_patronymic_individual.Text,
+                                ClientBirthday = s_date_birth_individual.Text,
+                                ClientPassportSerie = s_passport_series_individual.Text,
+                                ClientPassportId = s_passport_number_individual.Text,
+                                ClientPassportCode = s_department_code_individual.Text
+                            };
+
+                            using (var client = ClientHelper.GetClient())
+                            {
+                                AuthService.InitializeClient(client);
+                                var o_data = await AuthService.RegisterIndividual(register);
+
+                                if (o_data.Status == HttpStatusCode.OK)
+                                {
+                                    //o_data.Message = "Успешно авторизован!";
+                                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                                    SuccessResponse o_user_data = new SuccessResponse();
+                                    o_user_data = o_data.ResponseData;
+                                    preloader.Visibility = Android.Views.ViewStates.Invisible;
+                                    CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
+
+                                    CrossSettings.Current.AddOrUpdateValue("role", "user");
+                                    Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                                    Intent main = new Intent(Activity, typeof(MainActivity));
+                                    StartActivity(main);
+                                }
+                                else
+                                {
+                                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                                }
+                            };
+                        }
+                        else
+                        {
+                            Toast.MakeText(Activity, "Необходимо дать согласие на обработку " +
+                                "персональных данных и согласиться с договором офертой", ToastLength.Long).Show();
+                        }
+                    }
+                    else
+                    {
+                        Toast.MakeText(Activity, "Пароли не совпадают ", ToastLength.Long).Show();
+                    }
                 }
                               
             };
             return view;
+        }
+
+        private bool CheckingOnNullOrEmptyOfStrings()
+        {
+            if (String.IsNullOrEmpty(s_email_individual.Text) || String.IsNullOrEmpty(s_phone_individual.Text)
+               || String.IsNullOrEmpty(s_login_individual.Text) || String.IsNullOrEmpty(s_pass_individual.Text)
+               || String.IsNullOrEmpty(s_pass_confirmation_individual.Text) || String.IsNullOrEmpty(s_surname_individual.Text)
+               || String.IsNullOrEmpty(s_name_individual.Text) || String.IsNullOrEmpty(s_patronymic_individual.Text)
+               || String.IsNullOrEmpty(s_passport_series_individual.Text) || String.IsNullOrEmpty(s_passport_number_individual.Text)
+               || String.IsNullOrEmpty(s_date_birth_individual.Text) || String.IsNullOrEmpty(s_department_code_individual.Text))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        private void S_date_birth_individual_Click(object sender, EventArgs e)
+        {
+            DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
+            {
+                s_date_birth_individual.Text = time.ToShortDateString();
+            });
+            frag.Show(FragmentManager, DatePickerFragment.TAG);
         }
     }
 }

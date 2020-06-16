@@ -30,45 +30,56 @@ namespace SmartBoxCity.Activity.Order
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            RetainInstance = true;
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            View view;
-            if (CrossSettings.Current.GetValueOrDefault("isAuth", "") != "true")
+            try
             {
-                view = inflater.Inflate(Resource.Layout.activity_not_found_book, container, false);
-                var btn_add_order1 = view.FindViewById<Button>(Resource.Id.btn_add_order1);
-                btn_add_order1.Click += async delegate
+                View view;
+                if (CrossSettings.Current.GetValueOrDefault("isAuth", "") != "true")
                 {
-                    Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
-                    AddOrderActivity content = new AddOrderActivity();
-                    transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                };
-                return view;
+                    view = inflater.Inflate(Resource.Layout.activity_not_found_book, container, false);
+                    var btn_add_order1 = view.FindViewById<Button>(Resource.Id.btn_add_order1);
+                    btn_add_order1.Click += async delegate
+                    {
+                        Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                        AddOrderActivity content = new AddOrderActivity();
+                        transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                    };
+                    return view;
+                }
+                else
+                {
+                    view = inflater.Inflate(Resource.Layout.activity_order_book, container, false);
+                    lstOrder = view.FindViewById<ListView>(Resource.Id.orderlistview);
+                    orderlist = new List<OrderBookModel>();
+                    //начинай тестиьть
+
+                    GetOrders();
+
+                    //editEnterOrder.TextChanged += EtSearch_TextChanged;
+
+                    //int i = 0;
+                    //while(i<1)
+                    //{
+                    //    OrderResponse order = new OrderResponse();
+                    //    order = o_date.Rusult;
+                    //}
+                    //AuthResponseData o_user_data = new AuthResponseData();
+                    //o_user_data = o_data.ResponseData;
+
+                    return view;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                view = inflater.Inflate(Resource.Layout.activity_order_book, container, false);
-                lstOrder = view.FindViewById<ListView>(Resource.Id.orderlistview);
-                orderlist = new List<OrderBookModel>();
-                //начинай тестиьть
-
-                GetOrders();
-
-                //editEnterOrder.TextChanged += EtSearch_TextChanged;
-
-                //int i = 0;
-                //while(i<1)
-                //{
-                //    OrderResponse order = new OrderResponse();
-                //    order = o_date.Rusult;
-                //}
-                //AuthResponseData o_user_data = new AuthResponseData();
-                //o_user_data = o_data.ResponseData;
-
+                var view = inflater.Inflate(Resource.Layout.activity_errors_handling, container, false);
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
                 return view;
             }
+
         }
 
         private async void GetOrders()

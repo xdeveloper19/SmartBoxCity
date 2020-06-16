@@ -29,9 +29,10 @@ namespace SmartBoxCity.Activity.Home
         /// </summary>
         ViewPager viewPager;
         LinearLayout dotsLayout;
+        
         TextView[] dots;
         public int[] layouts;
-        Button btnNext, btnSkip;
+        Button btnNext, btnSkip, btnAddOrder;
         RefLayoutManager layoutManager;
         //private Button btn_calculate;
 
@@ -68,10 +69,11 @@ namespace SmartBoxCity.Activity.Home
                 dotsLayout = view.FindViewById<LinearLayout>(Resource.Id.layoutPanel);
                 btnNext = view.FindViewById<Button>(Resource.Id.btn_next);
                 btnSkip = view.FindViewById<Button>(Resource.Id.btn_skip);
+                
 
                 addDots(0);
-
-                ViewPagerAdapter adapter = new ViewPagerAdapter(layouts);
+                Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                ViewPagerAdapter adapter = new ViewPagerAdapter(layouts, ref transaction);
                 viewPager.Adapter = adapter;
 
                 viewPager.PageSelected += ViewPager_PageSelected;
@@ -181,41 +183,40 @@ namespace SmartBoxCity.Activity.Home
         }
 
 
-
         public class ViewPagerAdapter : PagerAdapter
         {
             LayoutInflater layoutInflater;
             int[] _layout;
+            Android.App.FragmentTransaction transaction;
 
-            public ViewPagerAdapter(int[] layout)
+            public ViewPagerAdapter(int[] layout, ref Android.App.FragmentTransaction transaction)
             {
                 _layout = layout;
+                this.transaction = transaction;
             }
 
             public override Java.Lang.Object InstantiateItem(ViewGroup container, int position)
             {
-                //if (_layout[position] == 1)
-                //{
-                //    layoutInflater = (LayoutInflater)Android.App.Application.Context.GetSystemService(Context.LayoutInflaterService);
-                //    View view = layoutInflater.Inflate(_layout[position], container, false);
-                //    var btn_cost = view.FindViewById<Button>(Resource.Id.btn_cost);
-                //    //btn_cost.Click += (sender, e) =>
-                //    //{
-                //    //    Android.App.FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
-                //    //    //lauch main screen here
-                //    //    MainPageActivity content = new MainPageActivity();
-                //    //    transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                //    //};
-                //    container.AddView(view);
-                //    return view;
-                //}
-                //else
-                //{
+                if (position == 1)
+                {
+                    layoutInflater = (LayoutInflater)Android.App.Application.Context.GetSystemService(Context.LayoutInflaterService);
+                    View view = layoutInflater.Inflate(_layout[position], container, false);
+                    var btn_cost = view.FindViewById<Button>(Resource.Id.Slide0BtnAddOrder);
+                    btn_cost.Click += (sender, e) =>
+                    {
+                        AddOrderActivity content = new AddOrderActivity();
+                        transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                    };
+                    container.AddView(view);
+                    return view;
+                }
+                else
+                {
                     layoutInflater = (LayoutInflater)Android.App.Application.Context.GetSystemService(Context.LayoutInflaterService);
                     View view = layoutInflater.Inflate(_layout[position], container, false);
                     container.AddView(view);
                     return view;
-                //}
+                }
             }
 
             public override int Count

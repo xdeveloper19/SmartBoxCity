@@ -46,36 +46,46 @@ namespace SmartBoxCity.Activity.Order
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
+            RetainInstance = true;
         }
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var view = inflater.Inflate(Resource.Layout.activity_order_stages, container, false);
-            #region Инициализация переменных
-            Id = view.FindViewById<TextView>(Resource.Id.OrderStageTxtId);
-            PaymentStatus = view.FindViewById<TextView>(Resource.Id.OrderStageTxtPaymentStatus);
-            Cost = view.FindViewById<TextView>(Resource.Id.OrderStageTxtCost);
-            StageRequest = view.FindViewById<TextView>(Resource.Id.StageRequest);
-            StageRequestValue = view.FindViewById<TextView>(Resource.Id.StageRequestValue);
-            StageWaitTransport = view.FindViewById<TextView>(Resource.Id.StageWaitTransport);
-            StageWaitTransportValue = view.FindViewById<TextView>(Resource.Id.StageWaitTransportValue);
-            StageLading = view.FindViewById<TextView>(Resource.Id.StageLading);
-            StageLadingValue = view.FindViewById<TextView>(Resource.Id.StageLadingValue);
-            StageShipping = view.FindViewById<TextView>(Resource.Id.StageShipping);
-            StageShippingValue = view.FindViewById<TextView>(Resource.Id.StageShippingValue);
-            StageWaitUnload = view.FindViewById<TextView>(Resource.Id.StageWaitUnload);
-            StageWaitUnloadValue = view.FindViewById<TextView>(Resource.Id.StageWaitUnloadValue);
-            StageUnload = view.FindViewById<TextView>(Resource.Id.StageUnload);
-            StageUnloadValue = view.FindViewById<TextView>(Resource.Id.StageUnloadValue);
-            StageCompletion = view.FindViewById<TextView>(Resource.Id.StageCompletion);
-            StageCompletionValue = view.FindViewById<TextView>(Resource.Id.StageCompletionValue);
-            StageEndCompletion = view.FindViewById<TextView>(Resource.Id.StageEndCompletion);
-            StageEndCompletionValue = view.FindViewById<TextView>(Resource.Id.StageEndCompletionValue);
-            #endregion
+            try
+            {
+                var view = inflater.Inflate(Resource.Layout.activity_order_stages, container, false);
+                #region Инициализация переменных
+                Id = view.FindViewById<TextView>(Resource.Id.OrderStageTxtId);
+                PaymentStatus = view.FindViewById<TextView>(Resource.Id.OrderStageTxtPaymentStatus);
+                Cost = view.FindViewById<TextView>(Resource.Id.OrderStageTxtCost);
+                StageRequest = view.FindViewById<TextView>(Resource.Id.StageRequest);
+                StageRequestValue = view.FindViewById<TextView>(Resource.Id.StageRequestValue);
+                StageWaitTransport = view.FindViewById<TextView>(Resource.Id.StageWaitTransport);
+                StageWaitTransportValue = view.FindViewById<TextView>(Resource.Id.StageWaitTransportValue);
+                StageLading = view.FindViewById<TextView>(Resource.Id.StageLading);
+                StageLadingValue = view.FindViewById<TextView>(Resource.Id.StageLadingValue);
+                StageShipping = view.FindViewById<TextView>(Resource.Id.StageShipping);
+                StageShippingValue = view.FindViewById<TextView>(Resource.Id.StageShippingValue);
+                StageWaitUnload = view.FindViewById<TextView>(Resource.Id.StageWaitUnload);
+                StageWaitUnloadValue = view.FindViewById<TextView>(Resource.Id.StageWaitUnloadValue);
+                StageUnload = view.FindViewById<TextView>(Resource.Id.StageUnload);
+                StageUnloadValue = view.FindViewById<TextView>(Resource.Id.StageUnloadValue);
+                StageCompletion = view.FindViewById<TextView>(Resource.Id.StageCompletion);
+                StageCompletionValue = view.FindViewById<TextView>(Resource.Id.StageCompletionValue);
+                StageEndCompletion = view.FindViewById<TextView>(Resource.Id.StageEndCompletion);
+                StageEndCompletionValue = view.FindViewById<TextView>(Resource.Id.StageEndCompletionValue);
+                #endregion
 
-            GetParameters();
+                GetParameters();
 
-            return view;
+                return view;
+            }
+            catch (Exception ex)
+            {
+                var view = inflater.Inflate(Resource.Layout.activity_errors_handling, container, false);
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+                return view;
+            }
+
         }
 
         private async void GetParameters()

@@ -28,158 +28,141 @@ using Android.Graphics.Drawables;
 using SmartBoxCity.Service;
 using WebService;
 using WebService.Account;
+using Entity.Model.AccountViewModel.AuthViewModel;
+using System.Net;
+using Java.Lang;
 
 namespace SmartBoxCity
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
-    public class MainActivity : AppCompatActivity //NavigationView.IOnNavigationItemSelectedListener
+    public class MainActivity : AppCompatActivity 
     {
         private int MY_PERMISSIONS_REQUEST_CAMERA = 100;
-        private View exit { get; set; }
+        private FragmentTransaction transaction1;
+        private IMenuItem btnAddOrder;
+        private IMenuItem btnOrders;
+        private IMenuItem btnExit;
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
-            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            SetContentView(Resource.Layout.activity_main);
-            Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
-            SetSupportActionBar(toolbar);
+            try
+            {                
+                base.OnCreate(savedInstanceState);
+                Xamarin.Essentials.Platform.Init(this, savedInstanceState);
+                SetContentView(Resource.Layout.activity_main);
+                Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+                SetSupportActionBar(toolbar);
 
-            string[] permissions = { Manifest.Permission.AccessFineLocation, Manifest.Permission.WriteExternalStorage };
-            Android.Support.V4.App.ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.Camera }, MY_PERMISSIONS_REQUEST_CAMERA);
-            Dexter.WithActivity(this).WithPermissions(permissions).WithListener(new CompositeMultiplePermissionsListener(new SamplePermissionListener(this))).Check();
+                string[] permissions = { Manifest.Permission.AccessFineLocation, Manifest.Permission.WriteExternalStorage };
+                Android.Support.V4.App.ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.Camera }, MY_PERMISSIONS_REQUEST_CAMERA);
+                Dexter.WithActivity(this).WithPermissions(permissions).WithListener(new CompositeMultiplePermissionsListener(new SamplePermissionListener(this))).Check();
 
-            string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-            BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
-            FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
-            fab.Click += FabOnClick;
+                string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+                BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
 
-            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-            var btnAddOrder = navigation.Menu.FindItem(Resource.Id.title_about_us);
-            var btnOrders = navigation.Menu.FindItem(Resource.Id.title_reviews);
-            var btnExit = navigation.Menu.FindItem(Resource.Id.title_contacts);
+                transaction1 = this.FragmentManager.BeginTransaction();
+                btnAddOrder = navigation.Menu.FindItem(Resource.Id.title_about_us);
+                btnOrders = navigation.Menu.FindItem(Resource.Id.title_reviews);
+                btnExit = navigation.Menu.FindItem(Resource.Id.title_contacts);
 
-            if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
-            {
-                if (CrossSettings.Current.GetValueOrDefault("role","") == "driver")
-                {
-                    Intent intent = new Intent(this, typeof(Activity.MainActivity2));
-                    StartActivity(intent);
-                    this.Finish();
-                }
-                else
-                {
-                    UserActivity content2 = new UserActivity();
-                    transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+                AuthorizationAndReceivingToken();
 
-                    btnAddOrder.SetTitle("Заказать");
-                    btnAddOrder.SetIcon(Resource.Drawable.ic_add_order);
-
-                    btnOrders.SetTitle("Заказы");
-                    btnOrders.SetIcon(Resource.Drawable.ic_orders);
-
-                    btnExit.SetTitle("Выход");
-                    btnExit.SetIcon(Resource.Drawable.ic_menu_exit);
-
-                    fab.SetVisibility(ViewStates.Visible);
-                }
-                
-            }
-            else
-            {
-                ContentMainActivity content = new ContentMainActivity();
-                transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-
-                btnAddOrder.SetTitle("О нас");
-                btnAddOrder.SetIcon(Resource.Drawable.ic_dashboard_black_24dp);
-
-                btnOrders.SetTitle("Отзывы");
-                btnOrders.SetIcon(Resource.Drawable.ic_notifications_black_24dp);
-
-                btnExit.SetTitle("Контакты");
-                btnExit.SetIcon(Resource.Drawable.ic_information);
-
-                fab.SetVisibility(ViewStates.Invisible);
-            }
-
-            navigation.NavigationItemSelected += async (sender, e) =>
-            {
-                FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
-               
-                switch (e.Item.ItemId)
+                navigation.NavigationItemSelected += async (sender, e) =>
                 {
 
-                    case Resource.Id.navigation_home:
-                        if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
-                        {
-                            UserActivity content2 = new UserActivity();
-                            transaction2.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
-                        }
-                        else
-                        {
-                            ContentMainActivity content = new ContentMainActivity();
-                            transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                        }
+                    FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
 
+                    switch (e.Item.ItemId)
+                    {
 
-                        break;
-                    case Resource.Id.title_about_us:
-                        if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
-                        {
-                            AddOrderActivity content = new AddOrderActivity();
-                            transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                        }
-                        else
-                        {
-                            Activity_About_As content3 = new Activity_About_As();
-                            transaction2.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
-                            Toast.MakeText(this, "Страница: О нас.", ToastLength.Long).Show();
-                        }
-                       
-                        break;
-                    case Resource.Id.title_reviews:
-                        if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
-                        {
-                            ListOrdersActivity content1 = new ListOrdersActivity();
-                            transaction2.Replace(Resource.Id.framelayout, content1).AddToBackStack(null).Commit();
-                        }
-                        else
-                        {
-                            Activity_Reviews content5 = new Activity_Reviews();
-                            transaction2.Replace(Resource.Id.framelayout, content5).AddToBackStack(null).Commit();
-                            Toast.MakeText(this, "Страница: Отзывы.", ToastLength.Long).Show();
-                        }
-
-                        
-                        break;
-                    case Resource.Id.title_contacts:
-                        if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
-                        {
-                            string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-                            File.Delete(dir_path + "user_data.txt");
-                            CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
-
-                            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+                        case Resource.Id.navigation_home:
+                            if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
                             {
-                                AuthService.InitializeClient(client);
-                                await AuthService.LogOut();
+                                UserActivity content2 = new UserActivity();
+                                transaction2.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+                            }
+                            else
+                            {
+                                ContentMainActivity content = new ContentMainActivity();
+                                transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
                             }
 
-                            Intent content = new Intent(this, typeof(MainActivity));
-                            StartActivity(content);
-                        }
-                        else
-                        {
-                            Activity_List_Contacts content4 = new Activity_List_Contacts();
-                            transaction2.Replace(Resource.Id.framelayout, content4).AddToBackStack(null).Commit();
-                            Toast.MakeText(this, "Страница: Контакты.", ToastLength.Long).Show();
-                        }
-                        break;
-                }
-            };
 
+                            break;
+                        case Resource.Id.title_about_us:
+                            if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+                            {
+                                AddOrderActivity content = new AddOrderActivity();
+                                transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                            }
+                            else
+                            {
+                                Activity_About_As content3 = new Activity_About_As();
+                                transaction2.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
+                                Toast.MakeText(this, "Страница: О нас.", ToastLength.Long).Show();
+                            }
+
+                            break;
+                        case Resource.Id.title_reviews:
+                            if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+                            {
+                                ListOrdersActivity content1 = new ListOrdersActivity();
+                                transaction2.Replace(Resource.Id.framelayout, content1).AddToBackStack(null).Commit();
+                            }
+                            else
+                            {
+                                Activity_Reviews content5 = new Activity_Reviews();
+                                transaction2.Replace(Resource.Id.framelayout, content5).AddToBackStack(null).Commit();
+                                Toast.MakeText(this, "Страница: Отзывы.", ToastLength.Long).Show();
+                            }
+
+
+                            break;
+                        case Resource.Id.title_contacts:
+                            if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+                            {
+                                Android.App.AlertDialog.Builder alert = new Android.App.AlertDialog.Builder(this);
+                                alert.SetTitle("Внимание!");
+                                alert.SetMessage("Вы действительно хотите выйти ?");
+                                alert.SetPositiveButton("Да", (senderAlert, args) =>
+                                {
+                                    string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+                                    File.Delete(dir_path + "user_data.txt");
+                                    CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
+
+                                    using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+                                    {
+                                        AuthService.InitializeClient(client);
+                                        AuthService.LogOut();
+                                    }
+
+                                    Intent content = new Intent(this, typeof(MainActivity));
+                                    StartActivity(content);
+                                });
+                                alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+                                {
+                                });
+                                Dialog dialog = alert.Create();
+                                dialog.Show();
+                            }
+                            else
+                            {
+                                Activity_List_Contacts content4 = new Activity_List_Contacts();
+                                transaction2.Replace(Resource.Id.framelayout, content4).AddToBackStack(null).Commit();
+                                Toast.MakeText(this, "Страница: Контакты.", ToastLength.Long).Show();
+                            }
+                            break;
+                    }
+                };
+
+
+
+                DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
+            }
+            catch (System.Exception ex)
+            {
+                Toast.MakeText(this, ex.Message, ToastLength.Long).Show();
+            }
             
-
-            DrawerLayout drawer = FindViewById<DrawerLayout>(Resource.Id.drawer_layout);
             //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
             //drawer.AddDrawerListener(toggle);
             //toggle.SyncState();
@@ -202,6 +185,84 @@ namespace SmartBoxCity
             //}
             
             //navigationView.SetNavigationItemSelectedListener(this);
+        }
+
+        private async void AuthorizationAndReceivingToken()
+        {
+            AuthModel auth = new AuthModel
+            {
+                Login = CrossSettings.Current.GetValueOrDefault("login",""),
+                Password = CrossSettings.Current.GetValueOrDefault("password", "")
+            };
+
+            using (var client = ClientHelper.GetClient(auth.Login, auth.Password))
+            {
+                AuthService.InitializeClient(client);
+                var o_data = await AuthService.Login(auth);
+
+                if (o_data.Status == HttpStatusCode.OK)
+                {
+                    AuthResponse o_user_data = new AuthResponse();
+                    o_user_data = o_data.ResponseData;
+
+                    CrossSettings.Current.AddOrUpdateValue("token", o_user_data.Token);
+                    CrossSettings.Current.AddOrUpdateValue("role", o_user_data.Role);
+
+                    if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
+                    {
+                        if (CrossSettings.Current.GetValueOrDefault("role", "") == "driver")
+                        {
+                            Intent intent = new Intent(this, typeof(Activity.MainActivity2));
+                            StartActivity(intent);
+                            this.Finish();
+                        }
+                        else
+                        {
+                            try
+                            {
+                                UserActivity content2 = new UserActivity();
+                                transaction1.Replace(Resource.Id.framelayout, content2).Commit();
+                            }
+                            catch (System.Exception ex)
+                            {
+                                Toast.MakeText(this, ex.Message, ToastLength.Long).Show();
+                            }                          
+
+                            btnAddOrder.SetTitle("Заказать");
+                            btnAddOrder.SetIcon(Resource.Drawable.ic_add_order);
+
+                            btnOrders.SetTitle("Заказы");
+                            btnOrders.SetIcon(Resource.Drawable.ic_orders);
+
+                            btnExit.SetTitle("Выход");
+                            btnExit.SetIcon(Resource.Drawable.ic_menu_exit);
+
+                        }
+
+                    }
+                    else
+                    {
+                        ContentMainActivity content = new ContentMainActivity();
+                        transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+
+                        btnAddOrder.SetTitle("О нас");
+                        btnAddOrder.SetIcon(Resource.Drawable.ic_dashboard_black_24dp);
+
+                        btnOrders.SetTitle("Отзывы");
+                        btnOrders.SetIcon(Resource.Drawable.ic_notifications_black_24dp);
+
+                        btnExit.SetTitle("Контакты");
+                        btnExit.SetIcon(Resource.Drawable.ic_information);
+
+                    }
+                }
+                else
+                
+                {
+                    Toast.MakeText(this, o_data.Message, ToastLength.Long).Show();
+                }
+
+            }
         }
 
         public interface IBackButtonListener
@@ -238,12 +299,6 @@ namespace SmartBoxCity
             return base.OnOptionsItemSelected(item);
         }
 
-        private void FabOnClick(object sender, EventArgs eventArgs)
-        {
-            View view = (View) sender;
-            Snackbar.Make(view, "Replace with your own action", Snackbar.LengthLong)
-                .SetAction("Action", (Android.Views.View.IOnClickListener)null).Show();
-        }
 
         //public bool OnNavigationItemSelected(IMenuItem item)
         //{
@@ -389,7 +444,11 @@ namespace SmartBoxCity
                 }
             }
         }
+
+       
     }
+
+   
 
     internal class MyDismissListener : Java.Lang.Object, IDialogInterfaceOnDismissListener
     {

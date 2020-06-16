@@ -7,7 +7,8 @@
     android:background="@drawable/activity_stili">
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="40dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -33,22 +34,17 @@
             <ImageView
                 android:layout_width="200dp"
                 android:layout_height="200dp"
-                android:src="@drawable/slide11" />
-            <ScrollView
+                android:src="@drawable/slide1" />
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/ScrollViewSlide1" >
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:layout_gravity = "center"
-                    android:gravity = "center"
-                    android:textColor = "#475B57"
-                    android:text="@string/slide_1"
-                    android:textStyle="normal"
-                    android:textSize="14dp" />
-            </ScrollView>
+                android:padding="10dp"
+                android:layout_gravity = "center"
+                android:gravity = "center"
+                android:textColor = "#475B57"
+                android:text="@string/slide_1"
+                android:textStyle="normal"
+                android:textSize="14dp" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
