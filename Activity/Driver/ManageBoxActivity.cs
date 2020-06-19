@@ -175,7 +175,7 @@ namespace SmartBoxCity.Activity.Driver
                     }
 
 
-                    var firstTask = o_data.ResponseData.TASKS.OrderBy(p => p.priority).First();
+                    var firstTask = o_data.ResponseData.TASKS.First();
                     StaticTask.AddInfoTask(firstTask);
 
                     var boxes_id = o_data.ResponseData.CONTAINERS.Select(s => s.id).ToList();

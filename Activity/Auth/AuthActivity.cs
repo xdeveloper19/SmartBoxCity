@@ -14,6 +14,7 @@ using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
 using Entity.Model.AccountViewModel.AuthViewModel;
+using Entity.Repository;
 using Newtonsoft.Json;
 using Plugin.Settings;
 using SmartBoxCity.Activity.Home;
@@ -26,6 +27,7 @@ namespace SmartBoxCity.Activity.Auth
 {
     public class AuthActivity: Android.App.Fragment
     {
+        #region
         /// <summary>
         /// Почта клиента
         /// </summary>
@@ -55,22 +57,18 @@ namespace SmartBoxCity.Activity.Auth
         /// Кнопка прокрутки.
         /// </summary>
         private ProgressBar preloader;
+        #endregion
 
         public override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);
-           
+            base.OnCreate(savedInstanceState);           
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             var view = inflater.Inflate(Resource.Layout.activity_auth, container, false);
 
-            //btn_register = view.FindViewById<Button>(Resource.Id.btn_register);
-            btn_auth = view.FindViewById<Button>(Resource.Id.btn_auth);
-            
-            //btn_back_a = view.FindViewById<ImageButton>(Resource.Id.btn_back_a);
-
+            btn_auth = view.FindViewById<Button>(Resource.Id.btn_auth);           
             s_login = view.FindViewById<EditText>(Resource.Id.s_login);
             s_pass = view.FindViewById<EditText>(Resource.Id.s_pass);
             is_remember = view.FindViewById<CheckBox>(Resource.Id.is_remember);
@@ -88,15 +86,11 @@ namespace SmartBoxCity.Activity.Auth
                 s_pass.Text = CrossSettings.Current.GetValueOrDefault("password", "");
             }
 
-          
-           
             btn_auth.Click += async delegate
             {
                 try
                 {
                     preloader.Visibility = Android.Views.ViewStates.Visible;
-                    // Авторизируюсь клиентом.
-
                     AuthModel auth = new AuthModel
                     {
                         Login = s_login.Text,
@@ -110,7 +104,6 @@ namespace SmartBoxCity.Activity.Auth
                         
                         if (o_data.Status == HttpStatusCode.OK)
                         {
-                            //o_data.Message = "Успешно авторизован!";
                             Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                             AuthResponse o_user_data = new AuthResponse();
                              o_user_data = o_data.ResponseData;
@@ -126,15 +119,17 @@ namespace SmartBoxCity.Activity.Auth
                                  CrossSettings.Current.AddOrUpdateValue("check", "0");
                              }
 
-                            //StaticUser.Email = s_login.Text;
-                            //StaticUser.AddInfoAuth(o_user_data);
-
-
                             preloader.Visibility = Android.Views.ViewStates.Invisible;
-                            CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
+
+                            StaticUser.PresenceOnPage = true;
                             CrossSettings.Current.AddOrUpdateValue("token", o_user_data.Token);
                             CrossSettings.Current.AddOrUpdateValue("role", o_user_data.Role);
-                            //Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+
+                            if (CrossSettings.Current.GetValueOrDefault("OrderInStageOfBid", "") == "true")
+                            {
+                                CrossSettings.Current.AddOrUpdateValue("NeedToCreateOrder", "true");
+                            }
+
                             Intent main = new Intent(Activity, typeof(MainActivity));
                             StartActivity(main);
                         }
@@ -157,15 +152,6 @@ namespace SmartBoxCity.Activity.Auth
             };
 
             return view;
-        }
-
-        /// <summary>
-        /// Метод очистки полей.
-        /// </summary>
-        void ClearField()
-        {
-            s_login.Text = "";
-            s_pass.Text = "";
         }
     }
 }

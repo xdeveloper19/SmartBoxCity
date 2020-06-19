@@ -30,8 +30,7 @@ namespace SmartBoxCity.Activity
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_driver);
-            //Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
-            //SetSupportActionBar(toolbar);
+
             BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation_driver);
 
             FragmentTransaction transaction3 = this.FragmentManager.BeginTransaction();
@@ -43,7 +42,6 @@ namespace SmartBoxCity.Activity
                 FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
                 switch (e.Item.ItemId)
                 {
-
                     case Resource.Id.tasks:
                         MapActivity content2 = new MapActivity();
                         transaction2.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
@@ -69,7 +67,7 @@ namespace SmartBoxCity.Activity
                         {
                             string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
                             File.Delete(dir_path + "user_data.txt");
-                            CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
+                            StaticUser.PresenceOnPage = false;
                             CrossSettings.Current.AddOrUpdateValue("role", "");
 
                             if (StaticDriver.busy == "0")
@@ -130,10 +128,7 @@ namespace SmartBoxCity.Activity
             }
 
             return base.OnOptionsItemSelected(item);
-        }
-
-        
-
+        }        
        
     }
 }

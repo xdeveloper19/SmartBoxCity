@@ -6,8 +6,11 @@ using System.Net;
 using System.Text;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
+using Android.Support.V7.Widget;
 using Android.Text;
 using Android.Views;
 using Android.Widget;
@@ -32,67 +35,49 @@ namespace SmartBoxCity.Activity.Order
     {
         #region Переменные
 
-        bool h_result, width_result, l_result, q_result, weight_result;
+        private bool h_result, width_result, l_result, q_result, weight_result, sum_seats_result;
 
-        double height, width, weight, length;
+        private double height, width, weight, length, sum_seats;
+
+        private string a_cargo_characteristic, a_hazard_class, myCity, a_loading_methodsc;
 
         int quantity;
 
+        private TextInputLayout LInputContactPerson;
+        private TextInputLayout LInputDate;
+        private TextInputLayout LInputTime;
+        private TextInputLayout LInputCargoInsurance;
+
         private EditText s_edit_from;
-
         private EditText s_edit_where;
-
         private EditText s_shipment_time;
-
         private EditText s_shipping_date;
-
         private EditText s_length;
-
         private EditText s_width;
-
         private EditText s_height;
-
         private EditText s_value;
-
         private EditText s_size;
-
         private EditText s_weight;
-
         private EditText s_sum_seats;
-
         private EditText s_declared_value_goods;
-
         private EditText s_order_cost;
-
         private EditText s_contact_person;
-
         private EditText s_phone;
-
         private EditText s_email_notifications;
-
         private EditText s_comment_order;
 
         private Spinner s_cargo_characteristic;
-
         private Spinner s_hazard_class;
-
         private Spinner s_loading_methods;
 
-        private CheckBox chek_cargo_insurance;
-
-        private CheckBox check_date;
-        private string myCity;
         private CheckBox check_argue;
-        private CheckBox check_receiver;
-        private CheckBox check_opherta;
 
-        private string a_cargo_characteristic;
+        private SwitchCompat SwitchDateTime;
+        private SwitchCompat SwitchCargoInsurance;
+        private SwitchCompat SwitchContactPerson;
 
-        private string a_hazard_class;
+        private Button btn_make_request;       
 
-        private string a_loading_methodsc;
-        private bool sum_seats_result;
-        private double sum_seats;
         #endregion
         public override void OnCreate(Bundle bundle)
         {
@@ -119,11 +104,15 @@ namespace SmartBoxCity.Activity.Order
                 fields.Add(Place.Field.LatLng);
                 fields.Add(Place.Field.Address);
 
-
-
-            
                 #region Инициализаия переменных
-                Button btn_make_request = view.FindViewById<Button>(Resource.Id.btn_make_request);
+
+                LInputCargoInsurance = view.FindViewById<TextInputLayout>(Resource.Id.ApplicationInputLayoutCargoInsurance);
+                LInputTime = view.FindViewById<TextInputLayout>(Resource.Id.ApplicationInputLayoutTime);
+                LInputDate = view.FindViewById<TextInputLayout>(Resource.Id.ApplicationInputLayoutDate);
+                LInputContactPerson = view.FindViewById<TextInputLayout>(Resource.Id.ApplicationInputLayoutContactPerson);
+
+                btn_make_request = view.FindViewById<Button>(Resource.Id.btn_make_request);
+
                 s_edit_from = view.FindViewById<EditText>(Resource.Id.s_edit_from);
                 s_edit_where = view.FindViewById<EditText>(Resource.Id.s_edit_where);
                 s_shipment_time = view.FindViewById<EditText>(Resource.Id.s_shipment_time);
@@ -136,14 +125,46 @@ namespace SmartBoxCity.Activity.Order
                 s_sum_seats = view.FindViewById<EditText>(Resource.Id.s_sum_seats);
                 s_contact_person = view.FindViewById<EditText>(Resource.Id.s_contact_person);
                 s_value = view.FindViewById<EditText>(Resource.Id.s_value);
+
                 s_cargo_characteristic = view.FindViewById<Spinner>(Resource.Id.s_cargo_characteristic);
                 s_hazard_class = view.FindViewById<Spinner>(Resource.Id.s_hazard_class);
                 s_loading_methods = view.FindViewById<Spinner>(Resource.Id.s_loading_methods);
-                chek_cargo_insurance = view.FindViewById<CheckBox>(Resource.Id.chek_cargo_insurance);
-                check_date = view.FindViewById<CheckBox>(Resource.Id.chek_date);
+
                 check_argue = view.FindViewById<CheckBox>(Resource.Id.check_argue);
-                check_receiver = view.FindViewById<CheckBox>(Resource.Id.chek_receiver);
-                #endregion 
+
+                SwitchDateTime = view.FindViewById<SwitchCompat>(Resource.Id.ApplicationSwitchDateTime);
+                SwitchCargoInsurance = view.FindViewById<SwitchCompat>(Resource.Id.ApplicationSwitchCargoInsurance);
+                SwitchContactPerson = view.FindViewById<SwitchCompat>(Resource.Id.ApplicationSwitchContactPerson);
+
+                s_length.SetMaxLines(8);
+                s_width.SetMaxLines(8);
+                s_height.SetMaxLines(8);
+                #region Focusable Enabled Clickable
+
+                SwitchDateTime.Focusable = true;
+                SwitchCargoInsurance.Focusable = true;
+                SwitchContactPerson.Focusable = true;
+
+                s_size.Focusable = false;
+                s_size.Enabled = false;
+
+                s_shipment_time.Focusable = false;
+                s_shipment_time.Enabled = false;
+
+                s_shipping_date.Focusable = false;
+                s_shipping_date.Enabled = false;
+
+                //s_value.Focusable = false;
+                //s_value.LongClickable = true;
+                s_value.Visibility = ViewStates.Invisible;
+                s_contact_person.Visibility = ViewStates.Invisible;
+                //s_contact_person.Focusable = false;
+                //s_contact_person.LongClickable = false;
+
+                s_edit_from.Focusable = false;
+                s_edit_where.Focusable = false;
+                #endregion
+                #endregion
                 ProgressBar preloader = view.FindViewById<ProgressBar>(Resource.Id.preloader);
 
                 if (Arguments != null)
@@ -154,50 +175,80 @@ namespace SmartBoxCity.Activity.Order
                     else
                         s_edit_from.Text = StaticOrder.Inception_address;
                 }
-                s_shipment_time.Focusable = false;
-                s_shipment_time.Enabled = false;
-                s_shipment_time.Clickable = false;
-                s_shipping_date.Focusable = false;
-                s_shipping_date.Enabled = false;
-                s_shipping_date.Clickable = false;
-                s_value.Enabled = false;
-                s_contact_person.Enabled = false;
-                s_edit_from.Focusable = false;
-                s_edit_where.Focusable = false;
-                s_size.Focusable = false;
+               
+                s_cargo_characteristic.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(Spinner_ItemSelected);
+                var adapter1 = ArrayAdapter.CreateFromResource(Activity, Resource.Array.array_cargo_characteristic, Android.Resource.Layout.SimpleSpinnerItem);
+                adapter1.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                s_cargo_characteristic.Adapter = adapter1;
 
-                #region Проверка отмеченных событий
-                chek_cargo_insurance.CheckedChange += (o, e) => {
-                    if (!chek_cargo_insurance.Checked)
-                    {
+                s_hazard_class.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(SpinnerClass_ItemSelected);
+                var adapter2 = ArrayAdapter.CreateFromResource(Activity, Resource.Array.array_hazard_class, Android.Resource.Layout.SimpleSpinnerItem);
+                adapter2.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                s_hazard_class.Adapter = adapter2;
 
-                        s_value.Enabled = false;
-                        s_value.Text = "";
-                    }
-                    else
-                    {
+                s_loading_methods.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(SpinnerLoad_ItemSelected);
+                var adapter3 = ArrayAdapter.CreateFromResource(Activity, Resource.Array.array_loading_methodsc, Android.Resource.Layout.SimpleSpinnerItem);
+                adapter3.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                s_loading_methods.Adapter = adapter3;
 
-                        s_value.Enabled = true;
-                    }
-                };
+                FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
 
-                check_date.CheckedChange += (o, e) =>
-                {
-                    if (!check_date.Checked)
-                    {
-                        s_shipping_date.Enabled = false;
-                        s_shipment_time.Enabled = false;
-                        s_shipment_time.Text = "";
-                        s_shipping_date.Text = "";
-                    }
-                    else
-                    {
-                        s_shipping_date.Enabled = true;
-                        s_shipment_time.Enabled = true;
-                    }
-                };
+                #region Обработка нажатий на кнопки
+                //s_size.Click += async delegate
+                //{
+                //    if (string.IsNullOrEmpty(s_length.Text) == false &&
+                //    string.IsNullOrEmpty(s_width.Text) == false &&
+                //    string.IsNullOrEmpty(s_height.Text) == false &&
+                //    string.IsNullOrEmpty(s_sum_seats.Text) == false)
+                //    {
+                //        CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+                //        ci.NumberFormat.CurrencyDecimalSeparator = ".";
+                //        float size_calculation = float.Parse(s_length.Text, NumberStyles.Any, ci)
+                //            * float.Parse(s_width.Text, NumberStyles.Any, ci)
+                //            * float.Parse(s_height.Text, NumberStyles.Any, ci)
+                //            * float.Parse(s_sum_seats.Text, NumberStyles.Any, ci);
+                //        s_size.Text = size_calculation.ToString();
+                //    }
+                //    else
+                //    {
+                //        AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
+                //        alert.SetTitle("Внимание!");
+                //        alert.SetMessage("Необходимо заполнить данные о длине, ширине и высоте груза !");
+                //        alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
+                //        {
+                //        });
+                //        Dialog dialog = alert.Create();
+                //        dialog.Show();
+                //    }
 
+                //};
+
+                SwitchDateTime.Click += SwitchDateTimeClick;
+                SwitchCargoInsurance.Click += SwitchCargoInsuranceClick;
+                SwitchContactPerson.Click += SwitchContactPersonClick;
+
+                s_width.TextChanged += ValueSizeCalculation;
+                s_height.TextChanged += ValueSizeCalculation;
+                s_length.TextChanged += ValueSizeCalculation;
+                s_sum_seats.TextChanged += ValueSizeCalculation;
+                s_weight.TextChanged += OnWieghtChanged;
                 s_shipping_date.Click += S_shipping_date_Click;
+
+                //s_shipping_date.TextChanged += delegate
+                //{
+                //    DateTime NowDate = new DateTime();
+                //    string[] NumberMonthYear = s_shipping_date.Text.Split('.');
+                //    int year = Convert.ToInt32(NumberMonthYear[2]);
+                //    int month = Convert.ToInt32(NumberMonthYear[1]);
+                //    int number = Convert.ToInt32(NumberMonthYear[0]);
+                //    DateTime ValueEntered = new DateTime(year, month, number);
+                //    if (NowDate.CompareTo(ValueEntered) > 0)
+                //    {
+                //        Toast.MakeText(Activity, "Указанная дата позже текущей.", ToastLength.Long).Show();
+                //        s_shipping_date.Text = NowDate.ToShortDateString();
+                //    }
+                //};
+
                 s_shipment_time.Click += delegate
                 {
                     LayoutInflater layoutInflater = LayoutInflater.From(Activity);
@@ -301,67 +352,6 @@ namespace SmartBoxCity.Activity.Order
 
                 };
 
-                check_receiver.CheckedChange += (o, e) =>
-                {
-                    if (!check_receiver.Checked)
-                    {
-                        s_contact_person.Enabled = false;
-                        s_contact_person.Text = "";
-                    }
-                    else
-                    {
-                        s_contact_person.Enabled = true;
-                    }
-
-                };
-
-                #endregion
-
-                
-                s_cargo_characteristic.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(Spinner_ItemSelected);
-                var adapter1 = ArrayAdapter.CreateFromResource(Activity, Resource.Array.array_cargo_characteristic, Android.Resource.Layout.SimpleSpinnerItem);
-                adapter1.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-                s_cargo_characteristic.Adapter = adapter1;
-
-                s_hazard_class.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(SpinnerClass_ItemSelected);
-                var adapter2 = ArrayAdapter.CreateFromResource(Activity, Resource.Array.array_hazard_class, Android.Resource.Layout.SimpleSpinnerItem);
-                adapter2.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-                s_hazard_class.Adapter = adapter2;
-
-                s_loading_methods.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(SpinnerLoad_ItemSelected);
-                var adapter3 = ArrayAdapter.CreateFromResource(Activity, Resource.Array.array_loading_methodsc, Android.Resource.Layout.SimpleSpinnerItem);
-                adapter3.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-                s_loading_methods.Adapter = adapter3;
-
-                FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
-
-                s_size.Click += async delegate
-                {
-                    if (string.IsNullOrEmpty(s_length.Text) == false &&
-                    string.IsNullOrEmpty(s_width.Text) == false &&
-                    string.IsNullOrEmpty(s_height.Text) == false)
-                    {
-                        CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
-                        ci.NumberFormat.CurrencyDecimalSeparator = ".";
-                        float size_calculation = float.Parse(s_length.Text, NumberStyles.Any, ci)
-                            * float.Parse(s_width.Text, NumberStyles.Any, ci)
-                            * float.Parse(s_height.Text, NumberStyles.Any, ci);
-                        s_size.Text = size_calculation.ToString();
-                    }
-                    else
-                    {
-                        AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
-                        alert.SetTitle("Внимание!");
-                        alert.SetMessage("Необходимо заполнить данные о длине, ширине и высоте груза !");
-                        alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
-                        {
-                        });
-                        Dialog dialog = alert.Create();
-                        dialog.Show();
-                    }
-
-                };
-
                 s_edit_from.Click += async delegate
                 {
                     //GooglePlacesResult fragment = new GooglePlacesResult();
@@ -381,7 +371,6 @@ namespace SmartBoxCity.Activity.Order
 
                 };
 
-
                 s_edit_where.Click += async delegate
                 {
                     Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.Overlay, fields)
@@ -396,7 +385,6 @@ namespace SmartBoxCity.Activity.Order
                     //transaction2.Replace(Resource.Id.framelayout, fragment).AddToBackStack(null).Commit();
                 };
 
-                //событие расчета стоимости заказа
                 btn_make_request.Click += async delegate
                 {
                     if (check_argue.Checked)
@@ -407,31 +395,23 @@ namespace SmartBoxCity.Activity.Order
                         float.Parse(s_width.Text, NumberStyles.Any, ci) > 2.59 ||
                         float.Parse(s_height.Text, NumberStyles.Any, ci) > 2.20)
                         {
-                            AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
-                            alert.SetTitle("Внимание!");
-                            alert.SetMessage("Пожалуйста, проверьте введённые Вами значения длины, ширины и высоты груза!" +
-                                "\n\nМакс. длина: 1.88 м\n\nМакс. ширина: 2.59 м\n\nМакс. высота: 2.20 м");
-                            alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
-                            {
-                            });
-                            Dialog dialog = alert.Create();
-                            dialog.Show();
+                            string ErrorMessag = "Пожалуйста, проверьте введённые Вами значения длины, ширины и высоты груза!" +
+                                "\n\nМакс. длина: 1.88 м\n\nМакс. ширина: 2.59 м\n\nМакс. высота: 2.20 м";
+                            AlertDialogCall(ErrorMessag);
                         }
-                        else if (s_size.Text == null)
+                        else if (s_size.Text == null || s_size.Text == "0.0")
                         {
-                            AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
-                            alert.SetTitle("Внимание!");
-                            alert.SetMessage("Необходимо вычислить объём груза ! Для этого введите данные длины, ширины и высоты груза и нажмите на поле «Объём».");
-                            alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
-                            {
-                            });
-                            Dialog dialog = alert.Create();
-                            dialog.Show();
+                            string ErrorMessag = "Необходимо вычислить объём груза ! Для этого введите данные длины, ширины и высоты груза, а так же кол-во мест.";
+                            AlertDialogCall(ErrorMessag);
+                        }
+                        else if(String.IsNullOrEmpty(s_edit_from.Text) == true || String.IsNullOrEmpty(s_edit_where.Text) == true)
+                        {
+                            string ErrorMessag = "Необходимо ввести пункт отправления и пункт назначения !";
+                            AlertDialogCall(ErrorMessag);
                         }
                         else
                         {
                             preloader.Visibility = Android.Views.ViewStates.Visible;
-
                             //q_result = Int32.TryParse(s_sum_seats.Text, out quantity);
                             l_result = Double.TryParse(s_length.Text, out length);
                             width_result = Double.TryParse(s_width.Text, out width);
@@ -440,20 +420,11 @@ namespace SmartBoxCity.Activity.Order
 
                             if (weight < 0 || weight > 5000)
                             {
-                                AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
-                                alert.SetTitle("Внимание!");
-                                alert.SetMessage("Пожалуйста, проверьте введённые Вами значения веса груза!" +
-                                    "\n\nМакс. вес: 5000 кг");
-                                alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
-                                {
-                                });
-                                Dialog dialog = alert.Create();
-                                dialog.Show();
-
+                                string ErrorMessag = "Пожалуйста, проверьте введённые Вами значения веса груза!";
+                                AlertDialogCall(ErrorMessag);                          
                             }
                             else
                             {
-                                s_size.Text = (width * length * height).ToString();
                                 MakeOrderModel model = new MakeOrderModel()
                                 {
                                     destination_address = s_edit_where.Text,
@@ -495,7 +466,7 @@ namespace SmartBoxCity.Activity.Order
 
                                         preloader.Visibility = Android.Views.ViewStates.Invisible;
 
-                                        CrossSettings.Current.AddOrUpdateValue("isOrdered", "true");
+                                        CrossSettings.Current.AddOrUpdateValue("OrderInStageOfBid", "true");
                                         Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                                         ActivityOrderPreis content = new ActivityOrderPreis();
                                         transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
@@ -520,8 +491,8 @@ namespace SmartBoxCity.Activity.Order
 
                 };
 
-                s_weight.TextChanged += OnWieghtChanged;
-                s_sum_seats.TextChanged += OnSumSeatsChanged;
+                #endregion
+
                 return view;
             }
             catch (Exception ex)
@@ -533,12 +504,108 @@ namespace SmartBoxCity.Activity.Order
            
         }
 
-        private void OnSumSeatsChanged(object sender, TextChangedEventArgs e)
+        private void AlertDialogCall(string ErrorMessag)
         {
-            string messagif = "Максимальное кол-во мест: 5";
-            string messagelse = "Введено неверное значение кол-во мест.";
-            TryParseAndInputValidation(ref s_sum_seats, sum_seats_result, sum_seats, 5, messagif, messagelse);
-        }       
+            AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
+            alert.SetTitle("Внимание!");
+            alert.SetMessage(ErrorMessag);
+            alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
+            {
+            });
+            Dialog dialog = alert.Create();
+            dialog.Show();
+        }
+
+        private void SwitchCargoInsuranceClick(object sender, EventArgs e)
+        {
+            if(s_value.Visibility == ViewStates.Invisible)
+            {
+                s_value.Visibility = ViewStates.Visible;
+                LInputCargoInsurance.SetBackgroundColor(Color.ParseColor("#FFFFFF"));
+            }
+            else
+            {
+                s_value.Visibility = ViewStates.Invisible;
+                s_value.Text = "";
+                LInputCargoInsurance.SetBackgroundColor(Color.ParseColor("#E6E3E3"));
+            }
+        }
+        private void SwitchDateTimeClick(object sender, EventArgs e)
+        {
+            if (s_shipment_time.Focusable == false && s_shipping_date.Focusable == false)
+            {
+                s_shipment_time.Focusable = true;
+                s_shipment_time.Enabled = true;
+                LInputTime.SetBackgroundColor(Color.ParseColor("#FFFFFF"));
+
+                s_shipping_date.Focusable = true;
+                s_shipping_date.Enabled = true;
+                LInputDate.SetBackgroundColor(Color.ParseColor("#FFFFFF"));
+            }
+            else
+            {
+                s_shipment_time.Focusable = false;
+                s_shipment_time.Enabled = false;
+                LInputTime.SetBackgroundColor(Color.ParseColor("#E6E3E3"));
+                s_shipment_time.Text = "";
+
+                s_shipping_date.Focusable = false;
+                s_shipping_date.Enabled = false;
+                LInputDate.SetBackgroundColor(Color.ParseColor("#E6E3E3"));
+                s_shipping_date.Text = "";
+            }
+        }
+        private void SwitchContactPersonClick(object sender, EventArgs e)
+        {
+            if (s_contact_person.Visibility == ViewStates.Invisible)
+            {
+                s_contact_person.Visibility = ViewStates.Visible;
+                LInputContactPerson.SetBackgroundColor(Color.ParseColor("#FFFFFF"));
+            }
+            else
+            {
+                s_contact_person.Visibility = ViewStates.Invisible;
+                s_contact_person.Text = "";
+                LInputContactPerson.SetBackgroundColor(Color.ParseColor("#E6E3E3"));
+            }           
+        }
+        private void ValueSizeCalculation(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+                ci.NumberFormat.CurrencyDecimalSeparator = ".";
+                float ValueSize;
+                var ValueSumSeits = float.Parse(s_length.Text, NumberStyles.Any, ci);
+                var ValueWidth = float.Parse(s_width.Text, NumberStyles.Any, ci);
+                var ValueLenght = float.Parse(s_height.Text, NumberStyles.Any, ci);
+                var ValueHeight = float.Parse(s_sum_seats.Text, NumberStyles.Any, ci);
+                //double ValueSumSeits, ValueWidth, ValueLenght, ValueHeight, ValueSize;
+                //bool TryParseSumSeats = Double.TryParse(s_sum_seats.Text, out ValueSumSeits);
+                //bool TryParseWidth = Double.TryParse(s_width.Text, out ValueWidth);
+                //bool TryParseLenght = Double.TryParse(s_length.Text, out ValueLenght);
+                //bool TryParseHeight = Double.TryParse(s_height.Text, out ValueHeight);
+                ValueSize = ValueSumSeits * ValueWidth * ValueLenght * ValueHeight;
+                s_size.Text = ValueSize.ToString();
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(Activity,"Некорректный ввод. Ошибка: " + ex.Message, ToastLength.Long).Show();
+            }            
+        }
+
+        //private void OnSumSeatsChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    double ValueSumSeits = 0;
+        //    //bool TryParseSumSeats = Double.TryParse(s_sum_seats.Text, out ValueSumSeits);
+        //    if (TryParseSumSeats == true && ValueSumSeits != 0)
+        //    {
+        //        var SizeCalculation = ValueSumSeits *
+        //    }
+        //    string messagif = "Максимальное кол-во мест: 5";
+        //    string messagelse = "Введено неверное значение кол-во мест.";
+        //    TryParseAndInputValidation(ref s_sum_seats, sum_seats_result, sum_seats, 5, messagif, messagelse);/
+        //}       
 
         private void OnWieghtChanged(object sender, TextChangedEventArgs e)
         {
@@ -590,21 +657,21 @@ namespace SmartBoxCity.Activity.Order
             }
         }
 
-        //EventHandler< TextChangedEventArgs> OnTextChanged(object sender, EventArgs e)
-        //{
-        //    String val = s_weight.Text; //Get Current Text
-
-        //    //if (val.Length > restrictCount)//If it is more than your character restriction
-        //    //{
-        //    //    val = val.Remove(val.Length - 1);// Remove Last character 
-        //    //    entry.Text = val; //Set the Old value
-        //    //}
-        //}
         private void S_shipping_date_Click(object sender, EventArgs e)
         {
             DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
             {
                 s_shipping_date.Text = time.ToShortDateString();
+                string[] NumberMonthYear = s_shipping_date.Text.Split('.');
+                int year = Convert.ToInt32(NumberMonthYear[2]);
+                int month = Convert.ToInt32(NumberMonthYear[1]);
+                int number = Convert.ToInt32(NumberMonthYear[0]);
+                DateTime ValueEntered = new DateTime(year, month, number);
+                if (DateTime.Now.CompareTo(ValueEntered) > 0)
+                {
+                    Toast.MakeText(Activity, "Указанная дата позже текущей.", ToastLength.Long).Show();
+                    s_shipping_date.Text = DateTime.Now.ToShortDateString();
+                }
             });
             frag.Show(FragmentManager, DatePickerFragment.TAG);
         }

@@ -51,6 +51,8 @@ namespace Entity.Repository
         /// </summary>
         public static string UserRole { get; set; }
 
+        public static bool PresenceOnPage { get; set; }
+
 
         /// <summary>
         /// Добавляю информацию о клиенте

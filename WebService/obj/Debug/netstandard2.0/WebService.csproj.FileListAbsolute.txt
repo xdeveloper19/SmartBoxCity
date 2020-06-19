@@ -1,0 +1,12 @@
+C:\Games\repos\User\SmartBoxCity\WebService\bin\Debug\netstandard2.0\WebService.deps.json
+C:\Games\repos\User\SmartBoxCity\WebService\bin\Debug\netstandard2.0\WebService.dll
+C:\Games\repos\User\SmartBoxCity\WebService\bin\Debug\netstandard2.0\WebService.pdb
+C:\Games\repos\User\SmartBoxCity\WebService\bin\Debug\netstandard2.0\Entity.dll
+C:\Games\repos\User\SmartBoxCity\WebService\bin\Debug\netstandard2.0\Entity.pdb
+C:\Games\repos\User\SmartBoxCity\WebService\obj\Debug\netstandard2.0\WebService.csprojAssemblyReference.cache
+C:\Games\repos\User\SmartBoxCity\WebService\obj\Debug\netstandard2.0\WebService.csproj.CoreCompileInputs.cache
+C:\Games\repos\User\SmartBoxCity\WebService\obj\Debug\netstandard2.0\WebService.AssemblyInfoInputs.cache
+C:\Games\repos\User\SmartBoxCity\WebService\obj\Debug\netstandard2.0\WebService.AssemblyInfo.cs
+C:\Games\repos\User\SmartBoxCity\WebService\obj\Debug\netstandard2.0\WebService.csproj.CopyComplete
+C:\Games\repos\User\SmartBoxCity\WebService\obj\Debug\netstandard2.0\WebService.dll
+C:\Games\repos\User\SmartBoxCity\WebService\obj\Debug\netstandard2.0\WebService.pdb

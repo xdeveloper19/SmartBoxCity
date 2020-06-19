@@ -40,9 +40,7 @@ namespace SmartBoxCity.Activity.Home
             base.OnCreate(savedInstanceState);
             RetainInstance = true;
 
-            //не сохраняет значение 
-            var is_ordered = CrossSettings.Current.GetValueOrDefault("isOrdered", "");
-            if (is_ordered == "true")
+            if (CrossSettings.Current.GetValueOrDefault("NeedToCreateOrder", "") == "true")
             {
                 MakeOrderModel model = new MakeOrderModel()
                 {
@@ -75,7 +73,7 @@ namespace SmartBoxCity.Activity.Home
         {
             try
             {
-                if (CrossSettings.Current.GetValueOrDefault("isAuth", "") != "true")
+                if (CrossSettings.Current.GetValueOrDefault("NeedToCreateOrder", "") != "true")
                 {
                     var view = inflater.Inflate(Resource.Layout.activity_not_found_order, container, false);
                     var btn_add_order = view.FindViewById<Button>(Resource.Id.NotFoundOrderBtnAddOrder);
@@ -194,35 +192,32 @@ namespace SmartBoxCity.Activity.Home
 
             if (o_data.Status == HttpStatusCode.OK)
             {
-
                 OrderSuccessResponse o_user_data = new OrderSuccessResponse();
                 o_user_data = o_data.ResponseData;
                 StaticOrder.Order_id = o_user_data.order_id;
-                AlertDialog.Builder alert = new AlertDialog.Builder(Context);
-                alert.SetTitle("Предупреждение.");
-                alert.SetMessage("Завка на оформление заказа успешно отправлена!");
-                alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
-                {
-                });
-                Dialog dialog = alert.Create();
-                dialog.Show();
-                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                string Messag = "Заявка на оформление заказа успешно отправлена !";
+                AlertDialogCall(Messag);
             }
             else
             {
-                AlertDialog.Builder alert = new AlertDialog.Builder(Context);
-                alert.SetTitle("Внимание!");
-                alert.SetMessage("Не получилось оформить заказ.\nПричина: " + o_data.Message +
-                    "\nДля повторного оформления заказа зайдите в раздел 'Заказать'.");
-                alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
-                {
-                });
-                Dialog dialog = alert.Create();
-                dialog.Show();
-                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                string ErrorMessag = "Не получилось оформить заказ.\nПричина: " + o_data.Message +
+                    "\nДля повторного оформления заказа зайдите в раздел 'Заказать'.";
+                AlertDialogCall(ErrorMessag);
             }
-            CrossSettings.Current.AddOrUpdateValue("isOrdered", "false");
+            CrossSettings.Current.AddOrUpdateValue("NeedToCreateOrder", "false");
+            CrossSettings.Current.AddOrUpdateValue("OrderInStageOfBid", "false");
 
+        }
+        private void AlertDialogCall(string Messag)
+        {
+            AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
+            alert.SetTitle("Внимание!");
+            alert.SetMessage(Messag);
+            alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
+            {
+            });
+            Dialog dialog = alert.Create();
+            dialog.Show();
         }
         //private async void GetSensorParameters()
         //{

@@ -49,6 +49,12 @@ namespace SmartBoxCity.Activity.Order
             btn_add_order = view.FindViewById<Button>(Resource.Id.OrderPriceBtnAddOrder);
             btn_add_order_again = view.FindViewById<Button>(Resource.Id.OrderPriceBtnAddOrderAgain);
 
+            txt_Shipping_Cost.Text = StaticOrder.Amount;
+            txt_Insurance_Price.Text = StaticOrder.Insurance_amount + " ₽";
+            txt_Distance.Text = StaticOrder.Distance + " км";
+            txt_To.Text = StaticOrder.Destination_address;
+            txt_From.Text = StaticOrder.Inception_address;
+
             btn_add_order_again.Click += delegate
             {
 
@@ -56,51 +62,53 @@ namespace SmartBoxCity.Activity.Order
 
             btn_add_order.Click += async delegate
             {
-                preloader.Visibility = Android.Views.ViewStates.Visible;
-                MakeOrderModel model = new MakeOrderModel()
-                {
-                    destination_address = StaticOrder.Destination_address,
-                    for_date = StaticOrder.For_date,
-                    for_time = StaticOrder.For_time,
-                    height = StaticOrder.Height,
-                    inception_address = StaticOrder.Inception_address,
-                    cargo_class = StaticOrder.Cargo_class,
-                    cargo_loading = StaticOrder.Cargo_loading,
-                    cargo_type = StaticOrder.Cargo_type,
-                    destination_lat = StaticOrder.Destination_lat,
-                    destination_lng = StaticOrder.Destination_lng,
-                    inception_lat = StaticOrder.Inception_lat,
-                    inception_lng = StaticOrder.Inception_lng,
-                    insurance = StaticOrder.Insurance,
-                    receiver = StaticOrder.Receiver,
-                    length = StaticOrder.Length,
-                    qty = StaticOrder.Qty,
-                    weight = StaticOrder.Weight,
-                    width = StaticOrder.Width
-                };
+                preloader.Visibility = Android.Views.ViewStates.Visible;                
 
                 if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
                 {
-                    using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
-                    {
-                        OrderService.InitializeClient(client);
-                        var o_data = await OrderService.AddOrder(model);
+                    //MakeOrderModel model = new MakeOrderModel()
+                    //{
+                    //    destination_address = StaticOrder.Destination_address,
+                    //    for_date = StaticOrder.For_date,
+                    //    for_time = StaticOrder.For_time,
+                    //    height = StaticOrder.Height,
+                    //    inception_address = StaticOrder.Inception_address,
+                    //    cargo_class = StaticOrder.Cargo_class,
+                    //    cargo_loading = StaticOrder.Cargo_loading,
+                    //    cargo_type = StaticOrder.Cargo_type,
+                    //    destination_lat = StaticOrder.Destination_lat,
+                    //    destination_lng = StaticOrder.Destination_lng,
+                    //    inception_lat = StaticOrder.Inception_lat,
+                    //    inception_lng = StaticOrder.Inception_lng,
+                    //    insurance = StaticOrder.Insurance,
+                    //    receiver = StaticOrder.Receiver,
+                    //    length = StaticOrder.Length,
+                    //    qty = StaticOrder.Qty,
+                    //    weight = StaticOrder.Weight,
+                    //    width = StaticOrder.Width
+                    //};
+                    //using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+                    //{
+                    //    OrderService.InitializeClient(client);
+                    //    var o_data = await OrderService.AddOrder(model);
 
-                        if (o_data.Status == HttpStatusCode.OK)
-                        {
-                            OrderSuccessResponse o_user_data = new OrderSuccessResponse();
-                            o_user_data = o_data.ResponseData;
+                    //    if (o_data.Status == HttpStatusCode.OK)
+                    //    {
+                    //        OrderSuccessResponse o_user_data = new OrderSuccessResponse();
+                    //        o_user_data = o_data.ResponseData;
 
-                            preloader.Visibility = Android.Views.ViewStates.Invisible;
-                            StaticOrder.Order_id = o_user_data.order_id;
-                            Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                        }
-                        else
-                        {
-                            Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                        }
-                        CrossSettings.Current.AddOrUpdateValue("isOrdered", "true");
-                    };
+                    //        preloader.Visibility = Android.Views.ViewStates.Invisible;
+                    //        StaticOrder.Order_id = o_user_data.order_id;
+                    //        CrossSettings.Current.AddOrUpdateValue("NeedToCreateOrder", "false");
+                    //        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                    //    }
+                    //    else
+                    //    {
+                    //        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                    //    }
+
+                    //};
+                    CrossSettings.Current.AddOrUpdateValue("NeedToCreateOrder", "true");
                     Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                     UserActivity content = new UserActivity();
                     transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
@@ -119,13 +127,11 @@ namespace SmartBoxCity.Activity.Order
                         alert1.SetMessage("Необходимо выбрать вид регистрации.");
                         alert1.SetPositiveButton("Для физ.лица", (senderAlert1, args1) =>
                         {
-                            CrossSettings.Current.AddOrUpdateValue("isOrdered", "true");
                             Activity_Registration_Individual_Person content4 = new Activity_Registration_Individual_Person();
                             transaction2.Replace(Resource.Id.framelayout, content4).AddToBackStack(null).Commit();
                         });
                         alert1.SetNegativeButton("Для юр.лица", (senderAlert1, args1) =>
                         {
-                            CrossSettings.Current.AddOrUpdateValue("isOrdered", "true");
                             Activity_Legal_Entity_Registration content3 = new Activity_Legal_Entity_Registration();
                             transaction2.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
                         });
@@ -134,7 +140,6 @@ namespace SmartBoxCity.Activity.Order
                     });
                     alert.SetNegativeButton("Вход", (senderAlert, args) =>
                     {
-                        CrossSettings.Current.AddOrUpdateValue("isOrdered", "true");
                         AuthActivity content3 = new AuthActivity();
                         transaction2.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
                     });
@@ -142,12 +147,26 @@ namespace SmartBoxCity.Activity.Order
                     dialog.Show();
                 }
             };
-            txt_Shipping_Cost.Text = StaticOrder.Amount;
-            txt_Insurance_Price.Text = StaticOrder.Insurance_amount + " ₽";
-            txt_Distance.Text = StaticOrder.Distance + " км";
-            txt_To.Text = StaticOrder.Destination_address;
-            txt_From.Text = StaticOrder.Inception_address;
+            
             return view;
         }
+        public void OnBackPressed()
+        {
+            AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
+            alert.SetTitle("Внимание!");
+            alert.SetMessage("Если Вы покините эту страницу, Ваш заказ будет удалён. Вы действительно хотите покинуть эту страницу ?");
+            alert.SetPositiveButton("Да", (senderAlert, args) =>
+            {
+                CrossSettings.Current.AddOrUpdateValue("OrderInStageOfBid", "false");
+                OnDestroy();
+            });
+            alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+            {
+                Toast.MakeText(Activity, "Выберите действие !", ToastLength.Long).Show();
+            });
+            Dialog dialog = alert.Create();
+            dialog.Show();
+        }
+
     }
 }

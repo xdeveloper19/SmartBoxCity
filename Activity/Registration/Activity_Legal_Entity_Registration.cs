@@ -11,6 +11,7 @@ using Android.Widget;
 using Entity.Model;
 using Entity.Model.AccountViewModel.AuthViewModel;
 using Entity.Model.HomeViewModel;
+using Entity.Repository;
 using Plugin.Settings;
 using SmartBoxCity.Service;
 using WebService;
@@ -100,7 +101,15 @@ namespace SmartBoxCity.Activity.Registration
             check_personal_data_processing_entity = view.FindViewById<CheckBox>(Resource.Id.check_personal_data_processing_entity);
             check_contract_oferta_entity = view.FindViewById<CheckBox>(Resource.Id.check_contract_oferta_entity);
             preloader = view.FindViewById<ProgressBar>(Resource.Id.preloader);
-            
+            s_orgPhone.SetMaxLines(11);
+            s_orgInn.SetMaxLines(9);
+            s_orgKpp.SetMaxLines(9);
+            s_orgOgrn.SetMaxLines(15);
+            s_orgBank.SetMaxLines(15);
+            s_orgBankpayment.SetMaxLines(20);
+            s_orgBankCorrespondent.SetMaxLines(20);
+            s_orgBankBik.SetMaxLines(9);
+
             #endregion
 
             check_personal_data_processing_entity.Click += async delegate
@@ -229,9 +238,13 @@ namespace SmartBoxCity.Activity.Registration
                                     o_user_data = o_data.ResponseData;
 
                                     preloader.Visibility = Android.Views.ViewStates.Invisible;
-                                    CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
-
+                                    StaticUser.PresenceOnPage = true;
                                     CrossSettings.Current.AddOrUpdateValue("role", "client");
+                                    CrossSettings.Current.AddOrUpdateValue("login", s_login.Text);
+                                    CrossSettings.Current.AddOrUpdateValue("password", s_password.Text);
+                                    CrossSettings.Current.AddOrUpdateValue("check", "0");
+                                    CrossSettings.Current.AddOrUpdateValue("NeedToCreateOrder", "true");
+
                                     Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                                     Intent main = new Intent(Activity, typeof(MainActivity));
                                     StartActivity(main);
