@@ -35,7 +35,8 @@ using Entity.Repository;
 
 namespace SmartBoxCity
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true, 
+        ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.ScreenSize)]
     public class MainActivity : AppCompatActivity 
     {
         private int MY_PERMISSIONS_REQUEST_CAMERA = 100;

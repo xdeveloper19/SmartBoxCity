@@ -76,7 +76,8 @@ namespace SmartBoxCity.Activity.Order
             catch (Exception ex)
             {
                 var view = inflater.Inflate(Resource.Layout.activity_errors_handling, container, false);
-                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+                var TextOfError = view.FindViewById<TextView>(Resource.Id.TextOfError);
+                TextOfError.Text += "\n(Ошибка: " + ex.Message + ")";
                 return view;
             }
 

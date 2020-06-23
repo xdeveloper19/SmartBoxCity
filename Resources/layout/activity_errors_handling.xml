@@ -30,9 +30,10 @@
         android:layout_height="wrap_content"
         android:textSize="15sp"
         android:padding="10dp"
+        android:id="@+id/TextOfError"
         android:background="@drawable/edittext_stili"
         android:textColor = "#475B57"
-        android:text="Что-то пошло не так. Перезапустите страницу или обратитесь в ценрт поддержики !"
+        android:text="Что-то пошло не так. Перезапустите страницу или обратитесь в центр поддержки !"
     />
 
 </LinearLayout>

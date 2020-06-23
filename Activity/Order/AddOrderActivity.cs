@@ -759,28 +759,53 @@ namespace SmartBoxCity.Activity.Order
         //        s_size.Text = savedInstanceState.GetString("s_size");
         //    }           
         //}
-        //public override void OnSaveInstanceState(Bundle outState)
-        //{
-        //    base.OnSaveInstanceState(outState);
-        //    outState.PutString("s_edit_where", s_edit_where.Text);
-        //    outState.PutString("s_shipping_date", s_shipping_date.Text);
-        //    outState.PutString("s_shipment_time", s_shipment_time.Text);
-        //    outState.PutString("s_height", s_height.Text);
-        //    outState.PutString("a_hazard_class", a_hazard_class);
-        //    outState.PutString("a_loading_methodsc", a_loading_methodsc);
-        //    outState.PutString("a_cargo_characteristic", a_cargo_characteristic);
-        //    outState.PutString("Destination_lat", StaticOrder.Destination_lat);
-        //    outState.PutString("Destination_lng", StaticOrder.Destination_lng);
-        //    outState.PutString("Inception_lat", StaticOrder.Inception_lat);
-        //    outState.PutString("Inception_lng", StaticOrder.Inception_lng);
-        //    outState.PutString("s_value", s_value.Text);
-        //    outState.PutString("s_contact_person", s_contact_person.Text);
-        //    outState.PutString("s_length", s_length.Text);
-        //    outState.PutString("s_sum_seats", s_sum_seats.Text);
-        //    outState.PutString("s_weight", s_weight.Text);
-        //    outState.PutString("s_width", s_width.Text);
-        //    outState.PutString("s_size", s_size.Text);
-        //}
+        public override void OnActivityCreated(Bundle savedInstanceState)
+        {
+            base.OnActivityCreated(savedInstanceState);
+            if (savedInstanceState != null)
+            {
+                s_edit_where.Text = savedInstanceState.GetString("s_edit_where");
+                s_shipping_date.Text = savedInstanceState.GetString("s_shipping_date");
+                s_shipment_time.Text = savedInstanceState.GetString("s_shipment_time");
+                s_height.Text = savedInstanceState.GetString("s_height");
+                a_hazard_class = savedInstanceState.GetString("a_hazard_class");
+                a_loading_methodsc = savedInstanceState.GetString("a_loading_methodsc");
+                a_cargo_characteristic = savedInstanceState.GetString("a_cargo_characteristic");
+                StaticOrder.Destination_lat = savedInstanceState.GetString("Destination_lat");
+                StaticOrder.Destination_lng = savedInstanceState.GetString("Destination_lng");
+                StaticOrder.Inception_lat = savedInstanceState.GetString("Inception_lat");
+                StaticOrder.Inception_lng = savedInstanceState.GetString("Inception_lng");
+                s_value.Text = savedInstanceState.GetString("s_value");
+                s_contact_person.Text = savedInstanceState.GetString("s_contact_person");
+                s_length.Text = savedInstanceState.GetString("s_length");
+                s_sum_seats.Text = savedInstanceState.GetString("s_sum_seats");
+                s_weight.Text = savedInstanceState.GetString("s_weight");
+                s_width.Text = savedInstanceState.GetString("s_width");
+                s_size.Text = savedInstanceState.GetString("s_size");
+            }
+        }
+        public override void OnSaveInstanceState(Bundle outState)
+        {
+            base.OnSaveInstanceState(outState);
+            outState.PutString("s_edit_where", s_edit_where.Text);
+            outState.PutString("s_shipping_date", s_shipping_date.Text);
+            outState.PutString("s_shipment_time", s_shipment_time.Text);
+            outState.PutString("s_height", s_height.Text);
+            outState.PutString("a_hazard_class", a_hazard_class);
+            outState.PutString("a_loading_methodsc", a_loading_methodsc);
+            outState.PutString("a_cargo_characteristic", a_cargo_characteristic);
+            outState.PutString("Destination_lat", StaticOrder.Destination_lat);
+            outState.PutString("Destination_lng", StaticOrder.Destination_lng);
+            outState.PutString("Inception_lat", StaticOrder.Inception_lat);
+            outState.PutString("Inception_lng", StaticOrder.Inception_lng);
+            outState.PutString("s_value", s_value.Text);
+            outState.PutString("s_contact_person", s_contact_person.Text);
+            outState.PutString("s_length", s_length.Text);
+            outState.PutString("s_sum_seats", s_sum_seats.Text);
+            outState.PutString("s_weight", s_weight.Text);
+            outState.PutString("s_width", s_width.Text);
+            outState.PutString("s_size", s_size.Text);
+        }
 
         //protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         //{

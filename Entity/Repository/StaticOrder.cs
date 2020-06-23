@@ -169,6 +169,28 @@ namespace Entity.Repository
             Cargo_loading = model.cargo_loading;
         }
 
+        public static void CreationOrderForCosteAgain(ref MakeOrderModel model)
+        {
+            model.inception_address = Inception_address;
+            model.inception_lat = Inception_lat;
+            model.inception_lng = Inception_lng;
+            model.destination_address = Destination_address;
+            model.destination_lat =  Destination_lat;
+            model.destination_lng = Destination_lng;
+            model.length = Length;
+            model.width = Width;
+            model.height = Height;
+            model.weight = Weight;
+            model.qty = Qty;
+            model.cargo_type = Cargo_type;
+            model.cargo_class = Cargo_class;
+            model.insurance = Insurance;
+            model.for_date = For_date;
+            model.for_time = For_time;
+            model.receiver = Receiver;
+            model.cargo_loading = Cargo_loading;
+        }
+
 
         /// <summary>
         /// Добавление информации о заказе.

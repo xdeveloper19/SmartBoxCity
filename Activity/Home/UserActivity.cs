@@ -73,40 +73,36 @@ namespace SmartBoxCity.Activity.Home
         {
             try
             {
-                if (CrossSettings.Current.GetValueOrDefault("NeedToCreateOrder", "") != "true")
-                {
-                    var view = inflater.Inflate(Resource.Layout.activity_not_found_order, container, false);
-                    var btn_add_order = view.FindViewById<Button>(Resource.Id.NotFoundOrderBtnAddOrder);
-                    btn_add_order.Click += delegate
-                    {
-                        try
-                        {
-                            FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
-                            AddOrderActivity content = new AddOrderActivity();
-                            transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
-                        }
-                    };
-                    return view;
-                }
-                else
-                {
-                    var view = inflater.Inflate(Resource.Layout.activity_user, container, false);/// ошибка при нажати на кнопку "назад" на лефоне(Binary XML file line #1: Binary XML file line #1: Error inflating class fragment' )
-                    lstOrder = view.FindViewById<ListView>(Resource.Id.CurrentOrderListView);
-                    orderlist = new List<OrderAdapter>();
-                    string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-                    GetOrders();
+                //var view = inflater.Inflate(Resource.Layout.activity_not_found_order, container, false);
+                //var btn_add_order = view.FindViewById<Button>(Resource.Id.NotFoundOrderBtnAddOrder);
+                //btn_add_order.Click += delegate
+                //{
+                //    try
+                //    {
+                //        FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                //        AddOrderActivity content = new AddOrderActivity();
+                //        transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+                //    }
+                //};
+                //return view;
+                
 
-                    return view;
-                }
+                var view = inflater.Inflate(Resource.Layout.activity_user, container, false);/// ошибка при нажати на кнопку "назад" на лефоне(Binary XML file line #1: Binary XML file line #1: Error inflating class fragment' )
+                lstOrder = view.FindViewById<ListView>(Resource.Id.CurrentOrderListView);
+                GetOrders();                
+                string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);               
+
+                return view;
             }
             catch (Exception ex)
             {
                 var view = inflater.Inflate(Resource.Layout.activity_errors_handling, container, false);
-                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+                var TextOfError = view.FindViewById<TextView>(Resource.Id.TextOfError);
+                TextOfError.Text += "\n(Ошибка: " + ex.Message + ")";
                 return view;                
             }
             
@@ -123,7 +119,6 @@ namespace SmartBoxCity.Activity.Home
 
                 if (o_data.Status == HttpStatusCode.OK)
                 {
-                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                     var number = 0;
 
                     if (o_data.ResponseData.ORDERS.Count == 0)
@@ -131,39 +126,42 @@ namespace SmartBoxCity.Activity.Home
                         Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
                         NotFoundOrdersActivity content = new NotFoundOrdersActivity();
                         transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-
                         return;
                     }
-
-                    foreach (var order in o_data.ResponseData.ORDERS)
+                    else
                     {
-                        number++;
-                        orderlist.Add(new OrderAdapter
+                        orderlist = new List<OrderAdapter>();
+                        foreach (var order in o_data.ResponseData.ORDERS)
                         {
-                            id = order.id,
-                            Id = number,
-                            inception_address = order.inception_address,
-                            inception_lat = order.inception_lat,
-                            cargo_class = order.cargo_class,
-                            distance = order.distance,
-                            insurance = order.insurance,
-                            stage2_datetime = order.stage2_datetime,
-                            stage5_datetime = order.stage5_datetime,
-                            payment_id = order.payment_id,
-                            order_stage_id = order.order_stage_id,
-                            created_at = order.created_at,
-                            payment_amount = order.payment_amount,
-                            payment_status = order.payment_status,
-                            order_stage_name = order.order_stage_name,
-                            last_stage_at = order.last_stage_at,
-                            container_id = order.container_id,
-                            sensors_status = order.sensors_status,
-                            event_count = order.event_count,
+                            number++;
+                            orderlist.Add(new OrderAdapter
+                            {
+                                id = order.id,
+                                Id = number,
+                                inception_address = order.inception_address,
+                                inception_lat = order.inception_lat,
+                                cargo_class = order.cargo_class,
+                                distance = order.distance,
+                                insurance = order.insurance,
+                                stage2_datetime = order.stage2_datetime,
+                                stage5_datetime = order.stage5_datetime,
+                                payment_id = order.payment_id,
+                                order_stage_id = order.order_stage_id,
+                                created_at = order.created_at,
+                                payment_amount = order.payment_amount,
+                                payment_status = order.payment_status,
+                                order_stage_name = order.order_stage_name,
+                                last_stage_at = order.last_stage_at,
+                                container_id = order.container_id,
+                                sensors_status = order.sensors_status,
+                                event_count = order.event_count,
+                            }
+                            );
                         }
-                        );
+                        UpdateList();
                     }
-                    UpdateList();
-                    lstOrder.ItemClick += ListOrders_ItemClick;
+                                        
+                    //lstOrder.ItemClick += ListOrders_ItemClick;
                 }
                 else
                 {
@@ -173,10 +171,10 @@ namespace SmartBoxCity.Activity.Home
             }
         }
 
-        private void ListOrders_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
-        {
-            Toast.MakeText(Activity, "Выбран заказ №" + e.Position.ToString(), ToastLength.Long).Show();
-        }
+        //private void ListOrders_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
+        //{
+        //    Toast.MakeText(Activity, "Выбран заказ №" + e.Position.ToString(), ToastLength.Long).Show();
+        //}
 
         private void UpdateList()
         {

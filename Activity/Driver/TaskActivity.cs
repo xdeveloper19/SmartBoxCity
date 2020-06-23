@@ -30,7 +30,7 @@ namespace SmartBoxCity.Activity.Driver
 {
     public enum TaskStatus
     {
-        OK,
+        OK = 0,
         NotFound,
         ServerError
     }

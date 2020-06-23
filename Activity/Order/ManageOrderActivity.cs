@@ -75,192 +75,167 @@ namespace SmartBoxCity.Activity.Order
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             GetOrderParameters();
-            if (ErrorHandling == "error")
+            var view = inflater.Inflate(Resource.Layout.activity_order_management, container, false);
+            #region Иннициализация переменных
+            Id = view.FindViewById<TextView>(Resource.Id.OrderManagementTextIdValue);
+            Weight = view.FindViewById<TextView>(Resource.Id.OrderManagementTexWeight);
+            Temperature = view.FindViewById<TextView>(Resource.Id.OrderManagementTextTemperature);
+            Battery = view.FindViewById<TextView>(Resource.Id.OrderManagementTexBattery);
+            Illumination = view.FindViewById<TextView>(Resource.Id.OrderManagementTextIllumination);
+            Humidity = view.FindViewById<TextView>(Resource.Id.OrderManagementTextHumidity);
+            Gate = view.FindViewById<TextView>(Resource.Id.OrderManagementTextGate);
+            Lock = view.FindViewById<TextView>(Resource.Id.OrderManagementTextLock);
+            Fold = view.FindViewById<TextView>(Resource.Id.OrderManagementTextFold);
+            Events = view.FindViewById<TextView>(Resource.Id.OrderManagementTextEvents);
+            progressBar = view.FindViewById<ProgressBar>(Resource.Id.OrderManagementProgressBar);
+            Status = view.FindViewById<TextView>(Resource.Id.OrderManagementTextStatus);
+            Cost = view.FindViewById<TextView>(Resource.Id.OrderManagementTextCost);
+            Payment = view.FindViewById<TextView>(Resource.Id.OrderManagementTextPayment);
+            btn_Pay = view.FindViewById<Button>(Resource.Id.OrderManagementButtonPay);
+            btn_Photo = view.FindViewById<Button>(Resource.Id.OrderManagementButtonPhoto);
+            btn_Video = view.FindViewById<Button>(Resource.Id.OrderManagementButtonVideo);
+            btn_Lock = view.FindViewById<Button>(Resource.Id.OrderManagementButtonLock);
+            #endregion
+
+            btn_Lock.Click += delegate
             {
-                var view = inflater.Inflate(Resource.Layout.activity_errors_handling, container, false);
 
-                return view;
-            }
-            else
+                AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
+                if (btn_Lock.Text == "Открыть")
+                {
+                    alert.SetTitle("Открытие замка");
+                    alert.SetMessage("Вы действительно хотите открыть замок контейнера?");
+                    alert.SetPositiveButton("Открыть", (senderAlert, args) =>
+                    {
+                        MakeUnLock();
+                    });
+                    alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+                    {
+                    });
+                }
+                else if (btn_Lock.Text == "Закрыть")
+                {
+                    alert.SetTitle("Закрытие замка");
+                    if (StaticOrder.Order_Stage_Id == "3")
+                    {
+                        LayoutInflater layoutInflater = LayoutInflater.From(Activity);
+                        View dialogView = layoutInflater.Inflate(Resource.Layout.modal_transmit_order, null);
+                        alert.SetView(dialogView);
+
+                        checkBox = dialogView.FindViewById<CheckBox>(Resource.Id.ManageOrderCheckBox);
+
+                        Date = dialogView.FindViewById<Spinner>(Resource.Id.ManageOrderSpinnerTime);
+                        CreateTimeArray();
+                        ArrayAdapter<string> adapter = new ArrayAdapter<string>(Activity, Android.Resource.Layout.SimpleSpinnerItem, Time);
+                        adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                        Date.Adapter = adapter;
+                        Date.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(SpinnerClass_ItemSelected);
+                        Date.Visibility = ViewStates.Invisible;
+
+                        checkBox.Text = "Погрузка завершена. Контейнер готов к отправке.";
+                        checkBox.Click += delegate
+                        {
+                            check = checkBox.Checked;
+                            Date.Visibility = ViewStates.Visible;
+                            Date.Focusable = false;
+                            Date.Clickable = false;
+                        };
+
+                    }
+                    else if (StaticOrder.Order_Stage_Id == "6")
+                    {
+                        LayoutInflater layoutInflater = LayoutInflater.From(Activity);
+                        View dialogView = layoutInflater.Inflate(Resource.Layout.modal_transmit_order, null);
+                        alert.SetView(dialogView);
+
+                        checkBox = dialogView.FindViewById<CheckBox>(Resource.Id.ManageOrderCheckBox);
+                        Date = dialogView.FindViewById<Spinner>(Resource.Id.ManageOrderSpinnerTime);
+                        CreateTimeArray();
+                        ArrayAdapter<string> adapter = new ArrayAdapter<string>(Activity, Android.Resource.Layout.SimpleSpinnerItem, Time);
+                        adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+                        Date.Adapter = adapter;
+                        Date.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(SpinnerClass_ItemSelected);
+                        Date.Visibility = ViewStates.Invisible;
+
+                        checkBox.Text = "Разгрузка завершена. Контейнер готов к отправке.";
+                        checkBox.Click += delegate
+                        {
+                            check = checkBox.Checked;
+                            Date.Visibility = ViewStates.Visible;
+                            Date.Focusable = false;
+                            Date.Clickable = false;
+                        };
+                    }
+                    alert.SetMessage("Вы действительно хотите закрыть замок контейнера?");
+                    alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
+                    {
+                        MakeLock(check);
+                        if (check == true)
+                            Transmitt();
+
+                        FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                        ManageOrderActivity content2 = new ManageOrderActivity();
+                        transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+                    });
+                }
+                Dialog dialog = alert.Create();
+                dialog.Show();
+
+
+                // }                
+            };
+            btn_Pay.Click += delegate
             {
-                var view = inflater.Inflate(Resource.Layout.activity_order_management, container, false);
-                #region Иннициализация переменных
-                Id = view.FindViewById<TextView>(Resource.Id.OrderManagementTextIdValue);
-                Weight = view.FindViewById<TextView>(Resource.Id.OrderManagementTexWeight);
-                Temperature = view.FindViewById<TextView>(Resource.Id.OrderManagementTextTemperature);
-                Battery = view.FindViewById<TextView>(Resource.Id.OrderManagementTexBattery);
-                Illumination = view.FindViewById<TextView>(Resource.Id.OrderManagementTextIllumination);
-                Humidity = view.FindViewById<TextView>(Resource.Id.OrderManagementTextHumidity);
-                Gate = view.FindViewById<TextView>(Resource.Id.OrderManagementTextGate);
-                Lock = view.FindViewById<TextView>(Resource.Id.OrderManagementTextLock);
-                Fold = view.FindViewById<TextView>(Resource.Id.OrderManagementTextFold);
-                Events = view.FindViewById<TextView>(Resource.Id.OrderManagementTextEvents);
-                progressBar = view.FindViewById<ProgressBar>(Resource.Id.OrderManagementProgressBar);
-                Status = view.FindViewById<TextView>(Resource.Id.OrderManagementTextStatus);
-                Cost = view.FindViewById<TextView>(Resource.Id.OrderManagementTextCost);
-                Payment = view.FindViewById<TextView>(Resource.Id.OrderManagementTextPayment);
-                btn_Pay = view.FindViewById<Button>(Resource.Id.OrderManagementButtonPay);
-                btn_Photo = view.FindViewById<Button>(Resource.Id.OrderManagementButtonPhoto);
-                btn_Video = view.FindViewById<Button>(Resource.Id.OrderManagementButtonVideo);
-                btn_Lock = view.FindViewById<Button>(Resource.Id.OrderManagementButtonLock);
-                #endregion
-
-
-                btn_Lock.Click += delegate
+                if (Payment.Text == "неизвестно")
                 {
-
-                    AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
-                    if (btn_Lock.Text == "Открыть")
-                    {
-                        alert.SetTitle("Открытие замка");
-                        alert.SetMessage("Вы действительно хотите открыть замок контейнера?");
-                        alert.SetPositiveButton("Открыть", (senderAlert, args) =>
-                        {
-                            MakeUnLock(alert);
-                        });
-                        alert.SetNegativeButton("Отмена", (senderAlert, args) =>
-                        {
-                        });
-                    }
-                    else if (btn_Lock.Text == "Закрыть")
-                    {
-                        alert.SetTitle("Закрытие замка");
-                        if (StaticOrder.Order_Stage_Id == "3")
-                        {
-                            LayoutInflater layoutInflater = LayoutInflater.From(Activity);
-                            View dialogView = layoutInflater.Inflate(Resource.Layout.modal_transmit_order, null);
-                            alert.SetView(dialogView);
-
-                            checkBox = dialogView.FindViewById<CheckBox>(Resource.Id.ManageOrderCheckBox);
-
-                            Date = dialogView.FindViewById<Spinner>(Resource.Id.ManageOrderSpinnerTime);
-                            CreateTimeArray();
-                            ArrayAdapter<string> adapter = new ArrayAdapter<string>(Activity, Android.Resource.Layout.SimpleSpinnerItem, Time);
-                            adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-                            Date.Adapter = adapter;
-                            Date.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(SpinnerClass_ItemSelected);
-                            Date.Visibility = ViewStates.Invisible;
-
-                            checkBox.Text = "Погрузка завершена. Контейнер готов к отправке.";
-                            checkBox.Click += delegate
-                            {
-                                check = checkBox.Checked;
-                                Date.Visibility = ViewStates.Visible;
-                                Date.Focusable = false;
-                                Date.Clickable = false;
-                            };
-
-                        }
-                        else if (StaticOrder.Order_Stage_Id == "6")
-                        {
-                            LayoutInflater layoutInflater = LayoutInflater.From(Activity);
-                            View dialogView = layoutInflater.Inflate(Resource.Layout.modal_transmit_order, null);
-                            alert.SetView(dialogView);
-
-                            checkBox = dialogView.FindViewById<CheckBox>(Resource.Id.ManageOrderCheckBox);
-                            Date = dialogView.FindViewById<Spinner>(Resource.Id.ManageOrderSpinnerTime);
-                            CreateTimeArray();
-                            ArrayAdapter<string> adapter = new ArrayAdapter<string>(Activity, Android.Resource.Layout.SimpleSpinnerItem, Time);
-                            adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-                            Date.Adapter = adapter;
-                            Date.ItemSelected += new EventHandler<AdapterView.ItemSelectedEventArgs>(SpinnerClass_ItemSelected);
-                            Date.Visibility = ViewStates.Invisible;
-
-                            checkBox.Text = "Разгрузка завершена. Контейнер готов к отправке.";
-                            checkBox.Click += delegate
-                            {
-                                check = checkBox.Checked;
-                                Date.Visibility = ViewStates.Visible;
-                                Date.Focusable = false;
-                                Date.Clickable = false;
-                            };
-                        }
-                        alert.SetMessage("Вы действительно хотите закрыть замок контейнера?");
-                        alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
-                        {
-                            MakeLock(alert, check);
-                            if (check == true)
-                                Transmitt(alert);
-
-                            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                            ManageOrderActivity content2 = new ManageOrderActivity();
-                            transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
-                        });
-                    }
-                    alert.SetNegativeButton("Отмена", (senderAlert, args) =>
-                    {
-                    });
-                    Dialog dialog = alert.Create();
-                    dialog.Show();
-
-
-                    // }                
-                };
-
-
-                btn_Pay.Click += delegate
+                    Toast.MakeText(Activity, "В настоящий момент невозможно использовать эту кнопку!\nПричина: Неизвестно состояние об оплате.", ToastLength.Long).Show();
+                }
+                else
                 {
-                    if (Payment.Text == "неизвестно")
-                    {
-                        Toast.MakeText(Activity, "В настоящий момент невозможно использовать эту кнопку!\nПричина: Неизвестно состояние об оплате.", ToastLength.Long).Show();
-                    }
-                    else
-                    {
-                        AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
-                        alert.SetTitle("Внесение оплаты");
-                        alert.SetMessage("Вы действительно хотите оплатить заказ?");
-                        alert.SetPositiveButton("Продолжить", (senderAlert, args) =>
-                        {
-                            MakePayment(alert);
+                    AlertDialogCreation("Внесение оплаты", "Вы действительно хотите оплатить заказ?");
+                }
+            };
+            btn_Photo.Click += delegate
+            {
+                AlertDialogCreation("Сделать фотографию", "Вы действительно хотите сделать фотографию с камеры контейнера?");
+            };
+            btn_Video.Click += delegate
+            {
+                AlertDialogCreation("Сделать видео", "Вы действительно хотите сделать видео с камеры контейнера?");
+            };
 
-                            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                            ManageOrderActivity content2 = new ManageOrderActivity();
-                            transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
-                        });
-                        alert.SetNegativeButton("Отмена", (senderAlert, args) =>
-                        {
-                        });
-                        Dialog dialog = alert.Create();
-                        dialog.Show();
-
-
-                    }
-                };
-
-                btn_Photo.Click += delegate
-                {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
-                    alert.SetTitle("Сделать фотографию");
-                    alert.SetMessage("Вы действительно хотите сделать фотографию с камеры контейнера?");
-                    alert.SetPositiveButton("Сделать", (senderAlert, args) =>
-                    {
-                        GetPhoto(alert);
-                    });
-                    alert.SetNegativeButton("Отмена", (senderAlert, args) =>
-                    {
-                    });
-                    Dialog dialog = alert.Create();
-                    dialog.Show();
-                };
-                btn_Video.Click += delegate
-                {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
-                    alert.SetTitle("Сделать видео");
-                    alert.SetMessage("Вы действительно хотите сделать видео с камеры контейнера?");
-                    alert.SetPositiveButton("Сделать", (senderAlert, args) =>
-                    {
-                        GetVideo(alert);
-                    });
-                    alert.SetNegativeButton("Отмена", (senderAlert, args) =>
-                    {
-                    });
-                    Dialog dialog = alert.Create();
-                    dialog.Show();
-                };
-
-                return view;
-            }
+            return view;
             
+        }
+
+        private void AlertDialogCreation(string titleString, string messageString)
+        {
+            AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
+            alert.SetTitle(titleString);
+            alert.SetMessage(messageString);
+            alert.SetPositiveButton("Да", (senderAlert, args) =>
+            {
+                switch(titleString)
+                {
+                    case "Сделать фотографию":
+                        GetPhoto();
+                        break;
+                    case "Сделать видео":
+                        GetVideo();
+                        break;
+                    case "Внесение оплаты":
+                        MakePayment();
+                        FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                        ManageOrderActivity content2 = new ManageOrderActivity();
+                        transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+                        break;
+                }
+            });
+            alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+            {
+            });
+            Dialog dialog = alert.Create();
+            dialog.Show();
         }
 
         private void CreateTimeArray()
@@ -299,202 +274,235 @@ namespace SmartBoxCity.Activity.Order
             Date_str = spinner.GetItemAtPosition(e.Position).ToString();
         }
 
-        private async void MakeLock(AlertDialog.Builder alert, bool checkBox)
+        private async void MakeLock(bool checkBox)
         {
-            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            try
             {
-                ManageOrderService.InitializeClient(client);
-                var o_data = new ServiceResponseObject<SuccessResponse>();
-                o_data = await ManageOrderService.LockRollete(StaticOrder.Order_id);
-
-                if (o_data.Status == HttpStatusCode.OK)
+                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
                 {
-                    alert.Dispose();
-                    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
-                    alert1.SetTitle("Закрытие замка");
-                    alert1.SetMessage(o_data.ResponseData.Message);
-                    alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                    ManageOrderService.InitializeClient(client);
+                    var o_data = new ServiceResponseObject<SuccessResponse>();
+                    o_data = await ManageOrderService.LockRollete(StaticOrder.Order_id);
+
+                    if (o_data.Status == HttpStatusCode.OK)
                     {
-                        if (checkBox == true)
+                        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
+                        alert1.SetTitle("Закрытие замка");
+                        alert1.SetMessage(o_data.Message);
+                        alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
                         {
-                            //btn_Lock.Clickable = false;
-                            //btn_Lock.Focusable = false;
-                            //btn_Lock.LongClickable = false;
-                            btn_Lock.Visibility = ViewStates.Gone;
-                            Lock.Text = "Закрыт";
-                        }
-                        else
+                            if (checkBox == true)
+                            {
+                                //btn_Lock.Clickable = false;
+                                //btn_Lock.Focusable = false;
+                                //btn_Lock.LongClickable = false;
+                                btn_Lock.Visibility = ViewStates.Gone;
+                                Lock.Text = "Закрыт";
+                            }
+                            else
+                            {
+                                btn_Lock.Text = "Открыть";
+                                Lock.Text = "Закрыт";
+                            }
+                        });
+                        Dialog dialog1 = alert1.Create();
+                        dialog1.Show();
+                    }
+
+
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+            }            
+        }
+
+        private async void Transmitt()
+        {
+            try
+            {
+                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+                {
+                    string[] date = Date_str.Split(' ', '-');
+                    var o_data = await ManageOrderService.TransmitOrder(StaticOrder.Order_id, date[0], date[1]);
+                    if (o_data.Status == HttpStatusCode.OK)
+                    {
+                        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
+                        alert1.SetTitle("Закрытие замка");
+                        alert1.SetMessage(o_data.Message);
+                        alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
                         {
-                            btn_Lock.Text = "Открыть";
-                            Lock.Text = "Закрыт";
-                        }
-                    });
-                    Dialog dialog1 = alert1.Create();
-                    dialog1.Show();
+                        });
+                        Dialog dialog1 = alert1.Create();
+                        dialog1.Show();
+
+                    }
+                    else
+                    {
+                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                    }
                 }
-
-
             }
+            catch (System.Exception ex)
+            {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+            }            
         }
 
-        private async void Transmitt(AlertDialog.Builder alert)
+        private async void MakeUnLock()
         {
-            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            try
             {
-                string[] date = Date_str.Split(' ', '-');
-                var o_data = await ManageOrderService.TransmitOrder(StaticOrder.Order_id, date[0], date[1]);
-                if (o_data.Status == HttpStatusCode.OK)
+                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
                 {
-                    alert.Dispose();
-                    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
-                    alert1.SetTitle("Закрытие замка");
-                    alert1.SetMessage(o_data.ResponseData.Message);
-                    alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                    ManageOrderService.InitializeClient(client);
+                    var o_data = new ServiceResponseObject<SuccessResponse>();
+                    o_data = await ManageOrderService.UnLockRollete(StaticOrder.Order_id);
+
+                    if (o_data.Status == HttpStatusCode.OK)
                     {
-                    });
-                    Dialog dialog1 = alert1.Create();
-                    dialog1.Show();
 
+                        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
+                        alert1.SetTitle("Открытие замка");
+                        alert1.SetMessage(o_data.Message);
+                        alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                        {
+                            btn_Lock.Text = "Закрыть";
+                            Lock.Text = "Открыт";
+                        });
+                        Dialog dialog1 = alert1.Create();
+                        dialog1.Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                    }
                 }
-                else
-                {
-                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                }
-
-
             }
-
+            catch (System.Exception ex)
+            {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+            }           
         }
 
-        private async void MakeUnLock(AlertDialog.Builder alert)
+        private async void MakePayment()
         {
-            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            try
             {
-                ManageOrderService.InitializeClient(client);
-                var o_data = new ServiceResponseObject<SuccessResponse>();
-                o_data = await ManageOrderService.UnLockRollete(StaticOrder.Order_id);
-
-                if (o_data.Status == HttpStatusCode.OK)
+                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
                 {
-                    alert.Dispose();
-                    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
-                    alert1.SetTitle("Открытие замка");
-                    alert1.SetMessage(o_data.ResponseData.Message);
-                    alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                    ManageOrderService.InitializeClient(client);
+                    var o_data = new ServiceResponseObject<SuccessResponse>();
+                    o_data = await ManageOrderService.MakePayment(StaticOrder.Order_id);
+                    if (o_data.Status == HttpStatusCode.OK)
                     {
-                        btn_Lock.Text = "Закрыть";
-                        Lock.Text = "Открыт";
-                    });
-                    Dialog dialog1 = alert1.Create();
-                    dialog1.Show();
-                }
-                else
-                {
-                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
+                        alert1.SetTitle("Внесение оплаты");
+                        alert1.SetMessage(o_data.Message);
+                        alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                        {
+                        });
+                        Dialog dialog1 = alert1.Create();
+                        dialog1.Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                    }
                 }
             }
-
-        }
-
-        private async void MakePayment(AlertDialog.Builder alert)
-        {
-            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            catch (System.Exception ex)
             {
-                ManageOrderService.InitializeClient(client);
-                var o_data = new ServiceResponseObject<SuccessResponse>();
-                o_data = await ManageOrderService.MakePayment(StaticOrder.Order_id);
-                if (o_data.Status == HttpStatusCode.OK)
-                {
-                    alert.Dispose();
-                    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
-                    alert1.SetTitle("Внесение оплаты");
-                    alert1.SetMessage(o_data.ResponseData.Message);
-                    alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
-                    {
-                    });
-                    Dialog dialog1 = alert1.Create();
-                    dialog1.Show();
-                }
-                else
-                {
-                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                }
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
             }
         }
-        private async void GetVideo(AlertDialog.Builder alert)
+        private async void GetVideo()
         {
-            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            try
             {
-                ManageOrderService.InitializeClient(client);
-                var o_data = new ServiceResponseObject<SuccessResponse>();
-                o_data = await ManageOrderService.GetVideo(StaticOrder.Order_id);
-                if (o_data.Status == HttpStatusCode.OK)
+                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
                 {
-                    alert.Dispose();
+                    ManageOrderService.InitializeClient(client);
+                    var o_data = new ServiceResponseObject<SuccessResponse>();
+                    o_data = await ManageOrderService.GetVideo(StaticOrder.Order_id);
 
-                    LayoutInflater layoutInflater = LayoutInflater.From(Activity);
-                    View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
-                    var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
-
-                    var src = Android.Net.Uri.Parse(URL + o_data.ResponseData.Message);
-                    img_get_video.SetVideoURI(src);
-                    img_get_video.Start();
-
-                    //var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.ResponseData.Message);
-                    //img_get_video.SetVideoURI(imageBitmap);
-
-                    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
-                    alert1.SetTitle("Сделать видео");
-                    alert1.SetView(view);
-                    alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                    if (o_data.Status == HttpStatusCode.OK)
                     {
-                    });
-                    Dialog dialog1 = alert1.Create();
-                    dialog1.Show();
-                }
-                else
-                {
-                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+
+                        LayoutInflater layoutInflater = LayoutInflater.From(Activity);
+                        View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
+                        var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
+
+                        var src = Android.Net.Uri.Parse(URL + o_data.Message);
+                        img_get_video.SetVideoURI(src);
+                        img_get_video.Start();
+
+                        //var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.ResponseData.Message);
+                        //img_get_video.SetVideoURI(imageBitmap);
+
+                        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
+                        alert1.SetTitle("Сделать видео");
+                        alert1.SetView(view);
+                        alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                        {
+                        });
+                        Dialog dialog1 = alert1.Create();
+                        dialog1.Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                    }
                 }
             }
+            catch (System.Exception ex)
+            {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+            }            
         }
 
-        private async void GetPhoto(AlertDialog.Builder alert)
+        private async void GetPhoto()
         {
-            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            try
             {
-                ManageOrderService.InitializeClient(client);
-                var o_data = new ServiceResponseObject<SuccessResponse>();
-                o_data = await ManageOrderService.GetPhoto(StaticOrder.Order_id);
-                if (o_data.Status == HttpStatusCode.OK)
+                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
                 {
-                    alert.Dispose();
-
-                    LayoutInflater layoutInflater = LayoutInflater.From(Activity);
-                    View view = layoutInflater.Inflate(Resource.Layout.modal_photo, null);
-                    var img_get_photo = view.FindViewById<ImageView>(Resource.Id.img_get_photo);
-
-                    var src = Android.Net.Uri.Parse(URL + o_data.ResponseData.Message);
-                    img_get_photo.SetImageURI(src);
-
-                    var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.ResponseData.Message);
-                    img_get_photo.SetImageBitmap(imageBitmap);
-
-                    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
-                    alert1.SetView(view);
-                    ////
-                    alert1.SetCancelable(false);
-                    alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                    ManageOrderService.InitializeClient(client);
+                    var o_data = new ServiceResponseObject<SuccessResponse>();
+                    o_data = await ManageOrderService.GetPhoto(StaticOrder.Order_id);
+                    if (o_data.Status == HttpStatusCode.OK)
                     {
-                    });
-                    Dialog dialog1 = alert1.Create();
-                    dialog1.Show();
-                }
-                else
-                {
-                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+
+                        LayoutInflater layoutInflater = LayoutInflater.From(Activity);
+                        View view = layoutInflater.Inflate(Resource.Layout.modal_photo, null);
+                        var img_get_photo = view.FindViewById<ImageView>(Resource.Id.img_get_photo);
+
+                        var src = Android.Net.Uri.Parse(URL + o_data.Message);
+                        img_get_photo.SetImageURI(src);
+
+                        var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.ResponseData.Message);
+                        img_get_photo.SetImageBitmap(imageBitmap);
+
+                        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
+                        alert1.SetView(view);
+                        alert1.SetCancelable(false);
+                        alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                        {
+                        });
+                        Dialog dialog1 = alert1.Create();
+                        dialog1.Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                    }
                 }
             }
+            catch (System.Exception ex)
+            {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+            }         
         }
 
 
@@ -505,9 +513,6 @@ namespace SmartBoxCity.Activity.Order
 
             if (o_data.Status == HttpStatusCode.OK)
             {
-                ErrorHandling = "ok";
-                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-
                 StaticBox.AddInfoSensors(o_data.ResponseData.SENSORS_STATUS);
                 StaticOrder.AddInfoOrder(o_data.ResponseData.ORDER);
 
@@ -592,10 +597,6 @@ namespace SmartBoxCity.Activity.Order
                 StaticOrder.Order_Stage_Id == "8") ? false : true;
 
                 btn_Pay.Enabled = (StaticOrder.Order_Stage_Id == "5") ? true : false;
-            }
-            else
-            {
-                ErrorHandling = "error";
             }
         }
     }

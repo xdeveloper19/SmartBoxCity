@@ -25,6 +25,7 @@
     />
     <ImageView
         android:layout_width="278dp"
+        android:src="@drawable/errorsHandling"
         android:id="@+id/img_get_photo"
         android:layout_height="150dp"/>
           

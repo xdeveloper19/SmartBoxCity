@@ -45,7 +45,8 @@ namespace SmartBoxCity.Activity.Order
             catch (Exception ex)
             {
                 var view = inflater.Inflate(Resource.Layout.activity_errors_handling, container, false);
-                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+                var TextOfError = view.FindViewById<TextView>(Resource.Id.TextOfError);
+                TextOfError.Text += "\n(Ошибка: " + ex.Message + ")";
                 return view;
             }        
         }
@@ -79,7 +80,6 @@ namespace SmartBoxCity.Activity.Order
                     }
 
                     UpdateList();
-                    lstEvent.ItemClick += ListOrders_ItemClick;
                 }
                 else
                 {
@@ -97,10 +97,6 @@ namespace SmartBoxCity.Activity.Order
         {
             EventListAdapter adapter = new EventListAdapter(Activity, Eventlist, this.FragmentManager);
             lstEvent.Adapter = adapter;
-        }
-        private void ListOrders_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
-        {
-            Toast.MakeText(Activity, "Выбран заказ №" + e.Position.ToString(), ToastLength.Long).Show();
         }
     }
 }

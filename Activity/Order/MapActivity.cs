@@ -32,6 +32,9 @@ namespace SmartBoxCity.Activity.Order
         private TextView txtTo;
         private TextView Weight;
         private TextView LenhWidHeig;
+
+        private string fromString, toString, weightString, lenhwidheigString;
+
         private GoogleMap GMap;
         MapView mMapView;
         public override void OnCreate(Bundle savedInstanceState)
@@ -162,6 +165,11 @@ namespace SmartBoxCity.Activity.Order
                 Weight = view.FindViewById<TextView>(Resource.Id.MapTextWeight);
                 LenhWidHeig = view.FindViewById<TextView>(Resource.Id.MapTextLenhWidHeig);
 
+                txtFrom.Text = fromString;
+                txtTo.Text = toString;
+                Weight.Text = weightString;
+                LenhWidHeig.Text = lenhwidheigString;
+
                 var layout = view.FindViewById<SlidingUpPanelLayout>(Resource.Id.sliding_client_layout);
                 view.FindViewById<TextView>(Resource.Id.txt_info_order_new).MovementMethod = new LinkMovementMethod();
 
@@ -230,12 +238,13 @@ namespace SmartBoxCity.Activity.Order
 
             if (o_data.Status == System.Net.HttpStatusCode.OK)
             {
-                txtFrom.Text = o_data.ResponseData.ORDER.inception_address;
-                txtTo.Text = o_data.ResponseData.ORDER.destination_address;
-                Weight.Text = o_data.ResponseData.ORDER.weight;
+
+                fromString = o_data.ResponseData.ORDER.inception_address;
+                toString = o_data.ResponseData.ORDER.destination_address;
+                weightString = o_data.ResponseData.ORDER.weight;
                 if (o_data.ResponseData.ORDER.length == null || o_data.ResponseData.ORDER.width == null || o_data.ResponseData.ORDER.height == null)
                 {
-                    LenhWidHeig.Text = "неизвестно";
+                    lenhwidheigString = "неизвестно";
                 }
                 else
                 {
@@ -243,7 +252,7 @@ namespace SmartBoxCity.Activity.Order
                     var width = double.Parse(o_data.ResponseData.ORDER.width, CultureInfo.InvariantCulture);
                     var height = double.Parse(o_data.ResponseData.ORDER.height, CultureInfo.InvariantCulture);
                     var sum = length.ToString() + "X" + width.ToString() + "X" + height.ToString();
-                    LenhWidHeig.Text = sum;
+                    lenhwidheigString = sum;
                 }
                 var way_points = o_data.ResponseData.MAP_WAYPOINTS;
                 StaticOrder.AddWayPoints(way_points);

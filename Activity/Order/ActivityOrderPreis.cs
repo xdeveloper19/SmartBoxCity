@@ -49,15 +49,37 @@ namespace SmartBoxCity.Activity.Order
             btn_add_order = view.FindViewById<Button>(Resource.Id.OrderPriceBtnAddOrder);
             btn_add_order_again = view.FindViewById<Button>(Resource.Id.OrderPriceBtnAddOrderAgain);
 
-            txt_Shipping_Cost.Text = StaticOrder.Amount;
-            txt_Insurance_Price.Text = StaticOrder.Insurance_amount + " ₽";
-            txt_Distance.Text = StaticOrder.Distance + " км";
-            txt_To.Text = StaticOrder.Destination_address;
-            txt_From.Text = StaticOrder.Inception_address;
+            
 
-            btn_add_order_again.Click += delegate
+            btn_add_order_again.Click += async delegate
             {
+                MakeOrderModel model = new MakeOrderModel();
+                StaticOrder.CreationOrderForCosteAgain(ref model);
+                using (var client = ClientHelper.GetClient())
+                {
+                    OrderService.InitializeClient(client);
+                    var o_data = await OrderService.GetOrderPrice(model);
 
+                    if (o_data.Status == HttpStatusCode.OK)
+                    {
+                        AmountResponse order_data = new AmountResponse();
+                        order_data = o_data.ResponseData;
+
+                        StaticOrder.AddInfoAmount(order_data);
+
+                        txt_Shipping_Cost.Text = StaticOrder.Amount;
+                        txt_Insurance_Price.Text = StaticOrder.Insurance_amount + " ₽";
+                        txt_Distance.Text = StaticOrder.Distance + " км";
+                        txt_To.Text = StaticOrder.Destination_address;
+                        txt_From.Text = StaticOrder.Inception_address;
+
+                        Toast.MakeText(Activity, "Стоимость груза была успешно рассчитана.", ToastLength.Long).Show();
+                    }
+                    else
+                    {
+                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                    }
+                }
             };
 
             btn_add_order.Click += async delegate
