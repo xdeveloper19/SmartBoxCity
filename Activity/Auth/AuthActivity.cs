@@ -112,6 +112,7 @@ namespace SmartBoxCity.Activity.Auth
                              {
                                  CrossSettings.Current.AddOrUpdateValue("check", "1");
                                  CrossSettings.Current.AddOrUpdateValue("login", s_login.Text);
+                                 CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
                                  CrossSettings.Current.AddOrUpdateValue("password", s_pass.Text);
                              }
                              else

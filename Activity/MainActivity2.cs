@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.OS;
@@ -63,12 +62,16 @@ namespace SmartBoxCity.Activity
                         Android.App.AlertDialog.Builder alert = new Android.App.AlertDialog.Builder(this);
                         alert.SetTitle("Внимание!");
                         alert.SetMessage("Вы действительно хотите выйти ?");
+                        alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+                        {
+                        });
                         alert.SetPositiveButton("Да", (senderAlert, args) =>
                         {
                             string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
                             File.Delete(dir_path + "user_data.txt");
                             StaticUser.PresenceOnPage = false;
                             CrossSettings.Current.AddOrUpdateValue("role", "");
+                            CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
 
                             if (StaticDriver.busy == "0")
                             {
@@ -80,9 +83,6 @@ namespace SmartBoxCity.Activity
                             Intent content1 = new Intent(this, typeof(MainActivity));
                             StartActivity(content1);
                             this.Finish();
-                        });
-                        alert.SetPositiveButton("Отмена", (senderAlert, args) =>
-                        {
                         });
                         Dialog dialog = alert.Create();
                         dialog.Show();

@@ -36,7 +36,9 @@ namespace SmartBoxCity.Activity.Order
         private string fromString, toString, weightString, lenhwidheigString;
 
         private GoogleMap GMap;
-        MapView mMapView;
+        MapView mMapView = null;
+        private string error_message = "";
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -117,41 +119,32 @@ namespace SmartBoxCity.Activity.Order
         public override void OnSaveInstanceState(Bundle outState)
         {
             base.OnSaveInstanceState(outState);
-            if (result != null)
-            {
-                if (result.Result == Driver.TaskStatus.OK)
-                    mMapView.OnSaveInstanceState(outState);
-            }
+
+            if (mMapView != null)
+                mMapView.OnSaveInstanceState(outState);   
         }
 
         public override void OnResume()
         {
-            if (result != null)
-            {
-                if(result.Result == Driver.TaskStatus.OK)
-                    mMapView.OnResume();
-            }
+            if (mMapView != null)
+                mMapView.OnResume();
+
             base.OnResume();
         }
 
         public override void OnDestroy()
         {
             base.OnDestroy();
-            if (result != null)
-            {
-                if (result.Result == Driver.TaskStatus.OK)
-                    mMapView.OnDestroy();
-            }
+            if (mMapView != null)
+                mMapView.OnDestroy();
         }
 
         public override void OnLowMemory()
         {
             base.OnLowMemory();
-            if (result != null)
-            {
-                if (result.Result == Driver.TaskStatus.OK)
-                    mMapView.OnLowMemory();
-            }
+            if (mMapView != null)
+                mMapView.OnLowMemory();
+            
         }
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
@@ -227,6 +220,8 @@ namespace SmartBoxCity.Activity.Order
             else
             {
                 var view = inflater.Inflate(Resource.Layout.activity_errors_handling, container, false);
+                var txt_error = view.FindViewById<TextView>(Resource.Id.TextOfError);
+                txt_error.Text = "Что-то пошло не так. Перезапустите страницу или обратитесь в центр поддержки!\nПричина: " + error_message;
                 return view;               
             }            
         }
@@ -258,6 +253,7 @@ namespace SmartBoxCity.Activity.Order
                 StaticOrder.AddWayPoints(way_points);
                 return SmartBoxCity.Activity.Driver.TaskStatus.OK;
             }
+            error_message = o_data.Message;
             return SmartBoxCity.Activity.Driver.TaskStatus.ServerError;
         }
     }

@@ -244,6 +244,7 @@ namespace SmartBoxCity.Activity.Registration
                                     CrossSettings.Current.AddOrUpdateValue("password", s_password.Text);
                                     CrossSettings.Current.AddOrUpdateValue("check", "0");
                                     CrossSettings.Current.AddOrUpdateValue("NeedToCreateOrder", "true");
+                                    CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
 
                                     Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                                     Intent main = new Intent(Activity, typeof(MainActivity));

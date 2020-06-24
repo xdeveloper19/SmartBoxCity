@@ -66,6 +66,8 @@ namespace SmartBoxCity.Activity.Order
         private const string URL = "https://smartboxcity.ru/";
         private string Date_str;
         private string ErrorHandling;
+        private string ErrorData;
+
         #endregion
         public override void OnCreate(Bundle savedInstanceState)
         {
@@ -227,7 +229,8 @@ namespace SmartBoxCity.Activity.Order
                         MakePayment();
                         FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                         ManageOrderActivity content2 = new ManageOrderActivity();
-                        transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+                        transaction1.Replace(Resource.Id.framelayout, content2);
+                        transaction1.Commit();
                         break;
                 }
             });
@@ -304,6 +307,11 @@ namespace SmartBoxCity.Activity.Order
                                 btn_Lock.Text = "Открыть";
                                 Lock.Text = "Закрыт";
                             }
+
+                            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                            ManageOrderActivity content2 = new ManageOrderActivity();
+                            transaction1.Replace(Resource.Id.framelayout, content2);
+                            transaction1.Commit();
                         });
                         Dialog dialog1 = alert1.Create();
                         dialog1.Show();
@@ -362,7 +370,6 @@ namespace SmartBoxCity.Activity.Order
 
                     if (o_data.Status == HttpStatusCode.OK)
                     {
-
                         Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
                         alert1.SetTitle("Открытие замка");
                         alert1.SetMessage(o_data.Message);
@@ -370,6 +377,11 @@ namespace SmartBoxCity.Activity.Order
                         {
                             btn_Lock.Text = "Закрыть";
                             Lock.Text = "Открыт";
+
+                            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                            ManageOrderActivity content2 = new ManageOrderActivity();
+                            transaction1.Replace(Resource.Id.framelayout, content2);
+                            transaction1.Commit();
                         });
                         Dialog dialog1 = alert1.Create();
                         dialog1.Show();
@@ -481,7 +493,7 @@ namespace SmartBoxCity.Activity.Order
                         var src = Android.Net.Uri.Parse(URL + o_data.Message);
                         img_get_photo.SetImageURI(src);
 
-                        var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.ResponseData.Message);
+                        var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.Message);
                         img_get_photo.SetImageBitmap(imageBitmap);
 
                         Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
@@ -508,6 +520,7 @@ namespace SmartBoxCity.Activity.Order
 
         private async void GetOrderParameters()
         {
+            //проверить оплату с сервера 
             var o_data = new ServiceResponseObject<OrderObjectResponse<OrderParameters, SensorResponse, StageResponse>>();
             o_data = await OrderService.GetSensorParameters(StaticOrder.Order_id);
 

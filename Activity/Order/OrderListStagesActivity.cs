@@ -91,6 +91,7 @@ namespace SmartBoxCity.Activity.Order
 
         private async void GetParameters()
         {
+            //проверить статус оплаты
             var o_data = new ServiceResponseObject<OrderObjectResponse<OrderParameters, SensorResponse, StageResponse>>();
             o_data = await OrderService.GetSensorParameters(StaticOrder.Order_id);
 

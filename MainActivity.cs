@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Android;
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
-using Android.Support.V4.View;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using System.IO;
@@ -17,20 +15,11 @@ using Com.Karumi.Dexter.Listener;
 using Com.Karumi.Dexter.Listener.Multi;
 using Plugin.Settings;
 using SmartBoxCity.Activity;
-using SmartBoxCity.Activity.Auth;
 using SmartBoxCity.Activity.Home;
 using SmartBoxCity.Activity.Order;
-using System.Text;
-using Newtonsoft.Json;
 using SmartBoxCity.Activity.Menu;
-using SmartBoxCity.Activity.Registration;
-using Android.Graphics.Drawables;
-using SmartBoxCity.Service;
 using WebService;
 using WebService.Account;
-using Entity.Model.AccountViewModel.AuthViewModel;
-using System.Net;
-using Java.Lang;
 using Entity.Repository;
 
 namespace SmartBoxCity
@@ -57,6 +46,9 @@ namespace SmartBoxCity
                 string[] permissions = { Manifest.Permission.AccessFineLocation, Manifest.Permission.WriteExternalStorage };
                 Android.Support.V4.App.ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.Camera }, MY_PERMISSIONS_REQUEST_CAMERA);
                 Dexter.WithActivity(this).WithPermissions(permissions).WithListener(new CompositeMultiplePermissionsListener(new SamplePermissionListener(this))).Check();
+
+                FloatingActionButton fab = FindViewById<FloatingActionButton>(Resource.Id.fab);
+                fab.Visibility = ViewStates.Invisible;
 
                 string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
                 BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
@@ -176,6 +168,7 @@ namespace SmartBoxCity
                                 {
                                     string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
                                     File.Delete(dir_path + "user_data.txt");
+                                    CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
 
                                     using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
                                     {

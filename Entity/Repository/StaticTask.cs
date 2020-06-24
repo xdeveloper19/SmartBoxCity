@@ -26,6 +26,7 @@ namespace Entity.Repository
         public static string time_window { get; set; }
         public static string title { get; set; }
         public static string type { get; set; }
+        public static bool IsStoppedGeo { get; set; }
 
         public static void AddInfoTask(TaskResponse task)
         {

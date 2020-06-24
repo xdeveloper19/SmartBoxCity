@@ -83,6 +83,7 @@ namespace SmartBoxCity.Activity.Order
 
         }
 
+        //не отображается архив заказов, проверить!
         private async void GetOrders()
         {
             //var o_data1 = new ServiceResponseObject<SensorResponse>();
@@ -93,7 +94,7 @@ namespace SmartBoxCity.Activity.Order
             //    OrderService.InitializeClient(client);
             //    o_data1 = await OrderService.GetSensorParameters();
 
-
+            
 
             //}
 
@@ -116,8 +117,8 @@ namespace SmartBoxCity.Activity.Order
                        
                         Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
                         BookNotFoundActivity content = new BookNotFoundActivity();
-                        transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-
+                        transaction.Replace(Resource.Id.framelayout, content);
+                        transaction.Commit();
                         return;
                     }
 

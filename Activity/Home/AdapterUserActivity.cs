@@ -210,7 +210,7 @@ namespace SmartBoxCity.Activity.Home
                         View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
                         var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
 
-                        var src = Android.Net.Uri.Parse(URL + o_data.ResponseData.Message);
+                        var src = Android.Net.Uri.Parse(URL + o_data.Message);
                         img_get_video.SetVideoURI(src);
                         img_get_video.Start();
 
@@ -253,10 +253,10 @@ namespace SmartBoxCity.Activity.Home
                         View view = layoutInflater.Inflate(Resource.Layout.modal_photo, null);
                         var img_get_photo = view.FindViewById<ImageView>(Resource.Id.img_get_photo);
 
-                        var src = Android.Net.Uri.Parse(URL + o_data.ResponseData.Message);
+                        var src = Android.Net.Uri.Parse(URL + o_data.Message);
                         img_get_photo.SetImageURI(src);
 
-                        var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.ResponseData.Message);
+                        var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.Message);
                         img_get_photo.SetImageBitmap(imageBitmap);
 
                         Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);

@@ -39,7 +39,7 @@ namespace SmartBoxCity.Service
                         try
                         {
                             //when app in foreground
-                            if (StaticDriver.busy != "1")
+                            if (!StaticTask.IsStoppedGeo)
                                 PostGeoData(location);
                             else
                                 _gpsService = new GPSService(context);

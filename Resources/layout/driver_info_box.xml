@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin"
     android:background = "@drawable/activity_stili">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -212,7 +213,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity = "center"            
-                                    android:id="@+id/BoxTextFold" />
+                                    android:id="@+id/BoxTextLock" />
                             </LinearLayout>
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -242,7 +243,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity = "center"            
-                                    android:id="@+id/BoxTextLock" />
+                                    android:id="@+id/BoxTextFold" />
                                 <View
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"

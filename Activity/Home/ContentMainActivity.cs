@@ -146,10 +146,8 @@ namespace SmartBoxCity.Activity.Home
         {
             dots = new TextView[layouts.Length];
 
-
-            string[] colorsActive = { "#d1395c", "#14a895", "#2278d4", "#a854d4", "#a854d4", "#a854d4" ,"#a854d4" };
-            string[] colorsInactive = { "#f98da5", "#8cf9eb", "#93c6fd", "#e4b5fc", "#a854d4", "#a854d4","#a854d4" };
-
+            string[] colorsActive = { "#d1395c", "#14a895", "#2278d4", "#a854d4", "#a854d4", "#a854d4", "#a854d4" };
+            string[] colorsInactive = { "#f98da5", "#8cf9eb", "#93c6fd", "#e4b5fc", "#e4b5fc", "#e4b5fc", "#e4b5fc" };
 
             dotsLayout.RemoveAllViews();
             for (int i = 0; i < dots.Length; i++)

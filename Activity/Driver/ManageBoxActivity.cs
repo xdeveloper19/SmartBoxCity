@@ -91,6 +91,7 @@ namespace SmartBoxCity.Activity.Driver
         private async void GetOrderParameters()
         {
             var o_data = new ServiceResponseObject<OrderObjectResponse<OrderParameters, SensorResponse, StageResponse>>();
+            StaticOrder.Order_id = StaticTask.order_id;
             o_data = await OrderService.GetSensorParameters(StaticTask.order_id);
 
             if (o_data.Status == HttpStatusCode.OK)

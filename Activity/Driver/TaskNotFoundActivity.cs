@@ -54,20 +54,28 @@ namespace SmartBoxCity.Activity.Driver
                 {
                     AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
                     alert.SetTitle("Подтверждение действия");
-                    alert.SetMessage("Задачи Вам не будут распределяться. Вы действительно освободились?");
+                    alert.SetMessage("Задачи Вам будут распределяться. Вы действительно освободились?");
                     alert.SetPositiveButton("Ок", (senderAlert, args) =>
                     {
                         var result = FreeStatus();
                         if (result.Result == TaskStatus.ServerError)
                         {
+                            StaticDriver.busy = "1";
                             btn_switch.Text = "Занят. Задачи на перевозку вам не распределяются.";
                             btn_switch.Checked = false;
+                        }
+                        else
+                        {
+                            StaticDriver.busy = "0";
+                            btn_switch.Text = "Свободен. У вас нет задач на перевозку груза.";
+                            btn_switch.Checked = true;
                         }
                         //to do...
                     });
                     alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                     {
-                        btn_switch.Text = "Свободен. У вас нет задач на перевозку груза.";
+                        StaticDriver.busy = "1";
+                        btn_switch.Text = "Занят. Задачи на перевозку вам не распределяются.";
                         btn_switch.Checked = false;
                     });
                     Dialog dialog = alert.Create();
@@ -131,18 +139,33 @@ namespace SmartBoxCity.Activity.Driver
                             {
                                 StaticTask.comment = edit_text_other_task.Text;
                             }
+                            else if (rbnt_finished_shift_task.Checked)
+                                StaticTask.comment = "Закончил смену";
+                            else if (rbnt_malfunction_task.Checked)
+                                StaticTask.comment = "Неисправность";
+                            else if (rbnt_relaxation_task.Checked)
+                                StaticTask.comment = "Отдых";
+                            
 
                             result = BusyStatus();
                             if (result.Result == TaskStatus.ServerError)
                             {
+                                StaticDriver.busy = "0";
                                 btn_switch.Text = "Свободен. У вас нет задач на перевозку груза.";
                                 btn_switch.Checked = true;
+                            }
+                            else
+                            {
+                                StaticDriver.busy = "1";
+                                btn_switch.Text = "Занят. Задачи на перевозку вам не распределяются.";
+                                btn_switch.Checked = false;
                             }
                         })
                         .SetNegativeButton("Отмена", delegate
                         {
-                            btn_switch.Text = "Свободен. У вас нет задач на перевозку груза.";
-                            btn_switch.Checked = true;
+                            StaticDriver.busy = "1";
+                            btn_switch.Text = "Занят. Задачи на перевозку вам не распределяются.";
+                            btn_switch.Checked = false;
                             alert.Dispose();
                         });
                         Dialog dialog = alert.Create();
@@ -153,6 +176,7 @@ namespace SmartBoxCity.Activity.Driver
                     });
                     alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                     {
+                        StaticDriver.busy = "0";
                         btn_switch.Text = "Свободен. У вас нет задач на перевозку груза.";
                         btn_switch.Checked = true;
                     });
@@ -201,7 +225,6 @@ namespace SmartBoxCity.Activity.Driver
                     //o_data.Message = "Успешно авторизован!";
                     Toast.MakeText(Activity, o_data.ResponseData.Message, ToastLength.Long).Show();
                     return TaskStatus.OK;
-                   
                 }
                 else
                 {

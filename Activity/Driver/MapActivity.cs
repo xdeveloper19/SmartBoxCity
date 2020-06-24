@@ -133,6 +133,7 @@ namespace SmartBoxCity.Activity.Driver
 
                     if (o_data.ResponseData.TASKS.Count == 0)
                     {
+                        StaticTask.IsStoppedGeo = true;
                         return TaskStatus.NotFound;
                     }
 
@@ -179,7 +180,7 @@ namespace SmartBoxCity.Activity.Driver
                     //    address = "Славный переулок, 5, Новошахтинск",
                     //    title = "г Ростов-на-Дону, ул Орбитальная, д 76. Доставить пустой контейнер."
                     //};
-
+                    StaticTask.IsStoppedGeo = false;
                     tasklist = tasks;
                     UpdateList();
                     lstTask.ItemClick += ListOrders_ItemClick;
@@ -187,6 +188,7 @@ namespace SmartBoxCity.Activity.Driver
                 }
                 else
                 {
+                    StaticTask.IsStoppedGeo = true;
                     Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();//"Unexpected character encountered while parsing value: {. Path 'ORDERS[0].last_stage_at', line 2, position 1086."
                     return TaskStatus.ServerError;
                 }
