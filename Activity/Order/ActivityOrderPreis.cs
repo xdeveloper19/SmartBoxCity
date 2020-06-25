@@ -49,93 +49,36 @@ namespace SmartBoxCity.Activity.Order
             btn_add_order = view.FindViewById<Button>(Resource.Id.OrderPriceBtnAddOrder);
             btn_add_order_again = view.FindViewById<Button>(Resource.Id.OrderPriceBtnAddOrderAgain);
 
-            
+            txt_Shipping_Cost.Text = StaticOrder.Amount;
+            txt_Insurance_Price.Text = StaticOrder.Insurance_amount + " ₽";
+            txt_Distance.Text = StaticOrder.Distance + " км";
+            txt_To.Text = StaticOrder.Destination_address;
+            txt_From.Text = StaticOrder.Inception_address;
+
 
             btn_add_order_again.Click += async delegate
             {
-                MakeOrderModel model = new MakeOrderModel();
-                StaticOrder.CreationOrderForCosteAgain(ref model);
-                using (var client = ClientHelper.GetClient())
+                AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
+                alert.SetTitle("Внимание!");
+                alert.SetMessage("Вы действительно хотите сделать перерасчёт стоимости ?");
+                alert.SetPositiveButton("Да", (senderAlert, args) =>
                 {
-                    OrderService.InitializeClient(client);
-                    var o_data = await OrderService.GetOrderPrice(model);
+                    FragmentTransaction transaction = FragmentManager.BeginTransaction();
+                    AddOrderActivity content = new AddOrderActivity();
+                    transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit(); CrossSettings.Current.AddOrUpdateValue("OrderInStageOfBid", "false");
+                    base.OnDestroy();
+                });
+                alert.SetNegativeButton("Отмена", (senderAlert, args) => {});
 
-                    if (o_data.Status == HttpStatusCode.OK)
-                    {
-                        AmountResponse order_data = new AmountResponse();
-                        order_data = o_data.ResponseData;
-
-                        StaticOrder.AddInfoAmount(order_data);
-
-                        txt_Shipping_Cost.Text = StaticOrder.Amount;
-                        txt_Insurance_Price.Text = StaticOrder.Insurance_amount + " ₽";
-                        txt_Distance.Text = StaticOrder.Distance + " км";
-                        txt_To.Text = StaticOrder.Destination_address;
-                        txt_From.Text = StaticOrder.Inception_address;
-
-                        Toast.MakeText(Activity, "Стоимость груза была успешно рассчитана.", ToastLength.Long).Show();
-                    }
-                    else
-                    {
-                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                    }
-                }
+                Dialog dialog = alert.Create();
+                dialog.Show();
             };
 
             btn_add_order.Click += async delegate
             {
                 preloader.Visibility = Android.Views.ViewStates.Visible;                
 
-                if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
-                {
-                    //MakeOrderModel model = new MakeOrderModel()
-                    //{
-                    //    destination_address = StaticOrder.Destination_address,
-                    //    for_date = StaticOrder.For_date,
-                    //    for_time = StaticOrder.For_time,
-                    //    height = StaticOrder.Height,
-                    //    inception_address = StaticOrder.Inception_address,
-                    //    cargo_class = StaticOrder.Cargo_class,
-                    //    cargo_loading = StaticOrder.Cargo_loading,
-                    //    cargo_type = StaticOrder.Cargo_type,
-                    //    destination_lat = StaticOrder.Destination_lat,
-                    //    destination_lng = StaticOrder.Destination_lng,
-                    //    inception_lat = StaticOrder.Inception_lat,
-                    //    inception_lng = StaticOrder.Inception_lng,
-                    //    insurance = StaticOrder.Insurance,
-                    //    receiver = StaticOrder.Receiver,
-                    //    length = StaticOrder.Length,
-                    //    qty = StaticOrder.Qty,
-                    //    weight = StaticOrder.Weight,
-                    //    width = StaticOrder.Width
-                    //};
-                    //using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
-                    //{
-                    //    OrderService.InitializeClient(client);
-                    //    var o_data = await OrderService.AddOrder(model);
-
-                    //    if (o_data.Status == HttpStatusCode.OK)
-                    //    {
-                    //        OrderSuccessResponse o_user_data = new OrderSuccessResponse();
-                    //        o_user_data = o_data.ResponseData;
-
-                    //        preloader.Visibility = Android.Views.ViewStates.Invisible;
-                    //        StaticOrder.Order_id = o_user_data.order_id;
-                    //        CrossSettings.Current.AddOrUpdateValue("NeedToCreateOrder", "false");
-                    //        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                    //    }
-                    //    else
-                    //    {
-                    //        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                    //    }
-
-                    //};
-                    CrossSettings.Current.AddOrUpdateValue("NeedToCreateOrder", "true");
-                    Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                    UserActivity content = new UserActivity();
-                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                }
-                else
+                if (StaticUser.PresenceOnPage != true)
                 {
                     Android.App.FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
                     AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
@@ -166,29 +109,23 @@ namespace SmartBoxCity.Activity.Order
                         transaction2.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
                     });
                     Dialog dialog = alert.Create();
-                    dialog.Show();
+                    dialog.Show();               
+                }
+                else
+                {
+                    StaticUser.NeedToCreateOrder = true;
+                    Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                    UserActivity content = new UserActivity();
+                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
                 }
             };
             
             return view;
         }
-        public void OnBackPressed()
-        {
-            AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
-            alert.SetTitle("Внимание!");
-            alert.SetMessage("Если Вы покините эту страницу, Ваш заказ будет удалён. Вы действительно хотите покинуть эту страницу ?");
-            alert.SetPositiveButton("Да", (senderAlert, args) =>
-            {
-                CrossSettings.Current.AddOrUpdateValue("OrderInStageOfBid", "false");
-                OnDestroy();
-            });
-            alert.SetNegativeButton("Отмена", (senderAlert, args) =>
-            {
-                Toast.MakeText(Activity, "Выберите действие !", ToastLength.Long).Show();
-            });
-            Dialog dialog = alert.Create();
-            dialog.Show();
-        }
+        //public override void OnDestroy()
+        //{
+        //    CrossSettings.Current.AddOrUpdateValue("OrderInStageOfBid", "false");
+        //}
 
     }
 }

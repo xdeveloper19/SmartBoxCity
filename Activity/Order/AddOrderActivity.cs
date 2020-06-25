@@ -411,7 +411,7 @@ namespace SmartBoxCity.Activity.Order
                         }
                         else
                         {
-                            preloader.Visibility = Android.Views.ViewStates.Visible;
+                            
                             //q_result = Int32.TryParse(s_sum_seats.Text, out quantity);
                             l_result = Double.TryParse(s_length.Text, out length);
                             width_result = Double.TryParse(s_width.Text, out width);
@@ -425,70 +425,74 @@ namespace SmartBoxCity.Activity.Order
                             }
                             else
                             {
-                                MakeOrderModel model = new MakeOrderModel()
+                                if(s_edit_from.Text == s_edit_where.Text)
                                 {
-                                    destination_address = s_edit_where.Text,
-                                    for_date = s_shipping_date.Text,
-                                    for_time = s_shipment_time.Text,
-                                    height = s_height.Text,
-                                    inception_address = s_edit_from.Text,
-                                    cargo_class = a_hazard_class,
-                                    cargo_loading = a_loading_methodsc,
-                                    cargo_type = a_cargo_characteristic,
-                                    destination_lat = StaticOrder.Destination_lat,/*"47.232032",*/
-                                    destination_lng = StaticOrder.Destination_lng,/*"39.731523",*/
-                                    inception_lat = StaticOrder.Inception_lat,/*"47.243221",*/
-                                    inception_lng = StaticOrder.Inception_lng,/*"39.668781",*/
-                                    insurance = s_value.Text,
-                                    receiver = s_contact_person.Text,
-                                    length = s_length.Text,
-                                    qty = s_sum_seats.Text,
-                                    weight = s_weight.Text,
-                                    width = s_width.Text
-                                };
-
-
-                                using (var client = ClientHelper.GetClient())
+                                    string ErrorMessag = "Вы ввели одинаковые пункты отправления и назначения !";
+                                    AlertDialogCall(ErrorMessag);
+                                }
+                                else
                                 {
-                                    OrderService.InitializeClient(client);
-                                    var o_data = await OrderService.GetOrderPrice(model);
-
-                                    if (o_data.Status == HttpStatusCode.OK)
+                                    preloader.Visibility = Android.Views.ViewStates.Visible;
+                                    MakeOrderModel model = new MakeOrderModel()
                                     {
-                                        //o_data.Message = "Успешно авторизован!";
-                                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                                        destination_address = s_edit_where.Text,
+                                        for_date = s_shipping_date.Text,
+                                        for_time = s_shipment_time.Text,
+                                        height = s_height.Text,
+                                        inception_address = s_edit_from.Text,
+                                        cargo_class = a_hazard_class,
+                                        cargo_loading = a_loading_methodsc,
+                                        cargo_type = a_cargo_characteristic,
+                                        destination_lat = StaticOrder.Destination_lat,/*"47.232032",*/
+                                        destination_lng = StaticOrder.Destination_lng,/*"39.731523",*/
+                                        inception_lat = StaticOrder.Inception_lat,/*"47.243221",*/
+                                        inception_lng = StaticOrder.Inception_lng,/*"39.668781",*/
+                                        insurance = s_value.Text,
+                                        receiver = s_contact_person.Text,
+                                        length = s_length.Text,
+                                        qty = s_sum_seats.Text,
+                                        weight = s_weight.Text,
+                                        width = s_width.Text
+                                    };
 
-                                        AmountResponse order_data = new AmountResponse();
-                                        order_data = o_data.ResponseData;
-
-                                        StaticOrder.AddInfoOrder(model);
-                                        StaticOrder.AddInfoAmount(order_data);
-
-                                        preloader.Visibility = Android.Views.ViewStates.Invisible;
-
-                                        CrossSettings.Current.AddOrUpdateValue("OrderInStageOfBid", "true");
-                                        Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                                        ActivityOrderPreis content = new ActivityOrderPreis();
-                                        transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                                    }
-                                    else
+                                    using (var client = ClientHelper.GetClient())
                                     {
-                                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                                        OrderService.InitializeClient(client);
+                                        var o_data = await OrderService.GetOrderPrice(model);
+
+                                        if (o_data.Status == HttpStatusCode.OK)
+                                        {
+                                            //o_data.Message = "Успешно авторизован!";
+                                            Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+
+                                            AmountResponse order_data = new AmountResponse();
+                                            order_data = o_data.ResponseData;
+
+                                            StaticOrder.AddInfoOrder(model);
+                                            StaticOrder.AddInfoAmount(order_data);
+
+                                            preloader.Visibility = Android.Views.ViewStates.Invisible;
+
+                                            StaticUser.OrderInStageOfBid = true;
+                                            Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                                            ActivityOrderPreis content = new ActivityOrderPreis();
+                                            transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                                        }
+                                        else
+                                        {
+                                            Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                                        }
                                     }
                                 }
+                                
                             }
 
-
-
                         }
-
                     }
                     else
                     {
                         Toast.MakeText(Activity, "Необходимо дать согласие с договором офертой ", ToastLength.Long).Show();
                     }
-
-
                 };
 
                 #endregion
@@ -759,9 +763,9 @@ namespace SmartBoxCity.Activity.Order
         //        s_size.Text = savedInstanceState.GetString("s_size");
         //    }           
         //}
-        public override void OnActivityCreated(Bundle savedInstanceState)
+        public override void OnViewStateRestored(Bundle savedInstanceState)
         {
-            base.OnActivityCreated(savedInstanceState);
+            base.OnViewStateRestored(savedInstanceState);
             if (savedInstanceState != null)
             {
                 s_edit_where.Text = savedInstanceState.GetString("s_edit_where");
@@ -784,6 +788,31 @@ namespace SmartBoxCity.Activity.Order
                 s_size.Text = savedInstanceState.GetString("s_size");
             }
         }
+        //public override void OnActivityCreated(Bundle savedInstanceState)
+        //{
+        //    base.OnActivityCreated(savedInstanceState);
+        //    if (savedInstanceState != null)
+        //    {
+        //        s_edit_where.Text = savedInstanceState.GetString("s_edit_where");
+        //        s_shipping_date.Text = savedInstanceState.GetString("s_shipping_date");
+        //        s_shipment_time.Text = savedInstanceState.GetString("s_shipment_time");
+        //        s_height.Text = savedInstanceState.GetString("s_height");
+        //        a_hazard_class = savedInstanceState.GetString("a_hazard_class");
+        //        a_loading_methodsc = savedInstanceState.GetString("a_loading_methodsc");
+        //        a_cargo_characteristic = savedInstanceState.GetString("a_cargo_characteristic");
+        //        StaticOrder.Destination_lat = savedInstanceState.GetString("Destination_lat");
+        //        StaticOrder.Destination_lng = savedInstanceState.GetString("Destination_lng");
+        //        StaticOrder.Inception_lat = savedInstanceState.GetString("Inception_lat");
+        //        StaticOrder.Inception_lng = savedInstanceState.GetString("Inception_lng");
+        //        s_value.Text = savedInstanceState.GetString("s_value");
+        //        s_contact_person.Text = savedInstanceState.GetString("s_contact_person");
+        //        s_length.Text = savedInstanceState.GetString("s_length");
+        //        s_sum_seats.Text = savedInstanceState.GetString("s_sum_seats");
+        //        s_weight.Text = savedInstanceState.GetString("s_weight");
+        //        s_width.Text = savedInstanceState.GetString("s_width");
+        //        s_size.Text = savedInstanceState.GetString("s_size");
+        //    }
+        //}
         public override void OnSaveInstanceState(Bundle outState)
         {
             base.OnSaveInstanceState(outState);

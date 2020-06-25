@@ -21,6 +21,9 @@ using SmartBoxCity.Activity.Menu;
 using WebService;
 using WebService.Account;
 using Entity.Repository;
+using System;
+using Android.Gms.Tasks;
+using System.Threading.Tasks;
 
 namespace SmartBoxCity
 {
@@ -109,22 +112,24 @@ namespace SmartBoxCity
 
                 navigation.NavigationItemSelected += async (sender, e) =>
                 {
-
-                    FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
-
+                    FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
                     switch (e.Item.ItemId)
                     {
 
                         case Resource.Id.navigation_home:
                             if (StaticUser.PresenceOnPage == true)
                             {
-                                UserActivity content2 = new UserActivity();
-                                transaction2.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+                                UserActivity content = new UserActivity();                                                              
+                                transaction.Replace(Resource.Id.framelayout, content);
+                                transaction.AddToBackStack(null);
+                                transaction.Commit();
                             }
                             else
                             {
                                 ContentMainActivity content = new ContentMainActivity();
-                                transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                                transaction.Replace(Resource.Id.framelayout, content);
+                                transaction.AddToBackStack(null);
+                                transaction.Commit();
                             }
 
 
@@ -133,12 +138,16 @@ namespace SmartBoxCity
                             if (StaticUser.PresenceOnPage == true)
                             {
                                 AddOrderActivity content = new AddOrderActivity();
-                                transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                                transaction.Replace(Resource.Id.framelayout, content);
+                                transaction.AddToBackStack(null);
+                                transaction.Commit();
                             }
                             else
-                            {
+                            {   
                                 Activity_About_As content3 = new Activity_About_As();
-                                transaction2.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
+                                transaction.Replace(Resource.Id.framelayout, content3);
+                                transaction.AddToBackStack(null);
+                                transaction.Commit();
                                 Toast.MakeText(this, "Страница: О нас.", ToastLength.Long).Show();
                             }
 
@@ -147,12 +156,16 @@ namespace SmartBoxCity
                             if (StaticUser.PresenceOnPage == true)
                             {
                                 ListOrdersActivity content1 = new ListOrdersActivity();
-                                transaction2.Replace(Resource.Id.framelayout, content1).AddToBackStack(null).Commit();
+                                transaction.Replace(Resource.Id.framelayout, content1);
+                                transaction.AddToBackStack(null);
+                                transaction.Commit();
                             }
                             else
                             {
                                 Activity_Reviews content5 = new Activity_Reviews();
-                                transaction2.Replace(Resource.Id.framelayout, content5).AddToBackStack(null).Commit();
+                                transaction.Replace(Resource.Id.framelayout, content5);
+                                transaction.AddToBackStack(null);
+                                transaction.Commit();
                                 Toast.MakeText(this, "Страница: Отзывы.", ToastLength.Long).Show();
                             }
 
@@ -166,20 +179,7 @@ namespace SmartBoxCity
                                 alert.SetMessage("Вы действительно хотите выйти ?");
                                 alert.SetPositiveButton("Да", (senderAlert, args) =>
                                 {
-                                    string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-                                    File.Delete(dir_path + "user_data.txt");
-                                    CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
-
-                                    using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
-                                    {
-                                        AuthService.InitializeClient(client);
-                                        AuthService.LogOut();
-                                        CrossSettings.Current.AddOrUpdateValue("token", "");
-                                        StaticUser.PresenceOnPage = false;
-                                    }
-
-                                    Intent content = new Intent(this, typeof(MainActivity));
-                                    StartActivity(content);
+                                    Leaveprofile();
                                 });
                                 alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                                 {
@@ -190,7 +190,9 @@ namespace SmartBoxCity
                             else
                             {
                                 Activity_List_Contacts content4 = new Activity_List_Contacts();
-                                transaction2.Replace(Resource.Id.framelayout, content4).AddToBackStack(null).Commit();
+                                transaction.Replace(Resource.Id.framelayout, content4);
+                                transaction.AddToBackStack(null);
+                                transaction.Commit();
                                 Toast.MakeText(this, "Страница: Контакты.", ToastLength.Long).Show();
                             }
                             break;
@@ -300,7 +302,7 @@ namespace SmartBoxCity
         //            }
         //        }
         //        else
-                
+
         //        {
         //            Toast.MakeText(this, o_data.Message, ToastLength.Long).Show();
         //        }
@@ -314,15 +316,66 @@ namespace SmartBoxCity
         }
         public override void OnBackPressed()
         {
-            // Ignoring stuff about DrawerLayout, etc for demo purposes.
-            var currentFragment = SupportFragmentManager.FindFragmentById(Resource.Id.framelayout);
-            var listener = currentFragment as IBackButtonListener;
-            if (listener != null)
+            if(StaticUser.OrderInStageOfBid == true)
             {
-                listener.OnBackPressed();
-                return;
+                string WarningMessage = "Если Вы покините эту страницу, Ваш заказ будет удалён. Вы действительно хотите покинуть эту страницу ?";
+                CreationAlertDialog(WarningMessage);
             }
-            base.OnBackPressed();
+            else if(StaticUser.PresenceOnPage == true)
+            {
+                string WarningMessage = "Вы действительно хотите выйти со своего профиля ?";
+                CreationAlertDialog( WarningMessage);
+            }
+            else
+            {
+               var currentFragment = SupportFragmentManager.FindFragmentById(Resource.Id.framelayout);
+                var listener = currentFragment as IBackButtonListener;
+                if (listener != null)
+                {
+                    listener.OnBackPressed();
+                    return;
+                }
+            }          
+        }
+
+        private void Leaveprofile()
+        {
+            string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            File.Delete(dir_path + "user_data.txt");
+
+            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            {
+                AuthService.InitializeClient(client);
+                AuthService.LogOut();
+                CrossSettings.Current.AddOrUpdateValue("token", "");
+                StaticUser.PresenceOnPage = false;
+            }
+
+            Intent content = new Intent(this, typeof(MainActivity));
+            StartActivity(content);
+        }
+
+        private void CreationAlertDialog(string warningMessage)
+        {
+            Android.App.AlertDialog.Builder alert = new Android.App.AlertDialog.Builder(this);
+            alert.SetTitle("Внимание!");
+            alert.SetMessage(warningMessage);
+            alert.SetPositiveButton("Да", (senderAlert, args) =>
+            {
+                if (warningMessage == "Если Вы покините эту страницу, Ваш заказ будет удалён." +
+                " Вы действительно хотите покинуть эту страницу ?")
+                {
+                    StaticUser.OrderInStageOfBid = false;
+                    base.OnBackPressed();
+                }               
+                else
+                    Leaveprofile();
+            });
+            alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+            {
+            });
+            Dialog dialog = alert.Create();
+            dialog.Show();
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)

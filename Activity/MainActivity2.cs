@@ -67,22 +67,7 @@ namespace SmartBoxCity.Activity
                         });
                         alert.SetPositiveButton("Да", (senderAlert, args) =>
                         {
-                            string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-                            File.Delete(dir_path + "user_data.txt");
-                            StaticUser.PresenceOnPage = false;
-                            CrossSettings.Current.AddOrUpdateValue("role", "");
-                            CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
-
-                            if (StaticDriver.busy == "0")
-                            {
-                                _gpsService = new GPSService(this);
-                                //_gpsService.UpdateLocation();
-                                _gpsService.RemoveLocation();
-                            }
-
-                            Intent content1 = new Intent(this, typeof(MainActivity));
-                            StartActivity(content1);
-                            this.Finish();
+                            Leaveprofile();
                         });
                         Dialog dialog = alert.Create();
                         dialog.Show();
@@ -102,17 +87,52 @@ namespace SmartBoxCity.Activity
         }
         public override void OnBackPressed()
         {
-            // Ignoring stuff about DrawerLayout, etc for demo purposes.
-            var currentFragment = SupportFragmentManager.FindFragmentById(Resource.Id.framelayout);
-            var listener = currentFragment as IBackButtonListener;
-            if (listener != null)
+            if (StaticUser.PresenceOnPage == true)
             {
-                listener.OnBackPressed();
-                return;
-            }
-            base.OnBackPressed();
-        }
 
+                Android.App.AlertDialog.Builder alert = new Android.App.AlertDialog.Builder(this);
+                alert.SetTitle("Внимание!");
+                alert.SetMessage("Вы действительно хотите выйти со своего профиля ?");
+                alert.SetPositiveButton("Да", (senderAlert, args) =>
+                {
+                    Leaveprofile();
+                });
+                alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+                {
+                });
+                Dialog dialog = alert.Create();
+                dialog.Show();
+            }
+            else
+            {
+                var currentFragment = SupportFragmentManager.FindFragmentById(Resource.Id.framelayout);
+                var listener = currentFragment as IBackButtonListener;
+                if (listener != null)
+                {
+                    listener.OnBackPressed();
+                    return;
+                }
+            }         
+        }
+        private void Leaveprofile()
+        {
+            string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            File.Delete(dir_path + "user_data.txt");
+
+            StaticUser.PresenceOnPage = false;
+            CrossSettings.Current.AddOrUpdateValue("role", "");
+
+            if (StaticDriver.busy == "0")
+            {
+                _gpsService = new GPSService(this);
+                //_gpsService.UpdateLocation();
+                _gpsService.RemoveLocation();
+            }
+
+            Intent content1 = new Intent(this, typeof(MainActivity));
+            StartActivity(content1);
+            this.Finish();
+        }
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             MenuInflater.Inflate(Resource.Menu.menu_main, menu);

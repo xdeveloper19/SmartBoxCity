@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "p4aRpbv1n5zGhV5quyRq1Oq6vqfloRMHul0SAAmX4PLlhV6iuUwdPgBbaznba54KbCwX/pm6c+lMftZmHOO+0w==",
+  "success": true,
+  "projectFilePath": "C:\\Games\\repos\\User\\SmartBoxCity\\WebService\\WebService.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Илья\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\Илья\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\Илья\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\Илья\\.nuget\\packages\\xam.plugins.settings\\3.1.1\\xam.plugins.settings.3.1.1.nupkg.sha512"
+  ],
+  "logs": []
+}

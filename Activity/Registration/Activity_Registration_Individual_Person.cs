@@ -65,6 +65,7 @@ namespace SmartBoxCity.Activity.Registration
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             var view = inflater.Inflate(Resource.Layout.activity_registration_individual_person, container, false);
+
             #region Объявление переменных
 
             s_email_individual = view.FindViewById<EditText>(Resource.Id.s_email_individual);
@@ -84,15 +85,11 @@ namespace SmartBoxCity.Activity.Registration
             check_contract_oferta_individual = view.FindViewById<CheckBox>(Resource.Id.check_contract_oferta_individual);
             preloader = view.FindViewById<ProgressBar>(Resource.Id.preloader);
 
-            s_passport_series_individual.SetMaxLines(4);
-            s_passport_number_individual.SetMaxLines(6);
-            s_department_code_individual.SetMaxLines(6);
-            s_phone_individual.SetMaxLines(11);
-
             s_date_birth_individual.Focusable = false;
             s_date_birth_individual.Clickable = false;
 
             #endregion
+
             s_date_birth_individual.Click += S_date_birth_individual_Click;
             check_personal_data_processing_individual.Click += async delegate
             {
@@ -217,8 +214,8 @@ namespace SmartBoxCity.Activity.Registration
                                     CrossSettings.Current.AddOrUpdateValue("login", s_login_individual.Text);
                                     CrossSettings.Current.AddOrUpdateValue("password", s_pass_individual.Text);
                                     CrossSettings.Current.AddOrUpdateValue("check", "0");
-                                    CrossSettings.Current.AddOrUpdateValue("NeedToCreateOrder", "true");
-                                    CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
+                                    StaticUser.NeedToCreateOrder = true;
+                                    StaticUser.PresenceOnPage = true;
 
                                     Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                                     Intent main = new Intent(Activity, typeof(MainActivity));

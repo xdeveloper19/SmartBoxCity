@@ -53,6 +53,8 @@ namespace Entity.Repository
 
         public static bool PresenceOnPage { get; set; }
 
+        public static bool OrderInStageOfBid {get; set;}
+        public static bool NeedToCreateOrder { get; set; }
 
         /// <summary>
         /// Добавляю информацию о клиенте

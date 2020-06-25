@@ -14,6 +14,7 @@ using Entity.Model;
 using Entity.Model.BoxResponse;
 using Entity.Model.OrderResponse;
 using Entity.Model.OrderViewModel.OrderInfoViewModel;
+using Entity.Repository;
 using EntityLibrary.Model.OrderResponse;
 using Plugin.Settings;
 using SmartBoxCity.Service;
@@ -38,7 +39,7 @@ namespace SmartBoxCity.Activity.Order
             try
             {
                 View view;
-                if (CrossSettings.Current.GetValueOrDefault("isAuth", "") != "true")
+                if (StaticUser.PresenceOnPage != true)
                 {
                     view = inflater.Inflate(Resource.Layout.activity_not_found_book, container, false);
                     var btn_add_order1 = view.FindViewById<Button>(Resource.Id.btn_add_order1);

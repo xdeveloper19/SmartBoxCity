@@ -112,7 +112,7 @@ namespace SmartBoxCity.Activity.Auth
                              {
                                  CrossSettings.Current.AddOrUpdateValue("check", "1");
                                  CrossSettings.Current.AddOrUpdateValue("login", s_login.Text);
-                                 CrossSettings.Current.AddOrUpdateValue("isAuth", "true");
+                                 StaticUser.PresenceOnPage = true;
                                  CrossSettings.Current.AddOrUpdateValue("password", s_pass.Text);
                              }
                              else
@@ -126,9 +126,9 @@ namespace SmartBoxCity.Activity.Auth
                             CrossSettings.Current.AddOrUpdateValue("token", o_user_data.Token);
                             CrossSettings.Current.AddOrUpdateValue("role", o_user_data.Role);
 
-                            if (CrossSettings.Current.GetValueOrDefault("OrderInStageOfBid", "") == "true")
+                            if (StaticUser.OrderInStageOfBid == true)
                             {
-                                CrossSettings.Current.AddOrUpdateValue("NeedToCreateOrder", "true");
+                                StaticUser.NeedToCreateOrder = true;
                             }
 
                             Intent main = new Intent(Activity, typeof(MainActivity));
@@ -136,6 +136,7 @@ namespace SmartBoxCity.Activity.Auth
                         }
                         else
                         {
+                            preloader.Visibility = Android.Views.ViewStates.Invisible;
                             Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                         }
                     }

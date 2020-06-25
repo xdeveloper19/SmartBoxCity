@@ -40,7 +40,7 @@ namespace SmartBoxCity.Activity.Home
             base.OnCreate(savedInstanceState);
             RetainInstance = true;
 
-            if (CrossSettings.Current.GetValueOrDefault("NeedToCreateOrder", "") == "true")
+            if (StaticUser.NeedToCreateOrder == true)
             {
                 MakeOrderModel model = new MakeOrderModel()
                 {
@@ -202,8 +202,8 @@ namespace SmartBoxCity.Activity.Home
                     "\nДля повторного оформления заказа зайдите в раздел 'Заказать'.";
                 AlertDialogCall(ErrorMessag);
             }
-            CrossSettings.Current.AddOrUpdateValue("NeedToCreateOrder", "false");
-            CrossSettings.Current.AddOrUpdateValue("OrderInStageOfBid", "false");
+            StaticUser.NeedToCreateOrder = false;
+            StaticUser.OrderInStageOfBid = false;
 
         }
         private void AlertDialogCall(string Messag)
