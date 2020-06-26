@@ -387,111 +387,71 @@ namespace SmartBoxCity.Activity.Order
 
                 btn_make_request.Click += async delegate
                 {
-                    if (check_argue.Checked)
+                    try
                     {
-                        CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
-                        ci.NumberFormat.CurrencyDecimalSeparator = ".";
-                        if (float.Parse(s_length.Text, NumberStyles.Any, ci) > 1.88 ||
-                        float.Parse(s_width.Text, NumberStyles.Any, ci) > 2.59 ||
-                        float.Parse(s_height.Text, NumberStyles.Any, ci) > 2.20)
+                        string InputErrorMessage = "";
+                        if(IsStringsNull(ref InputErrorMessage))
                         {
-                            string ErrorMessag = "Пожалуйста, проверьте введённые Вами значения длины, ширины и высоты груза!" +
-                                "\n\nМакс. длина: 1.88 м\n\nМакс. ширина: 2.59 м\n\nМакс. высота: 2.20 м";
-                            AlertDialogCall(ErrorMessag);
-                        }
-                        else if (s_size.Text == null || s_size.Text == "0.0")
-                        {
-                            string ErrorMessag = "Необходимо вычислить объём груза ! Для этого введите данные длины, ширины и высоты груза, а так же кол-во мест.";
-                            AlertDialogCall(ErrorMessag);
-                        }
-                        else if(String.IsNullOrEmpty(s_edit_from.Text) == true || String.IsNullOrEmpty(s_edit_where.Text) == true)
-                        {
-                            string ErrorMessag = "Необходимо ввести пункт отправления и пункт назначения !";
-                            AlertDialogCall(ErrorMessag);
+                            AlertDialogCall(InputErrorMessage);
                         }
                         else
                         {
-                            
-                            //q_result = Int32.TryParse(s_sum_seats.Text, out quantity);
-                            l_result = Double.TryParse(s_length.Text, out length);
-                            width_result = Double.TryParse(s_width.Text, out width);
-                            weight_result = Double.TryParse(s_weight.Text, out weight);
-                            h_result = Double.TryParse(s_height.Text, out height);
+                            preloader.Visibility = Android.Views.ViewStates.Visible;
+                            MakeOrderModel model = new MakeOrderModel()
+                            {
+                                destination_address = s_edit_where.Text,
+                                for_date = s_shipping_date.Text,
+                                for_time = s_shipment_time.Text,
+                                height = s_height.Text,
+                                inception_address = s_edit_from.Text,
+                                cargo_class = a_hazard_class,
+                                cargo_loading = a_loading_methodsc,
+                                cargo_type = a_cargo_characteristic,
+                                destination_lat = StaticOrder.Destination_lat,/*"47.232032",*/
+                                destination_lng = StaticOrder.Destination_lng,/*"39.731523",*/
+                                inception_lat = StaticOrder.Inception_lat,/*"47.243221",*/
+                                inception_lng = StaticOrder.Inception_lng,/*"39.668781",*/
+                                insurance = s_value.Text,
+                                receiver = s_contact_person.Text,
+                                length = s_length.Text,
+                                qty = s_sum_seats.Text,
+                                weight = s_weight.Text,
+                                width = s_width.Text
+                            };
 
-                            if (weight < 0 || weight > 5000)
+                            using (var client = ClientHelper.GetClient())
                             {
-                                string ErrorMessag = "Пожалуйста, проверьте введённые Вами значения веса груза!";
-                                AlertDialogCall(ErrorMessag);                          
-                            }
-                            else
-                            {
-                                if(s_edit_from.Text == s_edit_where.Text)
+                                OrderService.InitializeClient(client);
+                                var o_data = await OrderService.GetOrderPrice(model);
+
+                                if (o_data.Status == HttpStatusCode.OK)
                                 {
-                                    string ErrorMessag = "Вы ввели одинаковые пункты отправления и назначения !";
-                                    AlertDialogCall(ErrorMessag);
+                                    //o_data.Message = "Успешно авторизован!";
+                                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+
+                                    AmountResponse order_data = new AmountResponse();
+                                    order_data = o_data.ResponseData;
+
+                                    StaticOrder.AddInfoOrder(model);
+                                    StaticOrder.AddInfoAmount(order_data);
+
+                                    preloader.Visibility = Android.Views.ViewStates.Invisible;
+
+                                    StaticUser.OrderInStageOfBid = true;
+                                    Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                                    ActivityOrderPreis content = new ActivityOrderPreis();
+                                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
                                 }
                                 else
                                 {
-                                    preloader.Visibility = Android.Views.ViewStates.Visible;
-                                    MakeOrderModel model = new MakeOrderModel()
-                                    {
-                                        destination_address = s_edit_where.Text,
-                                        for_date = s_shipping_date.Text,
-                                        for_time = s_shipment_time.Text,
-                                        height = s_height.Text,
-                                        inception_address = s_edit_from.Text,
-                                        cargo_class = a_hazard_class,
-                                        cargo_loading = a_loading_methodsc,
-                                        cargo_type = a_cargo_characteristic,
-                                        destination_lat = StaticOrder.Destination_lat,/*"47.232032",*/
-                                        destination_lng = StaticOrder.Destination_lng,/*"39.731523",*/
-                                        inception_lat = StaticOrder.Inception_lat,/*"47.243221",*/
-                                        inception_lng = StaticOrder.Inception_lng,/*"39.668781",*/
-                                        insurance = s_value.Text,
-                                        receiver = s_contact_person.Text,
-                                        length = s_length.Text,
-                                        qty = s_sum_seats.Text,
-                                        weight = s_weight.Text,
-                                        width = s_width.Text
-                                    };
-
-                                    using (var client = ClientHelper.GetClient())
-                                    {
-                                        OrderService.InitializeClient(client);
-                                        var o_data = await OrderService.GetOrderPrice(model);
-
-                                        if (o_data.Status == HttpStatusCode.OK)
-                                        {
-                                            //o_data.Message = "Успешно авторизован!";
-                                            Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-
-                                            AmountResponse order_data = new AmountResponse();
-                                            order_data = o_data.ResponseData;
-
-                                            StaticOrder.AddInfoOrder(model);
-                                            StaticOrder.AddInfoAmount(order_data);
-
-                                            preloader.Visibility = Android.Views.ViewStates.Invisible;
-
-                                            StaticUser.OrderInStageOfBid = true;
-                                            Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                                            ActivityOrderPreis content = new ActivityOrderPreis();
-                                            transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                                        }
-                                        else
-                                        {
-                                            Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                                        }
-                                    }
+                                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                                 }
-                                
                             }
-
                         }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        Toast.MakeText(Activity, "Необходимо дать согласие с договором офертой ", ToastLength.Long).Show();
+                        Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
                     }
                 };
 
@@ -508,6 +468,62 @@ namespace SmartBoxCity.Activity.Order
            
         }
 
+        private bool IsStringsNull(ref string InputErrorMessage)
+        {
+            try
+            {
+                CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+                ci.NumberFormat.CurrencyDecimalSeparator = ".";
+
+                if (String.IsNullOrEmpty(s_edit_from.Text) || String.IsNullOrEmpty(s_edit_where.Text)
+                    || String.IsNullOrEmpty(s_height.Text) || String.IsNullOrEmpty(s_length.Text)
+                    || String.IsNullOrEmpty(s_width.Text) || String.IsNullOrEmpty(s_weight.Text)
+                    || String.IsNullOrEmpty(s_size.Text) || String.IsNullOrEmpty(s_sum_seats.Text)
+                    || s_edit_from.Text == s_edit_where.Text)
+                {
+                    InputErrorMessage = "Вы должны заполнить все обязательные поля перед тем, как оформите заказ !";
+                    return true;
+                }
+                else if (float.Parse(s_size.Text, NumberStyles.Any, ci) <= 0)
+                {
+                    InputErrorMessage = "Необходимо вычислить объём груза ! Для этого введите данные длины, ширины и высоты груза, а так же кол-во мест.";
+                    return true;
+                }
+                else if (float.Parse(s_length.Text, NumberStyles.Any, ci) > 1.88 ||
+                            float.Parse(s_width.Text, NumberStyles.Any, ci) > 2.59 ||
+                            float.Parse(s_height.Text, NumberStyles.Any, ci) > 2.20)
+                {
+                    InputErrorMessage = "Пожалуйста, проверьте введённые Вами значения длины, ширины и высоты груза!" +
+                        "\n\nМакс. длина: 1.88 м\n\nМакс. ширина: 2.59 м\n\nМакс. высота: 2.20 м";
+                    return true;
+                }
+                else
+                {
+                    l_result = Double.TryParse(s_length.Text, out length);
+                    width_result = Double.TryParse(s_width.Text, out width);
+                    weight_result = Double.TryParse(s_weight.Text, out weight);
+                    h_result = Double.TryParse(s_height.Text, out height);
+
+                    if (weight < 0 || weight > 5000)
+                    {
+                        InputErrorMessage = "Пожалуйста, проверьте введённые Вами значения веса груза!";
+                        return true;
+                    }
+                    else if (check_argue.Checked)
+                    {
+                        InputErrorMessage = "Необходимо согласиться с договором оферты !";
+                        return true;
+                    }
+                    else
+                        return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                InputErrorMessage = "Что-то пошло не так...\nОшибка: " + ex.Message;
+                return true;
+            }           
+        }
         private void AlertDialogCall(string ErrorMessag)
         {
             AlertDialog.Builder alert = new AlertDialog.Builder(Activity);

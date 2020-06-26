@@ -58,140 +58,170 @@ namespace SmartBoxCity.Activity.Home
 
         public override View GetView(int position, View convertView, ViewGroup parent)
         {
-            View view = convertView;
-            if (view == null)
-                view = LayoutInflater.From(context).Inflate(Resource.Layout.activity_user_CardView, null);
-
-            NameContainer = view.FindViewById<TextView>(Resource.Id.container_name);
-            Statusview = view.FindViewById<TextView>(Resource.Id.status_view);
-            Cost = view.FindViewById<TextView>(Resource.Id.s_cost);
-            Payment = view.FindViewById<TextView>(Resource.Id.s_payment);
-            Payment.Text = orders[position].payment_status;
-            Cost.Text = orders[position].payment_amount;
-            NameContainer.Text = orders[position].id;
-            Statusview.Text = orders[position].order_stage_id + ". " + orders[position].order_stage_name;
-            if (Payment.Text == "1")
+            try
             {
-                Payment.Text = "Оплачено";
-                Payment.SetTextColor(Color.ParseColor("#8EF892"));
-            }
-            else
-            {
-                Payment.Text = "Не оплачено";
-                Payment.SetTextColor(Color.ParseColor("#EC8F9B"));
-            }
+                View view = convertView;
+                if (view == null)
+                    view = LayoutInflater.From(context).Inflate(Resource.Layout.activity_user_CardView, null);
 
-            var btn_pay = view.FindViewById<Button>(Resource.Id.btn_pay);
-            var progress = view.FindViewById<ProgressBar>(Resource.Id.progressBar);
-            var btn_pass_delivery_service = view.FindViewById<Button>(Resource.Id.btn_pass_delivery_service);
-            var btn_make_photo = view.FindViewById<Button>(Resource.Id.btn_make_photo);
-            var btn_make_video = view.FindViewById<Button>(Resource.Id.btn_make_video);
-            var btn_order_management = view.FindViewById<Button>(Resource.Id.btn_order_management);
-
-            btn_pass_delivery_service.Click += delegate
-            {
-                try
+                NameContainer = view.FindViewById<TextView>(Resource.Id.container_name);
+                Statusview = view.FindViewById<TextView>(Resource.Id.status_view);
+                Cost = view.FindViewById<TextView>(Resource.Id.s_cost);
+                Payment = view.FindViewById<TextView>(Resource.Id.s_payment);
+                Payment.Text = orders[position].payment_status;
+                Cost.Text = orders[position].payment_amount;
+                NameContainer.Text = orders[position].id;
+                Statusview.Text = orders[position].order_stage_id + ". " + orders[position].order_stage_name;
+                if (Payment.Text == "1")
                 {
-                    MainOrderStatusActivity content = new MainOrderStatusActivity();
-                    StaticOrder.Order_id = orders[position].id;
-                    StaticOrder.Payment_Amount = orders[position].payment_amount;
-                    StaticOrder.Payment_Status = orders[position].payment_status;
-                    StaticOrder.Event_Count = orders[position].event_count;
-                    manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                }
-                catch (Exception ex)
-                {
-                    Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
-                }
-            };
-
-            btn_pay.Enabled = (orders[position].order_stage_id == "5") ? true : false;
-
-            btn_pay.Click += delegate
-            {
-                if (Payment.Text == "неизвестно")
-                {
-                    Toast.MakeText(context, "В настоящий момент невозможно использовать эту кнопку!\nПричина: Неизвестно состояние об оплате.", ToastLength.Long).Show();
+                    Payment.Text = "Оплачено";
+                    Payment.SetTextColor(Color.ParseColor("#8EF892"));
                 }
                 else
                 {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                    alert.SetTitle("Внесение оплаты");
-                    alert.SetMessage("Вы действительно хотите оплатить заказ?");
-                    alert.SetPositiveButton("Продолжить", (senderAlert, args) =>
+                    Payment.Text = "Не оплачено";
+                    Payment.SetTextColor(Color.ParseColor("#EC8F9B"));
+                }
+
+                var btn_pay = view.FindViewById<Button>(Resource.Id.btn_pay);
+                var progress = view.FindViewById<ProgressBar>(Resource.Id.progressBar);
+                var btn_pass_delivery_service = view.FindViewById<Button>(Resource.Id.btn_pass_delivery_service);
+                var btn_make_photo = view.FindViewById<Button>(Resource.Id.btn_make_photo);
+                var btn_make_video = view.FindViewById<Button>(Resource.Id.btn_make_video);
+                var btn_order_management = view.FindViewById<Button>(Resource.Id.btn_order_management);
+
+                btn_pass_delivery_service.Click += delegate
+                {
+                    try
                     {
-                        MakePayment(alert);
-                    });
-                    alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+                        MainOrderStatusActivity content = new MainOrderStatusActivity();
+                        StaticOrder.Order_id = orders[position].id;
+                        StaticOrder.Payment_Amount = orders[position].payment_amount;
+                        StaticOrder.Payment_Status = orders[position].payment_status;
+                        StaticOrder.Event_Count = orders[position].event_count;
+                        manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                    }
+                    catch (Exception ex)
                     {
-                    });
-                    Dialog dialog = alert.Create();
-                    dialog.Show();
-                }
-            };
+                        Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
+                    }
+                };
 
-            btn_make_photo.Click += delegate
+                btn_pay.Enabled = (orders[position].order_stage_id == "5") ? true : false;
+
+                btn_pay.Click += delegate
+                {
+                    try
+                    {
+                        if (Payment.Text == "неизвестно")
+                        {
+                            Toast.MakeText(context, "В настоящий момент невозможно использовать эту кнопку!\nПричина: Неизвестно состояние об оплате.", ToastLength.Long).Show();
+                        }
+                        else
+                        {
+                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                            alert.SetTitle("Внесение оплаты");
+                            alert.SetMessage("Вы действительно хотите оплатить заказ?");
+                            alert.SetPositiveButton("Продолжить", (senderAlert, args) =>
+                            {
+                                MakePayment(alert);
+                            });
+                            alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+                            {
+                            });
+                            Dialog dialog = alert.Create();
+                            dialog.Show();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
+                    }
+                };
+                btn_make_photo.Click += delegate
+                {
+                    try
+                    {
+                        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                        alert.SetTitle("Сделать фотографию");
+                        alert.SetMessage("Вы действительно хотите сделать фотографию с камеры контейнера?");
+                        alert.SetPositiveButton("Сделать", (senderAlert, args) =>
+                        {
+                            GetPhoto(orders[position].id, alert);
+                        });
+                        alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+                        {
+                        });
+                        Dialog dialog = alert.Create();
+                        dialog.Show();
+                    }
+                    catch (Exception ex)
+                    {
+                        Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
+                    }
+                };
+                btn_make_video.Click += delegate
+                {
+                    try
+                    {
+                        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                        alert.SetTitle("Сделать видео");
+                        alert.SetMessage("Вы действительно хотите сделать видео с камеры контейнера?");
+                        alert.SetPositiveButton("Сделать", (senderAlert, args) =>
+                        {
+                            GetVideo(orders[position].id, alert);
+                        });
+                        alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+                        {
+                        });
+                        Dialog dialog = alert.Create();
+                        dialog.Show();
+                    }
+                    catch (Exception ex)
+                    {
+                        Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
+                    }
+                };
+                btn_order_management.Click += delegate
+                {
+                    try
+                    {
+                        ManageOrderActivity content = new ManageOrderActivity();
+                        StaticOrder.Order_id = orders[position].id;
+                        StaticOrder.Payment_Amount = orders[position].payment_amount;
+                        StaticOrder.Payment_Status = orders[position].payment_status;
+                        StaticOrder.Event_Count = orders[position].event_count;
+                        manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
+                    }
+
+                };
+
+                int order_stage;
+                var result = int.TryParse(orders[position].order_stage_id, out order_stage);
+
+                if (result == true)
+                    progress.Progress = order_stage;
+                else
+                    progress.Progress = 0;
+                //btn.Click += async delegate
+                //{
+                //    OrderActivity content = new OrderActivity();
+                //    manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                //};
+
+                return view;
+            }
+            catch (Exception ex)
             {
-                AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                alert.SetTitle("Сделать фотографию");
-                alert.SetMessage("Вы действительно хотите сделать фотографию с камеры контейнера?");
-                alert.SetPositiveButton("Сделать", (senderAlert, args) =>
-                {
-                    GetPhoto(orders[position].id, alert);
-                });
-                alert.SetNegativeButton("Отмена", (senderAlert, args) =>
-                {
-                });
-                Dialog dialog = alert.Create();
-                dialog.Show();
-            };
-            btn_make_video.Click += delegate
-            {
-                AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                alert.SetTitle("Сделать видео");
-                alert.SetMessage("Вы действительно хотите сделать видео с камеры контейнера?");
-                alert.SetPositiveButton("Сделать", (senderAlert, args) =>
-                {
-                    GetVideo(orders[position].id, alert);
-                });
-                alert.SetNegativeButton("Отмена", (senderAlert, args) =>
-                {
-                });
-                Dialog dialog = alert.Create();
-                dialog.Show();
-            };
-            btn_order_management.Click += delegate
-            {
-                try
-                {
-                    ManageOrderActivity content = new ManageOrderActivity();
-                    StaticOrder.Order_id = orders[position].id;
-                    StaticOrder.Payment_Amount = orders[position].payment_amount;
-                    StaticOrder.Payment_Status = orders[position].payment_status;
-                    StaticOrder.Event_Count = orders[position].event_count;
-                    manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                }
-                catch (Exception ex)
-                {
-                    Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
-                }
-
-            };
-
-            int order_stage;
-            var result = int.TryParse(orders[position].order_stage_id, out order_stage);
-
-            if (result == true)
-                progress.Progress = order_stage;
-            else
-                progress.Progress = 0;
-            //btn.Click += async delegate
-            //{
-            //    OrderActivity content = new OrderActivity();
-            //    manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-            //};
-
-            return view;
+                var view = convertView;
+                var TextOfError = view.FindViewById<TextView>(Resource.Id.TextOfError);
+                TextOfError.Text += "\n(Ошибка: " + ex.Message + ")";
+                return view;
+            }            
         }
         private async void GetVideo(string id, AlertDialog.Builder alert)
         {

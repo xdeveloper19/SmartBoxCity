@@ -181,51 +181,58 @@ namespace SmartBoxCity.Activity.Registration
                     {
                         if (check_contract_oferta_individual.Checked == true && check_personal_data_processing_individual.Checked == true)
                         {
-                            RegisterIndividualModel register = new RegisterIndividualModel
+                            try
                             {
-                                Login = s_login_individual.Text,
-                                Password = s_pass_individual.Text,
-                                Email = s_email_individual.Text,
-                                Phone = s_phone_individual.Text,
-                                ClientType = "person",
-                                ClientLastName = s_surname_individual.Text,
-                                ClientName = s_name_individual.Text,
-                                ClientPatronymic = s_patronymic_individual.Text,
-                                ClientBirthday = s_date_birth_individual.Text,
-                                ClientPassportSerie = s_passport_series_individual.Text,
-                                ClientPassportId = s_passport_number_individual.Text,
-                                ClientPassportCode = s_department_code_individual.Text
-                            };
+                                RegisterIndividualModel register = new RegisterIndividualModel
+                                {
+                                    Login = s_login_individual.Text,
+                                    Password = s_pass_individual.Text,
+                                    Email = s_email_individual.Text,
+                                    Phone = s_phone_individual.Text,
+                                    ClientType = "person",
+                                    ClientLastName = s_surname_individual.Text,
+                                    ClientName = s_name_individual.Text,
+                                    ClientPatronymic = s_patronymic_individual.Text,
+                                    ClientBirthday = s_date_birth_individual.Text,
+                                    ClientPassportSerie = s_passport_series_individual.Text,
+                                    ClientPassportId = s_passport_number_individual.Text,
+                                    ClientPassportCode = s_department_code_individual.Text
+                                };
 
-                            using (var client = ClientHelper.GetClient())
+                                using (var client = ClientHelper.GetClient())
+                                {
+                                    AuthService.InitializeClient(client);
+                                    var o_data = await AuthService.RegisterIndividual(register);
+
+                                    if (o_data.Status == HttpStatusCode.OK)
+                                    {
+                                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                                        SuccessResponse o_user_data = new SuccessResponse();
+                                        o_user_data = o_data.ResponseData;
+                                        preloader.Visibility = Android.Views.ViewStates.Invisible;
+
+                                        StaticUser.PresenceOnPage = true;
+                                        CrossSettings.Current.AddOrUpdateValue("role", "user");
+                                        CrossSettings.Current.AddOrUpdateValue("login", s_login_individual.Text);
+                                        CrossSettings.Current.AddOrUpdateValue("password", s_pass_individual.Text);
+                                        CrossSettings.Current.AddOrUpdateValue("check", "0");
+                                        StaticUser.NeedToCreateOrder = true;
+                                        StaticUser.PresenceOnPage = true;
+
+                                        Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                                        Intent main = new Intent(Activity, typeof(MainActivity));
+                                        StartActivity(main);
+                                    }
+                                    else
+                                    {
+                                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                                    }
+                                };
+                            }
+                            catch (Exception ex)
                             {
-                                AuthService.InitializeClient(client);
-                                var o_data = await AuthService.RegisterIndividual(register);
-
-                                if (o_data.Status == HttpStatusCode.OK)
-                                {
-                                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                                    SuccessResponse o_user_data = new SuccessResponse();
-                                    o_user_data = o_data.ResponseData;
-                                    preloader.Visibility = Android.Views.ViewStates.Invisible;
-
-                                    StaticUser.PresenceOnPage = true;
-                                    CrossSettings.Current.AddOrUpdateValue("role", "user");
-                                    CrossSettings.Current.AddOrUpdateValue("login", s_login_individual.Text);
-                                    CrossSettings.Current.AddOrUpdateValue("password", s_pass_individual.Text);
-                                    CrossSettings.Current.AddOrUpdateValue("check", "0");
-                                    StaticUser.NeedToCreateOrder = true;
-                                    StaticUser.PresenceOnPage = true;
-
-                                    Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                                    Intent main = new Intent(Activity, typeof(MainActivity));
-                                    StartActivity(main);
-                                }
-                                else
-                                {
-                                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                                }
-                            };
+                                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+                            }                            
                         }
                         else
                         {
@@ -238,24 +245,30 @@ namespace SmartBoxCity.Activity.Registration
                         Toast.MakeText(Activity, "Пароли не совпадают ", ToastLength.Long).Show();
                     }
                 }
-                              
             };
             return view;
         }
 
         private bool CheckingOnNullOrEmptyOfStrings()
         {
-            if (String.IsNullOrEmpty(s_email_individual.Text) || String.IsNullOrEmpty(s_phone_individual.Text)
+            try
+            {
+                if (String.IsNullOrEmpty(s_email_individual.Text) || String.IsNullOrEmpty(s_phone_individual.Text)
                || String.IsNullOrEmpty(s_login_individual.Text) || String.IsNullOrEmpty(s_pass_individual.Text)
                || String.IsNullOrEmpty(s_pass_confirmation_individual.Text) || String.IsNullOrEmpty(s_surname_individual.Text)
                || String.IsNullOrEmpty(s_name_individual.Text) || String.IsNullOrEmpty(s_patronymic_individual.Text)
                || String.IsNullOrEmpty(s_passport_series_individual.Text) || String.IsNullOrEmpty(s_passport_number_individual.Text)
                || String.IsNullOrEmpty(s_date_birth_individual.Text) || String.IsNullOrEmpty(s_department_code_individual.Text))
-            {
-                return true;
+                {
+                    return true;
+                }
+                else
+                    return false;
             }
-            else
-                return false;
+            catch (Exception ex)
+            {               
+                return true;
+            }           
         }
 
         private void S_date_birth_individual_Click(object sender, EventArgs e)

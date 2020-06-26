@@ -56,6 +56,8 @@ namespace Entity.Repository
         public static bool OrderInStageOfBid {get; set;}
         public static bool NeedToCreateOrder { get; set; }
 
+        public static string NamePadeAbsenceSomething { get; set; }
+
         /// <summary>
         /// Добавляю информацию о клиенте
         /// </summary>

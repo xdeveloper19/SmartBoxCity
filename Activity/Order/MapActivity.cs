@@ -77,10 +77,26 @@ namespace SmartBoxCity.Activity.Order
                         //location = new LatLng(latitude, longitude);
 
                         markerOpt1.SetPosition(new LatLng(latitude, longitude));
-                        markerOpt1.SetTitle("Start");
-                        markerOpt1.SetSnippet("Текущее положение");
+                        markerOpt1.SetTitle("Пункт отправления");
+                        markerOpt1.SetSnippet(StaticOrder.Inception_address);
 
                         var bmDescriptor = BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueBlue);
+                        markerOpt1.InvokeIcon(bmDescriptor);
+
+                        googleMap.AddMarker(markerOpt1);
+
+                        continue;
+                    }
+                    else if(i == 1)
+                    {
+                        MarkerOptions markerOpt1 = new MarkerOptions();
+                        //location = new LatLng(latitude, longitude);
+
+                        markerOpt1.SetPosition(new LatLng(latitude, longitude));
+                        markerOpt1.SetTitle("Пункт назначения");
+                        markerOpt1.SetSnippet(StaticOrder.Destination_address);
+
+                        var bmDescriptor = BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueRed);
                         markerOpt1.InvokeIcon(bmDescriptor);
 
                         googleMap.AddMarker(markerOpt1);

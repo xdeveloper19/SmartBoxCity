@@ -54,6 +54,7 @@ namespace SmartBoxCity.Activity
                         transaction2.Replace(Resource.Id.frameDriverlayout, content3).AddToBackStack(null).Commit();
                         break;
                     case Resource.Id.alarms:
+                        StaticUser.NamePadeAbsenceSomething = "AlarmsActivity";
                         AlarmsActivity content4 = new AlarmsActivity();
                         transaction2.Replace(Resource.Id.frameDriverlayout, content4).AddToBackStack(null).Commit();
                         break;

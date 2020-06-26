@@ -198,66 +198,71 @@ namespace SmartBoxCity.Activity.Registration
                 }
                 else
                 {
-
                     if (s_password.Text == s_pass_confirmation.Text)
                     {
                         if (check_contract_oferta_entity.Checked == true && check_personal_data_processing_entity.Checked == true)
                         {
-
-                            RegisterLegalModel register = new RegisterLegalModel
+                            try
                             {
-                                Login = s_login.Text,
-                                Password = s_password.Text,
-                                Email = s_email.Text,
-                                OrgPhone = s_orgPhone.Text,
-                                ClientType = "organization",
-                                ClientLastName = s_clientLastName.Text,
-                                ClientName = s_clientName.Text,
-                                ClientPatronymic = s_clientPatronymic.Text,
-                                OrgPostalAddress = s_orgPostalAddress.Text,
-                                OrgName = s_orgName.Text,
-                                OrgKpp = s_orgKpp.Text,
-                                OrgInn = s_orgInn.Text,
-                                OrgOgrn = s_orgOgrn.Text,
-                                OrgBank = s_orgBank.Text,
-                                OrgBankpayment = s_orgBankpayment.Text,
-                                OrgBankCorrespondent = s_orgBankCorrespondent.Text,
-                                OrgBankBik = s_orgBankBik.Text,
-                                OrgLegalAddress = s_orgLegalAddress.Text
-                            };
+                                RegisterLegalModel register = new RegisterLegalModel
+                                {
+                                    Login = s_login.Text,
+                                    Password = s_password.Text,
+                                    Email = s_email.Text,
+                                    OrgPhone = s_orgPhone.Text,
+                                    ClientType = "organization",
+                                    ClientLastName = s_clientLastName.Text,
+                                    ClientName = s_clientName.Text,
+                                    ClientPatronymic = s_clientPatronymic.Text,
+                                    OrgPostalAddress = s_orgPostalAddress.Text,
+                                    OrgName = s_orgName.Text,
+                                    OrgKpp = s_orgKpp.Text,
+                                    OrgInn = s_orgInn.Text,
+                                    OrgOgrn = s_orgOgrn.Text,
+                                    OrgBank = s_orgBank.Text,
+                                    OrgBankpayment = s_orgBankpayment.Text,
+                                    OrgBankCorrespondent = s_orgBankCorrespondent.Text,
+                                    OrgBankBik = s_orgBankBik.Text,
+                                    OrgLegalAddress = s_orgLegalAddress.Text
+                                };
 
-                            using (var client = ClientHelper.GetClient())
+                                using (var client = ClientHelper.GetClient())
+                                {
+                                    AuthService.InitializeClient(client);
+                                    var o_data = await AuthService.RegisterLegal(register);
+
+                                    if (o_data.Status == HttpStatusCode.OK)
+                                    {
+                                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                                        SuccessResponse o_user_data = new SuccessResponse();
+                                        o_user_data = o_data.ResponseData;
+
+                                        preloader.Visibility = Android.Views.ViewStates.Invisible;
+
+                                        StaticUser.PresenceOnPage = true;
+                                        CrossSettings.Current.AddOrUpdateValue("role", "client");
+                                        CrossSettings.Current.AddOrUpdateValue("login", s_login.Text);
+                                        CrossSettings.Current.AddOrUpdateValue("password", s_password.Text);
+                                        CrossSettings.Current.AddOrUpdateValue("check", "0");
+                                        StaticUser.NeedToCreateOrder = true;
+                                        StaticUser.PresenceOnPage = true;
+
+                                        Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                                        Intent main = new Intent(Activity, typeof(MainActivity));
+                                        StartActivity(main);
+                                    }
+
+                                    else
+                                    {
+                                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                                    }
+
+                                };
+                            }
+                            catch (Exception ex)
                             {
-                                AuthService.InitializeClient(client);
-                                var o_data = await AuthService.RegisterLegal(register);
-
-                                if (o_data.Status == HttpStatusCode.OK)
-                                {
-                                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                                    SuccessResponse o_user_data = new SuccessResponse();
-                                    o_user_data = o_data.ResponseData;
-
-                                    preloader.Visibility = Android.Views.ViewStates.Invisible;
-
-                                    StaticUser.PresenceOnPage = true;
-                                    CrossSettings.Current.AddOrUpdateValue("role", "client");
-                                    CrossSettings.Current.AddOrUpdateValue("login", s_login.Text);
-                                    CrossSettings.Current.AddOrUpdateValue("password", s_password.Text);
-                                    CrossSettings.Current.AddOrUpdateValue("check", "0");
-                                    StaticUser.NeedToCreateOrder = true;
-                                    StaticUser.PresenceOnPage = true;
-
-                                    Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                                    Intent main = new Intent(Activity, typeof(MainActivity));
-                                    StartActivity(main);
-                                }
-
-                                else
-                                {
-                                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                                }
-
-                            };
+                                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+                            }                           
                         }
                         else
                         {
@@ -278,20 +283,27 @@ namespace SmartBoxCity.Activity.Registration
 
         private bool CheckingOnNullOrEmptyOfStrings()
         {
-            if (String.IsNullOrEmpty(s_login.Text) || String.IsNullOrEmpty(s_password.Text)
-              || String.IsNullOrEmpty(s_pass_confirmation.Text) || String.IsNullOrEmpty(s_email.Text)
-              || String.IsNullOrEmpty(s_orgPostalAddress.Text) || String.IsNullOrEmpty(s_clientLastName.Text)
-              || String.IsNullOrEmpty(s_clientName.Text) || String.IsNullOrEmpty(s_clientPatronymic.Text)
-              || String.IsNullOrEmpty(s_orgPhone.Text) || String.IsNullOrEmpty(s_orgName.Text)
-              || String.IsNullOrEmpty(s_orgKpp.Text) || String.IsNullOrEmpty(s_orgInn.Text)
-              || String.IsNullOrEmpty(s_orgOgrn.Text) || String.IsNullOrEmpty(s_orgBank.Text)
-              || String.IsNullOrEmpty(s_orgBankpayment.Text) || String.IsNullOrEmpty(s_orgBankCorrespondent.Text)
-              || String.IsNullOrEmpty(s_orgBankBik.Text) || String.IsNullOrEmpty(s_orgLegalAddress.Text))
+            try
+            {
+                if (String.IsNullOrEmpty(s_login.Text) || String.IsNullOrEmpty(s_password.Text)
+             || String.IsNullOrEmpty(s_pass_confirmation.Text) || String.IsNullOrEmpty(s_email.Text)
+             || String.IsNullOrEmpty(s_orgPostalAddress.Text) || String.IsNullOrEmpty(s_clientLastName.Text)
+             || String.IsNullOrEmpty(s_clientName.Text) || String.IsNullOrEmpty(s_clientPatronymic.Text)
+             || String.IsNullOrEmpty(s_orgPhone.Text) || String.IsNullOrEmpty(s_orgName.Text)
+             || String.IsNullOrEmpty(s_orgKpp.Text) || String.IsNullOrEmpty(s_orgInn.Text)
+             || String.IsNullOrEmpty(s_orgOgrn.Text) || String.IsNullOrEmpty(s_orgBank.Text)
+             || String.IsNullOrEmpty(s_orgBankpayment.Text) || String.IsNullOrEmpty(s_orgBankCorrespondent.Text)
+             || String.IsNullOrEmpty(s_orgBankBik.Text) || String.IsNullOrEmpty(s_orgLegalAddress.Text))
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            catch (Exception ex)
             {
                 return true;
-            }
-            else
-                return false;
+            }          
         }
     }
 }

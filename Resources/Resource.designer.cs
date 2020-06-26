@@ -5176,94 +5176,97 @@ namespace SmartBoxCity
 			public const int padlock = 2131230911;
 			
 			// aapt resource value: 0x7F0800C0
-			public const int photo_create = 2131230912;
+			public const int PageNotFound = 2131230912;
 			
 			// aapt resource value: 0x7F0800C1
-			public const int places_autocomplete_toolbar_shadow = 2131230913;
+			public const int photo_create = 2131230913;
 			
 			// aapt resource value: 0x7F0800C2
-			public const int places_ic_clear = 2131230914;
+			public const int places_autocomplete_toolbar_shadow = 2131230914;
 			
 			// aapt resource value: 0x7F0800C3
-			public const int places_ic_search = 2131230915;
+			public const int places_ic_clear = 2131230915;
 			
 			// aapt resource value: 0x7F0800C4
-			public const int places_powered_by_google_dark = 2131230916;
+			public const int places_ic_search = 2131230916;
 			
 			// aapt resource value: 0x7F0800C5
-			public const int places_powered_by_google_light = 2131230917;
+			public const int places_powered_by_google_dark = 2131230917;
 			
 			// aapt resource value: 0x7F0800C6
-			public const int powered_by_google_dark = 2131230918;
+			public const int places_powered_by_google_light = 2131230918;
 			
 			// aapt resource value: 0x7F0800C7
-			public const int powered_by_google_light = 2131230919;
+			public const int powered_by_google_dark = 2131230919;
 			
 			// aapt resource value: 0x7F0800C8
-			public const int progress_bar_drawable = 2131230920;
+			public const int powered_by_google_light = 2131230920;
 			
 			// aapt resource value: 0x7F0800C9
-			public const int quantum_ic_arrow_back_grey600_24 = 2131230921;
+			public const int progress_bar_drawable = 2131230921;
 			
 			// aapt resource value: 0x7F0800CA
-			public const int quantum_ic_clear_grey600_24 = 2131230922;
+			public const int quantum_ic_arrow_back_grey600_24 = 2131230922;
 			
 			// aapt resource value: 0x7F0800CB
-			public const int quantum_ic_cloud_off_vd_theme_24 = 2131230923;
+			public const int quantum_ic_clear_grey600_24 = 2131230923;
 			
 			// aapt resource value: 0x7F0800CC
-			public const int quantum_ic_search_grey600_24 = 2131230924;
+			public const int quantum_ic_cloud_off_vd_theme_24 = 2131230924;
 			
 			// aapt resource value: 0x7F0800CD
-			public const int review_photo = 2131230925;
+			public const int quantum_ic_search_grey600_24 = 2131230925;
 			
 			// aapt resource value: 0x7F0800CE
-			public const int shadow = 2131230926;
+			public const int review_photo = 2131230926;
 			
 			// aapt resource value: 0x7F0800CF
-			public const int side_nav_bar = 2131230927;
+			public const int shadow = 2131230927;
 			
 			// aapt resource value: 0x7F0800D0
-			public const int slide1 = 2131230928;
+			public const int side_nav_bar = 2131230928;
 			
 			// aapt resource value: 0x7F0800D1
-			public const int slide2 = 2131230929;
+			public const int slide1 = 2131230929;
 			
 			// aapt resource value: 0x7F0800D2
-			public const int slide3 = 2131230930;
+			public const int slide2 = 2131230930;
 			
 			// aapt resource value: 0x7F0800D3
-			public const int slide4 = 2131230931;
+			public const int slide3 = 2131230931;
 			
 			// aapt resource value: 0x7F0800D4
-			public const int stagestylecurrent = 2131230932;
+			public const int slide4 = 2131230932;
 			
 			// aapt resource value: 0x7F0800D5
-			public const int stagestylefuture = 2131230933;
+			public const int stagestylecurrent = 2131230933;
 			
 			// aapt resource value: 0x7F0800D6
-			public const int stagestylepast = 2131230934;
+			public const int stagestylefuture = 2131230934;
 			
 			// aapt resource value: 0x7F0800D7
-			public const int state = 2131230935;
+			public const int stagestylepast = 2131230935;
 			
 			// aapt resource value: 0x7F0800D8
-			public const int StyleInputLayout = 2131230936;
+			public const int state = 2131230936;
 			
 			// aapt resource value: 0x7F0800D9
-			public const int teststyle1 = 2131230937;
+			public const int StyleInputLayout = 2131230937;
 			
 			// aapt resource value: 0x7F0800DA
-			public const int tooltip_frame_dark = 2131230938;
+			public const int teststyle1 = 2131230938;
 			
 			// aapt resource value: 0x7F0800DB
-			public const int tooltip_frame_light = 2131230939;
+			public const int tooltip_frame_dark = 2131230939;
 			
 			// aapt resource value: 0x7F0800DC
-			public const int verticalprogressbar = 2131230940;
+			public const int tooltip_frame_light = 2131230940;
 			
 			// aapt resource value: 0x7F0800DD
-			public const int vidoe_move = 2131230941;
+			public const int verticalprogressbar = 2131230941;
+			
+			// aapt resource value: 0x7F0800DE
+			public const int vidoe_move = 2131230942;
 			
 			static Drawable()
 			{
@@ -5900,25 +5903,25 @@ namespace SmartBoxCity
 			public const int img_box = 2131296575;
 			
 			// aapt resource value: 0x7F090140
-			public const int img_choice = 2131296576;
+			public const int img_current_task = 2131296576;
 			
 			// aapt resource value: 0x7F090141
-			public const int img_current_task = 2131296577;
+			public const int img_get_photo = 2131296577;
 			
 			// aapt resource value: 0x7F090142
-			public const int img_get_photo = 2131296578;
+			public const int img_get_video = 2131296578;
 			
 			// aapt resource value: 0x7F090143
-			public const int img_get_video = 2131296579;
+			public const int img_greenM = 2131296579;
 			
 			// aapt resource value: 0x7F090144
-			public const int img_greenM = 2131296580;
-			
-			// aapt resource value: 0x7F090145
-			public const int img_label = 2131296581;
+			public const int img_label = 2131296580;
 			
 			// aapt resource value: 0x7F090146
-			public const int img_no_tasks = 2131296582;
+			public const int img_not_found = 2131296582;
+			
+			// aapt resource value: 0x7F090145
+			public const int img_no_tasks = 2131296581;
 			
 			// aapt resource value: 0x7F090147
 			public const int img_order = 2131296583;
@@ -7157,28 +7160,28 @@ namespace SmartBoxCity
 			public const int txtWhere = 2131296891;
 			
 			// aapt resource value: 0x7F09027C
-			public const int txt_add_order = 2131296892;
+			public const int txt_alarm = 2131296892;
 			
 			// aapt resource value: 0x7F09027D
-			public const int txt_alarm = 2131296893;
+			public const int txt_alarm_date = 2131296893;
 			
 			// aapt resource value: 0x7F09027E
-			public const int txt_alarm_date = 2131296894;
+			public const int txt_alarm_description = 2131296894;
 			
 			// aapt resource value: 0x7F09027F
-			public const int txt_alarm_description = 2131296895;
+			public const int txt_choice_box = 2131296895;
 			
 			// aapt resource value: 0x7F090280
-			public const int txt_choice_box = 2131296896;
+			public const int txt_confirm_time = 2131296896;
 			
 			// aapt resource value: 0x7F090281
-			public const int txt_confirm_time = 2131296897;
+			public const int txt_info_order_new = 2131296897;
 			
 			// aapt resource value: 0x7F090282
-			public const int txt_info_order_new = 2131296898;
+			public const int txt_name = 2131296898;
 			
 			// aapt resource value: 0x7F090283
-			public const int txt_name = 2131296899;
+			public const int txt_not_found_something = 2131296899;
 			
 			// aapt resource value: 0x7F090284
 			public const int txt_title_alarm = 2131296900;

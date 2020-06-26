@@ -517,100 +517,107 @@ namespace SmartBoxCity.Activity.Order
             }         
         }
 
-
         private async void GetOrderParameters()
         {
-            //проверить оплату с сервера 
-            var o_data = new ServiceResponseObject<OrderObjectResponse<OrderParameters, SensorResponse, StageResponse>>();
-            o_data = await OrderService.GetSensorParameters(StaticOrder.Order_id);
-
-            if (o_data.Status == HttpStatusCode.OK)
+            try
             {
-                StaticBox.AddInfoSensors(o_data.ResponseData.SENSORS_STATUS);
-                StaticOrder.AddInfoOrder(o_data.ResponseData.ORDER);
+                var o_data = new ServiceResponseObject<OrderObjectResponse<OrderParameters, SensorResponse, StageResponse>>();
+                o_data = await OrderService.GetSensorParameters(StaticOrder.Order_id);
 
-                Id.Text = (o_data.ResponseData.ORDER.id == null) ? "неизвестно" : o_data.ResponseData.ORDER.id;
-                Weight.Text = (o_data.ResponseData.SENSORS_STATUS.weight == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.weight;
-                Temperature.Text = (o_data.ResponseData.SENSORS_STATUS.temperature == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.temperature;
-                Battery.Text = (o_data.ResponseData.SENSORS_STATUS.battery == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.battery;
-                Illumination.Text = (o_data.ResponseData.SENSORS_STATUS.illumination == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.illumination;
-                Humidity.Text = (o_data.ResponseData.SENSORS_STATUS.humidity == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.humidity;
-                Events.Text = (o_data.ResponseData.ORDER.event_count == null) ? "неизвестно" : StaticOrder.Event_Count + " шт.";
-                progressBar.Progress = (o_data.ResponseData.ORDER.order_stage_id == null) ? 0 : Convert.ToInt32(o_data.ResponseData.ORDER.order_stage_id);
-                if (progressBar.Progress != 0)
+                if (o_data.Status == HttpStatusCode.OK)
                 {
-                    Status.Text = progressBar.Progress.ToString() + ". " + o_data.ResponseData.STAGES[progressBar.Progress - 1].name;
-                }
-                else
-                {
-                    Status.Text = "неизвестно";
-                }
-                Cost.Text = (o_data.ResponseData.ORDER.payment_amount == null) ? "неизвестно" : StaticOrder.Payment_Amount + " руб.";
-                if (o_data.ResponseData.ORDER.payment_status == "1")
-                {
-                    Payment.Text = "Оплачено";
-                    Payment.SetTextColor(Color.ParseColor("#8EF892"));
-                }
-                else if (o_data.ResponseData.ORDER.payment_status == "0")
-                {
-                    Payment.Text = "Не оплачено";
-                    Payment.SetTextColor(Color.ParseColor("#EC8F9B"));
-                }
-                else
-                {
-                    Payment.Text = "неизвестно";
-                }
+                    StaticBox.AddInfoSensors(o_data.ResponseData.SENSORS_STATUS);
+                    StaticOrder.AddInfoOrder(o_data.ResponseData.ORDER);
 
-                if (o_data.ResponseData.SENSORS_STATUS.Lock == "1")
-                {
-                    Lock.Text = "Закрыт";
-                    btn_Lock.Text = "Открыть";
-                }
-                else if (o_data.ResponseData.SENSORS_STATUS.Lock == "0")
-                {
-                    Lock.Text = "Открыт";
-                    btn_Lock.Text = "Закрыть";
-                }
-                else
-                {
-                    Lock.Text = "Неизвестно";
-                    btn_Lock.Text = "Открыть";
-                }
+                    Id.Text = (o_data.ResponseData.ORDER.id == null) ? "неизвестно" : o_data.ResponseData.ORDER.id;
+                    Weight.Text = (o_data.ResponseData.SENSORS_STATUS.weight == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.weight;
+                    Temperature.Text = (o_data.ResponseData.SENSORS_STATUS.temperature == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.temperature;
+                    Battery.Text = (o_data.ResponseData.SENSORS_STATUS.battery == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.battery;
+                    Illumination.Text = (o_data.ResponseData.SENSORS_STATUS.illumination == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.illumination;
+                    Humidity.Text = (o_data.ResponseData.SENSORS_STATUS.humidity == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.humidity;
+                    Events.Text = (o_data.ResponseData.ORDER.event_count == null) ? "неизвестно" : StaticOrder.Event_Count + " шт.";
+                    progressBar.Progress = (o_data.ResponseData.ORDER.order_stage_id == null) ? 0 : Convert.ToInt32(o_data.ResponseData.ORDER.order_stage_id);
+                    if (progressBar.Progress != 0)
+                    {
+                        Status.Text = progressBar.Progress.ToString() + ". " + o_data.ResponseData.STAGES[progressBar.Progress - 1].name;
+                    }
+                    else
+                    {
+                        Status.Text = "неизвестно";
+                    }
+                    Cost.Text = (o_data.ResponseData.ORDER.payment_amount == null) ? "неизвестно" : StaticOrder.Payment_Amount + " руб.";
+                    if (o_data.ResponseData.ORDER.payment_status == "1")
+                    {
+                        Payment.Text = "Оплачено";
+                        Payment.SetTextColor(Color.ParseColor("#8EF892"));
+                    }
+                    else if (o_data.ResponseData.ORDER.payment_status == "0")
+                    {
+                        Payment.Text = "Не оплачено";
+                        Payment.SetTextColor(Color.ParseColor("#EC8F9B"));
+                    }
+                    else
+                    {
+                        Payment.Text = "неизвестно";
+                    }
 
-                if (o_data.ResponseData.SENSORS_STATUS.fold == "1")
-                {
-                    Fold.Text = "Разложен";
-                }
-                else if (o_data.ResponseData.SENSORS_STATUS.fold == "0")
-                {
-                    Fold.Text = "Сложен";
-                }
-                else
-                {
-                    Fold.Text = "Неизвестно";
-                }
+                    if (o_data.ResponseData.SENSORS_STATUS.Lock == "1")
+                    {
+                        Lock.Text = "Закрыт";
+                        btn_Lock.Text = "Открыть";
+                    }
+                    else if (o_data.ResponseData.SENSORS_STATUS.Lock == "0")
+                    {
+                        Lock.Text = "Открыт";
+                        btn_Lock.Text = "Закрыть";
+                    }
+                    else
+                    {
+                        Lock.Text = "Неизвестно";
+                        btn_Lock.Text = "Открыть";
+                    }
 
-                if (o_data.ResponseData.SENSORS_STATUS.gate == "1")
-                {
-                    Gate.Text = "Закрыта";
-                }
-                else if (o_data.ResponseData.SENSORS_STATUS.gate == "0")
-                {
-                    Gate.Text = "Открыта";
-                }
-                else
-                {
-                    Gate.Text = "Неизвестно";
-                }
+                    if (o_data.ResponseData.SENSORS_STATUS.fold == "1")
+                    {
+                        Fold.Text = "Разложен";
+                    }
+                    else if (o_data.ResponseData.SENSORS_STATUS.fold == "0")
+                    {
+                        Fold.Text = "Сложен";
+                    }
+                    else
+                    {
+                        Fold.Text = "Неизвестно";
+                    }
 
-                btn_Lock.Enabled = (StaticOrder.Order_Stage_Id == "1" ||
-                StaticOrder.Order_Stage_Id == "4" ||
-                StaticOrder.Order_Stage_Id == "7" ||
-                StaticOrder.Order_Stage_Id == "5" ||
-                StaticOrder.Order_Stage_Id == "8") ? false : true;
+                    if (o_data.ResponseData.SENSORS_STATUS.gate == "1")
+                    {
+                        Gate.Text = "Закрыта";
+                    }
+                    else if (o_data.ResponseData.SENSORS_STATUS.gate == "0")
+                    {
+                        Gate.Text = "Открыта";
+                    }
+                    else
+                    {
+                        Gate.Text = "Неизвестно";
+                    }
 
-                btn_Pay.Enabled = (StaticOrder.Order_Stage_Id == "5") ? true : false;
+                    btn_Lock.Enabled = (StaticOrder.Order_Stage_Id == "1" ||
+                    StaticOrder.Order_Stage_Id == "4" ||
+                    StaticOrder.Order_Stage_Id == "7" ||
+                    StaticOrder.Order_Stage_Id == "5" ||
+                    StaticOrder.Order_Stage_Id == "8") ? false : true;
+
+                    btn_Pay.Enabled = (StaticOrder.Order_Stage_Id == "5") ? true : false;
+                }
             }
+            catch (System.Exception ex)
+            {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+            }           
         }
+
     }
+
 }

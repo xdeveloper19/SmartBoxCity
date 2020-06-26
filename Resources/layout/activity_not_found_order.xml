@@ -18,15 +18,15 @@
         android:layout_height="128dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
-        android:id="@+id/img_choice"
         android:src="@drawable/choices"
+        android:id="@+id/img_not_found"
         />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/img_choice"
-        android:id="@+id/txt_add_order"
+        android:layout_below="@+id/img_not_found"
+        android:id="@+id/txt_not_found_something"
         android:textSize="15sp"
         android:textColor = "#475B57"
         android:paddingLeft="40dp"
@@ -42,7 +42,7 @@
         android:layout_centerInParent="true"
 		android:textColor = "#FBF8F8"
         android:layout_marginTop="20dp"
-        android:layout_below = "@+id/txt_add_order"
+        android:layout_below = "@+id/txt_not_found_something"
 		android:background = "@drawable/button_stili"
 		android:textSize = "16sp"
 		android:textAppearance="?android:attr/textAppearanceMedium"/>

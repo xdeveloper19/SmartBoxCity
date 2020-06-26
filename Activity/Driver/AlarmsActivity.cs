@@ -14,6 +14,7 @@ using Entity.Model.AlarmResponse;
 using Entity.Model.AlarmViewModel;
 using Entity.Model.BoxViewModel;
 using Plugin.Settings;
+using SmartBoxCity.Activity.Order;
 using WebService;
 using WebService.Driver;
 
@@ -48,30 +49,33 @@ namespace SmartBoxCity.Activity.Driver
 
                 if (o_data.Status == HttpStatusCode.OK)
                 {
-                    //o_data.Message = "Успешно авторизован!";
-                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                    //StaticUser.Email = s_login.Text;
-                    //StaticUser.AddInfoAuth(o_user_data);
-                    alarmlist = new List<AlarmBookModel>();
-                    //обязательно должен быть прогресс бар при обращении к серверу, типо такого
-                    //preloader.Visibility = Android.Views.ViewStates.Invisible;
-                               
-                    foreach (var alm in o_data.ResponseData.ALARMS_STATUS)
+                    if(o_data.ResponseData.ALARMS_STATUS.Count == 0)
                     {
-                        alarmlist.Add(new AlarmBookModel
-                        {
-                            Id = alm.id,
-                            Acknowledged = alm.acknowledged,
-                            Container_id = alm.container_id,
-                            Name = alm.name,
-                            Raised_At = alm.raised_at
-                        }
-                        );
+                        Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                        NotFoundOrdersActivity content = new NotFoundOrdersActivity();
+                        transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                        return;
                     }
+                    else
+                    {
+                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                        alarmlist = new List<AlarmBookModel>();
 
-                    UpdateList();
-                    lstAlarm.ItemClick += ListBoxes_ItemClick;
-
+                        foreach (var alm in o_data.ResponseData.ALARMS_STATUS)
+                        {
+                            alarmlist.Add(new AlarmBookModel
+                            {
+                                Id = alm.id,
+                                Acknowledged = alm.acknowledged,
+                                Container_id = alm.container_id,
+                                Name = alm.name,
+                                Raised_At = alm.raised_at
+                            }
+                            );
+                        }
+                        UpdateList();
+                        lstAlarm.ItemClick += ListBoxes_ItemClick;
+                    }                  
                 }
                 else
                 {
