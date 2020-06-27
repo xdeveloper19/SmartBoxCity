@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Android;
 using Android.App;
-using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
@@ -26,7 +21,7 @@ namespace SmartBoxCity.Activity.Order
         {
             var view = inflater.Inflate(Resource.Layout.activity_not_found_order, container, false);
             var image = view.FindViewById<ImageView>(Resource.Id.img_not_found);
-            var txt_not_found = view.FindViewById<Button>(Resource.Id.txt_not_found_something);
+            var txt_not_found = view.FindViewById<TextView>(Resource.Id.txt_not_found_something);
             var btn_add_order = view.FindViewById<Button>(Resource.Id.NotFoundOrderBtnAddOrder);
             if (StaticUser.NamePadeAbsenceSomething == "AlarmsActivity")
             {

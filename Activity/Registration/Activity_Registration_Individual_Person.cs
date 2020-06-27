@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Entity.Model;
+using Entity.Model.AccountViewModel.AuthResponse;
 using Entity.Model.AccountViewModel.AuthViewModel;
 using Entity.Model.HomeViewModel;
 using Entity.Repository;
@@ -207,7 +208,7 @@ namespace SmartBoxCity.Activity.Registration
                                     if (o_data.Status == HttpStatusCode.OK)
                                     {
                                         Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                                        SuccessResponse o_user_data = new SuccessResponse();
+                                        RegisterResponse o_user_data = new RegisterResponse();
                                         o_user_data = o_data.ResponseData;
                                         preloader.Visibility = Android.Views.ViewStates.Invisible;
 
@@ -215,6 +216,7 @@ namespace SmartBoxCity.Activity.Registration
                                         CrossSettings.Current.AddOrUpdateValue("role", "user");
                                         CrossSettings.Current.AddOrUpdateValue("login", s_login_individual.Text);
                                         CrossSettings.Current.AddOrUpdateValue("password", s_pass_individual.Text);
+                                        CrossSettings.Current.AddOrUpdateValue("token", o_user_data.user.token);
                                         CrossSettings.Current.AddOrUpdateValue("check", "0");
                                         StaticUser.NeedToCreateOrder = true;
                                         StaticUser.PresenceOnPage = true;

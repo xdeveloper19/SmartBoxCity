@@ -60,7 +60,8 @@ namespace SmartBoxCity.Activity.Order
             {
                 MainOrderStatusActivity content = new MainOrderStatusActivity();
                 StaticOrder.Order_id = orders[position].OrderName;
-                manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null);
+                manager.Commit();
             };
 
             return view;

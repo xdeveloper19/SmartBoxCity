@@ -1,4 +1,5 @@
 ﻿using Entity.Model;
+using Entity.Model.AccountViewModel.AuthResponse;
 using Entity.Model.AccountViewModel.AuthViewModel;
 using Newtonsoft.Json;
 using System;
@@ -126,7 +127,7 @@ namespace WebService.Account
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public static async Task<ServiceResponseObject<SuccessResponse>> RegisterIndividual(RegisterIndividualModel model)
+        public static async Task<ServiceResponseObject<RegisterResponse>> RegisterIndividual(RegisterIndividualModel model)
         {
             try
             {
@@ -155,7 +156,7 @@ namespace WebService.Account
                     s_result = await responseContent.ReadAsStringAsync();
                 }
 
-                ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
+                ServiceResponseObject<RegisterResponse> o_data = new ServiceResponseObject<RegisterResponse>();
 
                 switch (response.StatusCode)
                 {
@@ -184,9 +185,14 @@ namespace WebService.Account
                         }
                     case HttpStatusCode.OK:
                         {
-                            var message = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
-                            o_data.Message = message.Message;
+                            var reg = JsonConvert.DeserializeObject<RegisterResponse>(s_result);
+                            o_data.Message = reg.message;
                             o_data.Status = response.StatusCode;
+                            o_data.ResponseData = new RegisterResponse
+                            {
+                                message = reg.message,
+                                user = reg.user
+                            };
                             return o_data;
                         }
                     default:
@@ -197,7 +203,7 @@ namespace WebService.Account
             }
             catch (Exception ex)
             {
-                ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
+                ServiceResponseObject<RegisterResponse> o_data = new ServiceResponseObject<RegisterResponse>();
                 o_data.Message = ex.Message;
                 return o_data;
             }
@@ -209,7 +215,7 @@ namespace WebService.Account
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public static async Task<ServiceResponseObject<SuccessResponse>> RegisterLegal(RegisterLegalModel model)
+        public static async Task<ServiceResponseObject<RegisterResponse>> RegisterLegal(RegisterLegalModel model)
         {
             try
             {
@@ -244,7 +250,7 @@ namespace WebService.Account
                     s_result = await responseContent.ReadAsStringAsync();
                 }
 
-                ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
+                ServiceResponseObject<RegisterResponse> o_data = new ServiceResponseObject<RegisterResponse>();
 
                 switch (response.StatusCode)
                 {
@@ -273,9 +279,14 @@ namespace WebService.Account
                         }
                     case HttpStatusCode.OK:
                         {
-                            var message = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
-                            o_data.Message = message.Message;
+                            var register = JsonConvert.DeserializeObject<RegisterResponse>(s_result);
+                            o_data.Message = register.message;
                             o_data.Status = response.StatusCode;
+                            o_data.ResponseData = new RegisterResponse
+                            {
+                                message = register.message,
+                                user = register.user
+                            };
                             return o_data;
                         }
                     default:
@@ -286,7 +297,7 @@ namespace WebService.Account
             }
             catch (Exception ex)
             {
-                ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
+                ServiceResponseObject<RegisterResponse> o_data = new ServiceResponseObject<RegisterResponse>();
                 o_data.Message = ex.Message;
                 return o_data;
             }

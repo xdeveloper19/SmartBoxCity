@@ -99,6 +99,9 @@ namespace SmartBoxCity.Activity.Order
             btn_Lock = view.FindViewById<Button>(Resource.Id.OrderManagementButtonLock);
             #endregion
 
+            Id.Click += Id_Click;
+            Events.Click += Events_Click;
+
             btn_Lock.Click += delegate
             {
 
@@ -208,6 +211,36 @@ namespace SmartBoxCity.Activity.Order
 
             return view;
             
+        }
+
+        private void Events_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                EventsActivity content3 = new EventsActivity();
+                transaction1.Replace(Resource.Id.framelayout, content3).AddToBackStack(null);
+                transaction1.Commit();
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+            }
+        }
+
+        private void Id_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                MainOrderStatusActivity content2 = new MainOrderStatusActivity();
+                transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null);
+                transaction1.Commit();
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+            }
         }
 
         private void AlertDialogCreation(string titleString, string messageString)

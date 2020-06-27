@@ -124,6 +124,7 @@ namespace SmartBoxCity.Activity.Home
                             alert.SetMessage("Вы действительно хотите оплатить заказ?");
                             alert.SetPositiveButton("Продолжить", (senderAlert, args) =>
                             {
+                                StaticOrder.Order_id = orders[position].id;
                                 MakePayment(alert);
                             });
                             alert.SetNegativeButton("Отмена", (senderAlert, args) =>
@@ -329,13 +330,12 @@ namespace SmartBoxCity.Activity.Home
                         alert1.SetMessage(o_data.ResponseData.Message);
                         alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
                         {
+                            UserActivity content = new UserActivity();
+                            manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null);
+                            manager.Commit();
                         });
                         Dialog dialog1 = alert1.Create();
                         dialog1.Show();
-
-
-                        UserActivity content = new UserActivity();
-                        manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
                     }
                     else
                     {

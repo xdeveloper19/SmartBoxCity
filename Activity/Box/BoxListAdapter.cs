@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -44,7 +45,34 @@ namespace SmartBoxCity.Activity.Box
                 view = LayoutInflater.From(_context).Inflate(Resource.Layout.box_book_parameters, null);
 
             view.FindViewById<TextView>(Resource.Id.txtBoxName).Text = _boxes[position].BoxId;
-            view.FindViewById<TextView>(Resource.Id.txt123).Text = _boxes[position].OrderId;
+            var txt_order_id = view.FindViewById<TextView>(Resource.Id.txt123);
+            txt_order_id.Text = _boxes[position].OrderId;
+
+            if (_boxes[position].OrderId == "нет заказа")
+            {
+                txt_order_id.SetTextColor(Color.Gray);
+                txt_order_id.Clickable = false;
+            }
+            else
+            {
+                txt_order_id.SetTextColor(Color.SkyBlue);
+                txt_order_id.Clickable = true;
+                txt_order_id.Click += delegate
+                {
+                    try
+                    {
+                        StaticOrder.Order_id = _boxes[position].OrderId;
+                        MainOrderStatusActivity content2 = new MainOrderStatusActivity();
+                        _manager.Replace(Resource.Id.frameDriverlayout, content2);
+                        _manager.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Toast.MakeText(_context, ex.Message, ToastLength.Long).Show();
+                    }
+                };
+            }
+
             view.FindViewById<ImageView>(Resource.Id.img_box).SetImageResource(_boxes[position].ImageView);
             view.FindViewById<TextView>(Resource.Id.txt_alarm).Text = _boxes[position].AlarmDescription;
 
