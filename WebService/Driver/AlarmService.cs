@@ -102,7 +102,7 @@ namespace WebService.Driver
                         {
                             var alarms = JsonConvert.DeserializeObject<ListAlarmResponse>(s_result);
                             o_data.Message = "Успешно!";
-                            o_data.Status = System.Net.HttpStatusCode.OK;// а почему переменная container_id пустая
+                            o_data.Status = System.Net.HttpStatusCode.OK;
                             o_data.ResponseData = new ListAlarmResponse
                             {
                                 ALARMS_STATUS = alarms.ALARMS_STATUS

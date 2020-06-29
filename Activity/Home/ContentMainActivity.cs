@@ -14,6 +14,7 @@ using Android.Support.V4.View;
 using Android.Text;
 using Android.Views;
 using Android.Widget;
+using Entity.Repository;
 using SmartBoxCity.Activity.Auth;
 using SmartBoxCity.Activity.Order;
 using SmartBoxCity.Activity.Registration;
@@ -39,6 +40,7 @@ namespace SmartBoxCity.Activity.Home
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+            StaticUser.IsContentMain = true;
             layoutManager = new RefLayoutManager(Activity);
             if (!layoutManager.isFirstTimeLauch())
             {
@@ -115,6 +117,17 @@ namespace SmartBoxCity.Activity.Home
             return view;
         }
 
+        public override void OnDestroyView()
+        {
+            StaticUser.IsContentMain = false;
+            base.OnDestroyView();
+        }
+
+        public override void OnStart()
+        {
+            StaticUser.IsContentMain = true;
+            base.OnStart();
+        }
         void ViewPager_PageSelected(object sender, ViewPager.PageSelectedEventArgs e)
         {
             addDots(e.Position);

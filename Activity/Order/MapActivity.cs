@@ -77,8 +77,8 @@ namespace SmartBoxCity.Activity.Order
                         //location = new LatLng(latitude, longitude);
 
                         markerOpt1.SetPosition(new LatLng(latitude, longitude));
-                        markerOpt1.SetTitle("Пункт отправления");
-                        markerOpt1.SetSnippet(StaticOrder.Inception_address);
+                        markerOpt1.SetTitle("Пункт отправления\n" + StaticOrder.Inception_address);
+                        //markerOpt1.SetSnippet(StaticOrder.Inception_address);
 
                         var bmDescriptor = BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueBlue);
                         markerOpt1.InvokeIcon(bmDescriptor);
@@ -93,8 +93,8 @@ namespace SmartBoxCity.Activity.Order
                         //location = new LatLng(latitude, longitude);
 
                         markerOpt1.SetPosition(new LatLng(latitude, longitude));
-                        markerOpt1.SetTitle("Пункт назначения");
-                        markerOpt1.SetSnippet(StaticOrder.Destination_address);
+                        markerOpt1.SetTitle("Пункт назначения\n" + StaticOrder.Destination_address);
+                        //markerOpt1.SetSnippet(StaticOrder.Destination_address);
 
                         var bmDescriptor = BitmapDescriptorFactory.DefaultMarker(BitmapDescriptorFactory.HueRed);
                         markerOpt1.InvokeIcon(bmDescriptor);

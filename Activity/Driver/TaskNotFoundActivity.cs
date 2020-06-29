@@ -189,6 +189,17 @@ namespace SmartBoxCity.Activity.Driver
             return view;
         }
 
+        public override void OnDestroyView()
+        {
+            StaticUser.IsUserOrMapActivity = false;
+            base.OnDestroyView();
+        }
+
+        public override void OnStart()
+        {
+            StaticUser.IsUserOrMapActivity = true;
+            base.OnStart();
+        }
         private async Task<TaskStatus> BusyStatus()
         {
             using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))

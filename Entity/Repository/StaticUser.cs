@@ -58,6 +58,10 @@ namespace Entity.Repository
 
         public static string NamePadeAbsenceSomething { get; set; }
 
+        public static bool IsUserOrMapActivity { get; set; }
+
+        public static bool IsContentMain { get; set; }
+
         /// <summary>
         /// Добавляю информацию о клиенте
         /// </summary>

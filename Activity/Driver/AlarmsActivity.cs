@@ -13,6 +13,7 @@ using Entity.Model;
 using Entity.Model.AlarmResponse;
 using Entity.Model.AlarmViewModel;
 using Entity.Model.BoxViewModel;
+using Entity.Repository;
 using Plugin.Settings;
 using SmartBoxCity.Activity.Order;
 using WebService;
@@ -25,7 +26,7 @@ namespace SmartBoxCity.Activity.Driver
         private ListView lstAlarm;
         public static List<AlarmBookModel> alarmlist;
         public override void OnCreate(Bundle savedInstanceState)
-        {
+        {            
             base.OnCreate(savedInstanceState);
         }
 
@@ -39,25 +40,17 @@ namespace SmartBoxCity.Activity.Driver
 
         private async void GetAlarms()
         {
-            var o_data = new ServiceResponseObject<ListAlarmResponse>();
-            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            try
             {
-                //надо было сначала клиента указать, а потом вызывать метод
-                //и обязательно с токеном
-                AlarmService.InitializeClient(client);
-                o_data = await AlarmService.GetAlarms();
-
-                if (o_data.Status == HttpStatusCode.OK)
+                var o_data = new ServiceResponseObject<ListAlarmResponse>();
+                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
                 {
-                    if(o_data.ResponseData.ALARMS_STATUS.Count == 0)
+
+                    AlarmService.InitializeClient(client);
+                    o_data = await AlarmService.GetAlarms();
+                    if (o_data.Status == HttpStatusCode.OK)
                     {
-                        Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
-                        NotFoundOrdersActivity content = new NotFoundOrdersActivity();
-                        transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                        return;
-                    }
-                    else
-                    {
+
                         Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                         alarmlist = new List<AlarmBookModel>();
 
@@ -75,16 +68,21 @@ namespace SmartBoxCity.Activity.Driver
                         }
                         UpdateList();
                         lstAlarm.ItemClick += ListBoxes_ItemClick;
-                    }                  
+                    }
+                    else
+                    {
+                        StaticUser.NamePadeAbsenceSomething = "AlarmsActivity";
+                        Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                        NotFoundOrdersActivity content = new NotFoundOrdersActivity();
+                        transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                    }
                 }
-                else
-                {
-                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();//"Unexpected character encountered while parsing value: {. Path 'ORDERS[0].last_stage_at', line 2, position 1086."
-                    FragmentTransaction transaction3 = this.FragmentManager.BeginTransaction();
-                    NotFoundAlarmsActivity content2 = new NotFoundAlarmsActivity();
-                    transaction3.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
-                }
+
             }
+            catch (System.Exception ex)
+            {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+            }            
         }
 
         private void ListBoxes_ItemClick(object sender, AdapterView.ItemClickEventArgs e)

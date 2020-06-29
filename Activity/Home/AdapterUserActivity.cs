@@ -139,6 +139,7 @@ namespace SmartBoxCity.Activity.Home
                         Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
                     }
                 };
+                //btn_make_photo.Click += MakePhotoClick;
                 btn_make_photo.Click += delegate
                 {
                     try
@@ -224,6 +225,55 @@ namespace SmartBoxCity.Activity.Home
                 return view;
             }            
         }
+
+        //private void MakePhotoClick(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        //        alert.SetTitle("Сделать фотографию");
+        //        alert.SetMessage("Вы действительно хотите сделать фотографию с камеры контейнера?");
+        //        alert.SetPositiveButton("Сделать", (senderAlert, args) =>
+        //        {
+        //            GetPhoto(orders[position].id, alert);
+        //        });
+        //        alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+        //        {
+        //        });
+        //        Dialog dialog = alert.Create();
+        //        dialog.Show();
+        //        return;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
+        //    }
+        //}
+
+        //private EventHandler MakePhotoClick(int position)
+        //{
+        //    try
+        //    {
+        //        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+        //        alert.SetTitle("Сделать фотографию");
+        //        alert.SetMessage("Вы действительно хотите сделать фотографию с камеры контейнера?");
+        //        alert.SetPositiveButton("Сделать", (senderAlert, args) =>
+        //        {
+        //            GetPhoto(orders[position].id, alert);
+        //        });
+        //        alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+        //        {
+        //        });
+        //        Dialog dialog = alert.Create();
+        //        dialog.Show();
+        //        return;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
+        //    }
+        //}
+
         private async void GetVideo(string id, AlertDialog.Builder alert)
         {
             try

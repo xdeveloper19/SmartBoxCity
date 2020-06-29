@@ -12,7 +12,9 @@ using Android.Widget;
 using Entity.Model;
 using Entity.Model.BoxResponse;
 using Entity.Model.BoxViewModel;
+using Entity.Repository;
 using Plugin.Settings;
+using SmartBoxCity.Activity.Order;
 using WebService;
 using WebService.Driver;
 
@@ -25,8 +27,10 @@ namespace SmartBoxCity.Activity.Box
         private EditText editEnterOrder;
         private Boolean isDepot;
         public static List<BoxBookModel> boxlist;
+        private Android.App.FragmentTransaction transaction;
         public override void OnCreate(Bundle savedInstanceState)
         {
+            StaticUser.NamePadeAbsenceSomething = "BoxListActivity";
             base.OnCreate(savedInstanceState);
         }
 
@@ -35,6 +39,7 @@ namespace SmartBoxCity.Activity.Box
             var view = inflater.Inflate(Resource.Layout.driver_container_book, container, false);
             lstBox = view.FindViewById<ListView>(Resource.Id.boxlistview);
             txt_title_lst_box = view.FindViewById<TextView>(Resource.Id.txt_title_lst_box);
+            transaction = this.FragmentManager.BeginTransaction();
 
             if (Arguments != null)
             {
@@ -45,64 +50,64 @@ namespace SmartBoxCity.Activity.Box
                 txt_title_lst_box.Text = "Контейнеры на складе";
             else
                 txt_title_lst_box.Text = "Контейнеры на машине";
-            //recycleView.SetLayoutManager(new LinearLayoutManager(this));
-
-                //editEnterOrder.TextChanged += EtSearch_TextChanged;
+;
 
             GetBoxes();
            
             return view;
         }
-
         private async void GetBoxes()
         {
-            var o_data = new ServiceResponseObject<ListBoxResponse>();
-            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            try
             {
-                //надо было сначала клиента указать, а потом вызывать метод
-                //и обязательно с токеном
-                BoxService.InitializeClient(client);
-                o_data = await BoxService.GetContainers();
-
-                if (o_data.Status == HttpStatusCode.OK)
+                var o_data = new ServiceResponseObject<ListBoxResponse>();
+                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
                 {
-                    //o_data.Message = "Успешно авторизован!";
-                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                    //StaticUser.Email = s_login.Text;
-                    //StaticUser.AddInfoAuth(o_user_data);
-                    boxlist = new List<BoxBookModel>();
-                    //обязательно должен быть прогресс бар при обращении к серверу, типо такого
-                    //preloader.Visibility = Android.Views.ViewStates.Invisible;
-                    List<ContainerResponse> containers = new List<ContainerResponse>();
-                    if (isDepot)
-                        containers = o_data.ResponseData.DEPOT_CONTAINERS;
-                    else
-                        containers = o_data.ResponseData.CONTAINERS;
+                    //надо было сначала клиента указать, а потом вызывать метод
+                    //и обязательно с токеном
+                    BoxService.InitializeClient(client);
+                    o_data = await BoxService.GetContainers();
 
-                    int id = 1;
-                    foreach (var box in containers)
+                    if (o_data.Status == HttpStatusCode.OK)
                     {
-                        boxlist.Add(new BoxBookModel
+
+                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                        boxlist = new List<BoxBookModel>();
+                        List<ContainerResponse> containers = new List<ContainerResponse>();
+                        if (isDepot)
+                            containers = o_data.ResponseData.DEPOT_CONTAINERS;
+                        else
+                            containers = o_data.ResponseData.CONTAINERS;
+
+                        int id = 1;
+                        foreach (var box in containers)
                         {
-                            Id = box.id,
-                            ImageView = (box.sensors_status.fold == "0")?Resource.Drawable.opened_box: Resource.Drawable.close_box,
-                            BoxId = "Контейнер: " + box.id,
-                            AlarmDescription = (box.alarms_status.Count == 0)? "": "На контейнере обнаружена тревога!",
-                            OrderId = (box.order_id == null) ? "нет заказа": box.order_id
+                            boxlist.Add(new BoxBookModel
+                            {
+                                Id = box.id,
+                                ImageView = (box.sensors_status.fold == "0") ? Resource.Drawable.opened_box : Resource.Drawable.close_box,
+                                BoxId = "Контейнер: " + box.id,
+                                AlarmDescription = (box.alarms_status.Count == 0) ? "" : "На контейнере обнаружена тревога!",
+                                OrderId = (box.order_id == null) ? "нет заказа" : box.order_id
+                            }
+                            );
                         }
-                        );
+
+                        UpdateList();
+                        lstBox.ItemClick += ListBoxes_ItemClick;
                     }
-                
-                    UpdateList();
-                    lstBox.ItemClick += ListBoxes_ItemClick;
-
-                }
-                else
-                {
-                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();//"Unexpected character encountered while parsing value: {. Path 'ORDERS[0].last_stage_at', line 2, position 1086."
-
+                    else
+                    {
+                        NotFoundOrdersActivity content = new NotFoundOrdersActivity();
+                        transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
+            }
+            
         }
 
         private void ListBoxes_ItemClick(object sender, AdapterView.ItemClickEventArgs e)

@@ -53,8 +53,7 @@ namespace SmartBoxCity.Activity
                         ManageBoxActivity content3 = new ManageBoxActivity();
                         transaction2.Replace(Resource.Id.frameDriverlayout, content3).AddToBackStack(null).Commit();
                         break;
-                    case Resource.Id.alarms:
-                        StaticUser.NamePadeAbsenceSomething = "AlarmsActivity";
+                    case Resource.Id.alarms:                        
                         AlarmsActivity content4 = new AlarmsActivity();
                         transaction2.Replace(Resource.Id.frameDriverlayout, content4).AddToBackStack(null).Commit();
                         break;
@@ -63,16 +62,15 @@ namespace SmartBoxCity.Activity
                         Android.App.AlertDialog.Builder alert = new Android.App.AlertDialog.Builder(this);
                         alert.SetTitle("Внимание!");
                         alert.SetMessage("Вы действительно хотите выйти ?");
-                        alert.SetNegativeButton("Отмена", (senderAlert, args) =>
-                        {
-                        });
                         alert.SetPositiveButton("Да", (senderAlert, args) =>
                         {
                             Leaveprofile();
                         });
+                        alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+                        {
+                        });                        
                         Dialog dialog = alert.Create();
-                        dialog.Show();
-                       
+                        dialog.Show();                      
                         break;
                 }
             };
@@ -88,9 +86,8 @@ namespace SmartBoxCity.Activity
         }
         public override void OnBackPressed()
         {
-            if (StaticUser.PresenceOnPage == true)
+            if (StaticUser.IsUserOrMapActivity == true)
             {
-
                 Android.App.AlertDialog.Builder alert = new Android.App.AlertDialog.Builder(this);
                 alert.SetTitle("Внимание!");
                 alert.SetMessage("Вы действительно хотите выйти со своего профиля ?");
@@ -106,13 +103,14 @@ namespace SmartBoxCity.Activity
             }
             else
             {
-                var currentFragment = SupportFragmentManager.FindFragmentById(Resource.Id.framelayout);
-                var listener = currentFragment as IBackButtonListener;
-                if (listener != null)
-                {
-                    listener.OnBackPressed();
-                    return;
-                }
+                base.OnBackPressed();
+                //var currentFragment = SupportFragmentManager.FindFragmentById(Resource.Id.framelayout);
+                //var listener = currentFragment as IBackButtonListener;
+                //if (listener != null)
+                //{
+                //    listener.OnBackPressed();
+                //    return;
+                //}
             }         
         }
         private void Leaveprofile()

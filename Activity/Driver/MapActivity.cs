@@ -36,8 +36,6 @@ namespace SmartBoxCity.Activity.Driver
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            // Create your fragment here
         }
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -110,6 +108,18 @@ namespace SmartBoxCity.Activity.Driver
             }
 
             return view;
+        }
+
+        public override void OnDestroyView()
+        {
+            StaticUser.IsUserOrMapActivity = false;
+            base.OnDestroyView();
+        }
+
+        public override void OnStart()
+        {
+            StaticUser.IsUserOrMapActivity = true;
+            base.OnStart();
         }
 
         public override void OnSaveInstanceState(Bundle outState)

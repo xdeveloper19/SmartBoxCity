@@ -19,33 +19,50 @@ namespace SmartBoxCity.Activity.Order
 
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var view = inflater.Inflate(Resource.Layout.activity_not_found_order, container, false);
-            var image = view.FindViewById<ImageView>(Resource.Id.img_not_found);
-            var txt_not_found = view.FindViewById<TextView>(Resource.Id.txt_not_found_something);
-            var btn_add_order = view.FindViewById<Button>(Resource.Id.NotFoundOrderBtnAddOrder);
-            if (StaticUser.NamePadeAbsenceSomething == "AlarmsActivity")
+            try
             {
-                image.SetImageBitmap(BitmapFactory.DecodeResource(this.Resources , Resource.Drawable.PageNotFound));
-                btn_add_order.Visibility = ViewStates.Gone;
-                txt_not_found.Text = "На данный момент тревог не обнаружено.";
-            }
-            else
-            {
-                btn_add_order.Click += delegate
+                var view = inflater.Inflate(Resource.Layout.activity_not_found_order, container, false);
+                var image = view.FindViewById<ImageView>(Resource.Id.img_not_found);
+                var txt_not_found = view.FindViewById<TextView>(Resource.Id.txt_not_found_something);
+                var btn_add_order = view.FindViewById<Button>(Resource.Id.NotFoundOrderBtnAddOrder);
+                if (StaticUser.NamePadeAbsenceSomething == "AlarmsActivity")
                 {
-                    try
+                    image.SetImageBitmap(BitmapFactory.DecodeResource(this.Resources, Resource.Drawable.PageNotFound));
+                    btn_add_order.Visibility = ViewStates.Gone;
+                    txt_not_found.Text = "На данный момент тревог не обнаружено.";
+                }
+                else if (StaticUser.NamePadeAbsenceSomething == "BoxListActivity")
+                {
+                    image.SetImageBitmap(BitmapFactory.DecodeResource(this.Resources, Resource.Drawable.PageNotFound));
+                    btn_add_order.Visibility = ViewStates.Gone;
+                    txt_not_found.Text = "Контейнеров не обнаружено.";
+                }
+                else
+                {
+                    btn_add_order.Click += delegate
                     {
-                        FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
-                        AddOrderActivity content = new AddOrderActivity();
-                        transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                    }
-                    catch (Exception ex)
-                    {
-                        Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
-                    }
-                };
+                        try
+                        {
+                            FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                            AddOrderActivity content = new AddOrderActivity();
+                            transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+                        }
+                    };
+                }
+                return view;
             }
-            return view;
+            catch (Exception ex)
+            {
+                var view = inflater.Inflate(Resource.Layout.activity_errors_handling, container, false);
+                var TextOfError = view.FindViewById<TextView>(Resource.Id.TextOfError);
+                TextOfError.Text += "\n(Ошибка: " + ex.Message + ")";
+                return view;
+            }
+            
         }
     }
 }

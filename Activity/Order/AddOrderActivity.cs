@@ -431,16 +431,25 @@ namespace SmartBoxCity.Activity.Order
 
                                     AmountResponse order_data = new AmountResponse();
                                     order_data = o_data.ResponseData;
+                                    if(IsFieldsEmptyOrNull(o_data.ResponseData))
+                                    {
+                                        string ErrorMessage = "Не удалось оформить заказ. Скорее всего " +
+                                        "Вы ввели неверные пункт отправления и/или пункт назначения ";
+                                        AlertDialogCall(ErrorMessage);
+                                        preloader.Visibility = Android.Views.ViewStates.Invisible;
+                                    }
+                                    else
+                                    {
+                                        StaticOrder.AddInfoOrder(model);
+                                        StaticOrder.AddInfoAmount(order_data);
 
-                                    StaticOrder.AddInfoOrder(model);
-                                    StaticOrder.AddInfoAmount(order_data);
+                                        preloader.Visibility = Android.Views.ViewStates.Invisible;
 
-                                    preloader.Visibility = Android.Views.ViewStates.Invisible;
-
-                                    StaticUser.OrderInStageOfBid = true;
-                                    Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                                    ActivityOrderPreis content = new ActivityOrderPreis();
-                                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                                        StaticUser.OrderInStageOfBid = true;
+                                        Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                                        ActivityOrderPreis content = new ActivityOrderPreis();
+                                        transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                                    }                                   
                                 }
                                 else
                                 {
@@ -466,6 +475,18 @@ namespace SmartBoxCity.Activity.Order
                 return view;
             }
            
+        }
+
+        private bool IsFieldsEmptyOrNull(AmountResponse responseData)
+        {
+            if (String.IsNullOrEmpty(responseData.amount) || String.IsNullOrEmpty(responseData.insurance_amount)
+                || String.IsNullOrEmpty(responseData.distance) || String.IsNullOrEmpty(responseData.destination_address)
+                || String.IsNullOrEmpty(responseData.inception_address))
+            {
+                return true;
+            }
+            else
+                return false;
         }
 
         private bool IsStringsNull(ref string InputErrorMessage)
@@ -509,7 +530,7 @@ namespace SmartBoxCity.Activity.Order
                         InputErrorMessage = "Пожалуйста, проверьте введённые Вами значения веса груза!";
                         return true;
                     }
-                    else if (check_argue.Checked)
+                    else if (!(check_argue.Checked))
                     {
                         InputErrorMessage = "Необходимо согласиться с договором оферты !";
                         return true;
@@ -535,7 +556,26 @@ namespace SmartBoxCity.Activity.Order
             Dialog dialog = alert.Create();
             dialog.Show();
         }
+        //    private void callDatePicker()
+        //    {
+        //        // получаем текущую дату
+        //        Calendar cal = new Calendar();
+        //        var mYear = cal.GetYear(DateTime.Now);
+        //        var mMonth = cal.GetMonth(DateTime.Now);
+        //        var mDay = cal.GetDayOfWeek(DateTime.Now);
 
+        //        // инициализируем диалог выбора даты текущими значениями
+        //        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+        //                new DatePickerDialog.OnDateSetListener() {
+        //                @Override
+        //                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+        //        {
+        //            String editTextDateParam = dayOfMonth + "." + (monthOfYear + 1) + "." + year;
+        //            editTextDate.setText(editTextDateParam);
+        //        }
+        //    }, mYear, mMonth, mDay);
+        //    datePickerDialog.show();
+        //}
         private void SwitchCargoInsuranceClick(object sender, EventArgs e)
         {
             if(s_value.Visibility == ViewStates.Invisible)

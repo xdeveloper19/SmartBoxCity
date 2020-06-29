@@ -2,6 +2,7 @@
 using Entity.Model.BoxResponse;
 using Entity.Model.OrderResponse;
 using Entity.Model.OrderViewModel.OrderInfoViewModel;
+using Entity.Repository;
 using EntityLibrary.Model.OrderResponse;
 using Newtonsoft.Json;
 using Plugin.Settings;
@@ -338,6 +339,7 @@ namespace WebService.Client
                         }
                     case HttpStatusCode.OK:
                         {
+                            
                             var order = JsonConvert.DeserializeObject<ListResponse<OrderResponseData, ArchiveResponse>>(s_result);
                             o_data.Message = "Успешно!";
                             o_data.Status = response.StatusCode;// а почему переменная container_id пустая

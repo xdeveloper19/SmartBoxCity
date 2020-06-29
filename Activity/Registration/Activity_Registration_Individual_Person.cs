@@ -275,11 +275,18 @@ namespace SmartBoxCity.Activity.Registration
 
         private void S_date_birth_individual_Click(object sender, EventArgs e)
         {
-            DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
+            DateTime currently = DateTime.Now;
+            DatePickerDialog dialog = new DatePickerDialog(Activity, AlertDialog.ThemeHoloLight, OnDateSet, currently.Year, currently.Month, currently.Day);
+            dialog.Show();
+            //    DatePickerFragment frag = DatePickerFragment.NewInstance(delegate (DateTime time)
+            //    {
+            //        s_date_birth_individual.Text = time.ToShortDateString();
+            //    });
+            //    frag.Show(FragmentManager, DatePickerFragment.TAG);
+            void OnDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
             {
-                s_date_birth_individual.Text = time.ToShortDateString();
-            });
-            frag.Show(FragmentManager, DatePickerFragment.TAG);
+                s_date_birth_individual.Text = e.Date.ToShortDateString();
+            }
         }
     }
 }

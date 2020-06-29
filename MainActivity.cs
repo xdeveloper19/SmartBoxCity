@@ -24,6 +24,7 @@ using Entity.Repository;
 using System;
 using Android.Gms.Tasks;
 using System.Threading.Tasks;
+using SmartBoxCity.Activity.Registration;
 
 namespace SmartBoxCity
 {
@@ -61,7 +62,6 @@ namespace SmartBoxCity
                 btnOrders = navigation.Menu.FindItem(Resource.Id.title_reviews);
                 btnExit = navigation.Menu.FindItem(Resource.Id.title_contacts);
 
-                //AuthorizationAndReceivingToken();
                 if (StaticUser.PresenceOnPage == true)
                 {
                     if (CrossSettings.Current.GetValueOrDefault("role", "") == "driver")
@@ -119,7 +119,7 @@ namespace SmartBoxCity
                         case Resource.Id.navigation_home:
                             if (StaticUser.PresenceOnPage == true)
                             {
-                                UserActivity content = new UserActivity();                                                              
+                                UserActivity content = new UserActivity();                                
                                 transaction.Replace(Resource.Id.framelayout, content);
                                 transaction.AddToBackStack(null);
                                 transaction.Commit();
@@ -179,7 +179,7 @@ namespace SmartBoxCity
                                 alert.SetMessage("Вы действительно хотите выйти ?");
                                 alert.SetPositiveButton("Да", (senderAlert, args) =>
                                 {
-                                    Leaveprofile();
+                                    LeaveProfile();
                                 });
                                 alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                                 {
@@ -321,24 +321,28 @@ namespace SmartBoxCity
                 string WarningMessage = "Если Вы покините эту страницу, Ваш заказ будет удалён. Вы действительно хотите покинуть эту страницу ?";
                 CreationAlertDialog(WarningMessage);
             }
-            else if(StaticUser.PresenceOnPage == true)
+            else if(StaticUser.IsUserOrMapActivity == true)
             {
                 string WarningMessage = "Вы действительно хотите выйти со своего профиля ?";
                 CreationAlertDialog( WarningMessage);
             }
+            else if(StaticUser.IsContentMain == true)
+            {
+            }
             else
             {
-               var currentFragment = SupportFragmentManager.FindFragmentById(Resource.Id.framelayout);
-                var listener = currentFragment as IBackButtonListener;
-                if (listener != null)
-                {
-                    listener.OnBackPressed();
-                    return;
-                }
+                base.OnBackPressed();
+                //var currentFragment = SupportFragmentManager.FindFragmentById(Resource.Id.framelayout);
+                //var listener = currentFragment as IBackButtonListener;
+                //if (listener != null)
+                //{
+                //    listener.OnBackPressed();
+                //    return;
+                //}
             }          
         }
 
-        private void Leaveprofile()
+        private void LeaveProfile()
         {
             string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             File.Delete(dir_path + "user_data.txt");
@@ -349,6 +353,7 @@ namespace SmartBoxCity
                 AuthService.LogOut();
                 CrossSettings.Current.AddOrUpdateValue("token", "");
                 StaticUser.PresenceOnPage = false;
+                StaticUser.IsUserOrMapActivity = false;
             }
 
             Intent content = new Intent(this, typeof(MainActivity));
@@ -369,7 +374,7 @@ namespace SmartBoxCity
                     base.OnBackPressed();
                 }               
                 else
-                    Leaveprofile();
+                    LeaveProfile();
             });
             alert.SetNegativeButton("Отмена", (senderAlert, args) =>
             {
