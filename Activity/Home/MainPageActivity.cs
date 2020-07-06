@@ -33,9 +33,17 @@ namespace SmartBoxCity.Activity.Home
 
             btn_auth1.Click += (s, e) =>
             {
-                Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                AuthActivity content3 = new AuthActivity();
-                transaction1.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
+                try
+                {
+                    Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                    AuthActivity content3 = new AuthActivity();
+                    transaction1.Replace(Resource.Id.framelayout, content3).AddToBackStack(null);
+                    transaction1.Commit();
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(Activity, "" + ex.Message, ToastLength.Long).Show();
+                }
             };
 
             // Переход к форме регистрации.
@@ -43,16 +51,16 @@ namespace SmartBoxCity.Activity.Home
             {
                     //set alert for executing the task
                     try
-                {
+                    {
                     Android.App.FragmentTransaction transaction2 = this.FragmentManager.BeginTransaction();
                     AddOrderActivity content = new AddOrderActivity();
-                    transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
-                    
-                }
-                catch (Exception ex)
-                {
-                    Toast.MakeText(Activity, "" + ex.Message, ToastLength.Long).Show();
-                }
+                    transaction2.Replace(Resource.Id.framelayout, content).AddToBackStack(null);
+                    transaction2.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Toast.MakeText(Activity, "" + ex.Message, ToastLength.Long).Show();
+                    }
 
             };
             return view;

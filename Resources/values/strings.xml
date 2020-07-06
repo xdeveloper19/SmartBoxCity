@@ -5,6 +5,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_home">Главная</string>
     <string name="title_tasks">Задачи</string>
+    <string name="txtAlarm">Тревоги</string>
     <string name="title_boxes">Контейнеры</string>
     <string name="title_status">Статус</string>
     <string name="title_alarms">Тревоги</string>

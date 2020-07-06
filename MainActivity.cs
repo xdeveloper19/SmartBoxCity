@@ -22,9 +22,7 @@ using WebService;
 using WebService.Account;
 using Entity.Repository;
 using System;
-using Android.Gms.Tasks;
-using System.Threading.Tasks;
-using SmartBoxCity.Activity.Registration;
+using Xamarin.Essentials;
 
 namespace SmartBoxCity
 {
@@ -33,21 +31,41 @@ namespace SmartBoxCity
     public class MainActivity : AppCompatActivity 
     {
         private int MY_PERMISSIONS_REQUEST_CAMERA = 100;
-        private FragmentTransaction transaction1;
         private IMenuItem btnAddOrder;
         private IMenuItem btnOrders;
         private IMenuItem btnExit;
+
+
+        [Obsolete]
         protected override void OnCreate(Bundle savedInstanceState)
         {
             try
-            {                
+            {   if (Connectivity.NetworkAccess == Xamarin.Essentials.NetworkAccess.None)
+                {
+                    Android.App.AlertDialog.Builder alert = new Android.App.AlertDialog.Builder(this);
+                    alert.SetTitle("Внимание!");
+                    alert.SetMessage("Для продолжения работы проверьте, пожалуйста, интернет-соединение.");
+                    alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
+                    {
+                        try
+                        {
+                            this.Finish();
+                        }
+                        catch (Exception ex)
+                        {
+                            Toast.MakeText(this, ex.Message, ToastLength.Long);
+                        }
+                    });
+                    Dialog dialog = alert.Create();
+                    dialog.Show();
+                }            
                 base.OnCreate(savedInstanceState);
                 Xamarin.Essentials.Platform.Init(this, savedInstanceState);
                 SetContentView(Resource.Layout.activity_main);
                 Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
                 SetSupportActionBar(toolbar);
 
-                string[] permissions = { Manifest.Permission.AccessFineLocation, Manifest.Permission.WriteExternalStorage };
+                string[] permissions = { Manifest.Permission.AccessFineLocation, Manifest.Permission.WriteExternalStorage, Manifest.Permission.ReceiveBootCompleted, Manifest.Permission.ReadExternalStorage };
                 Android.Support.V4.App.ActivityCompat.RequestPermissions(this, new string[] { Manifest.Permission.Camera }, MY_PERMISSIONS_REQUEST_CAMERA);
                 Dexter.WithActivity(this).WithPermissions(permissions).WithListener(new CompositeMultiplePermissionsListener(new SamplePermissionListener(this))).Check();
 
@@ -57,13 +75,14 @@ namespace SmartBoxCity
                 string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
                 BottomNavigationView navigation = FindViewById<BottomNavigationView>(Resource.Id.navigation);
 
-                transaction1 = this.FragmentManager.BeginTransaction();
+                FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                 btnAddOrder = navigation.Menu.FindItem(Resource.Id.title_about_us);
                 btnOrders = navigation.Menu.FindItem(Resource.Id.title_reviews);
                 btnExit = navigation.Menu.FindItem(Resource.Id.title_contacts);
 
                 if (StaticUser.PresenceOnPage == true)
                 {
+
                     if (CrossSettings.Current.GetValueOrDefault("role", "") == "driver")
                     {
                         Intent intent = new Intent(this, typeof(Activity.MainActivity2));
@@ -75,7 +94,8 @@ namespace SmartBoxCity
                         try
                         {
                             UserActivity content2 = new UserActivity();
-                            transaction1.Replace(Resource.Id.framelayout, content2).Commit();
+                            transaction1.Replace(Resource.Id.framelayout, content2);
+                            transaction1.Commit();
                         }
                         catch (System.Exception ex)
                         {
@@ -119,10 +139,17 @@ namespace SmartBoxCity
                         case Resource.Id.navigation_home:
                             if (StaticUser.PresenceOnPage == true)
                             {
-                                UserActivity content = new UserActivity();                                
-                                transaction.Replace(Resource.Id.framelayout, content);
-                                transaction.AddToBackStack(null);
-                                transaction.Commit();
+                                try
+                                {
+                                    UserActivity content = new UserActivity();
+                                    transaction.Replace(Resource.Id.framelayout, content);
+                                    transaction.AddToBackStack(null);
+                                    transaction.Commit();
+                                }
+                                catch (Exception ex)
+                                {
+                                    Toast.MakeText(this, ex.Message, ToastLength.Long);
+                                }
                             }
                             else
                             {
@@ -135,7 +162,7 @@ namespace SmartBoxCity
 
                             break;
                         case Resource.Id.title_about_us:
-                            if (StaticUser.PresenceOnPage == true)
+                            if(StaticUser.PresenceOnPage == true)
                             {
                                 AddOrderActivity content = new AddOrderActivity();
                                 transaction.Replace(Resource.Id.framelayout, content);
@@ -314,6 +341,7 @@ namespace SmartBoxCity
         {
             void OnBackPressed();
         }
+
         public override void OnBackPressed()
         {
             if(StaticUser.OrderInStageOfBid == true)
@@ -352,12 +380,13 @@ namespace SmartBoxCity
                 AuthService.InitializeClient(client);
                 AuthService.LogOut();
                 CrossSettings.Current.AddOrUpdateValue("token", "");
+                //CrossSettings.Current.AddOrUpdateValue("PresenceOnPage", "false");
                 StaticUser.PresenceOnPage = false;
                 StaticUser.IsUserOrMapActivity = false;
             }
 
-            Intent content = new Intent(this, typeof(MainActivity));
-            StartActivity(content);
+            Intent intent = new Intent(this, typeof(MainActivity));
+            StartActivity(intent);
         }
 
         private void CreationAlertDialog(string warningMessage)
@@ -391,6 +420,7 @@ namespace SmartBoxCity
 
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
+           
             int id = item.ItemId;
             if (id == Resource.Id.action_settings)
             {
@@ -400,13 +430,14 @@ namespace SmartBoxCity
             return base.OnOptionsItemSelected(item);
         }
 
+        
 
         //public bool OnNavigationItemSelected(IMenuItem item)
         //{
         //    int id = item.ItemId;
         //    //MenuItem register = item.findItem(R.id.menuregistrar);
         //    FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-            
+
         //    if (id == Resource.Id.nav_auth)
         //    {
         //        if (CrossSettings.Current.GetValueOrDefault("isAuth", "") == "true")
@@ -419,7 +450,7 @@ namespace SmartBoxCity
         //            AuthActivity home = new AuthActivity();
         //            transaction1.Replace(Resource.Id.framelayout, home).AddToBackStack(null).Commit();
         //        }
-                
+
         //    }
         //    if(id == Resource.Id.nav_registration)
         //    {
@@ -440,7 +471,7 @@ namespace SmartBoxCity
         //    if (id == Resource.Id.nav_camera)
         //    {
 
-                
+
         //    }
         //    else if (id == Resource.Id.nav_gallery)
         //    {
@@ -485,7 +516,7 @@ namespace SmartBoxCity
         //        string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
         //        File.Delete(dir_path + "user_data.txt");
         //        CrossSettings.Current.AddOrUpdateValue("isAuth", "false");
-                
+
         //        Intent content = new Intent(this, typeof(MainActivity));
         //        StartActivity(content);
         //    }

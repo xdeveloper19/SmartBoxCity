@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using Android.App;
+using Android.Text.Method;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
@@ -74,6 +75,10 @@ namespace SmartBoxCity.Activity.Auth
             is_remember = view.FindViewById<CheckBox>(Resource.Id.is_remember);
             preloader = view.FindViewById<ProgressBar>(Resource.Id.loader);
 
+            //s_pass.InputType = Android.Text.InputTypes.TextVariationPassword |
+            //              Android.Text.InputTypes.ClassText;
+            s_pass.SetCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, Resource.Drawable.HidePass, 0);
+            s_pass.SetOnTouchListener(new OnDrawableTouchListener());
             is_remember.Checked = true;
 
             string file_data_remember = "";
@@ -86,6 +91,14 @@ namespace SmartBoxCity.Activity.Auth
                 s_pass.Text = CrossSettings.Current.GetValueOrDefault("password", "");
             }
 
+            //ShowPasswrod.Click += delegate
+            //{
+            //    if (s_pass.InputType != Android.Text.InputTypes.TextVariationVisiblePassword)
+            //        s_pass.InputType = Android.Text.InputTypes.TextVariationVisiblePassword;
+            //    else
+            //        s_pass.InputType = Android.Text.InputTypes.TextVariationPassword |
+            //              Android.Text.InputTypes.ClassText;
+            //};
             btn_auth.Click += async delegate
             {
                 try
@@ -113,6 +126,7 @@ namespace SmartBoxCity.Activity.Auth
                                  CrossSettings.Current.AddOrUpdateValue("check", "1");
                                  CrossSettings.Current.AddOrUpdateValue("login", s_login.Text);
                                  StaticUser.PresenceOnPage = true;
+                                 //CrossSettings.Current.GetValueOrDefault("PresenceOnPage", "true");
                                  CrossSettings.Current.AddOrUpdateValue("password", s_pass.Text);
                              }
                              else
@@ -123,6 +137,8 @@ namespace SmartBoxCity.Activity.Auth
                             preloader.Visibility = Android.Views.ViewStates.Invisible;
 
                             StaticUser.PresenceOnPage = true;
+                            //CrossSettings.Current.GetValueOrDefault("PresenceOnPage", "true");
+
                             CrossSettings.Current.AddOrUpdateValue("token", o_user_data.Token);
                             CrossSettings.Current.AddOrUpdateValue("role", o_user_data.Role);
 
@@ -156,4 +172,40 @@ namespace SmartBoxCity.Activity.Auth
             return view;
         }
     }
+    public class OnDrawableTouchListener : Java.Lang.Object, Android.Views.View.IOnTouchListener
+    {
+        public bool OnTouch(Android.Views.View v, MotionEvent e)
+        {
+            try
+            {
+                if (v is EditText && e.Action == MotionEventActions.Up)
+                {
+                    EditText editText = (EditText)v;
+                    if (e.RawX >= (editText.Right - editText.GetCompoundDrawables()[2].Bounds.Width()))
+                    {
+                        if (editText.TransformationMethod == null)
+                        {
+                            editText.TransformationMethod = PasswordTransformationMethod.Instance;
+                            editText.SetCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, Resource.Drawable.ShowPass, 0);
+                        }
+                        else
+                        {
+                            editText.TransformationMethod = null;
+                            editText.SetCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, Resource.Drawable.HidePass, 0);
+                        }
+
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+        }
+    }
+
 }

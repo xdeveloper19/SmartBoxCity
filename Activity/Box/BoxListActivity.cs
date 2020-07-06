@@ -79,6 +79,15 @@ namespace SmartBoxCity.Activity.Box
                         else
                             containers = o_data.ResponseData.CONTAINERS;
 
+                        if (containers == null || containers.Count == 0)
+                        {
+                            StaticUser.NamePadeAbsenceSomething = "BoxListActivity";
+                            Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                            NotFoundOrdersActivity content = new NotFoundOrdersActivity();
+                            transaction1.Replace(Resource.Id.frameDriverlayout, content);
+                            transaction1.Commit();
+                        }
+
                         int id = 1;
                         foreach (var box in containers)
                         {
@@ -98,8 +107,11 @@ namespace SmartBoxCity.Activity.Box
                     }
                     else
                     {
+                        StaticUser.NamePadeAbsenceSomething = "BoxListActivity";
+                        Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                         NotFoundOrdersActivity content = new NotFoundOrdersActivity();
-                        transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                        transaction1.Replace(Resource.Id.frameDriverlayout, content);
+                        transaction1.Commit();
                     }
                 }
             }

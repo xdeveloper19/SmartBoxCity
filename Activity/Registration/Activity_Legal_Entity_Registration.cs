@@ -240,8 +240,9 @@ namespace SmartBoxCity.Activity.Registration
 
                                         preloader.Visibility = Android.Views.ViewStates.Invisible;
 
-                                        StaticUser.PresenceOnPage = true;
+                                        //CrossSettings.Current.GetValueOrDefault("PresenceOnPage", "true");
                                         CrossSettings.Current.AddOrUpdateValue("role", "client");
+
                                         CrossSettings.Current.AddOrUpdateValue("login", s_login.Text);
                                         CrossSettings.Current.AddOrUpdateValue("password", s_password.Text);
                                         CrossSettings.Current.AddOrUpdateValue("token", o_user_data.user.token);

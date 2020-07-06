@@ -56,6 +56,11 @@
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
+    <BundleAssemblies>false</BundleAssemblies>
+    <AndroidSupportedAbis />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android.Export" />
@@ -81,6 +86,7 @@
     <Compile Include="Activity\Driver\TaskActivity.cs" />
     <Compile Include="Activity\Driver\TaskListAdapter.cs" />
     <Compile Include="Activity\Driver\TaskNotFoundActivity.cs" />
+    <Compile Include="Activity\Event\BoxEventsActivity.cs" />
     <Compile Include="Activity\Event\EventActivity.cs" />
     <Compile Include="Activity\Event\EventListAdapter.cs" />
     <Compile Include="Activity\Home\AdapterUserActivity.cs" />
@@ -117,10 +123,13 @@
     <Compile Include="Service\DatePickerFragment.cs" />
     <Compile Include="Service\GPSService.cs" />
     <Compile Include="Service\HomeService.cs" />
-    <Compile Include="Service\MyLocationService.cs" />
+    <Compile Include="Service\JobWebBackgroundService.cs" />
+    <Compile Include="Service\MyLocationBroadcastReceiver.cs" />
+    <Compile Include="Service\MyTasksBroadcastReceiver .cs" />
     <Compile Include="Service\OrderAdapter.cs" />
     <Compile Include="Service\OrderData.cs" />
     <Compile Include="Service\SensorData.cs" />
+    <Compile Include="Service\StartUp.cs" />
     <Compile Include="Service\TimePickerFragment.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +228,9 @@
       <Version>1.1.1.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
+    <PackageReference Include="Xamarin.Firebase.JobDispatcher">
+      <Version>0.8.5</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Google.Android.Places">
       <Version>1.1.0.2</Version>
     </PackageReference>
@@ -616,6 +628,15 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\PageNotFound.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\show_password.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ShowPass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\HidePass.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

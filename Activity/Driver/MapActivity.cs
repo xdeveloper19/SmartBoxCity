@@ -28,6 +28,7 @@ namespace SmartBoxCity.Activity.Driver
     public class MapActivity : Fragment, IOnMapReadyCallback
     {
         private const string SavedStateActionBarHidden = "saved_state_action_bar_hidden";
+        
         private GoogleMap GMap;
         private ListView lstTask;
         private GPSService _gpsService;
@@ -144,6 +145,7 @@ namespace SmartBoxCity.Activity.Driver
                     if (o_data.ResponseData.TASKS.Count == 0)
                     {
                         StaticTask.IsStoppedGeo = true;
+                        
                         return TaskStatus.NotFound;
                     }
 
@@ -277,8 +279,8 @@ namespace SmartBoxCity.Activity.Driver
             CameraPosition cameraPosition = builder.Build();
             CameraUpdate cameraUpdate = CameraUpdateFactory.NewCameraPosition(cameraPosition);
 
-            googleMap.UiSettings.ZoomControlsEnabled = true;
-            googleMap.UiSettings.CompassEnabled = true;
+            //googleMap.UiSettings.ZoomControlsEnabled = true;
+            //googleMap.UiSettings.CompassEnabled = true;
             googleMap.MoveCamera(cameraUpdate);
         }
 

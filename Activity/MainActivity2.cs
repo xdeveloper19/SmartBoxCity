@@ -24,9 +24,12 @@ namespace SmartBoxCity.Activity
     public class MainActivity2: AppCompatActivity
     {
         GPSService _gpsService;
+        private const string TASK_TAG = "task-job-tag";
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+      
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_driver);
 
@@ -80,6 +83,13 @@ namespace SmartBoxCity.Activity
            
         }
 
+        protected override void OnStart()
+        {
+            if (!StaticTask.IsStoppedGettingTasks)
+                StartUp.StartTracking(TASK_TAG);
+            base.OnStart();
+        }
+
         public interface IBackButtonListener
         {
             void OnBackPressed();
@@ -118,8 +128,11 @@ namespace SmartBoxCity.Activity
             string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             File.Delete(dir_path + "user_data.txt");
 
+            //CrossSettings.Current.AddOrUpdateValue("PresenceOnPage", "false");
             StaticUser.PresenceOnPage = false;
             CrossSettings.Current.AddOrUpdateValue("role", "");
+            StartUp.StopTracking();
+
 
             if (StaticDriver.busy == "0")
             {
@@ -147,7 +160,25 @@ namespace SmartBoxCity.Activity
             }
 
             return base.OnOptionsItemSelected(item);
-        }        
-       
+        }
+
+        protected override void OnPause()
+        {
+
+            base.OnPause();
+            //StartUp.StartTracking(TASK_TAG);
+        }
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+            //StartUp.StartTracking(TASK_TAG);
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            //StartUp.StopTracking();
+        }
     }
 }

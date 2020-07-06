@@ -45,7 +45,8 @@ namespace SmartBoxCity.Activity.Order
                         {
                             FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
                             AddOrderActivity content = new AddOrderActivity();
-                            transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                            transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null);
+                            transaction.Commit();
                         }
                         catch (Exception ex)
                         {

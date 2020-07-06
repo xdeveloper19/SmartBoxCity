@@ -27,6 +27,7 @@ namespace Entity.Repository
         public static string title { get; set; }
         public static string type { get; set; }
         public static bool IsStoppedGeo { get; set; }
+        public static bool IsStoppedGettingTasks { get; set; }
 
         public static void AddInfoTask(TaskResponse task)
         {

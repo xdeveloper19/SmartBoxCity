@@ -26,6 +26,7 @@ using WebService.Client;
 using Entity.Model.OrderResponse;
 using WebService;
 using EntityLibrary.Model.OrderResponse;
+using Xamarin.Essentials;
 
 namespace SmartBoxCity.Activity.Home
 {
@@ -128,6 +129,9 @@ namespace SmartBoxCity.Activity.Home
                             container_id = order.container_id,
                             sensors_status = order.sensors_status,
                             event_count = order.event_count,
+                            destination_address = order.destination_address,
+                            destination_lat = order.destination_lat,
+                            destination_lng = order.destination_lng
                         }
                         );
                     }
@@ -135,9 +139,19 @@ namespace SmartBoxCity.Activity.Home
                 }
                 else
                 {
-                    Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
-                    NotFoundOrdersActivity content = new NotFoundOrdersActivity();
-                    transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                    try
+                    {
+                        StaticUser.NamePadeAbsenceSomething = "";
+                        Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                        NotFoundOrdersActivity content = new NotFoundOrdersActivity();
+                        transaction.Replace(Resource.Id.framelayout, content);
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        Toast.MakeText(Activity, ex.Message, ToastLength.Long);
+                    }
+                    
                 }
             }
         }
@@ -191,6 +205,17 @@ namespace SmartBoxCity.Activity.Home
             alert.SetMessage(Messag);
             alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
             {
+                try
+                {
+                    Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                    UserActivity content = new UserActivity();
+                    transaction.Replace(Resource.Id.framelayout, content);
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(Activity, ex.Message, ToastLength.Long);
+                }
             });
             Dialog dialog = alert.Create();
             dialog.Show();

@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Text;
-
+using System.Threading.Tasks;
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Entity.Model;
@@ -38,54 +35,75 @@ namespace SmartBoxCity.Activity.Order
 
                 lstEvent = view.FindViewById<ListView>(Resource.Id.eventlistview);
                 Eventlist = new List<EventModel>();
-                GetEvents();
+                var result = GetEvents();
 
+                if (result.Result == TaskStatus.Faulted)
+                {
+                    throw new Exception("Событий нет");
+                }
                 return view;
             }
             catch (Exception ex)
             {
                 var view = inflater.Inflate(Resource.Layout.activity_errors_handling, container, false);
                 var TextOfError = view.FindViewById<TextView>(Resource.Id.TextOfError);
-                TextOfError.Text += "\n(Ошибка: " + ex.Message + ")";
+                var image = view.FindViewById<ImageView>(Resource.Id.img_error_handing);
+
+                TextOfError.Text += "\n(" + ex.Message + ")";
+                image.SetImageResource(Resource.Drawable.PageNotFound);
                 return view;
             }        
         }
 
-        private async void GetEvents()
+        private async Task<TaskStatus> GetEvents()
         {
             var o_data = new ServiceResponseObject<EventsResponse>();
             using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
             {
-                OrderService.InitializeClient(client);
-                o_data = await OrderService.Events(StaticOrder.Order_id);
-
-                if (o_data.Status == HttpStatusCode.OK)
+                try
                 {
-                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                    var number = 0;
+                    OrderService.InitializeClient(client);
+                    o_data = await OrderService.Events(StaticOrder.Order_id);
 
-                    foreach (KeyValuePair<string, List<EventResponse>> kvp in o_data.ResponseData.EVENTS)
+                    if (o_data.Status == HttpStatusCode.OK)
                     {
-                        for (int i = 0; i < o_data.ResponseData.EVENTS[kvp.Key].Count; i++)
+                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                        var number = 0;
+
+                        if (o_data.ResponseData.EVENTS == null || o_data.ResponseData.EVENTS.Count == 0)
                         {
-                            Eventlist.Add(new EventModel
-                            {
-                                id = number++,
-                                Id = kvp.Value[i].order_id,
-                                Name = kvp.Value[i].message,
-                                Time = "(" + kvp.Value[i].created_at.ToLongTimeString() + ")",
-                                Date = kvp.Value[i].event_day,
-                            });
+                            return TaskStatus.Faulted;
                         }
+
+                        foreach (KeyValuePair<string, List<EventResponse>> kvp in o_data.ResponseData.EVENTS)
+                        {
+                            for (int i = 0; i < o_data.ResponseData.EVENTS[kvp.Key].Count; i++)
+                            {
+                                Eventlist.Add(new EventModel
+                                {
+                                    id = number++,
+                                    Id = kvp.Value[i].order_id,
+                                    Name = kvp.Value[i].message,
+                                    Time = "(" + kvp.Value[i].created_at.ToLongTimeString() + ")",
+                                    Date = kvp.Value[i].event_day,
+                                    ContentType = kvp.Value[i].type
+                                });
+                            }
+                        }
+
+                        UpdateList();
+                        return TaskStatus.Running;
                     }
+                    else
+                    {
+                        return TaskStatus.Faulted;//"Unexpected character encountered while parsing value: <. Path '', line 0, position 0."
 
-                    UpdateList();
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();//"Unexpected character encountered while parsing value: <. Path '', line 0, position 0."
-
-                }
+                    return TaskStatus.Faulted;
+                }   
             }
         }
 

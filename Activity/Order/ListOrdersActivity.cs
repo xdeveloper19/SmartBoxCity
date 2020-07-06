@@ -43,11 +43,20 @@ namespace SmartBoxCity.Activity.Order
                 {
                     view = inflater.Inflate(Resource.Layout.activity_not_found_book, container, false);
                     var btn_add_order1 = view.FindViewById<Button>(Resource.Id.btn_add_order1);
-                    btn_add_order1.Click += async delegate
+                    btn_add_order1.Click += delegate
                     {
-                        Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
-                        AddOrderActivity content = new AddOrderActivity();
-                        transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                        try
+                        {
+                            Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                            AddOrderActivity content = new AddOrderActivity();
+                            transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null);
+                            transaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            Toast.MakeText(Activity, ex.Message, ToastLength.Long);
+                        }
+                        
                     };
                     return view;
                 }
@@ -115,11 +124,17 @@ namespace SmartBoxCity.Activity.Order
                     //StaticUser.AddInfoAuth(o_user_data);
                     if (o_data.ResponseData.ARCHIVE.Count == 0)
                     {
-                       
-                        Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
-                        BookNotFoundActivity content = new BookNotFoundActivity();
-                        transaction.Replace(Resource.Id.framelayout, content);
-                        transaction.Commit();
+                        try
+                        {
+                            Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                            BookNotFoundActivity content = new BookNotFoundActivity();
+                            transaction.Replace(Resource.Id.framelayout, content);
+                            transaction.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            Toast.MakeText(Activity, ex.Message, ToastLength.Long);
+                        }
                         return;
                     }
 

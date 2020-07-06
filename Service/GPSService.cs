@@ -35,8 +35,8 @@ namespace SmartBoxCity.Service
 
         private PendingIntent GetPendingIntent()
         {
-            Intent intent = new Intent(context, typeof(MyLocationService));
-            intent.SetAction(MyLocationService.ACTION_PROCESS_LOCATION);
+            Intent intent = new Intent(context, typeof(MyLocationBroadcastReceiver));
+            intent.SetAction(MyLocationBroadcastReceiver.ACTION_PROCESS_LOCATION);
             return PendingIntent.GetBroadcast(context, 0, intent, PendingIntentFlags.UpdateCurrent);
         }
 

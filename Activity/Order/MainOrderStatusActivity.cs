@@ -34,31 +34,58 @@ namespace SmartBoxCity.Activity.Order
             ButtonEvents = view.FindViewById<Button>(Resource.Id.ButtonEvents);
             FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
 
-            ButtonOrderAndItsStages.Click += async delegate
+            ButtonOrderAndItsStages.Click += delegate
             {
-                OrderListStagesActivity content1 = new OrderListStagesActivity();
-                if (CrossSettings.Current.GetValueOrDefault("role", "") == "driver")
-                    transaction1.Replace(Resource.Id.frameDriverlayout, content1).AddToBackStack(null).Commit();
-                else
-                    transaction1.Replace(Resource.Id.framelayout, content1).AddToBackStack(null).Commit();
+                try
+                {
+                    OrderListStagesActivity content1 = new OrderListStagesActivity();
+                    if (CrossSettings.Current.GetValueOrDefault("role", "") == "driver")
+                    {
+                        transaction1.Replace(Resource.Id.frameDriverlayout, content1).AddToBackStack(null);
+                        transaction1.Commit();
+                    }
+                    else
+                    {
+                        transaction1.Replace(Resource.Id.framelayout, content1).AddToBackStack(null);
+                        transaction1.Commit();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(Activity, ex.Message, ToastLength.Long);
+                }
             };
 
-            ButtonMap.Click += async delegate
+            ButtonMap.Click += delegate
             {
-                MapActivity content2 = new MapActivity();
-                if (CrossSettings.Current.GetValueOrDefault("role", "") == "driver")
-                    transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
-                else
-                    transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+                try
+                {
+                    MapActivity content2 = new MapActivity();
+                    if (CrossSettings.Current.GetValueOrDefault("role", "") == "driver")
+                        transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
+                    else
+                        transaction1.Replace(Resource.Id.framelayout, content2).AddToBackStack(null).Commit();
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(Activity, ex.Message, ToastLength.Long);
+                }
             };
 
-            ButtonEvents.Click += async delegate
+            ButtonEvents.Click += delegate
             {
-                EventsActivity content3 = new EventsActivity();
-                if (CrossSettings.Current.GetValueOrDefault("role", "") == "driver")
-                    transaction1.Replace(Resource.Id.frameDriverlayout, content3).AddToBackStack(null).Commit();
-                else
-                    transaction1.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
+                try
+                {
+                    EventsActivity content3 = new EventsActivity();
+                    if (CrossSettings.Current.GetValueOrDefault("role", "") == "driver")
+                        transaction1.Replace(Resource.Id.frameDriverlayout, content3).AddToBackStack(null).Commit();
+                    else
+                        transaction1.Replace(Resource.Id.framelayout, content3).AddToBackStack(null).Commit();
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(Activity, ex.Message, ToastLength.Long);
+                }
             };
 
             return view;

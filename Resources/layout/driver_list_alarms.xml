@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
     android:orientation="vertical"
-	android:id="@+id/alarm_book_layout"
 	android:background = "@drawable/activity_stili"
     android:layout_height="match_parent">
 
@@ -14,7 +13,7 @@
              android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/txt_title_lst_alarm"
             android:textAlignment="center"
-            android:text="Тревоги"
+            android:text="@string/txtAlarm"
             android:textColor="?android:attr/textColorPrimary"
             android:layout_height="wrap_content"/>
 

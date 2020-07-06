@@ -32,7 +32,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize = "15dp"
+                    android:textSize = "17dp"
                     android:gravity="center"
                     android:layout_weight = "1"
                     android:text="Заказ:"
@@ -49,11 +49,71 @@
                     android:textSize="17sp"
                 />
 
-            </LinearLayout>                 
+            </LinearLayout>  
+            
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below = "@+id/LinearLayoutUser1"
+                android:background = "#BFE2ED"
+            />
+
+            <LinearLayout
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal"
+                    android:id ="@+id/LinearLayoutUserFrom"
+                    android:layout_below = "@+id/LinearLayoutUser1"
+					android:paddingTop="3dp">
+				<ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+					app:srcCompat="@drawable/bluemarker"
+					android:id="@+id/img_blueM"
+					android:layout_marginLeft="-5dp"
+					/>
+				<TextView
+					android:id="@+id/UserCardViewTxtFrom"
+					android:layout_marginTop="7dp"
+					android:textColor = "#475B57"
+				    android:text="улица Шеболдаева, 24А, Ростов-на-Дону"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:textSize="12sp"/>
+
+
+			</LinearLayout>
+             
+
+             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id ="@+id/LinearLayoutUserTo"
+                android:layout_below = "@+id/LinearLayoutUserFrom"
+                android:orientation = "horizontal">   
+
+               <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+					app:srcCompat="@drawable/greenmarker"
+					android:id="@+id/img_greenM"
+					android:layout_marginLeft="-5dp"
+					/>
+				<TextView
+					android:id="@+id/UserCardViewTxtTo"
+					android:layout_marginTop="7dp"
+					android:textColor = "#475B57"
+				    android:text="улица Кошевого, 1, Новочеркасск"
+					android:layout_height="wrap_content"
+					android:layout_width="wrap_content"
+					android:textSize="12sp"/>
+
+            </LinearLayout>  
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below = "@+id/LinearLayoutUserTo"
                 android:background = "#BFE2ED"
             />
             <LinearLayout
@@ -63,7 +123,7 @@
                 android:layout_marginTop = "15dp"
                 android:padding = "10dp"
                 android:id = "@+id/LinearLayoutUser2"
-                android:layout_below = "@+id/LinearLayoutUser1">
+                android:layout_below = "@+id/LinearLayoutUserTo">
 
 
                <ProgressBar

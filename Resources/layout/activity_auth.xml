@@ -75,8 +75,8 @@
 						android:padding = "7dp"
 						android:hint="Пароль"/>
 				</android.support.design.widget.TextInputLayout>
+              
         
-
 				<CheckBox
 					android:text="Запомнить"
 					android:textColor = "#475B57"

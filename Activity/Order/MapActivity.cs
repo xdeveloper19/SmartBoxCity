@@ -122,8 +122,8 @@ namespace SmartBoxCity.Activity.Order
                 CameraPosition cameraPosition = builder.Build();
                 CameraUpdate cameraUpdate = CameraUpdateFactory.NewCameraPosition(cameraPosition);
 
-                googleMap.UiSettings.ZoomControlsEnabled = true;
-                googleMap.UiSettings.CompassEnabled = true;
+                //googleMap.UiSettings.ZoomControlsEnabled = true;
+                //googleMap.UiSettings.CompassEnabled = true;
                 googleMap.MoveCamera(cameraUpdate);
             }
             catch (Exception ex)
@@ -164,113 +164,133 @@ namespace SmartBoxCity.Activity.Order
         }
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            var result = GetParameters();
-            if(result.Result == Driver.TaskStatus.OK)
+            try
             {
-                var view = inflater.Inflate(Resource.Layout.activity_map, container, false);
+                Task<SmartBoxCity.Activity.Driver.TaskStatus> result = GetParameters();
 
-                txtFrom = view.FindViewById<TextView>(Resource.Id.MapTextFrom);
-                txtTo = view.FindViewById<TextView>(Resource.Id.MapTextTo);
-                Weight = view.FindViewById<TextView>(Resource.Id.MapTextWeight);
-                LenhWidHeig = view.FindViewById<TextView>(Resource.Id.MapTextLenhWidHeig);
-
-                txtFrom.Text = fromString;
-                txtTo.Text = toString;
-                Weight.Text = weightString;
-                LenhWidHeig.Text = lenhwidheigString;
-
-                var layout = view.FindViewById<SlidingUpPanelLayout>(Resource.Id.sliding_client_layout);
-                view.FindViewById<TextView>(Resource.Id.txt_info_order_new).MovementMethod = new LinkMovementMethod();
-
-
-
-                if (result.Result == SmartBoxCity.Activity.Driver.TaskStatus.OK)
+                if (result.Result == Driver.TaskStatus.OK)
                 {
-                    layout.AnchorPoint = 0.3f;
-                    layout.PanelExpanded += (s, e) => Log.Info(Tag, "PanelExpanded");
-                    layout.PanelCollapsed += (s, e) => Log.Info(Tag, "PanelCollapsed");
-                    layout.PanelAnchored += (s, e) => Log.Info(Tag, "PanelAnchored");
-                    layout.PanelSlide += (s, e) =>
+                    var view = inflater.Inflate(Resource.Layout.activity_map, container, false);
+
+                    txtFrom = view.FindViewById<TextView>(Resource.Id.MapTextFrom);
+                    txtTo = view.FindViewById<TextView>(Resource.Id.MapTextTo);
+                    Weight = view.FindViewById<TextView>(Resource.Id.MapTextWeight);
+                    LenhWidHeig = view.FindViewById<TextView>(Resource.Id.MapTextLenhWidHeig);
+
+                    txtFrom.Text = fromString;
+                    txtTo.Text = toString;
+                    Weight.Text = weightString;
+                    LenhWidHeig.Text = lenhwidheigString;
+
+                    var layout = view.FindViewById<SlidingUpPanelLayout>(Resource.Id.sliding_client_layout);
+                    view.FindViewById<TextView>(Resource.Id.txt_info_order_new).MovementMethod = new LinkMovementMethod();
+
+
+
+                    if (result.Result == SmartBoxCity.Activity.Driver.TaskStatus.OK)
                     {
-                        if (e.SlideOffset < 0.2)
+                        layout.AnchorPoint = 0.3f;
+                        layout.PanelExpanded += (s, e) => Log.Info(Tag, "PanelExpanded");
+                        layout.PanelCollapsed += (s, e) => Log.Info(Tag, "PanelCollapsed");
+                        layout.PanelAnchored += (s, e) => Log.Info(Tag, "PanelAnchored");
+                        layout.PanelSlide += (s, e) =>
                         {
-                            //if (SupportActionBar.IsShowing)
-                            //    SupportActionBar.Hide();
-                        }
-                        else
+                            if (e.SlideOffset < 0.2)
+                            {
+                                //if (SupportActionBar.IsShowing)
+                                //    SupportActionBar.Hide();
+                            }
+                            else
+                            {
+                                //if (!SupportActionBar.IsShowing)
+                                //    SupportActionBar.Show();
+                            }
+                        };
+
+                        var actionBarHidden = savedInstanceState != null &&
+                                              savedInstanceState.GetBoolean(SavedStateActionBarHidden, false);
+                        //if (actionBarHidden)
+                        //    SupportActionBar.Hide();
+
+                        MapsInitializer.Initialize(Activity);
+                        mMapView = view.FindViewById<MapView>(Resource.Id.FragmentMapUser);
+
+                        switch (GooglePlayServicesUtil.IsGooglePlayServicesAvailable(Activity))
                         {
-                            //if (!SupportActionBar.IsShowing)
-                            //    SupportActionBar.Show();
+                            case ConnectionResult.Success:
+                                Toast.MakeText(Activity, "SUCCESS", ToastLength.Long).Show();
+                                mMapView.OnCreate(savedInstanceState);
+                                mMapView.GetMapAsync(this);
+                                break;
+                            case ConnectionResult.ServiceMissing:
+                                Toast.MakeText(Activity, "ServiceMissing", ToastLength.Long).Show();
+                                break;
+                            case ConnectionResult.ServiceVersionUpdateRequired:
+                                Toast.MakeText(Activity, "Update", ToastLength.Long).Show();
+                                break;
+                            default:
+                                Toast.MakeText(Activity, GooglePlayServicesUtil.IsGooglePlayServicesAvailable(Activity), ToastLength.Long).Show();
+                                break;
                         }
-                    };
-
-                    var actionBarHidden = savedInstanceState != null &&
-                                          savedInstanceState.GetBoolean(SavedStateActionBarHidden, false);
-                    //if (actionBarHidden)
-                    //    SupportActionBar.Hide();
-
-                    MapsInitializer.Initialize(Activity);
-                    mMapView = view.FindViewById<MapView>(Resource.Id.FragmentMapUser);
-
-                    switch (GooglePlayServicesUtil.IsGooglePlayServicesAvailable(Activity))
-                    {
-                        case ConnectionResult.Success:
-                            Toast.MakeText(Activity, "SUCCESS", ToastLength.Long).Show();
-                            mMapView.OnCreate(savedInstanceState);
-                            mMapView.GetMapAsync(this);
-                            break;
-                        case ConnectionResult.ServiceMissing:
-                            Toast.MakeText(Activity, "ServiceMissing", ToastLength.Long).Show();
-                            break;
-                        case ConnectionResult.ServiceVersionUpdateRequired:
-                            Toast.MakeText(Activity, "Update", ToastLength.Long).Show();
-                            break;
-                        default:
-                            Toast.MakeText(Activity, GooglePlayServicesUtil.IsGooglePlayServicesAvailable(Activity), ToastLength.Long).Show();
-                            break;
                     }
-                }
 
-                return view;
+                    return view;
+                }
+                else
+                {
+                    var view = inflater.Inflate(Resource.Layout.activity_errors_handling, container, false);
+                    var txt_error = view.FindViewById<TextView>(Resource.Id.TextOfError);
+                    txt_error.Text = "Что-то пошло не так. Перезапустите страницу или обратитесь в центр поддержки!\nПричина: " + error_message;
+                    return view;
+                }
             }
-            else
+            catch (Exception ex)
             {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long);
                 var view = inflater.Inflate(Resource.Layout.activity_errors_handling, container, false);
                 var txt_error = view.FindViewById<TextView>(Resource.Id.TextOfError);
-                txt_error.Text = "Что-то пошло не так. Перезапустите страницу или обратитесь в центр поддержки!\nПричина: " + error_message;
-                return view;               
-            }            
+                txt_error.Text = "Что-то пошло не так. Перезапустите страницу или обратитесь в центр поддержки!\nПричина: " + ex.Message;
+                return view;
+            } 
         }
 
         private async Task<SmartBoxCity.Activity.Driver.TaskStatus> GetParameters()
         {
-            var o_data = new ServiceResponseObject<GeoResponseData>();
-            o_data = await OrderService.GeoOrder(StaticOrder.Order_id);
-
-            if (o_data.Status == System.Net.HttpStatusCode.OK)
+            try
             {
+                var o_data = new ServiceResponseObject<GeoResponseData>();
+                o_data = await OrderService.GeoOrder(StaticOrder.Order_id);
 
-                fromString = o_data.ResponseData.ORDER.inception_address;
-                toString = o_data.ResponseData.ORDER.destination_address;
-                weightString = o_data.ResponseData.ORDER.weight;
-                if (o_data.ResponseData.ORDER.length == null || o_data.ResponseData.ORDER.width == null || o_data.ResponseData.ORDER.height == null)
+                if (o_data.Status == System.Net.HttpStatusCode.OK)
                 {
-                    lenhwidheigString = "неизвестно";
+
+                    fromString = o_data.ResponseData.ORDER.inception_address;
+                    toString = o_data.ResponseData.ORDER.destination_address;
+                    weightString = o_data.ResponseData.ORDER.weight;
+                    if (o_data.ResponseData.ORDER.length == null || o_data.ResponseData.ORDER.width == null || o_data.ResponseData.ORDER.height == null)
+                    {
+                        lenhwidheigString = "неизвестно";
+                    }
+                    else
+                    {
+                        var length = double.Parse(o_data.ResponseData.ORDER.length, CultureInfo.InvariantCulture);
+                        var width = double.Parse(o_data.ResponseData.ORDER.width, CultureInfo.InvariantCulture);
+                        var height = double.Parse(o_data.ResponseData.ORDER.height, CultureInfo.InvariantCulture);
+                        var sum = length.ToString() + "X" + width.ToString() + "X" + height.ToString();
+                        lenhwidheigString = sum;
+                    }
+                    var way_points = o_data.ResponseData.MAP_WAYPOINTS;
+                    StaticOrder.AddWayPoints(way_points);
+                    return SmartBoxCity.Activity.Driver.TaskStatus.OK;
                 }
-                else
-                {
-                    var length = double.Parse(o_data.ResponseData.ORDER.length, CultureInfo.InvariantCulture);
-                    var width = double.Parse(o_data.ResponseData.ORDER.width, CultureInfo.InvariantCulture);
-                    var height = double.Parse(o_data.ResponseData.ORDER.height, CultureInfo.InvariantCulture);
-                    var sum = length.ToString() + "X" + width.ToString() + "X" + height.ToString();
-                    lenhwidheigString = sum;
-                }
-                var way_points = o_data.ResponseData.MAP_WAYPOINTS;
-                StaticOrder.AddWayPoints(way_points);
-                return SmartBoxCity.Activity.Driver.TaskStatus.OK;
+                error_message = o_data.Message;
+                return SmartBoxCity.Activity.Driver.TaskStatus.ServerError;
             }
-            error_message = o_data.Message;
-            return SmartBoxCity.Activity.Driver.TaskStatus.ServerError;
+            catch (Exception ex)
+            {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long);
+                return SmartBoxCity.Activity.Driver.TaskStatus.ServerError;
+            }
         }
     }
 }

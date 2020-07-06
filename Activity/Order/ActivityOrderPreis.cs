@@ -116,7 +116,8 @@ namespace SmartBoxCity.Activity.Order
                     StaticUser.NeedToCreateOrder = true;
                     Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                     UserActivity content = new UserActivity();
-                    transaction1.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                    transaction1.Replace(Resource.Id.framelayout, content);
+                    transaction1.Commit();
                 }
             };
             

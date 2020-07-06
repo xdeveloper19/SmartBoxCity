@@ -56,12 +56,19 @@ namespace SmartBoxCity.Activity.Order
                 txt_date.Text += word + "\n";
             }
 
-            btn.Click += async delegate
+            btn.Click += delegate
             {
-                MainOrderStatusActivity content = new MainOrderStatusActivity();
-                StaticOrder.Order_id = orders[position].OrderName;
-                manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null);
-                manager.Commit();
+                try
+                {
+                    MainOrderStatusActivity content = new MainOrderStatusActivity();
+                    StaticOrder.Order_id = orders[position].OrderName;
+                    manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null);
+                    manager.Commit();
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(context, ex.Message, ToastLength.Long);
+                }
             };
 
             return view;

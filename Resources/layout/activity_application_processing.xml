@@ -98,7 +98,31 @@
                     android:paddingLeft="16dp"
                     android:paddingTop="16dp"
                     android:paddingRight="16dp"
-                    android:paddingBottom="16dp">                       
+                    android:paddingBottom="16dp">      
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text = "Характер груза:"
+                        android:id = "@+id/TextCargoCharacteristic"
+                        android:gravity="left|center_vertical"
+                        android:padding="10dp"
+                        android:textColor = "#2C4C46"
+                        android:textSize="15sp"
+                        
+                    />             
+                    <Spinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="9sp"
+                        android:padding="4dp"
+                        android:background = "@drawable/edittext_stili"               
+                        android:id = "@+id/s_cargo_characteristic"
+                        android:entries="@array/array_cargo_characteristic"
+                        android:layout_marginLeft = "5dp"
+                        android:layout_marginRight = "5dp"
+                        android:layout_marginStart = "5dp"
+                        android:layout_below = "@+id/TextCargoCharacteristic"
+                     />
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -107,6 +131,7 @@
                         android:textSize="15sp"
                         android:textColor = "#2C4C46"
                         android:id = "@+id/textHeading1"
+                        android:layout_below="@+id/s_cargo_characteristic"
                         android:layout_centerHorizontal = "true"
                     />
                     <LinearLayout
@@ -301,6 +326,7 @@
                                     android:inputType="number"
                                     android:gravity="center"
                                     android:text="1"
+                                    android:maxLength="4"
                                     android:hint="Кол-во мест"
                                     android:padding="8dp"
                                     android:textSize="11sp"
@@ -310,30 +336,7 @@
                         </LinearLayout>
                     </LinearLayout>
                     
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text = "Характер груза:"
-                        android:id = "@+id/TextCargoCharacteristic"
-                        android:gravity="left|center_vertical"
-                        android:padding="10dp"
-                        android:textColor = "#2C4C46"
-                        android:textSize="15sp"
-                        android:layout_below = "@+id/LinaerLayoutСharacteristicsBox"
-                    />             
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="9sp"
-                        android:padding="4dp"
-                        android:background = "@drawable/edittext_stili"               
-                        android:id = "@+id/s_cargo_characteristic"
-                        android:entries="@array/array_cargo_characteristic"
-                        android:layout_marginLeft = "5dp"
-                        android:layout_marginRight = "5dp"
-                        android:layout_marginStart = "5dp"
-                        android:layout_below = "@+id/TextCargoCharacteristic"
-                     />
+                    
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -344,7 +347,7 @@
                         android:padding="10dp"
                         android:textColor = "#2C4C46"    
                         android:textSize="15sp"
-                        android:layout_below = "@+id/s_cargo_characteristic"
+                        android:layout_below = "@+id/LinaerLayoutСharacteristicsBox"
                     />
                     <Spinner
                         android:layout_width="match_parent"

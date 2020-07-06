@@ -91,6 +91,69 @@ namespace WebService.Driver
             }
         }
 
+
+        /// <summary>
+        /// Получение событий для контейнера.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<ServiceResponseObject<EventsBoxResponse>> Events(string event_id)
+        {
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"container/{event_id}/events");
+
+                string s_result;
+                using (HttpContent responseContent = response.Content)
+                {
+                    s_result = await responseContent.ReadAsStringAsync();
+                }
+
+                ServiceResponseObject<EventsBoxResponse> o_data =
+                    new ServiceResponseObject<EventsBoxResponse>();
+
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.BadRequest:
+                        {
+                            throw new Exception("Событий этого контейнера нет");
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var box = JsonConvert.DeserializeObject<EventsBoxResponse>(s_result);
+                            o_data.Message = "Успешно!";
+                            o_data.Status = response.StatusCode;// а почему переменная container_id пустая
+                            o_data.ResponseData = new EventsBoxResponse
+                            {
+                                CONTAINER = box.CONTAINER,
+                                EVENTS = box.EVENTS
+                            };
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
+                }
+
+
+            }//can not access to close stream 
+            catch (Exception ex)
+            {
+                ServiceResponseObject<EventsBoxResponse> o_data = new ServiceResponseObject<EventsBoxResponse>();
+                o_data.Message = ex.Message;
+                return o_data;
+            }
+        }
+
         /// <summary>
         /// Получение данных контейнера.
         /// </summary>

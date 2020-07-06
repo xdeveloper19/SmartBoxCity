@@ -54,6 +54,16 @@ namespace SmartBoxCity.Activity.Driver
                         Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
                         alarmlist = new List<AlarmBookModel>();
 
+                        if (o_data.ResponseData.ALARMS_STATUS == null || 
+                            o_data.ResponseData.ALARMS_STATUS.Count == 0)
+                        {
+                            StaticUser.NamePadeAbsenceSomething = "AlarmsActivity";
+                            Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                            NotFoundOrdersActivity content = new NotFoundOrdersActivity();
+                            transaction.Replace(Resource.Id.frameDriverlayout, content);
+                            transaction.Commit();
+                        }
+
                         foreach (var alm in o_data.ResponseData.ALARMS_STATUS)
                         {
                             alarmlist.Add(new AlarmBookModel
@@ -74,7 +84,8 @@ namespace SmartBoxCity.Activity.Driver
                         StaticUser.NamePadeAbsenceSomething = "AlarmsActivity";
                         Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
                         NotFoundOrdersActivity content = new NotFoundOrdersActivity();
-                        transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null).Commit();
+                        transaction.Replace(Resource.Id.frameDriverlayout, content);
+                        transaction.Commit();
                     }
                 }
 

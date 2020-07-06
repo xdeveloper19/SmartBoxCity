@@ -25,6 +25,8 @@ namespace SmartBoxCity.Activity.Box
             base.OnCreate(savedInstanceState);
 
         }
+
+        [Obsolete]
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             var view = inflater.Inflate(Resource.Layout.driver_menu_box, container, false);
@@ -33,24 +35,41 @@ namespace SmartBoxCity.Activity.Box
             btn_boxes_depot = view.FindViewById<Button>(Resource.Id.btn_boxes_depot);
             FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
 
-            btn_boxes_car.Click += async delegate
+            btn_boxes_car.Click += delegate
             {
-                BoxListActivity content1 = new BoxListActivity();
-                StaticBox.isDepot = false;
-                Bundle args = new Bundle();
-                args.PutBoolean("isDepot", false);
-                content1.Arguments = args;
-                transaction1.Replace(Resource.Id.frameDriverlayout, content1).AddToBackStack(null).Commit();
+                try
+                {
+                    BoxListActivity content1 = new BoxListActivity();
+                    StaticBox.isDepot = false;
+                    Bundle args = new Bundle();
+                    args.PutBoolean("isDepot", false);
+                    content1.Arguments = args;
+                    transaction1.Replace(Resource.Id.frameDriverlayout, content1).AddToBackStack(null);
+                    transaction1.Commit();
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(Activity, ex.Message, ToastLength.Long);
+                }
+               
             };
 
             btn_boxes_depot.Click += async delegate
             {
-                BoxListActivity content2 = new BoxListActivity();
-                StaticBox.isDepot = true;
-                Bundle args = new Bundle();
-                args.PutBoolean("isDepot", true);
-                content2.Arguments = args;
-                transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
+                try
+                {
+                    BoxListActivity content2 = new BoxListActivity();
+                    StaticBox.isDepot = true;
+                    Bundle args = new Bundle();
+                    args.PutBoolean("isDepot", true);
+                    content2.Arguments = args;
+                    transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null);
+                    transaction1.Commit();
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(Activity, ex.Message, ToastLength.Long);
+                }
             };
 
             return view;

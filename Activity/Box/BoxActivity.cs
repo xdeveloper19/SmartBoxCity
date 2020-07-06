@@ -4,8 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using Android.App;
-using Android.Content;
-using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
@@ -16,13 +14,16 @@ using Entity.Model;
 using Entity.Model.BoxResponse;
 using Entity.Repository;
 using Plugin.Settings;
+using SmartBoxCity.Activity.Event;
 using SmartBoxCity.Service;
 using WebService;
 using WebService.Driver;
+using Xamarin.Essentials;
 using static Android.Support.Design.Widget.AppBarLayout;
 
 namespace SmartBoxCity.Activity.Box
 {
+    [Obsolete]
     public class BoxActivity: Fragment
     {
         #region Объявление переменных
@@ -50,6 +51,7 @@ namespace SmartBoxCity.Activity.Box
             base.OnCreate(savedInstanceState);
         }
 
+        [Obsolete]
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             var view = inflater.Inflate(Resource.Layout.driver_info_box, container, false);
@@ -76,6 +78,7 @@ namespace SmartBoxCity.Activity.Box
             btn_fold.Enabled = (StaticBox.isDepot) ? false : true;
             #endregion
 
+            BoxTextEvents.Click += BoxTextEvents_Click;
             GetBoxParameters();
 
             if (StaticBox.alarms != null)
@@ -109,9 +112,18 @@ namespace SmartBoxCity.Activity.Box
                     {
                         MakeFold(alert);
 
-                        FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                        BoxActivity content2 = new BoxActivity();
-                        transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
+                        try
+                        {
+                            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                            BoxActivity content2 = new BoxActivity();
+                            transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null);
+                            transaction1.Commit();
+                        }
+                        catch (Exception ex)
+                        {
+                            Toast.MakeText(Activity, ex.Message, ToastLength.Long);
+                        }
+                       
                     });
                     alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                     {
@@ -127,7 +139,8 @@ namespace SmartBoxCity.Activity.Box
 
                         FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                         BoxActivity content2 = new BoxActivity();
-                        transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
+                        transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null);
+                        transaction1.Commit();
                     });
                 }
                 alert.SetNegativeButton("Отмена", (senderAlert, args) =>
@@ -216,6 +229,21 @@ namespace SmartBoxCity.Activity.Box
             return view;
         }
 
+        private void BoxTextEvents_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                BoxEventsActivity content2 = new BoxEventsActivity();
+                transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null);
+                transaction1.Commit();
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+            }
+        }
+
         private async void Dettach(AlertDialog.Builder alert, bool isChecked)
         {
             using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
@@ -232,13 +260,15 @@ namespace SmartBoxCity.Activity.Box
                     alert1.SetMessage(o_data.ResponseData.Message);
                     alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
                     {
+
                     });
                     Dialog dialog1 = alert1.Create();
                     dialog1.Show();
 
                     FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                     MainBoxStatusActivity content2 = new MainBoxStatusActivity();
-                    transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null).Commit();
+                    transaction1.Replace(Resource.Id.frameDriverlayout, content2);
+                    transaction1.Commit();
                 }
                 else
                 {
@@ -247,6 +277,7 @@ namespace SmartBoxCity.Activity.Box
             }
         }
 
+        [Obsolete]
         private async void Attach(AlertDialog.Builder alert)
         {
             using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
@@ -459,13 +490,13 @@ namespace SmartBoxCity.Activity.Box
 
                     if (o_data.ResponseData.SENSORS_STATUS.fold == "1")
                     {
-                        BoxTextFold.Text = "Разложен";
-                        btn_fold.Text = "Сложить";
+                        BoxTextFold.Text = "Сложен";
+                        btn_fold.Text = "Разложить";
                     }
                     else if (o_data.ResponseData.SENSORS_STATUS.fold == "0")
                     {
-                        BoxTextFold.Text = "Сложен";
-                        btn_fold.Text = "Разложить";
+                        BoxTextFold.Text = "Разложен";
+                        btn_fold.Text = "Сложить";
                     }
                     else
                     {

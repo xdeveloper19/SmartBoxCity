@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using Android.App;
 using Android.Content;
 using Android.Gms.Common;
@@ -18,6 +17,7 @@ using Entity.Model.TaskViewModel;
 using Entity.Repository;
 using Plugin.Settings;
 using SmartBoxCity.Activity.Order;
+using SmartBoxCity.Service;
 using WebService;
 using WebService.Driver;
 
@@ -26,6 +26,7 @@ namespace SmartBoxCity.Activity.Driver
     public class TaskListAdapter: BaseAdapter<IViewItemType>
     {
         Context context;
+        private const string TASK_TAG = "task-job-tag";
         //Bundle savedInstanceState;
         List<IViewItemType> tasks;
         private LayoutInflater inflater;
@@ -126,6 +127,7 @@ namespace SmartBoxCity.Activity.Driver
                         .SetPositiveButton("Выполнил", delegate
                         {
                             PerformTask();
+           
 
                         })
                         .SetNegativeButton("Отмена", delegate
@@ -243,6 +245,8 @@ namespace SmartBoxCity.Activity.Driver
                 if (o_data.Status == System.Net.HttpStatusCode.OK)
                 {
                     //o_data.Message = "Успешно авторизован!";
+                    StaticTask.IsStoppedGettingTasks = false;
+                    StartUp.StartTracking(TASK_TAG);
                     Toast.MakeText(context, o_data.ResponseData.Message, ToastLength.Long).Show();
                 }
                 else
@@ -267,6 +271,8 @@ namespace SmartBoxCity.Activity.Driver
                 if (o_data.Status == System.Net.HttpStatusCode.OK)
                 {
                     //o_data.Message = "Успешно авторизован!";
+                    StaticTask.IsStoppedGettingTasks = false;
+                    StartUp.StartTracking(TASK_TAG);
                     Toast.MakeText(context, o_data.ResponseData.Message, ToastLength.Long).Show();
                 }
                 else

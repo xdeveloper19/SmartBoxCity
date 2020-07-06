@@ -212,7 +212,7 @@ namespace SmartBoxCity.Activity.Registration
                                         o_user_data = o_data.ResponseData;
                                         preloader.Visibility = Android.Views.ViewStates.Invisible;
 
-                                        StaticUser.PresenceOnPage = true;
+                                        //CrossSettings.Current.AddOrUpdateValue("PresenceOnPage", "true");
                                         CrossSettings.Current.AddOrUpdateValue("role", "user");
                                         CrossSettings.Current.AddOrUpdateValue("login", s_login_individual.Text);
                                         CrossSettings.Current.AddOrUpdateValue("password", s_pass_individual.Text);

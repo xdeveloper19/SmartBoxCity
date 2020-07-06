@@ -102,6 +102,8 @@ namespace SmartBoxCity.Activity.Order
             Id.Click += Id_Click;
             Events.Click += Events_Click;
 
+           
+
             btn_Lock.Click += delegate
             {
 
@@ -643,6 +645,14 @@ namespace SmartBoxCity.Activity.Order
                     StaticOrder.Order_Stage_Id == "8") ? false : true;
 
                     btn_Pay.Enabled = (StaticOrder.Order_Stage_Id == "5") ? true : false;
+
+                    btn_Photo.Enabled = (StaticOrder.Order_Stage_Id == "7" ||
+                   StaticOrder.Order_Stage_Id == "8" ||
+                    StaticOrder.Order_Stage_Id == "1") ? false : true;
+
+                    btn_Video.Enabled = (StaticOrder.Order_Stage_Id == "7" ||
+                        StaticOrder.Order_Stage_Id == "8" ||
+                         StaticOrder.Order_Stage_Id == "1") ? false : true;
                 }
             }
             catch (System.Exception ex)
