@@ -35,18 +35,18 @@
             </LinearLayout>
             
              <Button                    
-                                    android:textSize="13dp"
-                                    android:textColor="@color/colorMainBlue"
-                                    android:padding="5dp"   
-                                    android:text = "Посмотреть видео"
-                                    android:visibility="invisible"
-                                    android:background="?android:attr/selectableItemBackground"
-                                    android:layout_marginRight = "10dp"
-                                    android:layout_marginBottom = "5dp"  
-                                    android:enabled="false"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="25dp"
-                                    android:id="@+id/btn_video" />
+                android:textSize="13dp"
+                android:textColor="@color/colorMainBlue"
+                android:padding="5dp"   
+                android:text = "Посмотреть видео"
+                android:visibility="invisible"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_marginRight = "10dp"
+                android:layout_marginBottom = "5dp"  
+                android:enabled="false"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:id="@+id/btn_video" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="horizontal"

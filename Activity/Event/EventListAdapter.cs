@@ -27,12 +27,14 @@ namespace SmartBoxCity.Activity.Event
         private int MaxElement;
         private List<int> listPosition;
         private bool _Clicked = false;
+        private string Message;
         private const string URL = "https://smartboxcity.ru/";
         public EventListAdapter(Context Context, List<EventModel> List, FragmentManager Manager)
         {
             this.manager = Manager.BeginTransaction();
             this.context = Context;
             this.events = List;
+            this.Message = "";
         }
         public override EventModel this[int position] => events[position];
 
@@ -56,24 +58,6 @@ namespace SmartBoxCity.Activity.Event
             view.FindViewById<TextView>(Resource.Id.EventCardTextTime).Text = events[position].Time;
             view.FindViewById<TextView>(Resource.Id.EventCardTextDate).Text = events[position].Date;
 
-            btn_video.Click += delegate
-            {
-                try
-                {
-                    if (events[position].ContentType == "image")
-                    {
-                        SetPhoto(events[position].Name);
-                    }
-                    else
-                    {
-                        SetVideo(events[position].Name);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Toast.MakeText(context, ex.Message, ToastLength.Long);
-                }
-            };
 
             if (events[position].ContentType == "image")
             {
@@ -89,81 +73,147 @@ namespace SmartBoxCity.Activity.Event
                 btn_video.Visibility = ViewStates.Visible;
                 btn_video.Enabled = true;
             }
-            else 
+            else
             {
                 message.Text = events[position].Name;
                 btn_video.Visibility = ViewStates.Invisible;
                 btn_video.Enabled = false;
                 btn_video.Text = "";
             }
+
+            btn_video.Click += delegate
+            {
+                try
+                {
+                    listPosition.Add(position);
+                    if (_Clicked == false)
+                    {
+                        _Clicked = true;
+                        AlertDialog.Builder alert = new AlertDialog.Builder(context);
+                        alert.SetTitle("Внимание!");
+                        alert.SetMessage(Message);
+                        alert.SetPositiveButton("Открыть", (senderAlert, args) =>
+                        {
+                            if(Message == "Фотография успешно получена. Вы можете её посмотреть.")
+                            {
+                                _Clicked = false;
+                                MaxElement = listPosition.Max();
+                                SetPhoto(events[MaxElement].Name);
+                                listPosition.Clear();
+                            }
+                            else
+                            {
+                                _Clicked = false;
+                                MaxElement = listPosition.Max();
+                                SetVideo(events[MaxElement].Name);
+                                listPosition.Clear();
+                            }
+                        });
+                        alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+                        {
+                            _Clicked = false;
+                            listPosition.Clear();
+                        });
+                        Dialog dialog = alert.Create();
+                        dialog.Show();
+                    }
+                    
+                    if (events[position].ContentType == "image")
+                    {
+                        string Message = "Фотография успешно получена. Вы можете её посмотреть."; 
+                    }
+                    else
+                    {
+                        string Message = "Видео успешно получено. Вы можете его просмотреть.";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(context, ex.Message, ToastLength.Long);
+                }
+            };
             
             return view;
         }
 
         private void SetVideo(string video_url)
         {
-            LayoutInflater layoutInflater = LayoutInflater.From(context);
-            View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
-            var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
-
-            var src = Android.Net.Uri.Parse(URL + video_url);
-            img_get_video.SetVideoURI(src);
-            img_get_video.Start();
-
-            Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
-            alert1.SetTitle("Сделать видео");
-            alert1.SetView(view);
-            alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+            try
             {
-            });
-            Dialog dialog1 = alert1.Create();
-            dialog1.Show();
+                LayoutInflater layoutInflater = LayoutInflater.From(context);
+                View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
+                var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
+
+                var src = Android.Net.Uri.Parse(URL + video_url);
+                img_get_video.SetVideoURI(src);
+                img_get_video.Start();
+
+                Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
+                alert1.SetTitle("Сделать видео");
+                alert1.SetView(view);
+                alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                {
+                });
+                Dialog dialog1 = alert1.Create();
+                dialog1.Show();
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(context, ex.Message, ToastLength.Long);
+            }            
         }
 
         private void SetPhoto(string photo_url)
         {
-            LayoutInflater layoutInflater = LayoutInflater.From(context);
-            View view = layoutInflater.Inflate(Resource.Layout.modal_photo, null);
-            var img_get_photo = view.FindViewById<ImageView>(Resource.Id.img_get_photo);
-
-            var src = Android.Net.Uri.Parse(URL + photo_url);
-            img_get_photo.SetImageURI(src);
-
-            //var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.Message);
-            Bitmap imageBitmap = HomeService.GetImageBitmapFromUrl(URL + photo_url);
-
-            //SaveFileDialog dialog = new SaveFileDialog();
-            //if (dialog.ShowDialog() == DialogResult.OK)
-            //{
-            //    int width = Convert.ToInt32(drawImage.Width);
-            //    int height = Convert.ToInt32(drawImage.Height);
-            //    Bitmap bmp = new Bitmap(width, height);
-            //    drawImage.DrawToBitmap(bmp, new Rectangle(0, 0, width, height);
-            //    bmp.Save(dialog.FileName, ImageFormat.Jpeg);
-            //}
-
-            //Android.Provider.MediaStore.Images.Media.InsertImage(imageBitmap, "photo", "");
-
-            img_get_photo.SetImageBitmap(imageBitmap);
-            //var storageDir = new File(
-            //    Environment.ExternalStorageDirectory(
-            //        Environment.DIRECTORY_PICTURES
-            //    ),
-            //    getAlbumName()
-            //);
-            Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
-            alert1.SetView(view);
-            ////
-            alert1.SetCancelable(false);
-            alert1.SetPositiveButton("Скачать", (senderAlert1, args1) =>
+            try
             {
-                //SaveImage(imageBitmap);
-            });
-            alert1.SetNegativeButton("Закрыть", (senderAlert1, args1) =>
+                LayoutInflater layoutInflater = LayoutInflater.From(context);
+                View view = layoutInflater.Inflate(Resource.Layout.modal_photo, null);
+                var img_get_photo = view.FindViewById<ImageView>(Resource.Id.img_get_photo);
+
+                var src = Android.Net.Uri.Parse(URL + photo_url);
+                img_get_photo.SetImageURI(src);
+
+                //var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.Message);
+                Bitmap imageBitmap = HomeService.GetImageBitmapFromUrl(URL + photo_url);
+
+                //SaveFileDialog dialog = new SaveFileDialog();
+                //if (dialog.ShowDialog() == DialogResult.OK)
+                //{
+                //    int width = Convert.ToInt32(drawImage.Width);
+                //    int height = Convert.ToInt32(drawImage.Height);
+                //    Bitmap bmp = new Bitmap(width, height);
+                //    drawImage.DrawToBitmap(bmp, new Rectangle(0, 0, width, height);
+                //    bmp.Save(dialog.FileName, ImageFormat.Jpeg);
+                //}
+
+                //Android.Provider.MediaStore.Images.Media.InsertImage(imageBitmap, "photo", "");
+
+                img_get_photo.SetImageBitmap(imageBitmap);
+                //var storageDir = new File(
+                //    Environment.ExternalStorageDirectory(
+                //        Environment.DIRECTORY_PICTURES
+                //    ),
+                //    getAlbumName()
+                //);
+                Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
+                alert1.SetView(view);
+                ////
+                alert1.SetCancelable(false);
+                alert1.SetPositiveButton("Скачать", (senderAlert1, args1) =>
+                {
+                    //SaveImage(imageBitmap);
+                });
+                alert1.SetNegativeButton("Закрыть", (senderAlert1, args1) =>
+                {
+                });
+                Dialog dialog1 = alert1.Create();
+                dialog1.Show();
+            }
+            catch (Exception ex)
             {
-            });
-            Dialog dialog1 = alert1.Create();
-            dialog1.Show();
+                Toast.MakeText(context, ex.Message, ToastLength.Long);
+            }           
         }
     }
 }

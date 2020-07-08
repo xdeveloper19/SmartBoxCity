@@ -36,6 +36,7 @@ namespace SmartBoxCity.Activity.Order
 
         int quantity;
 
+        private TextInputLayout SizeInputLayout;
         private TextInputLayout LInputContactPerson;
         private TextInputLayout LInputDate;
         private TextInputLayout LInputTime;
@@ -99,6 +100,7 @@ namespace SmartBoxCity.Activity.Order
 
                 #region Инициализаия переменных
 
+                SizeInputLayout = view.FindViewById<TextInputLayout>(Resource.Id.SizeInputLayout);
                 LInputCargoInsurance = view.FindViewById<TextInputLayout>(Resource.Id.ApplicationInputLayoutCargoInsurance);
                 LInputTime = view.FindViewById<TextInputLayout>(Resource.Id.ApplicationInputLayoutTime);
                 LInputDate = view.FindViewById<TextInputLayout>(Resource.Id.ApplicationInputLayoutDate);
@@ -133,6 +135,7 @@ namespace SmartBoxCity.Activity.Order
                 s_width.SetMaxLines(8);
                 s_height.SetMaxLines(8);
                 s_size.Text = "1";
+                
                 #region Focusable Enabled Clickable
 
                 SwitchDateTime.Focusable = true;
@@ -141,6 +144,8 @@ namespace SmartBoxCity.Activity.Order
 
                 //s_size.Focusable = false;
                 //s_size.Enabled = false;
+                s_size.Visibility = ViewStates.Visible;
+                s_size.Enabled = false;
 
                 s_shipment_time.Focusable = false;
                 s_shipment_time.Enabled = false;
@@ -825,15 +830,19 @@ namespace SmartBoxCity.Activity.Order
             {
                 s_height.Enabled = false;
                 s_width.Enabled = false;
-                s_length.Enabled = false;
+                s_length.Enabled = false;               
 
                 s_height.Text = "0";
                 s_width.Text = "0";
                 s_length.Text = "0";
 
-                s_size.Focusable = true;
-                s_size.Clickable = true;
                 s_size.Enabled = true;
+                SizeInputLayout.SetBackgroundColor(Color.Transparent);
+
+                //s_size.Visibility = ViewStates.Visible;
+                //s_size.TextChanged += S_size_TextChanged;
+
+
 
                 s_sum_seats.TextChanged -= ValueSizeCalculation;
             }
@@ -843,12 +852,20 @@ namespace SmartBoxCity.Activity.Order
                 s_width.Enabled = true;
                 s_length.Enabled = true;
 
-                s_size.Focusable = false;
-                s_size.Clickable = false;
                 s_size.Enabled = false;
+                SizeInputLayout.SetBackgroundResource(Resource.Drawable.StyleInputLayout);
+                //s_size.Focusable = false;
+                //s_size.Clickable = false;
+                //s_size.Enabled = false;
+                //s_size.Visibility = ViewStates.Invisible;
+                //SizeInputLayout.SetBackgroundResource(Resource.Drawable.StyleInputLayout);
 
                 s_sum_seats.TextChanged += ValueSizeCalculation;
             }
+        }
+
+        private void S_size_TextChanged(object sender, TextChangedEventArgs e)
+        {
         }
 
         private void RadioButtonClick(object sender, EventArgs e)

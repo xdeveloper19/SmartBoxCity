@@ -153,10 +153,12 @@ namespace SmartBoxCity.Activity.Home
                                 MaxElement = listPosition.Max();
                                 StaticOrder.Order_id = orders[MaxElement].id;
                                 MakePayment(alert);
+                                listPosition.Clear();
                             });
                             alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                             {
                                 _Clicked = false;
+                                listPosition.Clear();
                             });
                             Dialog dialog = alert.Create();
                             dialog.Show();
@@ -204,10 +206,12 @@ namespace SmartBoxCity.Activity.Home
                                 _Clicked = false;
                                 MaxElement = listPosition.Max();
                                 GetPhoto(orders[MaxElement].id, alert);
+                                listPosition.Clear();
                             });
                             alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                             {
                                 _Clicked = false;
+                                listPosition.Clear();
                             });
                             Dialog dialog = alert.Create();
                             dialog.Show();
@@ -246,9 +250,12 @@ namespace SmartBoxCity.Activity.Home
                                 _Clicked = false;
                                 MaxElement = listPosition.Max();
                                 GetVideo(orders[MaxElement].id, alert);
+                                listPosition.Clear();
+
                             });
                             alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                             {
+                                listPosition.Clear();
                                 _Clicked = false;
                             });
                             Dialog dialog = alert.Create();

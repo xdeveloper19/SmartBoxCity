@@ -26,7 +26,6 @@
                 android:text="Выберите нужный пункт:"
                 android:layout_marginTop = "100dp"
                 android:textStyle = "normal"
-                android:textSize = "21dp"
                 android:textColor = "#2C4C46"
                 android:layout_centerHorizontal = "true"
                 android:textAppearance="?android:attr/textAppearanceLarge"

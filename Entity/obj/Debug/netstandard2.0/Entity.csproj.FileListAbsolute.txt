@@ -1,0 +1,9 @@
+C:\Games\repos\User\SmartBoxCity\Entity\bin\Debug\netstandard2.0\Entity.deps.json
+C:\Games\repos\User\SmartBoxCity\Entity\bin\Debug\netstandard2.0\Entity.dll
+C:\Games\repos\User\SmartBoxCity\Entity\bin\Debug\netstandard2.0\Entity.pdb
+C:\Games\repos\User\SmartBoxCity\Entity\obj\Debug\netstandard2.0\Entity.csprojAssemblyReference.cache
+C:\Games\repos\User\SmartBoxCity\Entity\obj\Debug\netstandard2.0\Entity.csproj.CoreCompileInputs.cache
+C:\Games\repos\User\SmartBoxCity\Entity\obj\Debug\netstandard2.0\Entity.AssemblyInfoInputs.cache
+C:\Games\repos\User\SmartBoxCity\Entity\obj\Debug\netstandard2.0\Entity.AssemblyInfo.cs
+C:\Games\repos\User\SmartBoxCity\Entity\obj\Debug\netstandard2.0\Entity.dll
+C:\Games\repos\User\SmartBoxCity\Entity\obj\Debug\netstandard2.0\Entity.pdb

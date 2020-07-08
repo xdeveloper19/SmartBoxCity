@@ -249,6 +249,7 @@
                             <android.support.design.widget.TextInputLayout
 			                    android:layout_width="100dp"
                                 android:background="@drawable/StyleInputLayout"
+                                android:id="@+id/SizeInputLayout"
                                 android:layout_height="wrap_content"
 			                    style="@style/LoginTextInputLayoutStyle">
                                 <EditText

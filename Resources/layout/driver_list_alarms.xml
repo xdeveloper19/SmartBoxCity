@@ -4,23 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
     android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
 	android:background = "@drawable/activity_stili"
     android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/txt_title_lst_alarm"
-            android:textAlignment="center"
-            android:text="@string/txtAlarm"
-            android:textColor="?android:attr/textColorPrimary"
-            android:layout_height="wrap_content"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/txt_title_lst_alarm"
+        android:textAlignment="center"
+        android:text="@string/txtAlarm"
+        android:textColor="?android:attr/textColorPrimary"
+     />
 
-		 <ListView
-			android:id="@+id/alarmlistview" 
-            android:layout_marginTop="10dp"
-			android:layout_height="match_parent" 
-			android:layout_width="match_parent"> 
-		</ListView>
+	<ListView
+		android:id="@+id/alarmlistview" 
+        android:layout_marginTop="10dp"
+		android:layout_height="match_parent" 
+		android:layout_width="match_parent"> 
+	</ListView>
+
 </LinearLayout>
