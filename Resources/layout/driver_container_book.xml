@@ -6,41 +6,17 @@
     android:orientation="vertical"
 	android:id="@+id/box_book_layout"
 	android:background = "@drawable/activity_stili"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:layout_height="match_parent">
-
-	<!--<android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            
-            android:layout_height="wrap_content"
-            style="@style/LoginTextInputLayoutStyle"
-            android:id="@+id/s_search_layout">
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:layout_marginBottom="10dp"
-                android:singleLine="true"
-                android:id="@+id/s_search"
-                android:padding = "8dp"
-                
-                android:hint="Введите ID контейнера для поиска"/>
-        </android.support.design.widget.TextInputLayout>
--->
-        <SearchView
-            android:id="@+id/searchbar"
-            android:layout_marginTop="10dp"
-            android:queryHint="Введите ID контейнера для поиска"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-        />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-             android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/txt_title_lst_box"
             android:textAlignment="center"
-            android:text=""
             android:textColor="?android:attr/textColorPrimary"
             android:layout_height="wrap_content"/>
 

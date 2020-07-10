@@ -72,6 +72,8 @@ namespace SmartBoxCity.Activity.Order
 
         private Button btn_make_request;       
 
+        private ProgressBar preloader;
+
         #endregion
         public override void OnCreate(Bundle bundle)
         {
@@ -130,6 +132,7 @@ namespace SmartBoxCity.Activity.Order
                 SwitchDateTime = view.FindViewById<SwitchCompat>(Resource.Id.ApplicationSwitchDateTime);
                 SwitchCargoInsurance = view.FindViewById<SwitchCompat>(Resource.Id.ApplicationSwitchCargoInsurance);
                 SwitchContactPerson = view.FindViewById<SwitchCompat>(Resource.Id.ApplicationSwitchContactPerson);
+                preloader = view.FindViewById<ProgressBar>(Resource.Id.preloader);
 
                 s_length.SetMaxLines(8);
                 s_width.SetMaxLines(8);
@@ -164,7 +167,7 @@ namespace SmartBoxCity.Activity.Order
                 s_edit_where.Focusable = false;
                 #endregion
                 #endregion
-                ProgressBar preloader = view.FindViewById<ProgressBar>(Resource.Id.preloader);
+                
 
                 if (Arguments != null)
                 {
@@ -702,22 +705,26 @@ namespace SmartBoxCity.Activity.Order
         {
             try
             {
-                CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
-                ci.NumberFormat.CurrencyDecimalSeparator = ".";
-                float ValueSize;
-                var ValueSumSeits = int.Parse(s_length.Text, NumberStyles.Any, ci);
-                if (ValueSumSeits > 100 || ValueSumSeits < 0)
-                    throw new Exception("Количество мест ограничено до 100 шт.");
-                var ValueWidth = float.Parse(s_width.Text, NumberStyles.Any, ci);
-                var ValueLenght = float.Parse(s_height.Text, NumberStyles.Any, ci);
-                var ValueHeight = float.Parse(s_sum_seats.Text, NumberStyles.Any, ci);
-                //double ValueSumSeits, ValueWidth, ValueLenght, ValueHeight, ValueSize;
-                //bool TryParseSumSeats = Double.TryParse(s_sum_seats.Text, out ValueSumSeits);
-                //bool TryParseWidth = Double.TryParse(s_width.Text, out ValueWidth);
-                //bool TryParseLenght = Double.TryParse(s_length.Text, out ValueLenght);
-                //bool TryParseHeight = Double.TryParse(s_height.Text, out ValueHeight);
-                ValueSize = ValueSumSeits * ValueWidth * ValueLenght * ValueHeight;
-                s_size.Text = ValueSize.ToString();
+
+                if (a_cargo_characteristic == "Тарно-штучные")
+                {
+                    CultureInfo ci = (CultureInfo)CultureInfo.CurrentCulture.Clone();
+                    ci.NumberFormat.CurrencyDecimalSeparator = ".";
+                    float ValueSize;
+                    var ValueSumSeits = int.Parse(s_length.Text, NumberStyles.Any, ci);
+                    if (ValueSumSeits > 100 || ValueSumSeits < 0)
+                        throw new Exception("Количество мест ограничено до 100 шт.");
+                    var ValueWidth = float.Parse(s_width.Text, NumberStyles.Any, ci);
+                    var ValueLenght = float.Parse(s_height.Text, NumberStyles.Any, ci);
+                    var ValueHeight = float.Parse(s_sum_seats.Text, NumberStyles.Any, ci);
+                    //double ValueSumSeits, ValueWidth, ValueLenght, ValueHeight, ValueSize;
+                    //bool TryParseSumSeats = Double.TryParse(s_sum_seats.Text, out ValueSumSeits);
+                    //bool TryParseWidth = Double.TryParse(s_width.Text, out ValueWidth);
+                    //bool TryParseLenght = Double.TryParse(s_length.Text, out ValueLenght);
+                    //bool TryParseHeight = Double.TryParse(s_height.Text, out ValueHeight);
+                    ValueSize = ValueSumSeits * ValueWidth * ValueLenght * ValueHeight;
+                    s_size.Text = ValueSize.ToString();
+                }
             }
             catch (Exception ex)
             {
@@ -824,9 +831,8 @@ namespace SmartBoxCity.Activity.Order
         {
             var spinner = sender as Spinner;
             a_cargo_characteristic = spinner.GetItemAtPosition(e.Position).ToString();
-            var text = a_cargo_characteristic;
 
-            if (text != "Тарно-штучные")
+            if (a_cargo_characteristic != "Тарно-штучные")
             {
                 s_height.Enabled = false;
                 s_width.Enabled = false;
@@ -844,7 +850,7 @@ namespace SmartBoxCity.Activity.Order
 
 
 
-                s_sum_seats.TextChanged -= ValueSizeCalculation;
+                s_sum_seats.TextChanged += ValueSizeCalculation;
             }
             else
             {

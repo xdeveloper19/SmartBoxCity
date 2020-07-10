@@ -9,6 +9,7 @@ using Android.App;
 using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
+using Android.Media;
 using Android.OS;
 using Android.Provider;
 using Android.Runtime;
@@ -16,6 +17,8 @@ using Android.Views;
 using Android.Widget;
 using Entity.Model;
 using Entity.Repository;
+using Java.IO;
+using Java.Net;
 using Java.Nio.FileNio;
 using Plugin.Settings;
 using SmartBoxCity.Activity.Order;
@@ -391,15 +394,21 @@ namespace SmartBoxCity.Activity.Home
                         LayoutInflater layoutInflater = LayoutInflater.From(context);
                         View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
                         var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
-
                         var src = Android.Net.Uri.Parse(URL + o_data.Message);
+                        
                         img_get_video.SetVideoURI(src);
                         img_get_video.Start();
 
                         Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
                         alert1.SetTitle("Сделать видео");
                         alert1.SetView(view);
-                        alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                        alert1.SetPositiveButton("Скачать", (senderAlert1, args1) =>
+                        {
+                            string url = URL + o_data.Message;
+                            //downloadFile(url);
+                            SaveVideo(url);
+                        });
+                        alert1.SetNegativeButton("Закрыть", (senderAlert1, args1) =>
                         {
                         });
                         Dialog dialog1 = alert1.Create();
@@ -415,6 +424,163 @@ namespace SmartBoxCity.Activity.Home
             {
                 Toast.MakeText(context, ex.Message, ToastLength.Long).Show();
             }            
+        }
+
+        //private void downloadFile(Android.Net.Uri src)
+        //{
+
+        //    try
+        //    {
+        //        //URL url = new URL(src.ToString());
+        //        //HttpURLConnection urlConnection = (HttpURLConnection)url.OpenConnection();
+
+        //        //urlConnection.("GET");
+        //        //urlConnection.Set(true);
+
+        //        ////connect
+        //        //urlConnection.Connect();
+
+        //        //set the path where we want to save the file           
+        //        String SDCardRoot = Android.OS.Environment.ExternalStorageDirectory.ToString();
+        //        //create a new file, to save the downloaded file 
+        //        Java.IO.File file = new Java.IO.File(SDCardRoot, "mydownloadmovie.mp4");
+
+        //        FileOutputStream fileOutput = new FileOutputStream(file);
+
+        //        //Stream used for reading the data from the internet
+        //        InputStream inputStream = new FileInputStream(src);
+
+        //        //this is the total size of the file which we are downloading
+        //        totalSize = urlConnection.getContentLength();
+
+
+        //        //create a buffer...
+        //        byte[] buffer = new byte[1024];
+        //        int bufferLength = 0;
+
+        //        while ((bufferLength = inputStream.read(buffer)) > 0)
+        //        {
+        //            fileOutput.write(buffer, 0, bufferLength);
+        //            downloadedSize += bufferLength;
+        //        }
+        //        //close the output stream when complete //
+        //        fileOutput.close();
+
+        //    }
+        //    catch (MalformedURLException e)
+        //    {
+        //        e.PrintStackTrace();
+        //    }
+        //    catch (IOException e)
+        //    {
+        //        e.printStackTrace();
+        //    }
+        //    catch (Exception e)
+        //    {
+
+        //    }
+        //}
+
+        private void  SaveVideo(string urll)
+        {
+            try
+            {
+                string FileName = "Video" + DateTime.Now.Minute.ToString() + ".mp4";
+
+                string filepath = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.ToString(), FileName); 
+
+                URL url = new URL(urll);
+                URLConnection conection = url.OpenConnection();
+                conection.Connect();
+                int LenghtOfFile = conection.ContentLength;
+                InputStream input = new BufferedInputStream(url.OpenStream(), LenghtOfFile);
+                OutputStream outp = new FileOutputStream(filepath);
+
+                int count;
+
+                byte[] data = new byte[1024];
+                long total = 0;
+                while ((count = input.Read(data)) != -1)
+                {
+                    total += count;
+                    outp.Write(data, 0, count);
+                }
+
+                outp.Flush();
+                outp.Close();
+                input.Close();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+
+            //byte[] bitmapData;
+            //var stream = new MemoryStream();
+            //imageBitmap.Compress(Android.Graphics.Bitmap.CompressFormat.Png, 0, stream);
+            //bitmapData = stream.ToArray();
+
+            //string FileName = "Video" + DateTime.Now.Minute.ToString() + ".mp4";
+
+            //string fileName = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.ToString(), FileName);
+
+            //System.IO.File.WriteAllText(fileName, bitmapData.ToString());
+
+            //using (FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate))
+            //{
+            //    int length = bitmapData.Length;
+            //    fs.Write(bitmapData, 0, length);
+            //    fs.Close();
+            //}
+            //FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate);
+            //int bytes = 0;
+            //byte[] data = new byte[1024];
+            //while ((bytes = fs.Read(data)) != -1)
+            //{
+            //    oStream.Write(data, 0, bytes);
+            //}
+
+
+            // get filename from path
+            //int idx = filePath.LastIndexOf("/") + 1;
+            //string name = filePath.Substring(idx, filePath.Length - idx);
+
+            //// set in/out files
+            
+            
+            //Java.IO.File outDir = Android.OS.Environment.ExternalStorageDirectory;
+            //var iii = outDir + name;
+            //Java.IO.File outFile = new Java.IO.File(outDir, name);
+            //string fileName = System.IO.Path.Combine(outDir.ToString(), name);
+            //Java.IO.File inFile = new Java.IO.File(fileName);
+            //inFile.CreateNewFile();
+
+            //// Make sure the Pictures directory exists.
+            //outDir.Mkdirs();
+
+            //// save the file to disc
+            //InputStream iStream = new FileInputStream(inFile);
+            //OutputStream oStream = new FileOutputStream(outFile);
+
+            //int bytes = 0;
+            //byte[] data = new byte[1024];
+            //while ((bytes = iStream.Read(data)) != -1)
+            //{
+            //    oStream.Write(data, 0, bytes);
+            //}
+
+            //iStream.Close();
+            //oStream.Close();
+
+            //// Tell the media scanner about the new file so that it is
+            //// immediately available to the user.
+            //MediaScannerConnection.ScanFile(
+            //    context.ApplicationContext,
+            //    new string[] { outFile.ToString() },
+            //    null,
+            //    null);
+
         }
 
         private async void GetPhoto(string id, AlertDialog.Builder alert)
@@ -516,14 +682,14 @@ namespace SmartBoxCity.Activity.Home
             try
             {
                 #region 1-й метод
-                byte[] bitmapData;
-                var stream = new MemoryStream();
-                imageBitmap.Compress(Android.Graphics.Bitmap.CompressFormat.Png, 0, stream);
-                string path = MediaStore.Images.Media.InsertImage(context.ContentResolver, imageBitmap, "screen", "shot");
+                //byte[] bitmapData;
+                //var stream = new MemoryStream();
+                //imageBitmap.Compress(Android.Graphics.Bitmap.CompressFormat.Png, 0, stream);
+                //string path = MediaStore.Images.Media.InsertImage(context.ContentResolver, imageBitmap, "screen", "shot");
                 #endregion
 
                 #region 2-й метод
-                //var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+                //var documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.LocalApplicationData);
                 //documentsPath = System.IO.Path.Combine(documentsPath, "Orders", "temp");
                 //Directory.CreateDirectory(documentsPath);
                 //string FileName = "Image" + DateTime.Today.Day.ToString()
@@ -531,17 +697,23 @@ namespace SmartBoxCity.Activity.Home
                 //            + DateTime.Today.Year.ToString()
                 //            + ".png";
                 //string filePath = System.IO.Path.Combine(documentsPath, FileName);
+                string FileName = "Image" + DateTime.Now.Minute.ToString() + ".png";
 
-                //byte[] bitmapData;
-                //var stream = new MemoryStream();
-                //imageBitmap.Compress(Android.Graphics.Bitmap.CompressFormat.Png, 0, stream);
-                //bitmapData = stream.ToArray();
 
-                //using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate))
-                //{
-                //    int length = bitmapData.Length;
-                //    fs.Write(bitmapData, 0, length);
-                //}
+                byte[] bitmapData;
+                var stream = new MemoryStream();
+                imageBitmap.Compress(Android.Graphics.Bitmap.CompressFormat.Png, 0, stream);
+                bitmapData = stream.ToArray();
+
+                string fileName = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.ToString(), FileName);
+                System.IO.File.WriteAllText(fileName, bitmapData.ToString());
+                using (FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate))
+                {
+                    int length = bitmapData.Length;
+                    fs.Write(bitmapData, 0, length);
+                    fs.Close();
+                }
+
                 #endregion
 
                 //bitmapData = stream.ToArray();

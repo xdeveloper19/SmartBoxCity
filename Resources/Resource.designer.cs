@@ -6493,9 +6493,6 @@ namespace SmartBoxCity
 			// aapt resource value: 0x7F09021D
 			public const int scrollView = 2131296797;
 			
-			// aapt resource value: 0x7F090229
-			public const int searchbar = 2131296809;
-			
 			// aapt resource value: 0x7F09021F
 			public const int search_badge = 2131296799;
 			
@@ -6526,29 +6523,29 @@ namespace SmartBoxCity
 			// aapt resource value: 0x7F090228
 			public const int search_voice_btn = 2131296808;
 			
-			// aapt resource value: 0x7F09022B
-			public const int selected = 2131296811;
-			
 			// aapt resource value: 0x7F09022A
-			public const int select_dialog_listview = 2131296810;
+			public const int selected = 2131296810;
 			
-			// aapt resource value: 0x7F09022C
-			public const int sensor_name = 2131296812;
+			// aapt resource value: 0x7F090229
+			public const int select_dialog_listview = 2131296809;
+			
+			// aapt resource value: 0x7F09022B
+			public const int sensor_name = 2131296811;
 			
 			// aapt resource value: 0x7F090076
 			public const int SHIFT = 2131296374;
 			
+			// aapt resource value: 0x7F09022C
+			public const int shortcut = 2131296812;
+			
 			// aapt resource value: 0x7F09022D
-			public const int shortcut = 2131296813;
+			public const int showCustom = 2131296813;
 			
 			// aapt resource value: 0x7F09022E
-			public const int showCustom = 2131296814;
+			public const int showHome = 2131296814;
 			
 			// aapt resource value: 0x7F09022F
-			public const int showHome = 2131296815;
-			
-			// aapt resource value: 0x7F090230
-			public const int showTitle = 2131296816;
+			public const int showTitle = 2131296815;
 			
 			// aapt resource value: 0x7F090078
 			public const int SizeInputLayout = 2131296376;
@@ -6556,41 +6553,41 @@ namespace SmartBoxCity
 			// aapt resource value: 0x7F090079
 			public const int Slide0BtnAddOrder = 2131296377;
 			
+			// aapt resource value: 0x7F090230
+			public const int sliding_client_layout = 2131296816;
+			
 			// aapt resource value: 0x7F090231
-			public const int sliding_client_layout = 2131296817;
+			public const int sliding_layout = 2131296817;
 			
 			// aapt resource value: 0x7F090232
-			public const int sliding_layout = 2131296818;
+			public const int smallLabel = 2131296818;
 			
 			// aapt resource value: 0x7F090233
-			public const int smallLabel = 2131296819;
+			public const int snackbar_action = 2131296819;
 			
 			// aapt resource value: 0x7F090234
-			public const int snackbar_action = 2131296820;
+			public const int snackbar_text = 2131296820;
 			
 			// aapt resource value: 0x7F090235
-			public const int snackbar_text = 2131296821;
+			public const int snap = 2131296821;
 			
 			// aapt resource value: 0x7F090236
-			public const int snap = 2131296822;
+			public const int snapMargins = 2131296822;
 			
 			// aapt resource value: 0x7F090237
-			public const int snapMargins = 2131296823;
+			public const int spacer = 2131296823;
 			
 			// aapt resource value: 0x7F090238
-			public const int spacer = 2131296824;
+			public const int split_action_bar = 2131296824;
 			
 			// aapt resource value: 0x7F090239
-			public const int split_action_bar = 2131296825;
+			public const int src_atop = 2131296825;
 			
 			// aapt resource value: 0x7F09023A
-			public const int src_atop = 2131296826;
+			public const int src_in = 2131296826;
 			
 			// aapt resource value: 0x7F09023B
-			public const int src_in = 2131296827;
-			
-			// aapt resource value: 0x7F09023C
-			public const int src_over = 2131296828;
+			public const int src_over = 2131296827;
 			
 			// aapt resource value: 0x7F09007A
 			public const int StageCompletion = 2131296378;
@@ -6640,29 +6637,29 @@ namespace SmartBoxCity
 			// aapt resource value: 0x7F090089
 			public const int StageWaitUnloadValue = 2131296393;
 			
+			// aapt resource value: 0x7F09023C
+			public const int standard = 2131296828;
+			
 			// aapt resource value: 0x7F09023D
-			public const int standard = 2131296829;
+			public const int start = 2131296829;
 			
 			// aapt resource value: 0x7F09023E
-			public const int start = 2131296830;
+			public const int status_bar_latest_event_content = 2131296830;
 			
 			// aapt resource value: 0x7F09023F
-			public const int status_bar_latest_event_content = 2131296831;
+			public const int status_view = 2131296831;
 			
 			// aapt resource value: 0x7F090240
-			public const int status_view = 2131296832;
+			public const int stretch = 2131296832;
 			
 			// aapt resource value: 0x7F090241
-			public const int stretch = 2131296833;
+			public const int submenuarrow = 2131296833;
 			
 			// aapt resource value: 0x7F090242
-			public const int submenuarrow = 2131296834;
+			public const int submit_area = 2131296834;
 			
 			// aapt resource value: 0x7F090243
-			public const int submit_area = 2131296835;
-			
-			// aapt resource value: 0x7F090244
-			public const int switch_compat = 2131296836;
+			public const int switch_compat = 2131296835;
 			
 			// aapt resource value: 0x7F090077
 			public const int SYM = 2131296375;
@@ -6949,20 +6946,20 @@ namespace SmartBoxCity
 			// aapt resource value: 0x7F090214
 			public const int s_width_layout = 2131296788;
 			
+			// aapt resource value: 0x7F090244
+			public const int tabMode = 2131296836;
+			
 			// aapt resource value: 0x7F090245
-			public const int tabMode = 2131296837;
+			public const int tag_transition_group = 2131296837;
 			
 			// aapt resource value: 0x7F090246
-			public const int tag_transition_group = 2131296838;
+			public const int tag_unhandled_key_event_manager = 2131296838;
 			
 			// aapt resource value: 0x7F090247
-			public const int tag_unhandled_key_event_manager = 2131296839;
+			public const int tag_unhandled_key_listeners = 2131296839;
 			
 			// aapt resource value: 0x7F090248
-			public const int tag_unhandled_key_listeners = 2131296840;
-			
-			// aapt resource value: 0x7F090249
-			public const int tasklistview = 2131296841;
+			public const int tasklistview = 2131296840;
 			
 			// aapt resource value: 0x7F09008A
 			public const int TaskManagementLinearId1 = 2131296394;
@@ -6970,17 +6967,17 @@ namespace SmartBoxCity
 			// aapt resource value: 0x7F09008B
 			public const int TaskManagementTextIdValue1 = 2131296395;
 			
+			// aapt resource value: 0x7F090249
+			public const int tasks = 2131296841;
+			
 			// aapt resource value: 0x7F09024A
-			public const int tasks = 2131296842;
+			public const int terrain = 2131296842;
 			
 			// aapt resource value: 0x7F09024B
-			public const int terrain = 2131296843;
+			public const int text = 2131296843;
 			
 			// aapt resource value: 0x7F09024C
-			public const int text = 2131296844;
-			
-			// aapt resource value: 0x7F09024D
-			public const int text2 = 2131296845;
+			public const int text2 = 2131296844;
 			
 			// aapt resource value: 0x7F09008C
 			public const int TextAboutUs = 2131296396;
@@ -6997,41 +6994,41 @@ namespace SmartBoxCity
 			// aapt resource value: 0x7F090090
 			public const int TextContacts = 2131296400;
 			
-			// aapt resource value: 0x7F09024E
-			public const int textDesc = 2131296846;
+			// aapt resource value: 0x7F09024D
+			public const int textDesc = 2131296845;
 			
 			// aapt resource value: 0x7F090091
 			public const int TextHazardClass = 2131296401;
 			
+			// aapt resource value: 0x7F09024E
+			public const int textHead = 2131296846;
+			
 			// aapt resource value: 0x7F09024F
-			public const int textHead = 2131296847;
+			public const int textHeading = 2131296847;
 			
 			// aapt resource value: 0x7F090250
-			public const int textHeading = 2131296848;
+			public const int textHeading1 = 2131296848;
 			
 			// aapt resource value: 0x7F090251
-			public const int textHeading1 = 2131296849;
+			public const int textHeading2 = 2131296849;
 			
-			// aapt resource value: 0x7F090252
-			public const int textHeading2 = 2131296850;
+			// aapt resource value: 0x7F09025E
+			public const int textinput_counter = 2131296862;
 			
 			// aapt resource value: 0x7F09025F
-			public const int textinput_counter = 2131296863;
+			public const int textinput_error = 2131296863;
 			
 			// aapt resource value: 0x7F090260
-			public const int textinput_error = 2131296864;
-			
-			// aapt resource value: 0x7F090261
-			public const int textinput_helper_text = 2131296865;
+			public const int textinput_helper_text = 2131296864;
 			
 			// aapt resource value: 0x7F090092
 			public const int TextLoadingMethods = 2131296402;
 			
-			// aapt resource value: 0x7F090262
-			public const int textlogin = 2131296866;
+			// aapt resource value: 0x7F090261
+			public const int textlogin = 2131296865;
 			
-			// aapt resource value: 0x7F090263
-			public const int textlogin_desc = 2131296867;
+			// aapt resource value: 0x7F090262
+			public const int textlogin_desc = 2131296866;
 			
 			// aapt resource value: 0x7F090093
 			public const int TextMainOrderPrice = 2131296403;
@@ -7039,20 +7036,20 @@ namespace SmartBoxCity
 			// aapt resource value: 0x7F090094
 			public const int TextOfError = 2131296404;
 			
-			// aapt resource value: 0x7F090253
-			public const int textReviews = 2131296851;
+			// aapt resource value: 0x7F090252
+			public const int textReviews = 2131296850;
 			
 			// aapt resource value: 0x7F090095
 			public const int TextReviewsTop = 2131296405;
 			
+			// aapt resource value: 0x7F090253
+			public const int textSpacerNoButtons = 2131296851;
+			
 			// aapt resource value: 0x7F090254
-			public const int textSpacerNoButtons = 2131296852;
+			public const int textSpacerNoTitle = 2131296852;
 			
 			// aapt resource value: 0x7F090255
-			public const int textSpacerNoTitle = 2131296853;
-			
-			// aapt resource value: 0x7F090256
-			public const int textStart = 2131296854;
+			public const int textStart = 2131296853;
 			
 			// aapt resource value: 0x7F090096
 			public const int TextStatusUser = 2131296406;
@@ -7060,26 +7057,26 @@ namespace SmartBoxCity
 			// aapt resource value: 0x7F090097
 			public const int TextTopContact = 2131296407;
 			
+			// aapt resource value: 0x7F090256
+			public const int textView = 2131296854;
+			
 			// aapt resource value: 0x7F090257
-			public const int textView = 2131296855;
+			public const int textView1 = 2131296855;
 			
 			// aapt resource value: 0x7F090258
-			public const int textView1 = 2131296856;
+			public const int textView10 = 2131296856;
 			
 			// aapt resource value: 0x7F090259
-			public const int textView10 = 2131296857;
+			public const int textView2 = 2131296857;
 			
 			// aapt resource value: 0x7F09025A
-			public const int textView2 = 2131296858;
+			public const int textView4 = 2131296858;
 			
 			// aapt resource value: 0x7F09025B
-			public const int textView4 = 2131296859;
+			public const int textView5 = 2131296859;
 			
 			// aapt resource value: 0x7F09025C
-			public const int textView5 = 2131296860;
-			
-			// aapt resource value: 0x7F09025D
-			public const int textView9 = 2131296861;
+			public const int textView9 = 2131296860;
 			
 			// aapt resource value: 0x7F090098
 			public const int TextViewMapHaupt = 2131296408;
@@ -7087,158 +7084,158 @@ namespace SmartBoxCity
 			// aapt resource value: 0x7F090099
 			public const int TextViewStagesHaupt = 2131296409;
 			
-			// aapt resource value: 0x7F09025E
-			public const int text_input_password_toggle = 2131296862;
+			// aapt resource value: 0x7F09025D
+			public const int text_input_password_toggle = 2131296861;
+			
+			// aapt resource value: 0x7F090263
+			public const int time = 2131296867;
 			
 			// aapt resource value: 0x7F090264
-			public const int time = 2131296868;
+			public const int title = 2131296868;
 			
 			// aapt resource value: 0x7F090265
-			public const int title = 2131296869;
+			public const int titleDividerNoCustom = 2131296869;
 			
 			// aapt resource value: 0x7F090266
-			public const int titleDividerNoCustom = 2131296870;
+			public const int title_about_us = 2131296870;
 			
 			// aapt resource value: 0x7F090267
-			public const int title_about_us = 2131296871;
+			public const int title_contacts = 2131296871;
 			
 			// aapt resource value: 0x7F090268
-			public const int title_contacts = 2131296872;
+			public const int title_reviews = 2131296872;
 			
 			// aapt resource value: 0x7F090269
-			public const int title_reviews = 2131296873;
+			public const int title_template = 2131296873;
 			
 			// aapt resource value: 0x7F09026A
-			public const int title_template = 2131296874;
+			public const int toolbar = 2131296874;
 			
 			// aapt resource value: 0x7F09026B
-			public const int toolbar = 2131296875;
+			public const int top = 2131296875;
 			
 			// aapt resource value: 0x7F09026C
-			public const int top = 2131296876;
+			public const int topPanel = 2131296876;
 			
 			// aapt resource value: 0x7F09026D
-			public const int topPanel = 2131296877;
+			public const int touch_outside = 2131296877;
 			
 			// aapt resource value: 0x7F09026E
-			public const int touch_outside = 2131296878;
+			public const int transition_current_scene = 2131296878;
 			
 			// aapt resource value: 0x7F09026F
-			public const int transition_current_scene = 2131296879;
+			public const int transition_layout_save = 2131296879;
 			
 			// aapt resource value: 0x7F090270
-			public const int transition_layout_save = 2131296880;
+			public const int transition_position = 2131296880;
 			
 			// aapt resource value: 0x7F090271
-			public const int transition_position = 2131296881;
+			public const int transition_scene_layoutid_cache = 2131296881;
 			
 			// aapt resource value: 0x7F090272
-			public const int transition_scene_layoutid_cache = 2131296882;
+			public const int transition_transform = 2131296882;
 			
 			// aapt resource value: 0x7F090273
-			public const int transition_transform = 2131296883;
+			public const int txt123 = 2131296883;
 			
 			// aapt resource value: 0x7F090274
-			public const int txt123 = 2131296884;
+			public const int txtBoxName = 2131296884;
 			
 			// aapt resource value: 0x7F090275
-			public const int txtBoxName = 2131296885;
+			public const int txtComment = 2131296885;
 			
 			// aapt resource value: 0x7F090276
-			public const int txtComment = 2131296886;
+			public const int txtDate = 2131296886;
 			
 			// aapt resource value: 0x7F090277
-			public const int txtDate = 2131296887;
+			public const int txtFrom = 2131296887;
 			
 			// aapt resource value: 0x7F090278
-			public const int txtFrom = 2131296888;
+			public const int txtHeader1 = 2131296888;
 			
 			// aapt resource value: 0x7F090279
-			public const int txtHeader1 = 2131296889;
+			public const int txtNoTask = 2131296889;
 			
 			// aapt resource value: 0x7F09027A
-			public const int txtNoTask = 2131296890;
+			public const int txtOrder = 2131296890;
 			
 			// aapt resource value: 0x7F09027B
-			public const int txtOrder = 2131296891;
+			public const int txtOrderName = 2131296891;
 			
 			// aapt resource value: 0x7F09027C
-			public const int txtOrderName = 2131296892;
+			public const int txtPrice = 2131296892;
 			
 			// aapt resource value: 0x7F09027D
-			public const int txtPrice = 2131296893;
+			public const int txtSensor = 2131296893;
 			
 			// aapt resource value: 0x7F09027E
-			public const int txtSensor = 2131296894;
+			public const int txtTaskName = 2131296894;
 			
 			// aapt resource value: 0x7F09027F
-			public const int txtTaskName = 2131296895;
+			public const int txtValue = 2131296895;
 			
 			// aapt resource value: 0x7F090280
-			public const int txtValue = 2131296896;
+			public const int txtWhere = 2131296896;
 			
 			// aapt resource value: 0x7F090281
-			public const int txtWhere = 2131296897;
+			public const int txt_alarm = 2131296897;
 			
 			// aapt resource value: 0x7F090282
-			public const int txt_alarm = 2131296898;
+			public const int txt_alarm_date = 2131296898;
 			
 			// aapt resource value: 0x7F090283
-			public const int txt_alarm_date = 2131296899;
+			public const int txt_alarm_description = 2131296899;
 			
 			// aapt resource value: 0x7F090284
-			public const int txt_alarm_description = 2131296900;
+			public const int txt_choice_box = 2131296900;
 			
 			// aapt resource value: 0x7F090285
-			public const int txt_choice_box = 2131296901;
+			public const int txt_confirm_time = 2131296901;
 			
 			// aapt resource value: 0x7F090286
-			public const int txt_confirm_time = 2131296902;
+			public const int txt_info_order_new = 2131296902;
 			
 			// aapt resource value: 0x7F090287
-			public const int txt_info_order_new = 2131296903;
+			public const int txt_name = 2131296903;
 			
 			// aapt resource value: 0x7F090288
-			public const int txt_name = 2131296904;
+			public const int txt_not_found_something = 2131296904;
 			
 			// aapt resource value: 0x7F090289
-			public const int txt_not_found_something = 2131296905;
+			public const int txt_title_alarm = 2131296905;
 			
 			// aapt resource value: 0x7F09028A
-			public const int txt_title_alarm = 2131296906;
+			public const int txt_title_alarms = 2131296906;
 			
 			// aapt resource value: 0x7F09028B
-			public const int txt_title_alarms = 2131296907;
+			public const int txt_title_box = 2131296907;
 			
 			// aapt resource value: 0x7F09028C
-			public const int txt_title_box = 2131296908;
+			public const int txt_title_lst_alarm = 2131296908;
 			
 			// aapt resource value: 0x7F09028D
-			public const int txt_title_lst_alarm = 2131296909;
+			public const int txt_title_lst_box = 2131296909;
 			
 			// aapt resource value: 0x7F09028E
-			public const int txt_title_lst_box = 2131296910;
+			public const int txt_title_tasks = 2131296910;
 			
 			// aapt resource value: 0x7F09028F
-			public const int txt_title_tasks = 2131296911;
+			public const int txt_title_time = 2131296911;
 			
 			// aapt resource value: 0x7F090290
-			public const int txt_title_time = 2131296912;
+			public const int uniform = 2131296912;
 			
 			// aapt resource value: 0x7F090291
-			public const int uniform = 2131296913;
+			public const int units = 2131296913;
 			
 			// aapt resource value: 0x7F090292
-			public const int units = 2131296914;
+			public const int unlabeled = 2131296914;
 			
 			// aapt resource value: 0x7F090293
-			public const int unlabeled = 2131296915;
+			public const int up = 2131296915;
 			
 			// aapt resource value: 0x7F090294
-			public const int up = 2131296916;
-			
-			// aapt resource value: 0x7F090295
-			public const int useLogo = 2131296917;
+			public const int useLogo = 2131296916;
 			
 			// aapt resource value: 0x7F09009A
 			public const int UserCardViewTxtFrom = 2131296410;
@@ -7249,14 +7246,14 @@ namespace SmartBoxCity
 			// aapt resource value: 0x7F09009C
 			public const int UserTextMain = 2131296412;
 			
+			// aapt resource value: 0x7F090295
+			public const int user_layout = 2131296917;
+			
 			// aapt resource value: 0x7F090296
-			public const int user_layout = 2131296918;
+			public const int view2 = 2131296918;
 			
 			// aapt resource value: 0x7F090297
-			public const int view2 = 2131296919;
-			
-			// aapt resource value: 0x7F090298
-			public const int view4 = 2131296920;
+			public const int view4 = 2131296919;
 			
 			// aapt resource value: 0x7F09009D
 			public const int ViewAboutUs = 2131296413;
@@ -7282,29 +7279,29 @@ namespace SmartBoxCity
 			// aapt resource value: 0x7F0900A4
 			public const int ViewOrderStatus2 = 2131296420;
 			
-			// aapt resource value: 0x7F090299
-			public const int viewPager = 2131296921;
+			// aapt resource value: 0x7F090298
+			public const int viewPager = 2131296920;
 			
 			// aapt resource value: 0x7F0900A5
 			public const int ViewReviews = 2131296421;
 			
+			// aapt resource value: 0x7F090299
+			public const int view_box = 2131296921;
+			
 			// aapt resource value: 0x7F09029A
-			public const int view_box = 2131296922;
+			public const int view_offset_helper = 2131296922;
 			
 			// aapt resource value: 0x7F09029B
-			public const int view_offset_helper = 2131296923;
+			public const int visible = 2131296923;
 			
 			// aapt resource value: 0x7F09029C
-			public const int visible = 2131296924;
+			public const int wide = 2131296924;
 			
 			// aapt resource value: 0x7F09029D
-			public const int wide = 2131296925;
+			public const int withText = 2131296925;
 			
 			// aapt resource value: 0x7F09029E
-			public const int withText = 2131296926;
-			
-			// aapt resource value: 0x7F09029F
-			public const int wrap_content = 2131296927;
+			public const int wrap_content = 2131296926;
 			
 			static Id()
 			{
