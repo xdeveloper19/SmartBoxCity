@@ -6,6 +6,8 @@ namespace Entity.Model.OrderViewModel.OrderInfoViewModel
 {
     public class MakeOrderModel
     {
+        public string volume { get; set; }
+
         public string inception_address { get; set; }
         public string inception_lat { get; set; }
         public string inception_lng { get; set; }

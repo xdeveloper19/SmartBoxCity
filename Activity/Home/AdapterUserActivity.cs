@@ -17,6 +17,7 @@ using Android.Views;
 using Android.Widget;
 using Entity.Model;
 using Entity.Repository;
+using Java.Interop;
 using Java.IO;
 using Java.Net;
 using Java.Nio.FileNio;
@@ -33,6 +34,7 @@ namespace SmartBoxCity.Activity.Home
         Context context;
         List<OrderAdapter> orders;
         Android.App.FragmentTransaction manager;
+        public MediaController controller;
         private TextView Cost;
         private TextView txtFrom;
         private TextView txtTo;
@@ -90,6 +92,7 @@ namespace SmartBoxCity.Activity.Home
                 Cost.Text = orders[position].payment_amount;
                 NameContainer.Text = orders[position].id;
                 Statusview.Text = orders[position].order_stage_id + ". " + orders[position].order_stage_name;
+                //StaticOrder.Order_id = orders[position].id;
 
                 btn_pay = view.FindViewById<Button>(Resource.Id.btn_pay);
                 progress = view.FindViewById<ProgressBar>(Resource.Id.progressBar);
@@ -360,7 +363,7 @@ namespace SmartBoxCity.Activity.Home
         //        AlertDialog.Builder alert = new AlertDialog.Builder(context);
         //        alert.SetTitle("Сделать фотографию");
         //        alert.SetMessage("Вы действительно хотите сделать фотографию с камеры контейнера?");
-        //        alert.SetPositiveButton("Сделать", (senderAlert, args) =>
+        //        alert.SetPositiveButton("Сделатьыыф", (senderAlert, args) =>
         //        {
         //            GetPhoto(orders[position].id, alert);
         //        });
@@ -395,20 +398,26 @@ namespace SmartBoxCity.Activity.Home
                         View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
                         var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
                         var src = Android.Net.Uri.Parse(URL + o_data.Message);
-                        
+                        //controller = new MediaController(context);
+                       
                         img_get_video.SetVideoURI(src);
+                        //img_get_video.CanPause();
+                       // controller.SetAnchorView(img_get_video);
+                        //img_get_video.SetMediaController(controller);
+                        //img_get_video.SetOnPreparedListener(new MediaOPlayerListener(context, img_get_video));
                         img_get_video.Start();
+                        //controller.Show(50000);
 
                         Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
                         alert1.SetTitle("Сделать видео");
                         alert1.SetView(view);
-                        alert1.SetPositiveButton("Скачать", (senderAlert1, args1) =>
-                        {
-                            string url = URL + o_data.Message;
-                            //downloadFile(url);
-                            SaveVideo(url);
-                        });
-                        alert1.SetNegativeButton("Закрыть", (senderAlert1, args1) =>
+                        //alert1.SetPositiveButton("Скачать", (senderAlert1, args1) =>
+                        //{
+                        //    string url = URL + o_data.Message;
+                        //    //downloadFile(url);
+                        //    SaveVideo(url);
+                        //});
+                        alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
                         {
                         });
                         Dialog dialog1 = alert1.Create();
@@ -485,34 +494,43 @@ namespace SmartBoxCity.Activity.Home
         {
             try
             {
-                string FileName = "Video" + DateTime.Now.Minute.ToString() + ".mp4";
+                //string FileName = "Video" + DateTime.Now.ToString() + ".mp4";
 
-                string filepath = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.ToString(), FileName); 
+                //string filepath = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.ToString(), FileName); 
 
-                URL url = new URL(urll);
-                URLConnection conection = url.OpenConnection();
-                conection.Connect();
-                int LenghtOfFile = conection.ContentLength;
-                InputStream input = new BufferedInputStream(url.OpenStream(), LenghtOfFile);
-                OutputStream outp = new FileOutputStream(filepath);
+                //URL url = new URL(urll);
+                //URLConnection conection = url.OpenConnection();
+                //conection.Connect();
+                //int LenghtOfFile = conection.ContentLength;
+                //InputStream input = new BufferedInputStream(url.OpenStream(), LenghtOfFile);
+                //OutputStream outp = new FileOutputStream(filepath);
 
-                int count;
+                //int count;
 
-                byte[] data = new byte[1024];
-                long total = 0;
-                while ((count = input.Read(data)) != -1)
-                {
-                    total += count;
-                    outp.Write(data, 0, count);
-                }
+                //byte[] data = new byte[1024];
+                //long total = 0;
+                //while ((count = input.Read(data)) != -1)
+                //{
+                //    total += count;
+                //    outp.Write(data, 0, count);
+                //}
 
-                outp.Flush();
-                outp.Close();
-                input.Close();
+                //outp.Flush();
+                //outp.Close();
+                //input.Close();
+
+                //MediaDownloaderService mediaDownloader = new MediaDownloaderService();
+                //mediaDownloader.InitializeDownload(urll);
+                //mediaDownloader.StartDownloading(true);
+                //while(!mediaDownloader.IsDownloading())
+                //{
+
+                //}
+                Toast.MakeText(context, "Видео успешно загружено!", ToastLength.Long);
             }
             catch (Exception ex)
             {
-
+                Toast.MakeText(context, "Ошибка загрузки: " +  ex.Message, ToastLength.Long);
             }
 
 
@@ -697,15 +715,16 @@ namespace SmartBoxCity.Activity.Home
                 //            + DateTime.Today.Year.ToString()
                 //            + ".png";
                 //string filePath = System.IO.Path.Combine(documentsPath, FileName);
-                string FileName = "Image" + DateTime.Now.Minute.ToString() + ".png";
-
+                //var date = DateTime.Now.ToString();
+                //string[] dates = date.Split(' ');
+                string FileName = "Order_" + NameContainer.Text + ".png";
 
                 byte[] bitmapData;
                 var stream = new MemoryStream();
                 imageBitmap.Compress(Android.Graphics.Bitmap.CompressFormat.Png, 0, stream);
                 bitmapData = stream.ToArray();
 
-                string fileName = System.IO.Path.Combine(Android.OS.Environment.ExternalStorageDirectory.ToString(), FileName);
+                string fileName = System.IO.Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).ToString(), FileName);
                 System.IO.File.WriteAllText(fileName, bitmapData.ToString());
                 using (FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate))
                 {
@@ -739,6 +758,7 @@ namespace SmartBoxCity.Activity.Home
                 //    imageBitmap = loadAndResizeBitmap(realPath);
                 //}
                 //{
+                Toast.MakeText(context, "Фото успешно сохранено в папке /downloads!", ToastLength.Long).Show();
                 #region 3-й метод
                 //byte[] bitmapData;
                 //var stream = new MemoryStream();
@@ -830,5 +850,126 @@ namespace SmartBoxCity.Activity.Home
                 Toast.MakeText(context, ex.Message, ToastLength.Long).Show();
             }          
         }       
+    }
+
+    public class MediaOPlayerListener : Java.Lang.Object, MediaPlayer.IOnPreparedListener, MediaController.IMediaPlayerControl
+    {
+        private Context context;
+        private View img_get_video;
+        private MediaPlayer mediaPlayer;
+        private MediaController controller;
+
+        public MediaOPlayerListener(Context context, View media_view)
+        {
+            this.context = context;
+            this.img_get_video = media_view;
+        }
+
+        public int AudioSessionId => mediaPlayer.AudioSessionId;
+
+        public int BufferPercentage => 0;
+
+        public int CurrentPosition => mediaPlayer.CurrentPosition;
+
+        public int Duration => mediaPlayer.Duration;
+
+        public bool IsPlaying => mediaPlayer.IsPlaying;
+
+        public bool CanPause()
+        {
+            //throw new NotImplementedException();
+            return true;
+        }
+
+        public bool CanSeekBackward()
+        {
+            //throw new NotImplementedException();
+            return false;
+        }
+
+        public bool CanSeekForward()
+        {
+            return false;
+        }
+
+        //public IntPtr Handle => throw new NotImplementedException();
+
+        //public int JniIdentityHashCode => throw new NotImplementedException();
+
+        //public JniObjectReference PeerReference => throw new NotImplementedException();
+
+        //public JniPeerMembers JniPeerMembers => throw new NotImplementedException();
+
+        //public JniManagedPeerStates JniManagedPeerState => throw new NotImplementedException();
+
+        public void Dispose()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void Disposed()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void DisposeUnlessReferenced()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void Finalized()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void OnPrepared(MediaPlayer mp)
+        {
+            MediaController controller = new MediaController(context);
+            mediaPlayer = new MediaPlayer();
+            mediaPlayer = mp;
+            //img_get_video.CanPause();
+            controller.SetMediaPlayer(this);
+            controller.SetAnchorView(img_get_video);
+            //img_get_video.SetMediaController(controller);
+           
+            controller.Enabled = true;
+            controller.Show(0);
+            //throw new NotImplementedException();
+        }
+
+        public void Pause()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void SeekTo(int pos)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void SetJniIdentityHashCode(int value)
+        {
+           // throw new NotImplementedException();
+        }
+
+        public void SetJniManagedPeerState(JniManagedPeerStates value)
+        {
+           // throw new NotImplementedException();
+        }
+
+        public void SetPeerReference(JniObjectReference reference)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void Start()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void UnregisterFromRuntime()
+        {
+            //throw new NotImplementedException();
+        }
     }
 }

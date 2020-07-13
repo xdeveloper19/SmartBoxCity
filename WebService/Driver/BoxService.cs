@@ -396,11 +396,7 @@ namespace WebService.Driver
                 {
                     case HttpStatusCode.BadRequest:
                         {
-                            ErrorResponseObject error = new ErrorResponseObject();
-                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
-                            o_data.Status = response.StatusCode;
-                            o_data.Message = error.Errors[0];
-                            return o_data;
+                            throw new Exception("Ошибка сервера 400");
                         }
                     case HttpStatusCode.InternalServerError:
                         {

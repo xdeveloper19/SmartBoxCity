@@ -72,7 +72,8 @@ namespace SmartBoxCity.Activity.Driver
                                 Acknowledged = alm.acknowledged,
                                 Container_id = alm.container_id,
                                 Name = alm.name,
-                                Raised_At = alm.raised_at
+                                Raised_At = alm.raised_at,
+                                IsDepot = (alm.depot == "1") ? true : false
                             }
                             );
                         }

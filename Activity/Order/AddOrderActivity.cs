@@ -419,7 +419,8 @@ namespace SmartBoxCity.Activity.Order
                                 length = s_length.Text,
                                 qty = s_sum_seats.Text,
                                 weight = s_weight.Text,
-                                width = s_width.Text
+                                width = s_width.Text,
+                                volume = s_size.Text
                             };
 
                             using (var client = ClientHelper.GetClient())
@@ -434,15 +435,15 @@ namespace SmartBoxCity.Activity.Order
 
                                     AmountResponse order_data = new AmountResponse();
                                     order_data = o_data.ResponseData;
-                                    //if(IsFieldsEmptyOrNull(o_data.ResponseData))
-                                    //{
-                                    //    string ErrorMessage = "Не удалось оформить заказ. Скорее всего " +
-                                    //    "Вы ввели неверные пункт отправления и/или пункт назначения ";
-                                    //    AlertDialogCall(ErrorMessage);
-                                    //    preloader.Visibility = Android.Views.ViewStates.Invisible;
-                                    //}
-                                    //else
-                                    //{
+                                    if (IsFieldsEmptyOrNull(o_data.ResponseData))
+                                    {
+                                        string ErrorMessage = "Не удалось оформить заказ. Скорее всего " +
+                                        "Вы ввели неверные пункт отправления и/или пункт назначения ";
+                                        AlertDialogCall(ErrorMessage);
+                                        preloader.Visibility = Android.Views.ViewStates.Invisible;
+                                    }
+                                    else
+                                    {
                                         StaticOrder.AddInfoOrder(model);
                                         StaticOrder.AddInfoAmount(order_data);
 
@@ -461,7 +462,8 @@ namespace SmartBoxCity.Activity.Order
                                         {
                                             Toast.MakeText(Activity, ex.Message, ToastLength.Long);
                                         }
-                                                                    
+
+                                    }
                                 }
                                 else
                                 {
@@ -489,17 +491,17 @@ namespace SmartBoxCity.Activity.Order
            
         }
 
-        //private bool IsFieldsEmptyOrNull(AmountResponse responseData)
-        //{
-        //    if (String.IsNullOrEmpty(responseData.amount) || String.IsNullOrEmpty(responseData.insurance_amount)
-        //        || String.IsNullOrEmpty(responseData.distance) || String.IsNullOrEmpty(responseData.destination_address)
-        //        || String.IsNullOrEmpty(responseData.inception_address))
-        //    {
-        //        return true;
-        //    }
-        //    else
-        //        return false;
-        //}
+        private bool IsFieldsEmptyOrNull(AmountResponse responseData)
+        {
+            if (String.IsNullOrEmpty(responseData.amount) || String.IsNullOrEmpty(responseData.insurance_amount)
+                || String.IsNullOrEmpty(responseData.distance) || String.IsNullOrEmpty(responseData.destination_address)
+                || String.IsNullOrEmpty(responseData.inception_address))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
 
         private bool ValidationValues(ref string InputErrorMessage)
         {
@@ -515,7 +517,7 @@ namespace SmartBoxCity.Activity.Order
                     || s_edit_from.Text == s_edit_where.Text)
                 {
                     InputErrorMessage = "Вы должны заполнить все обязательные поля перед тем, как оформите заказ !\n1. Откуда\n2. Куда\n3. Длина" +
-                        " (для тарно-штучных)\n4. Ширина (для тарно-штучных)\n5. Высота (для тарно-штучных)\n6. Вес груза\n7. Кол-во мест";
+                        " (для тарно-штучных)\n4. Ширина (для тарно-штучных)\n5. Высота (для тарно-штучных)\n6. Вес груза\n7. Кол-во мест (для тарно-штучных)";
                     return true;
                 }
                 else if (float.Parse(s_size.Text, NumberStyles.Any, ci) <= 0)
@@ -528,7 +530,7 @@ namespace SmartBoxCity.Activity.Order
                             float.Parse(s_height.Text, NumberStyles.Any, ci) > 2.20)
                 {
                     InputErrorMessage = "Пожалуйста, проверьте введённые Вами значения длины, ширины и высоты груза!" +
-                        "\n\nМакс. длина: 1.88 м\n\nМакс. ширина: 2.59 м\n\nМакс. высота: 2.20 м";
+                        "\n\nМакс. длина: 1.88 м\n\nМакс. ширина: 2.59 м\n\nМакс. высота: 2.20 м\n\nМакс. объем груза: 10 куб. метров";
                     return true;
                 }
                 else
@@ -836,9 +838,11 @@ namespace SmartBoxCity.Activity.Order
             {
                 s_height.Enabled = false;
                 s_width.Enabled = false;
-                s_length.Enabled = false;               
+                s_length.Enabled = false;
+                s_sum_seats.Enabled = false;
 
                 s_height.Text = "0";
+                s_sum_seats.Text = "1";
                 s_width.Text = "0";
                 s_length.Text = "0";
 
@@ -846,18 +850,14 @@ namespace SmartBoxCity.Activity.Order
                 SizeInputLayout.SetBackgroundColor(Color.Transparent);
 
                 //s_size.Visibility = ViewStates.Visible;
-                //s_size.TextChanged += S_size_TextChanged;
-
-
-
-                s_sum_seats.TextChanged += ValueSizeCalculation;
+                //s_size.TextChanged += S_size_TextChanged
             }
             else
             {
                 s_height.Enabled = true;
                 s_width.Enabled = true;
                 s_length.Enabled = true;
-
+                s_sum_seats.Enabled = true;
                 s_size.Enabled = false;
                 SizeInputLayout.SetBackgroundResource(Resource.Drawable.StyleInputLayout);
                 //s_size.Focusable = false;
@@ -865,8 +865,6 @@ namespace SmartBoxCity.Activity.Order
                 //s_size.Enabled = false;
                 //s_size.Visibility = ViewStates.Invisible;
                 //SizeInputLayout.SetBackgroundResource(Resource.Drawable.StyleInputLayout);
-
-                s_sum_seats.TextChanged += ValueSizeCalculation;
             }
         }
 

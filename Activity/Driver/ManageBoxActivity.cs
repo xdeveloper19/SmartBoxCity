@@ -77,6 +77,14 @@ namespace SmartBoxCity.Activity.Driver
             var result = GetTasks();
             if (result.Result == TaskStatus.OK)
                 GetOrderParameters();
+            else if (result.Result == TaskStatus.OrderNotImplemented)
+            {
+                StaticUser.NamePadeAbsenceSomething = "OrderNotFoundForDriver";
+                Android.App.FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                NotFoundOrdersActivity content = new NotFoundOrdersActivity();
+                transaction1.Replace(Resource.Id.frameDriverlayout, content);
+                transaction1.Commit();
+            }
             else
             {
                 FragmentTransaction ft = this.FragmentManager.BeginTransaction();
@@ -182,7 +190,9 @@ namespace SmartBoxCity.Activity.Driver
                     var boxes_id = o_data.ResponseData.CONTAINERS.Select(s => s.id).ToList();
                     StaticTask.AddContainersID(boxes_id);
 
-                    
+                    if (StaticTask.order_id == "")
+                        return TaskStatus.OrderNotImplemented;
+
                     return TaskStatus.OK;
                 }
                 else

@@ -32,7 +32,8 @@ namespace SmartBoxCity.Activity.Driver
     {
         OK = 0,
         NotFound,
-        ServerError
+        ServerError,
+        OrderNotImplemented
     }
     public class TaskActivity: Fragment
     {

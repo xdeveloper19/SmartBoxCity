@@ -30,6 +30,7 @@ namespace SmartBoxCity.Activity.Driver
             SwitchCompat btn_switch = view.FindViewById<SwitchCompat>(Resource.Id.switch_compat);
             var txt_comment = view.FindViewById<TextView>(Resource.Id.txtNoTask);
             btn_switch.Focusable = true;
+            StaticTask.IsStoppedGettingTasks = false;
 
             if (StaticDriver.busy == "0")
             {

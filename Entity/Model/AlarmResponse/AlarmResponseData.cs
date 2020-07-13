@@ -6,6 +6,7 @@ namespace Entity.Model.AlarmResponse
 {
     public class AlarmResponseData
     {
+        public string depot { get; set; }
         public string acknowledged { get; set; }
         public string id { get; set; }
         public string name { get; set; }

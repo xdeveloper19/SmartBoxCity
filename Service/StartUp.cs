@@ -1,68 +1,70 @@
 ﻿using Android.App;
-using Android.Icu.Util;
+using Android.App.Job;
+using Android.Content;
 using Android.Util;
 using Android.Widget;
 using Firebase.JobDispatcher;
 
 namespace SmartBoxCity.Service
 {
-    public class StartUp
+    public static class StartUp
     {
         static readonly string TAG = "X:StartService";
-        static FirebaseJobDispatcher dispatcher;
 
-        
+
         /// <summary>
         /// Запуск задачи.
         /// </summary>
-        public static void StartTracking(string tag)
+        public static void StartTracking(Context context, string tag)
         {
             Log.Debug(TAG, "Starting Tracking");
 
-            // This is the "Java" way to create a FirebaseJobDispatcher object
-            IDriver driver = new GooglePlayDriver(Application.Context);
+            var jobBuilder = CreateJobBuilderUsingJobId<JobWebBackgroundService>(context, 1);
 
-          
-            dispatcher = new FirebaseJobDispatcher(driver);
+            var jobInfo = jobBuilder
+                .SetRequiredNetworkType(NetworkType.Any)
+                //.SetImportantWhileForeground(true)
+                .SetPersisted(true)
+                .SetBackoffCriteria(5000, BackoffPolicy.Linear)
+                .SetPeriodic(10000)
+                .Build();  // creates a JobInfo object.
 
-            //RetryStrategy retry = dispatcher.NewRetryStrategy(RetryStrategy.RetryPolicyLinear, retryTime, deadline);
-            //long second = TimeUnit.SECONDS.toSeconds(seconds) - (TimeUnit.SECONDS.toMinutes(seconds) * 60);
-            JobTrigger myTrigger = Trigger.ExecutionWindow(0, 5);
+            var jobScheduler = (JobScheduler)context.GetSystemService(Context.JobSchedulerService);
+            var scheduleResult = jobScheduler.Schedule(jobInfo);
 
-            // FirebaseJobDispatcher dispatcher = context.CreateJobDispatcher();
-            Job myJob = dispatcher.NewJobBuilder()
-                       .SetService<JobWebBackgroundService>(tag)
-                       .SetLifetime(Lifetime.Forever)
-                       .SetTrigger(myTrigger)
-                       .AddConstraint(Constraint.OnAnyNetwork)
-                       .Build();
-            
-            // This method will not throw an exception; an integer result value is returned
-            int scheduleResult = dispatcher.Schedule(myJob);
-            //dispatcher.MustSchedule(myJob);
+            if (JobScheduler.ResultSuccess == scheduleResult)
+            {
+                Toast.MakeText(context, "SUCCESS", ToastLength.Long);
+            }
+            else
+            {
+                Toast.MakeText(context, "FAILED", ToastLength.Long);
+            }
 
             Log.Debug(TAG, "Scheduling LocationJobService...");
+        }
 
-            if (scheduleResult != FirebaseJobDispatcher.ScheduleResultSuccess)
-            {
-                Log.Warn(TAG, "Job Scheduler failed to schedule job!");
-                Toast.MakeText(Application.Context, "Job Scheduler failed to schedule job!", ToastLength.Long);
-            }
+        public static JobInfo.Builder CreateJobBuilderUsingJobId<T>(this Context context, int jobId) where T : Android.App.Job.JobService
+        {
+            var javaClass = Java.Lang.Class.FromType(typeof(T));
+            var componentName = new ComponentName(context, javaClass);
+
+            // Sample usage - creates a JobBuilder for a DownloadJob and sets the Job ID to 1.
+            return new JobInfo.Builder(jobId, componentName);
         }
 
 
         /// <summary>
         /// Отмена задачи.
         /// </summary>
-        public static void StopTracking()
+        public static void StopTracking(Context context)
         {
             Log.Debug(TAG, "Stopping Tracking");
+            var jobScheduler = (JobScheduler)context.GetSystemService(Context.JobSchedulerService);
 
-            int cancelResult = dispatcher.CancelAll();
-
-            // to cancel a single job:
-
-            //int cancelResult = dispatcher.Cancel("unique-tag-for-job");
+            jobScheduler.CancelAll();
         }
     }
+
+
 }

@@ -100,6 +100,7 @@ namespace SmartBoxCity.Activity.Driver
             {
                 try
                 {
+                    StaticBox.isDepot = _alarms[position].IsDepot;
                     BoxActivity content2 = new BoxActivity();
                     StaticBox.id = _alarms[position].Container_id;
                     _manager.Replace(Resource.Id.frameDriverlayout, content2).Commit();

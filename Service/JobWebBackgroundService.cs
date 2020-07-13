@@ -1,27 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.V4.App;
 using Android.Util;
-using Android.Views;
-using Android.Widget;
-using Entity.Repository;
-using Firebase.JobDispatcher;
-using Plugin.Settings;
-using SmartBoxCity.Activity.Driver;
-using WebService;
-using WebService.Driver;
+using Android.App.Job;
 
 namespace SmartBoxCity.Service
 {
-    [Service(Name = "com.xamarin.fjdtestapp.DemoJob")]
-    [IntentFilter(new[] { FirebaseJobServiceIntent.Action })]
+    [Service(Name = "com.xamarin.fjdtestapp.DemoJob", Permission = "android.permission.BIND_JOB_SERVICE")]
+
     public class JobWebBackgroundService : JobService
     {
         private const string TASK_TAG = "task-job-tag";
@@ -34,30 +20,30 @@ namespace SmartBoxCity.Service
         }
 
 
-        public override bool OnStartJob(IJobParameters jobParameters)
+        public override bool OnStartJob(JobParameters jobParameters)
         {
             Task.Run(() =>
-           {
-               switch (jobParameters.Tag)
-               {
-                   case TASK_TAG:
-                       {
-                           RegisterReceiver(receiver, new IntentFilter(ACTION_PROCESS_TASKS));
-                           Intent intent = new Intent();
-                           intent.SetAction(ACTION_PROCESS_TASKS);
-                           SendBroadcast(intent);
-                           break;
-                       }
-                   default:
-                       break;
-               }
-               JobFinished(jobParameters, true);
-           });
+            {
+                switch (jobParameters.JobId)
+                {
+                    case 1:
+                        {
+                            RegisterReceiver(receiver, new IntentFilter(ACTION_PROCESS_TASKS));
+                            Intent intent = new Intent();
+                            intent.SetAction(ACTION_PROCESS_TASKS);
+                            SendBroadcast(intent);
+                            break;
+                        }
+                    default:
+                        break;
+                }
+                JobFinished(jobParameters, true);
+            });
             // Return true because of the asynchronous work
             return true;
         }
 
-        public override bool OnStopJob(IJobParameters jobParameters)
+        public override bool OnStopJob(JobParameters jobParameters)
         {
             Log.Debug(TASK_TAG, "DemoJob::OnStartJob");
             UnregisterReceiver(receiver);

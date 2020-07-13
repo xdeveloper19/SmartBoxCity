@@ -28,7 +28,7 @@
     <FrameLayout android:id="@+id/frameDriverlayout"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:layout_marginTop="42dp"
+    android:layout_marginTop="51dp"
     />
 
     

@@ -141,6 +141,7 @@ namespace Entity.Repository
         /// Тип погрузки.
         /// </summary>
         public static string Cargo_loading { get; set; }
+        public static string Volume { get; set; }
         #endregion
 
         /// <summary>
@@ -167,6 +168,7 @@ namespace Entity.Repository
             For_time = model.for_time;
             Receiver = model.receiver;
             Cargo_loading = model.cargo_loading;
+            Volume = model.volume;
         }
 
         public static void CreationOrderForCosteAgain(ref MakeOrderModel model)

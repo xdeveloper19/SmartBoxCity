@@ -1,12 +1,13 @@
 ﻿using System;
 using Android.App;
 using Android.Content;
+using Android.Media;
+using Android.OS;
 using Android.Support.V4.App;
 using Android.Widget;
 using Entity.Repository;
 using Plugin.Settings;
 using SmartBoxCity.Activity;
-using SmartBoxCity.Activity.Driver;
 using WebService;
 using WebService.Driver;
 
@@ -16,7 +17,10 @@ namespace SmartBoxCity.Service
     public class MyTasksBroadcastReceiver : BroadcastReceiver
     {
         public static string ACTION_PROCESS_TASKS = "SmartBoxCity.UPDATE_TASKS";
- 
+        // Идентификатор уведомления
+        private static int NOTIFY_ID = 101;
+        static readonly string CHANNEL_ID = "location_notification";
+
         public override void OnReceive(Context context, Intent intent)
         {
             if (intent != null)
@@ -26,6 +30,7 @@ namespace SmartBoxCity.Service
                 {
                     try
                     {
+                        CreateNotificationChannel(context);
                         GetTasks(context);
                     }
                     catch (Exception)
@@ -45,18 +50,43 @@ namespace SmartBoxCity.Service
             PendingIntentFlags.UpdateCurrent);
 
             //Create Notification
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "Tasks")
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .SetSmallIcon(Resource.Mipmap.ic_launcher)
             .SetContentTitle(title)
             .SetContentText(text)
             .SetAutoCancel(true)
+            .SetSound(RingtoneManager.GetDefaultUri(RingtoneType.Notification))
             .SetVibrate(new long[] { 1000, 1000 })
             .SetContentIntent(resultPendingIntent);
 
             //Show Notification
             Notification notification = builder.Build();
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.From(context);
+            var str = notificationManager.AreNotificationsEnabled();
+            //NotificationManager notificationManager = context.GetSystemService(Context.NotificationService) as NotificationManager;
+            notificationManager.Notify(NOTIFY_ID, notification);
+        }
+
+
+        void CreateNotificationChannel(Context context)
+        {
+            if (Build.VERSION.SdkInt < BuildVersionCodes.O)
+            {
+                // Notification channels are new in API 26 (and not a part of the
+                // support library). There is no need to create a notification
+                // channel on older versions of Android.
+                return;
+            }
+
+            var name = context.Resources.GetString(Resource.String.channel_name);
+            var description = context.Resources.GetString(Resource.String.channel_description);
+            var channel = new NotificationChannel(CHANNEL_ID, name, NotificationImportance.Default)
+            {
+                Description = description
+            };
+
             NotificationManager notificationManager = context.GetSystemService(Context.NotificationService) as NotificationManager;
-            notificationManager.Notify(0, notification);
+            notificationManager.CreateNotificationChannel(channel);
         }
 
         private async void GetTasks(Context context)
@@ -79,7 +109,7 @@ namespace SmartBoxCity.Service
                     PushNotifications(context, "Новая задача на перевозку груза", "Просмотреть задачу");
                     StaticTask.IsStoppedGeo = false;
                     StaticTask.IsStoppedGettingTasks = true;
-                    StartUp.StopTracking();
+                    StartUp.StopTracking(context);
                     return;
                 }
                 else

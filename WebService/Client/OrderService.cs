@@ -189,7 +189,8 @@ namespace WebService.Client
                         { "for_date", model.for_date},
                         { "for_time", model.for_time},
                         { "receiver", model.receiver},
-                        { "cargo_loading", model.cargo_loading}
+                        { "cargo_loading", model.cargo_loading},
+                        { "volume", model.volume }
                     };
 
                 string newData = "";
@@ -454,13 +455,36 @@ namespace WebService.Client
         {
             try
             {
-                HttpResponseMessage response = await _httpClient.GetAsync($"order/{ORDER_ID}/events");
+                //HttpResponseMessage response = await _httpClient.GetAsync($"order/{ORDER_ID}/events");
 
-                string s_result;
-                using (HttpContent responseContent = response.Content)
-                {
-                    s_result = await responseContent.ReadAsStringAsync();
-                }
+                //string s_result;
+                //using (HttpContent responseContent = response.Content)
+                //{
+                //    s_result = await responseContent.ReadAsStringAsync();
+                //}
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://smartboxcity.ru:8003/order/" + ORDER_ID + "/events");
+                request.Method = "GET";
+                request.Credentials = new NetworkCredential(CrossSettings.Current.GetValueOrDefault("token", ""), "");
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                Stream responseStream = response.GetResponseStream();
+
+                StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+
+                string s_result = myStreamReader.ReadToEnd();
+
+                myStreamReader.Close();
+                responseStream.Close();
+
+                response.Close();
+                //HttpResponseMessage response = await _httpClient.GetAsync($"order/{ORDER_ID}/geo");
+
+                //string s_result;
+                //using (HttpContent responseContent = response.Content)
+                //{
+                //    s_result = await responseContent.ReadAsStringAsync();
+                //}
 
                 ServiceResponseObject<EventsResponse> o_data =
                     new ServiceResponseObject<EventsResponse>();

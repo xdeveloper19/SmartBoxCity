@@ -163,7 +163,7 @@ namespace SmartBoxCity.Activity.Driver
                     tasks.Add(new CurrentTaskModel
                     {
                         Description = StaticTask.title,
-                        Order_Id = StaticTask.order_id
+                        Order_Id = (StaticTask.order_id == "") ? "нет" : StaticTask.order_id
                     });
 
                     o_data.ResponseData.TASKS.Remove(firstTask);

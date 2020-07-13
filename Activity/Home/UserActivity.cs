@@ -62,7 +62,8 @@ namespace SmartBoxCity.Activity.Home
                     length = StaticOrder.Length,
                     qty = StaticOrder.Qty,
                     weight = StaticOrder.Weight,
-                    width = StaticOrder.Width
+                    width = StaticOrder.Width,
+                    volume = StaticOrder.Volume
                 };
 
                 AddOrder(model);
@@ -149,7 +150,8 @@ namespace SmartBoxCity.Activity.Home
                     }
                     catch (Exception ex)
                     {
-                        Toast.MakeText(Activity, ex.Message, ToastLength.Long);
+                        Android.Util.Log.Debug("Reference on another page error: ", ex.Message);
+                       // Toast.MakeText(Activity, ex.Message, ToastLength.Long);
                     }
                     
                 }

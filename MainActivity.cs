@@ -235,6 +235,8 @@ namespace SmartBoxCity
                 Toast.MakeText(this, ex.Message, ToastLength.Long).Show();
             }
             
+
+          
             //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, Resource.String.navigation_drawer_open, Resource.String.navigation_drawer_close);
             //drawer.AddDrawerListener(toggle);
             //toggle.SyncState();
@@ -259,6 +261,22 @@ namespace SmartBoxCity
             //navigationView.SetNavigationItemSelectedListener(this);
         }
 
+        protected override void OnDestroy()
+        {
+            //string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            //File.Delete(dir_path + "user_data.txt");
+
+            //using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            //{
+            //    AuthService.InitializeClient(client);
+            //    AuthService.LogOut();
+            //    CrossSettings.Current.AddOrUpdateValue("token", "");
+            //    //CrossSettings.Current.AddOrUpdateValue("PresenceOnPage", "false");
+            //    StaticUser.PresenceOnPage = false;
+            //    StaticUser.IsUserOrMapActivity = false;
+            //}
+            base.OnDestroy();
+        }
         //private async void AuthorizationAndReceivingToken()
         //{
         //    AuthModel auth = new AuthModel
@@ -430,7 +448,7 @@ namespace SmartBoxCity
             return base.OnOptionsItemSelected(item);
         }
 
-        
+  
 
         //public bool OnNavigationItemSelected(IMenuItem item)
         //{

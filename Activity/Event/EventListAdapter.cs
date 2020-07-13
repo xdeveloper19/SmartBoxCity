@@ -35,6 +35,7 @@ namespace SmartBoxCity.Activity.Event
             this.context = Context;
             this.events = List;
             this.Message = "";
+            this.listPosition = new List<int>();
         }
         public override EventModel this[int position] => events[position];
 
@@ -42,7 +43,7 @@ namespace SmartBoxCity.Activity.Event
 
         public override long GetItemId(int position)
         {
-            return events[position].id;
+            return /*events[position].id*/ position;
         }
 
 
@@ -89,25 +90,20 @@ namespace SmartBoxCity.Activity.Event
                     if (_Clicked == false)
                     {
                         _Clicked = true;
+                       
                         AlertDialog.Builder alert = new AlertDialog.Builder(context);
                         alert.SetTitle("Внимание!");
-                        alert.SetMessage(Message);
+                        alert.SetMessage("Вы действительно хотите открыть медиа файл?");
                         alert.SetPositiveButton("Открыть", (senderAlert, args) =>
                         {
-                            if(Message == "Фотография успешно получена. Вы можете её посмотреть.")
-                            {
-                                _Clicked = false;
-                                MaxElement = listPosition.Max();
+                            
+                            _Clicked = false;
+                            MaxElement = listPosition.Max();
+                            if (btn_video.Text == "Просмотреть фото")
                                 SetPhoto(events[MaxElement].Name);
-                                listPosition.Clear();
-                            }
                             else
-                            {
-                                _Clicked = false;
-                                MaxElement = listPosition.Max();
                                 SetVideo(events[MaxElement].Name);
-                                listPosition.Clear();
-                            }
+                            listPosition.Clear();
                         });
                         alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                         {
@@ -118,14 +114,14 @@ namespace SmartBoxCity.Activity.Event
                         dialog.Show();
                     }
                     
-                    if (events[position].ContentType == "image")
-                    {
-                        string Message = "Фотография успешно получена. Вы можете её посмотреть."; 
-                    }
-                    else
-                    {
-                        string Message = "Видео успешно получено. Вы можете его просмотреть.";
-                    }
+                    //if (events[position].ContentType == "image")
+                    //{
+                    //    string Message = "Фотография успешно получена. Вы можете её посмотреть."; 
+                    //}
+                    //else
+                    //{
+                    //    string Message = "Видео успешно получено. Вы можете его просмотреть.";
+                    //}
                 }
                 catch (Exception ex)
                 {
@@ -200,11 +196,11 @@ namespace SmartBoxCity.Activity.Event
                 alert1.SetView(view);
                 ////
                 alert1.SetCancelable(false);
-                alert1.SetPositiveButton("Скачать", (senderAlert1, args1) =>
-                {
-                    //SaveImage(imageBitmap);
-                });
-                alert1.SetNegativeButton("Закрыть", (senderAlert1, args1) =>
+                //alert1.SetPositiveButton("Скачать", (senderAlert1, args1) =>
+                //{
+                //    //SaveImage(imageBitmap);
+                //});
+                alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
                 {
                 });
                 Dialog dialog1 = alert1.Create();

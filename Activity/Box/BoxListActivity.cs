@@ -94,7 +94,7 @@ namespace SmartBoxCity.Activity.Box
                             boxlist.Add(new BoxBookModel
                             {
                                 Id = box.id,
-                                ImageView = (box.sensors_status.fold == "0") ? Resource.Drawable.opened_box : Resource.Drawable.close_box,
+                                ImageView = (box.sensors_status.fold == "0") ? Resource.Drawable.open_box : Resource.Drawable.close_box,
                                 BoxId = "Контейнер: " + box.id,
                                 AlarmDescription = (box.alarms_status.Count == 0) ? "" : "На контейнере обнаружена тревога!",
                                 OrderId = (box.order_id == null) ? "нет заказа" : box.order_id

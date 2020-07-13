@@ -86,7 +86,7 @@ namespace SmartBoxCity.Activity
         protected override void OnStart()
         {
             if (!StaticTask.IsStoppedGettingTasks)
-                StartUp.StartTracking(TASK_TAG);
+                StartUp.StartTracking(this, TASK_TAG);
             base.OnStart();
         }
 
@@ -131,7 +131,7 @@ namespace SmartBoxCity.Activity
             //CrossSettings.Current.AddOrUpdateValue("PresenceOnPage", "false");
             StaticUser.PresenceOnPage = false;
             CrossSettings.Current.AddOrUpdateValue("role", "");
-            StartUp.StopTracking();
+            StartUp.StopTracking(this);
 
 
             if (StaticDriver.busy == "0")
@@ -177,6 +177,21 @@ namespace SmartBoxCity.Activity
 
         protected override void OnDestroy()
         {
+            string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+            File.Delete(dir_path + "user_data.txt");
+
+            //CrossSettings.Current.AddOrUpdateValue("PresenceOnPage", "false");
+            StaticUser.PresenceOnPage = false;
+            //CrossSettings.Current.AddOrUpdateValue("role", "");
+            //StartUp.StopTracking(this);
+
+            if (StaticDriver.busy == "0")
+            {
+                _gpsService = new GPSService(this);
+                //_gpsService.UpdateLocation();
+                _gpsService.RemoveLocation();
+            }
+
             base.OnDestroy();
             //StartUp.StopTracking();
         }

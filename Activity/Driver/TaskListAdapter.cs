@@ -4,12 +4,6 @@ using System.Linq;
 using System.Text;
 using Android.App;
 using Android.Content;
-using Android.Gms.Common;
-using Android.Gms.Maps;
-using Android.Gms.Maps.Model;
-using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Entity.Model;
@@ -246,7 +240,7 @@ namespace SmartBoxCity.Activity.Driver
                 {
                     //o_data.Message = "Успешно авторизован!";
                     StaticTask.IsStoppedGettingTasks = false;
-                    StartUp.StartTracking(TASK_TAG);
+                    StartUp.StartTracking(context, TASK_TAG);
                     Toast.MakeText(context, o_data.ResponseData.Message, ToastLength.Long).Show();
                 }
                 else
@@ -272,7 +266,7 @@ namespace SmartBoxCity.Activity.Driver
                 {
                     //o_data.Message = "Успешно авторизован!";
                     StaticTask.IsStoppedGettingTasks = false;
-                    StartUp.StartTracking(TASK_TAG);
+                    StartUp.StartTracking(context, TASK_TAG);
                     Toast.MakeText(context, o_data.ResponseData.Message, ToastLength.Long).Show();
                 }
                 else

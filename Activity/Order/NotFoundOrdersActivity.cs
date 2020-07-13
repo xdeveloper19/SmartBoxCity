@@ -37,6 +37,12 @@ namespace SmartBoxCity.Activity.Order
                     btn_add_order.Visibility = ViewStates.Gone;
                     txt_not_found.Text = "Контейнеров не обнаружено.";
                 }
+                else if (StaticUser.NamePadeAbsenceSomething == "OrderNotFoundForDriver")
+                {
+                    image.SetImageBitmap(BitmapFactory.DecodeResource(this.Resources, Resource.Drawable.PageNotFound));
+                    btn_add_order.Visibility = ViewStates.Gone;
+                    txt_not_found.Text = "У текущей задачи нет заказа.";
+                }
                 else
                 {
                     btn_add_order.Click += delegate
@@ -45,7 +51,7 @@ namespace SmartBoxCity.Activity.Order
                         {
                             FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
                             AddOrderActivity content = new AddOrderActivity();
-                            transaction.Replace(Resource.Id.framelayout, content).AddToBackStack(null);
+                            transaction.Replace(Resource.Id.framelayout, content);
                             transaction.Commit();
                         }
                         catch (Exception ex)
