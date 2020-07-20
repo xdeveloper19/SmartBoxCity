@@ -13,6 +13,7 @@ using Android.Views;
 using Android.Widget;
 using Entity.Model;
 using Entity.Model.OrderViewModel.OrderInfoViewModel;
+using SmartBoxCity.Activity.Home;
 using SmartBoxCity.Service;
 using WebService;
 using WebService.Client;
@@ -102,8 +103,12 @@ namespace SmartBoxCity.Activity.Event
                             if (btn_video.Text == "Просмотреть фото")
                                 SetPhoto(events[MaxElement].Name);
                             else
-                                SetVideo(events[MaxElement].Name);
-                            listPosition.Clear();
+                            {
+                                VideoFromServerActivity content = new VideoFromServerActivity("", events[MaxElement].Name);
+                                listPosition.Clear();
+                                manager.Replace(Resource.Id.framelayout, content);
+                                manager.Commit();
+                            }
                         });
                         alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                         {
@@ -132,32 +137,32 @@ namespace SmartBoxCity.Activity.Event
             return view;
         }
 
-        private void SetVideo(string video_url)
-        {
-            try
-            {
-                LayoutInflater layoutInflater = LayoutInflater.From(context);
-                View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
-                var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
+        //private void SetVideo(string video_url)
+        //{
+        //    try
+        //    {
+        //        LayoutInflater layoutInflater = LayoutInflater.From(context);
+        //        View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
+        //        var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
 
-                var src = Android.Net.Uri.Parse(URL + video_url);
-                img_get_video.SetVideoURI(src);
-                img_get_video.Start();
+        //        var src = Android.Net.Uri.Parse(URL + video_url);
+        //        img_get_video.SetVideoURI(src);
+        //        img_get_video.Start();
 
-                Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
-                alert1.SetTitle("Сделать видео");
-                alert1.SetView(view);
-                alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
-                {
-                });
-                Dialog dialog1 = alert1.Create();
-                dialog1.Show();
-            }
-            catch (Exception ex)
-            {
-                Toast.MakeText(context, ex.Message, ToastLength.Long);
-            }            
-        }
+        //        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
+        //        alert1.SetTitle("Сделать видео");
+        //        alert1.SetView(view);
+        //        alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+        //        {
+        //        });
+        //        Dialog dialog1 = alert1.Create();
+        //        dialog1.Show();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Toast.MakeText(context, ex.Message, ToastLength.Long);
+        //    }            
+        //}
 
         private void SetPhoto(string photo_url)
         {

@@ -92,6 +92,7 @@
     <Compile Include="Activity\Home\AdapterUserActivity.cs" />
     <Compile Include="Activity\Home\MainPageActivity.cs" />
     <Compile Include="Activity\Home\RefLayoutManager.cs" />
+    <Compile Include="Activity\Home\VidoeFromServerActivity.cs" />
     <Compile Include="Activity\MainActivity2.cs" />
     <Compile Include="Activity\Home\Activity_About_As.cs" />
     <Compile Include="Activity\Auth\AuthActivity.cs" />
@@ -559,9 +560,6 @@
     <AndroidResource Include="Resources\layout\modal_transmit_order.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\modal_video.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\layout\driver_info_box.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -641,6 +639,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\open_box.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\activity_video_from_server.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

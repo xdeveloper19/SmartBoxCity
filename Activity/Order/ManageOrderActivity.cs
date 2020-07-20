@@ -19,6 +19,7 @@ using Entity.Model.OrderViewModel.OrderInfoViewModel;
 using Entity.Repository;
 using EntityLibrary.Model.OrderResponse;
 using Plugin.Settings;
+using SmartBoxCity.Activity.Home;
 using SmartBoxCity.Service;
 using WebService;
 using WebService.Client;
@@ -258,7 +259,10 @@ namespace SmartBoxCity.Activity.Order
                         GetPhoto();
                         break;
                     case "Сделать видео":
-                        GetVideo();
+                        Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                        VideoFromServerActivity content = new VideoFromServerActivity(StaticOrder.Order_id, "");
+                        transaction.Replace(Resource.Id.framelayout, content);
+                        transaction.Commit();
                         break;
                     case "Внесение оплаты":
                         MakePayment();
@@ -464,50 +468,50 @@ namespace SmartBoxCity.Activity.Order
                 Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
             }
         }
-        private async void GetVideo()
-        {
-            try
-            {
-                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
-                {
-                    ManageOrderService.InitializeClient(client);
-                    var o_data = new ServiceResponseObject<SuccessResponse>();
-                    o_data = await ManageOrderService.GetVideo(StaticOrder.Order_id);
+        //private async void GetVideo()
+        //{
+        //    try
+        //    {
+        //        using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+        //        {
+        //            ManageOrderService.InitializeClient(client);
+        //            var o_data = new ServiceResponseObject<SuccessResponse>();
+        //            o_data = await ManageOrderService.GetVideo(StaticOrder.Order_id);
 
-                    if (o_data.Status == HttpStatusCode.OK)
-                    {
+        //            if (o_data.Status == HttpStatusCode.OK)
+        //            {
 
-                        LayoutInflater layoutInflater = LayoutInflater.From(Activity);
-                        View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
-                        var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
+        //                LayoutInflater layoutInflater = LayoutInflater.From(Activity);
+        //                View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
+        //                var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
 
-                        var src = Android.Net.Uri.Parse(URL + o_data.Message);
-                        img_get_video.SetVideoURI(src);
-                        img_get_video.Start();
+        //                var src = Android.Net.Uri.Parse(URL + o_data.Message);
+        //                img_get_video.SetVideoURI(src);
+        //                img_get_video.Start();
 
-                        //var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.ResponseData.Message);
-                        //img_get_video.SetVideoURI(imageBitmap);
+        //                //var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.ResponseData.Message);
+        //                //img_get_video.SetVideoURI(imageBitmap);
 
-                        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
-                        alert1.SetTitle("Сделать видео");
-                        alert1.SetView(view);
-                        alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
-                        {
-                        });
-                        Dialog dialog1 = alert1.Create();
-                        dialog1.Show();
-                    }
-                    else
-                    {
-                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                    }
-                }
-            }
-            catch (System.Exception ex)
-            {
-                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
-            }            
-        }
+        //                Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
+        //                alert1.SetTitle("Сделать видео");
+        //                alert1.SetView(view);
+        //                alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+        //                {
+        //                });
+        //                Dialog dialog1 = alert1.Create();
+        //                dialog1.Show();
+        //            }
+        //            else
+        //            {
+        //                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+        //            }
+        //        }
+        //    }
+        //    catch (System.Exception ex)
+        //    {
+        //        Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+        //    }            
+        //}
 
         private async void GetPhoto()
         {

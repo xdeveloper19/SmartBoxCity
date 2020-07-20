@@ -103,6 +103,7 @@ namespace SmartBoxCity.Activity.Home
 
                 txtFrom.Text = orders[position].inception_address;
                 txtTo.Text = orders[position].destination_address;
+                
 
                 if (Payment.Text == "1")
                 {
@@ -255,9 +256,10 @@ namespace SmartBoxCity.Activity.Home
                             {
                                 _Clicked = false;
                                 MaxElement = listPosition.Max();
-                                GetVideo(orders[MaxElement].id, alert);
+                                VideoFromServerActivity content = new VideoFromServerActivity(orders[MaxElement].id,"");
                                 listPosition.Clear();
-
+                                manager.Replace(Resource.Id.framelayout, content);
+                                manager.Commit();
                             });
                             alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                             {
@@ -380,60 +382,60 @@ namespace SmartBoxCity.Activity.Home
         //    }
         //}
 
-        private async void GetVideo(string id, AlertDialog.Builder alert)
-        {
-            try
-            {
-                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
-                {
-                    ManageOrderService.InitializeClient(client);
-                    var o_data = new ServiceResponseObject<SuccessResponse>();
-                    o_data = await ManageOrderService.GetVideo(id);
+        //private async void GetVideo(string id, AlertDialog.Builder alert)
+        //{
+        //    try
+        //    {
+        //        using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+        //        {
+        //            ManageOrderService.InitializeClient(client);
+        //            var o_data = new ServiceResponseObject<SuccessResponse>();
+        //            o_data = await ManageOrderService.GetVideo(id);
 
-                    if (o_data.Status == HttpStatusCode.OK)
-                    {
-                        alert.Dispose();
+        //            if (o_data.Status == HttpStatusCode.OK)
+        //            {
+        //                alert.Dispose();
 
-                        LayoutInflater layoutInflater = LayoutInflater.From(context);
-                        View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
-                        var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
-                        var src = Android.Net.Uri.Parse(URL + o_data.Message);
-                        //controller = new MediaController(context);
+        //                LayoutInflater layoutInflater = LayoutInflater.From(context);
+        //                View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
+        //                var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
+        //                var src = Android.Net.Uri.Parse(URL + o_data.Message);
+        //                //controller = new MediaController(context);
                        
-                        img_get_video.SetVideoURI(src);
-                        //img_get_video.CanPause();
-                       // controller.SetAnchorView(img_get_video);
-                        //img_get_video.SetMediaController(controller);
-                        //img_get_video.SetOnPreparedListener(new MediaOPlayerListener(context, img_get_video));
-                        img_get_video.Start();
-                        //controller.Show(50000);
+        //                img_get_video.SetVideoURI(src);
+        //                //img_get_video.CanPause();
+        //               // controller.SetAnchorView(img_get_video);
+        //                //img_get_video.SetMediaController(controller);
+        //                //img_get_video.SetOnPreparedListener(new MediaOPlayerListener(context, img_get_video));
+        //                img_get_video.Start();
+        //                //controller.Show(50000);
 
-                        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
-                        alert1.SetTitle("Сделать видео");
-                        alert1.SetView(view);
-                        //alert1.SetPositiveButton("Скачать", (senderAlert1, args1) =>
-                        //{
-                        //    string url = URL + o_data.Message;
-                        //    //downloadFile(url);
-                        //    SaveVideo(url);
-                        //});
-                        alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
-                        {
-                        });
-                        Dialog dialog1 = alert1.Create();
-                        dialog1.Show();
-                    }
-                    else
-                    {
-                        Toast.MakeText(context, o_data.Message, ToastLength.Long).Show();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Toast.MakeText(context, ex.Message, ToastLength.Long).Show();
-            }            
-        }
+        //                Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
+        //                alert1.SetTitle("Сделать видео");
+        //                alert1.SetView(view);
+        //                //alert1.SetPositiveButton("Скачать", (senderAlert1, args1) =>
+        //                //{
+        //                //    string url = URL + o_data.Message;
+        //                //    //downloadFile(url);
+        //                //    SaveVideo(url);
+        //                //});
+        //                alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+        //                {
+        //                });
+        //                Dialog dialog1 = alert1.Create();
+        //                dialog1.Show();
+        //            }
+        //            else
+        //            {
+        //                Toast.MakeText(context, o_data.Message, ToastLength.Long).Show();
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Toast.MakeText(context, ex.Message, ToastLength.Long).Show();
+        //    }            
+        //}
 
         //private void downloadFile(Android.Net.Uri src)
         //{
@@ -724,15 +726,15 @@ namespace SmartBoxCity.Activity.Home
                 imageBitmap.Compress(Android.Graphics.Bitmap.CompressFormat.Png, 0, stream);
                 bitmapData = stream.ToArray();
 
-                string fileName = System.IO.Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).ToString(), FileName);
-                System.IO.File.WriteAllText(fileName, bitmapData.ToString());
-                using (FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate))
+                string path = System.IO.Path.Combine(Android.OS.Environment.GetExternalStoragePublicDirectory(Android.OS.Environment.DirectoryDownloads).ToString(), FileName);
+                System.IO.File.WriteAllText(path, bitmapData.ToString());
+                using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
                 {
                     int length = bitmapData.Length;
                     fs.Write(bitmapData, 0, length);
                     fs.Close();
                 }
-
+                //MediaScannerConnection.ScanFile(Android.App.Application.Context, new string[] { path }, null, null);
                 #endregion
 
                 //bitmapData = stream.ToArray();

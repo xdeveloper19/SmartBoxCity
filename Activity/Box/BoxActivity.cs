@@ -15,6 +15,7 @@ using Entity.Model.BoxResponse;
 using Entity.Repository;
 using Plugin.Settings;
 using SmartBoxCity.Activity.Event;
+using SmartBoxCity.Activity.Home;
 using SmartBoxCity.Service;
 using WebService;
 using WebService.Driver;
@@ -217,7 +218,10 @@ namespace SmartBoxCity.Activity.Box
                 alert.SetMessage("Вы действительно хотите сделать видео с камеры контейнера?");
                 alert.SetPositiveButton("Сделать", (senderAlert, args) =>
                 {
-                    GetVideo(alert);
+                    Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                    VideoFromServerActivity content = new VideoFromServerActivity(StaticBox.id, "");
+                    transaction.Replace(Resource.Id.framelayout, content);
+                    transaction.Commit();
                 });
                 alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                 {
@@ -370,44 +374,44 @@ namespace SmartBoxCity.Activity.Box
         }
 
 
-        private async void GetVideo(AlertDialog.Builder alert)
-        {
-            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
-            {
-                BoxService.InitializeClient(client);
-                var o_data = new ServiceResponseObject<SuccessResponse>();
-                o_data = await BoxService.GetVideo(StaticBox.id);
+        //private async void GetVideo(AlertDialog.Builder alert)
+        //{
+        //    using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+        //    {
+        //        BoxService.InitializeClient(client);
+        //        var o_data = new ServiceResponseObject<SuccessResponse>();
+        //        o_data = await BoxService.GetVideo(StaticBox.id);
 
-                if (o_data.Status == HttpStatusCode.OK)
-                {
-                    alert.Dispose();
+        //        if (o_data.Status == HttpStatusCode.OK)
+        //        {
+        //            alert.Dispose();
 
-                    LayoutInflater layoutInflater = LayoutInflater.From(Activity);
-                    View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
-                    var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
+        //            LayoutInflater layoutInflater = LayoutInflater.From(Activity);
+        //            View view = layoutInflater.Inflate(Resource.Layout.modal_video, null);
+        //            var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
 
-                    var src = Android.Net.Uri.Parse(URL + o_data.ResponseData.Message);
-                    img_get_video.SetVideoURI(src);
-                    img_get_video.Start();
+        //            var src = Android.Net.Uri.Parse(URL + o_data.ResponseData.Message);
+        //            img_get_video.SetVideoURI(src);
+        //            img_get_video.Start();
 
-                    //var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.ResponseData.Message);
-                    //img_get_video.SetVideoURI(imageBitmap);
+        //            //var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.ResponseData.Message);
+        //            //img_get_video.SetVideoURI(imageBitmap);
 
-                    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
-                    alert1.SetTitle("Сделать видео");
-                    alert1.SetView(view);
-                    alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
-                    {
-                    });
-                    Dialog dialog1 = alert1.Create();
-                    dialog1.Show();
-                }
-                else
-                {
-                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                }
-            }
-        }
+        //            Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
+        //            alert1.SetTitle("Сделать видео");
+        //            alert1.SetView(view);
+        //            alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+        //            {
+        //            });
+        //            Dialog dialog1 = alert1.Create();
+        //            dialog1.Show();
+        //        }
+        //        else
+        //        {
+        //            Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+        //        }
+        //    }
+        //}
 
         private async void GetPhoto(AlertDialog.Builder alert)
         {
