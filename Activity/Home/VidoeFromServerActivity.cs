@@ -6,6 +6,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Media;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -23,6 +24,7 @@ namespace SmartBoxCity.Activity.Home
         private const string URL = "https://smartboxcity.ru/";
         private string id;
         private string video_url;
+        private ProgressBar preloader;
 
         public VideoFromServerActivity(string id, string video_url)
         {
@@ -38,8 +40,9 @@ namespace SmartBoxCity.Activity.Home
                 //this.Window.SetFlags(WindowManagerFlags.KeepScreenOn, WindowManagerFlags.KeepScreenOn);
 
                 videoView = view.FindViewById<VideoView>(Resource.Id.ViewVideoFromServer);
+                preloader = view.FindViewById<ProgressBar>(Resource.Id.preloader);
 
-                if(video_url == "")
+                if (video_url == "")
                 {
                     GetVideo();
                 }
@@ -47,11 +50,6 @@ namespace SmartBoxCity.Activity.Home
                 {
                     PlayVideoMethod();
                 }
-                
-
-                var mediaController = new MediaController(Activity);
-                mediaController.SetAnchorView(videoView);
-                videoView.SetMediaController(mediaController);
 
                 return view;
             }
@@ -120,14 +118,130 @@ namespace SmartBoxCity.Activity.Home
         {
             try
             {
+                //controller = new MediaController(context);
+                //img_get_video.CanPause();
+                // controller.SetAnchorView(img_get_video);
+                //img_get_video.SetMediaController(controller);
+                //img_get_video.SetOnPreparedListener(new MediaOPlayerListener(context, img_get_video));
+                //controller.Show(50000);
+                preloader.Visibility = ViewStates.Visible;
+
                 var src = Android.Net.Uri.Parse(URL + video_url);
                 videoView.SetVideoURI(src);
+                var mediaController = new MediaController(Activity);
+                mediaController.SetAnchorView(videoView);
+                videoView.SetMediaController(mediaController);
+                videoView.SetOnPreparedListener(new MediaOnPlayerListener(mediaController, preloader));
                 videoView.Start();
             }
             catch (Exception ex)
             {
                 Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
-            }            
+            }
+        }
+    }
+
+    public class MediaOnPlayerListener : Java.Lang.Object, MediaPlayer.IOnPreparedListener
+    {
+        private MediaController controller;
+        private ProgressBar preloader;
+
+        public MediaOnPlayerListener(MediaController controller, ProgressBar preloader)
+        {
+            this.controller = controller;
+            this.preloader = preloader;
+        }
+
+
+        public bool CanPause()
+        {
+            //throw new NotImplementedException();
+            return true;
+        }
+
+        public bool CanSeekBackward()
+        {
+            //throw new NotImplementedException();
+            return false;
+        }
+
+        public bool CanSeekForward()
+        {
+            return false;
+        }
+
+        //public IntPtr Handle => throw new NotImplementedException();
+
+        //public int JniIdentityHashCode => throw new NotImplementedException();
+
+        //public JniObjectReference PeerReference => throw new NotImplementedException();
+
+        //public JniPeerMembers JniPeerMembers => throw new NotImplementedException();
+
+        //public JniManagedPeerStates JniManagedPeerState => throw new NotImplementedException();
+
+        public void Dispose()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void Disposed()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void DisposeUnlessReferenced()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void Finalized()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void OnPrepared(MediaPlayer mp)
+        {
+            //MediaController controller = new MediaController(context);
+            //mediaPlayer = new MediaPlayer();
+            //mediaPlayer = mp;
+            ////img_get_video.CanPause();
+            //controller.SetMediaPlayer(this);
+            //controller.SetAnchorView(img_get_video);
+            ////img_get_video.SetMediaController(controller);
+            preloader.Visibility = ViewStates.Invisible;
+
+            controller.Enabled = true;
+            controller.Show(0);
+            mp.Start();
+            //throw new NotImplementedException();
+        }
+
+        public void Pause()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void SeekTo(int pos)
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void SetJniIdentityHashCode(int value)
+        {
+            // throw new NotImplementedException();
+        }
+
+
+
+        public void Start()
+        {
+            //throw new NotImplementedException();
+        }
+
+        public void UnregisterFromRuntime()
+        {
+            //throw new NotImplementedException();
         }
     }
 }

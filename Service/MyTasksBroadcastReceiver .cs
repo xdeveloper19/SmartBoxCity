@@ -55,7 +55,7 @@ namespace SmartBoxCity.Service
             .SetContentTitle(title)
             .SetContentText(text)
             .SetAutoCancel(true)
-            .SetSound(RingtoneManager.GetDefaultUri(RingtoneType.Notification))
+            .SetSound(RingtoneManager.GetDefaultUri(RingtoneType.Ringtone))
             .SetVibrate(new long[] { 1000, 1000 })
             .SetContentIntent(resultPendingIntent);
 
@@ -103,7 +103,7 @@ namespace SmartBoxCity.Service
                     if (o_data.ResponseData.TASKS.Count == 0)
                     {
                         StaticTask.IsStoppedGeo = true;
-                        PushNotifications(context, "Задач не обнаружено", "Просмотреть");
+                        //PushNotifications(context, "Задач не обнаружено", "Просмотреть");
                         return;
                     }
                     PushNotifications(context, "Новая задача на перевозку груза", "Просмотреть задачу");

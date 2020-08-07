@@ -254,12 +254,19 @@ namespace SmartBoxCity.Activity.Home
                             alert.SetMessage("Вы действительно хотите сделать видео с камеры контейнера?");
                             alert.SetPositiveButton("Сделать", (senderAlert, args) =>
                             {
-                                _Clicked = false;
-                                MaxElement = listPosition.Max();
-                                VideoFromServerActivity content = new VideoFromServerActivity(orders[MaxElement].id,"");
-                                listPosition.Clear();
-                                manager.Replace(Resource.Id.framelayout, content);
-                                manager.Commit();
+                                try
+                                {
+                                    _Clicked = false;
+                                    MaxElement = listPosition.Max();
+                                    VideoFromServerActivity content = new VideoFromServerActivity(orders[MaxElement].id, "");
+                                    listPosition.Clear();
+                                    manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null);
+                                    manager.Commit();
+                                }
+                                catch (Exception ex)
+                                {
+                                    Toast.MakeText(context, "Ошибка перехода на страницу", ToastLength.Long);
+                                }
                             });
                             alert.SetNegativeButton("Отмена", (senderAlert, args) =>
                             {
@@ -824,22 +831,17 @@ namespace SmartBoxCity.Activity.Home
                         alert.Dispose();
                         Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
                         alert1.SetTitle("Внесение оплаты");
-                        alert1.SetMessage(o_data.ResponseData.Message);
+                        alert1.SetMessage(o_data.Message);
                         alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
                         {
-                            try
-                            {
-                                UserActivity content = new UserActivity();
-                                manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null);
-                                manager.Commit();
-                            }
-                            catch (Exception ex)
-                            {
-                                Toast.MakeText(context, ex.Message, ToastLength.Long);
-                            }
+                            
                         });
                         Dialog dialog1 = alert1.Create();
                         dialog1.Show();
+
+                        UserActivity content = new UserActivity();
+                        manager.Replace(Resource.Id.framelayout, content);
+                        manager.Commit();
                     }
                     else
                     {

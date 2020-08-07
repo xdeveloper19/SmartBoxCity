@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.App.Job;
 using Android.Content;
+using Android.OS;
 using Android.Util;
 using Android.Widget;
 using Firebase.JobDispatcher;
@@ -20,14 +21,31 @@ namespace SmartBoxCity.Service
             Log.Debug(TAG, "Starting Tracking");
 
             var jobBuilder = CreateJobBuilderUsingJobId<JobWebBackgroundService>(context, 1);
+            JobInfo jobInfo;
 
-            var jobInfo = jobBuilder
-                .SetRequiredNetworkType(NetworkType.Any)
-                //.SetImportantWhileForeground(true)
-                .SetPersisted(true)
-                .SetBackoffCriteria(5000, BackoffPolicy.Linear)
-                .SetPeriodic(10000)
-                .Build();  // creates a JobInfo object.
+            //if (Build.VERSION.SdkInt >= BuildVersionCodes.P)
+            //{
+            //    //More than 28 API level
+            //    jobInfo = jobBuilder
+            //    .SetRequiredNetworkType(NetworkType.Any)
+            //    //.SetImportantWhileForeground(true)
+            //    .SetPersisted(true)
+            //    .SetMinimumLatency(100)
+            //    .SetOverrideDeadline(500)
+            //    //.SetBackoffCriteria(1000, BackoffPolicy.Linear)
+            //    //.SetPeriodic(1000)
+            //    .Build();  // creates a JobInfo object.
+            //}
+
+            jobInfo = jobBuilder
+            .SetRequiredNetworkType(NetworkType.Any)
+            .SetPersisted(true)
+            .SetMinimumLatency(1000)
+            .SetOverrideDeadline(5000)
+            .SetBackoffCriteria(100, BackoffPolicy.Linear)
+            //.SetPeriodic(5000)
+            .Build();  // creates a JobInfo object.
+
 
             var jobScheduler = (JobScheduler)context.GetSystemService(Context.JobSchedulerService);
             var scheduleResult = jobScheduler.Schedule(jobInfo);

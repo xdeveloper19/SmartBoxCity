@@ -110,7 +110,14 @@ namespace SmartBoxCity.Activity.Driver
 
                             // Show Radio Button Selected
                             RadioGroupBoxDriver.CheckedChange += (s, e) => {
-                                StaticTask.box_id = StaticTask.containers_id[e.CheckedId - 1];
+                                try
+                                {
+                                    StaticTask.box_id = StaticTask.containers_id[e.CheckedId - 1];
+                                }
+                                catch (Exception ex)
+                                {
+                                    Toast.MakeText(context, ex.Message, ToastLength.Long);
+                                }
                             };
 
                             #endregion
@@ -275,9 +282,16 @@ namespace SmartBoxCity.Activity.Driver
 
                 }
 
-                TaskActivity act = new TaskActivity();
-                manager.Replace(Resource.Id.frameDriverlayout, act);
-                manager.Commit();
+                try
+                {
+                    TaskActivity act = new TaskActivity();
+                    manager.Replace(Resource.Id.frameDriverlayout, act);
+                    manager.Commit();
+                }
+                catch (Exception ex)
+                {
+                    Toast.MakeText(context, ex.Message, ToastLength.Long);
+                }
             }
         }
 

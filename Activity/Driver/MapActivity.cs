@@ -22,6 +22,7 @@ using WebService.Driver;
 using Entity.Model;
 using Entity.Model.TaskViewModel;
 using SmartBoxCity.Service;
+using Xamarin.Essentials;
 
 namespace SmartBoxCity.Activity.Driver
 {
@@ -50,6 +51,7 @@ namespace SmartBoxCity.Activity.Driver
                 // Use this to return your custom view for this Fragment
                 mMapView = view.FindViewById<MapView>(Resource.Id.fragmentMap3);
                 var layout = view.FindViewById<SlidingUpPanelLayout>(Resource.Id.sliding_layout);
+                var btn_open_map = view.FindViewById<Button>(Resource.Id.btn_open_map);
                 view.FindViewById<TextView>(Resource.Id.txt_title_tasks).MovementMethod = new LinkMovementMethod();
                 lstTask = view.FindViewById<ListView>(Resource.Id.tasklistview);
 
@@ -78,6 +80,22 @@ namespace SmartBoxCity.Activity.Driver
                                       savedInstanceState.GetBoolean(SavedStateActionBarHidden, false);
                 //if (actionBarHidden)
                 //    SupportActionBar.Hide();
+                btn_open_map.Click += async delegate
+                {
+                    var location = new Location(StaticTask.way_points[1].lat, StaticTask.way_points[1].lng);
+                    var options = new MapLaunchOptions
+                    {
+                        NavigationMode = NavigationMode.Driving
+                    };
+                    try
+                    {
+                        await Map.OpenAsync(location, options);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Toast.MakeText(Activity, ex.Message, ToastLength.Long);
+                    }
+                };
 
                 MapsInitializer.Initialize(Activity);
                 // HomeService.SetListViewHeightBasedOnChildren(lstTask);
@@ -279,8 +297,11 @@ namespace SmartBoxCity.Activity.Driver
             CameraPosition cameraPosition = builder.Build();
             CameraUpdate cameraUpdate = CameraUpdateFactory.NewCameraPosition(cameraPosition);
 
-            //googleMap.UiSettings.ZoomControlsEnabled = true;
-            //googleMap.UiSettings.CompassEnabled = true;
+            googleMap.UiSettings.CompassEnabled = true;
+            //googleMap.UiSettings.IndoorLevelPickerEnabled = true;
+            //googleMap.UiSettings.MapToolbarEnabled = true;
+            //googleMap.UiSettings.RotateGesturesEnabled = true;
+            //googleMap.UiSettings.ScrollGesturesEnabledDuringRotateOrZoom = true;
             googleMap.MoveCamera(cameraUpdate);
         }
 

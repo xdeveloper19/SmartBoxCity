@@ -266,10 +266,6 @@ namespace SmartBoxCity.Activity.Order
                         break;
                     case "Внесение оплаты":
                         MakePayment();
-                        FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                        ManageOrderActivity content2 = new ManageOrderActivity();
-                        transaction1.Replace(Resource.Id.framelayout, content2);
-                        transaction1.Commit();
                         break;
                 }
             });
@@ -333,30 +329,30 @@ namespace SmartBoxCity.Activity.Order
                         alert1.SetMessage(o_data.Message);
                         alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
                         {
-                            if (checkBox == true)
-                            {
-                                //btn_Lock.Clickable = false;
-                                //btn_Lock.Focusable = false;
-                                //btn_Lock.LongClickable = false;
-                                btn_Lock.Visibility = ViewStates.Gone;
-                                Lock.Text = "Закрыт";
-                            }
-                            else
-                            {
-                                btn_Lock.Text = "Открыть";
-                                Lock.Text = "Закрыт";
-                            }
 
-                            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                            ManageOrderActivity content2 = new ManageOrderActivity();
-                            transaction1.Replace(Resource.Id.framelayout, content2);
-                            transaction1.Commit();
                         });
                         Dialog dialog1 = alert1.Create();
                         dialog1.Show();
+
+                        if (checkBox == true)
+                        {
+                            //btn_Lock.Clickable = false;
+                            //btn_Lock.Focusable = false;
+                            //btn_Lock.LongClickable = false;
+                            btn_Lock.Visibility = ViewStates.Gone;
+                            Lock.Text = "Закрыт";
+                        }
+                        else
+                        {
+                            btn_Lock.Text = "Открыть";
+                            Lock.Text = "Закрыт";
+                        }
+
+                        FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                        ManageOrderActivity content2 = new ManageOrderActivity();
+                        transaction1.Replace(Resource.Id.framelayout, content2);
+                        transaction1.Commit();
                     }
-
-
                 }
             }
             catch (System.Exception ex)
@@ -414,16 +410,18 @@ namespace SmartBoxCity.Activity.Order
                         alert1.SetMessage(o_data.Message);
                         alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
                         {
-                            btn_Lock.Text = "Закрыть";
-                            Lock.Text = "Открыт";
 
-                            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                            ManageOrderActivity content2 = new ManageOrderActivity();
-                            transaction1.Replace(Resource.Id.framelayout, content2);
-                            transaction1.Commit();
                         });
                         Dialog dialog1 = alert1.Create();
                         dialog1.Show();
+
+                        btn_Lock.Text = "Закрыть";
+                        Lock.Text = "Открыт";
+
+                        FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                        ManageOrderActivity content2 = new ManageOrderActivity();
+                        transaction1.Replace(Resource.Id.framelayout, content2);
+                        transaction1.Commit();
                     }
                     else
                     {
@@ -456,6 +454,11 @@ namespace SmartBoxCity.Activity.Order
                         });
                         Dialog dialog1 = alert1.Create();
                         dialog1.Show();
+
+                        FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                        ManageOrderActivity content2 = new ManageOrderActivity();
+                        transaction1.Replace(Resource.Id.framelayout, content2);
+                        transaction1.Commit();
                     }
                     else
                     {

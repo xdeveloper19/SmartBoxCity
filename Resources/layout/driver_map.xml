@@ -15,6 +15,18 @@
         android:clickable="true"
         android:focusable="false"
         android:focusableInTouchMode="true">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:id="@+id/btn_open_map"
+            android:textColor="@color/quantum_white_100"
+            android:text="Построить маршрут"
+            android:textSize="8sp"
+            android:layout_marginRight="15dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/button_main"
+            android:layout_height="30dp"/>
+
         <com.google.android.gms.maps.MapView
             android:id="@+id/fragmentMap3"
             android:layout_width="match_parent"

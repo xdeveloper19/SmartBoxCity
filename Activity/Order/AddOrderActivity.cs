@@ -520,9 +520,9 @@ namespace SmartBoxCity.Activity.Order
                         " (для тарно-штучных)\n4. Ширина (для тарно-штучных)\n5. Высота (для тарно-штучных)\n6. Вес груза\n7. Кол-во мест (для тарно-штучных)";
                     return true;
                 }
-                else if (float.Parse(s_size.Text, NumberStyles.Any, ci) <= 0)
+                else if (float.Parse(s_size.Text, NumberStyles.Any, ci) >= 10)
                 {
-                    InputErrorMessage = "Необходимо вычислить объём груза! Для этого введите данные длины, ширины и высоты груза, а так же кол-во мест (для тарно-штучных грузов).";
+                    InputErrorMessage = "Некорректное значение объёма груза! Макс. объем: 10 куб. метров.";
                     return true;
                 }
                 else if (float.Parse(s_length.Text, NumberStyles.Any, ci) > 1.88 ||

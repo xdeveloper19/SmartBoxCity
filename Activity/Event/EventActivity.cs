@@ -48,7 +48,11 @@ namespace SmartBoxCity.Activity.Order
                 var view = inflater.Inflate(Resource.Layout.activity_errors_handling, container, false);
                 var TextOfError = view.FindViewById<TextView>(Resource.Id.TextOfError);
                 var image = view.FindViewById<ImageView>(Resource.Id.img_error_handing);
+                var txt_title_error = view.FindViewById<TextView>(Resource.Id.txt_title_error);
 
+                TextOfError.Text = "" + ex.Message;
+                txt_title_error.Text = "";
+                //TextOfError.Text += "\n(" + ex.Message + ")";
                 TextOfError.Text += "\n(" + ex.Message + ")";
                 image.SetImageResource(Resource.Drawable.PageNotFound);
                 return view;
