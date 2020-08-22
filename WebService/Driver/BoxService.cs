@@ -629,5 +629,195 @@ namespace WebService.Driver
         }
 
 
+        /// <summary>
+        /// Поднять роллету.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<ServiceResponseObject<SuccessResponse>> UnlockRollete(string CONTAINER_ID)
+        {
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"container/{CONTAINER_ID}/unlock");
+
+                string s_result;
+                using (HttpContent responseContent = response.Content)
+                {
+                    s_result = await responseContent.ReadAsStringAsync();
+                }
+
+                ServiceResponseObject<SuccessResponse> o_data =
+                    new ServiceResponseObject<SuccessResponse>();
+
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var box = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
+                            o_data.Message = "Успешно!";
+                            o_data.Status = response.StatusCode;// а почему переменная container_id пустая
+                            o_data.ResponseData = new SuccessResponse
+                            {
+                                Message = box.Message
+                            };
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
+                }
+            }//can not access to close stream 
+            catch (Exception ex)
+            {
+                ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
+                o_data.Message = ex.Message;
+                return o_data;
+            }
+        }
+
+
+        /// <summary>
+        /// Опустить роллету.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<ServiceResponseObject<SuccessResponse>> LockRollete(string CONTAINER_ID)
+        {
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"container/{CONTAINER_ID}/lock");
+
+                string s_result;
+                using (HttpContent responseContent = response.Content)
+                {
+                    s_result = await responseContent.ReadAsStringAsync();
+                }
+
+                ServiceResponseObject<SuccessResponse> o_data =
+                    new ServiceResponseObject<SuccessResponse>();
+
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var box = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
+                            o_data.Message = "Успешно!";
+                            o_data.Status = response.StatusCode;// а почему переменная container_id пустая
+                            o_data.ResponseData = new SuccessResponse
+                            {
+                                Message = box.Message
+                            };
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
+                }
+            }//can not access to close stream 
+            catch (Exception ex)
+            {
+                ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
+                o_data.Message = ex.Message;
+                return o_data;
+            }
+        }
+
+
+        /// <summary>
+        /// Остановить исполнение команды.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<ServiceResponseObject<SuccessResponse>> StopCommands(string CONTAINER_ID)
+        {
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync($"container/{CONTAINER_ID}/stop");
+
+                string s_result;
+                using (HttpContent responseContent = response.Content)
+                {
+                    s_result = await responseContent.ReadAsStringAsync();
+                }
+
+                ServiceResponseObject<SuccessResponse> o_data =
+                    new ServiceResponseObject<SuccessResponse>();
+
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var box = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
+                            o_data.Message = "Успешно!";
+                            o_data.Status = response.StatusCode;// а почему переменная container_id пустая
+                            o_data.ResponseData = new SuccessResponse
+                            {
+                                Message = box.Message
+                            };
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
+                }
+            }//can not access to close stream 
+            catch (Exception ex)
+            {
+                ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
+                o_data.Message = ex.Message;
+                return o_data;
+            }
+        }
     }
 }

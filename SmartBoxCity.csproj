@@ -76,6 +76,7 @@
     <Compile Include="Activity\Box\BoxListActivity.cs" />
     <Compile Include="Activity\Box\BoxListAdapter.cs" />
     <Compile Include="Activity\Box\ExpandableSensorDataAdapter.cs" />
+    <Compile Include="Activity\Box\GetBoxVideo.cs" />
     <Compile Include="Activity\Box\MainBoxStatusActivity.cs" />
     <Compile Include="Activity\Driver\AlarmsActivity.cs" />
     <Compile Include="Activity\Driver\AlarmsAdapter.cs" />

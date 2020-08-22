@@ -15,10 +15,11 @@ using Entity.Model;
 using Plugin.Settings;
 using WebService;
 using WebService.Client;
+using WebService.Driver;
 
 namespace SmartBoxCity.Activity.Home
 {
-    public class VideoFromServerActivity : Fragment
+    public class VideoFromServerActivity: Fragment
     {
         private VideoView videoView;
         private const string URL = "https://smartboxcity.ru/";

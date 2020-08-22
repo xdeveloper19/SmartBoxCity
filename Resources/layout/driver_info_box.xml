@@ -197,26 +197,7 @@
                             android:layout_below="@+id/BoxScrollSensors"
                             android:id="@+id/BoxLinearOrderState"
                             android:orientation="horizontal">               
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation = "vertical"
-                                android:layout_alignParentRight = "true">
-                                <TextView
-                                    android:text="Замок"
-                                    android:textSize="15dp"
-                                    android:textColor = "@color/textclient"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity = "center"/>
-                                <TextView
-                                    android:textSize="13dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity = "center"            
-                                    android:id="@+id/BoxTextLock" />
-                            </LinearLayout>
+                            
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -262,14 +243,15 @@
                                     android:layout_height="30dp"
                                     android:id="@+id/btn_fold" />
                                 
-                            </LinearLayout>                  
-                            <LinearLayout
+                            </LinearLayout>  
+                            <!--<LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:orientation = "vertical">
+                                android:orientation = "vertical"
+                                android:layout_alignParentRight = "true">
                                 <TextView
-                                    android:text="Ролета"
+                                    android:text="Замок"
                                     android:textSize="15dp"
                                     android:textColor = "@color/textclient"
                                     android:layout_width="wrap_content"
@@ -280,7 +262,50 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity = "center"            
+                                    android:id="@+id/BoxTextLock" />
+                            </LinearLayout>-->
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@drawable/edittext_stili"
+                                android:orientation = "vertical">
+                                <TextView
+                                    android:text="Ролета"
+                                    android:textSize="15dp"
+                                    android:padding="5dp"
+                                    android:textColor = "@color/textclient"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity = "center"/>
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginRight="2dp"
+                                    android:background="@color/colorMainLightBlue"/>
+                                <TextView
+                                    android:textSize="12dp"
+                                    android:padding="3dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity = "center"            
                                     android:id="@+id/BoxTextGate" />
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginRight="2dp"
+                                    android:background="@color/colorMainLightBlue"/>
+                                <Button                    
+                                    android:textSize="13dp"
+                                    android:textColor="@color/colorMainBlue"
+                                    android:padding="5dp"          
+                                    android:background="?android:attr/selectableItemBackground"
+                                    android:layout_gravity="center"                                    
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="30dp"
+                                    android:id="@+id/btn_gate" />
                             </LinearLayout>                           
                         </LinearLayout>
                 
@@ -363,7 +388,16 @@
                             android:id="@+id/BoxButtonDetach"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text = "Прикрепить/открепить"
+                            android:text = "Прикрепить"
+                            android:layout_weight = "1"
+                            android:textSize = "9dp"/>
+                        <Button
+                            android:textColor="@color/colorMainLightBlue"
+                            android:background="@drawable/button_main"
+                            android:id="@+id/BoxButtonStop"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text = "СТОП"
                             android:layout_weight = "1"
                             android:textSize = "10dp"/>
                          <Button
@@ -375,7 +409,6 @@
                             android:layout_height="wrap_content"
                             android:layout_weight = "1"
                             android:textSize = "10dp"/>
-                       
                     </LinearLayout> 
 
                 </LinearLayout>

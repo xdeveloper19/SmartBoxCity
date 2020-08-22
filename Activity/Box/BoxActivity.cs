@@ -35,15 +35,17 @@ namespace SmartBoxCity.Activity.Box
         private TextView BoxTextIllumination;
         private TextView BoxTextHumidity;
         private TextView BoxTextGate;
-        private TextView BoxTextLock;
+        //private TextView BoxTextLock;
         private TextView BoxTextFold;
         private TextView BoxTextEvents;
+
+        public Button BoxButtonStop { get; private set; }
 
         private Button BoxButtonDetach;
         private Button BoxButtonPhoto;
         private Button BoxButtonVideo;
         private Button btn_fold;
-
+        private Button btn_gate;
         private LinearLayout BoxLinearAlarms;
         private const string URL = "https://smartboxcity.ru/";
         #endregion
@@ -65,13 +67,20 @@ namespace SmartBoxCity.Activity.Box
             BoxTextHumidity = view.FindViewById<TextView>(Resource.Id.BoxTextHumidity);
             BoxTextGate = view.FindViewById<TextView>(Resource.Id.BoxTextGate);
             BoxTextFold = view.FindViewById<TextView>(Resource.Id.BoxTextFold);
-            BoxTextLock = view.FindViewById<TextView>(Resource.Id.BoxTextLock);
+            //BoxTextLock = view.FindViewById<TextView>(Resource.Id.BoxTextLock);
             BoxTextEvents = view.FindViewById<TextView>(Resource.Id.BoxTextEvents);
 
+
+            BoxButtonStop = view.FindViewById<Button>(Resource.Id.BoxButtonStop);
             BoxButtonDetach = view.FindViewById<Button>(Resource.Id.BoxButtonDetach);
             BoxButtonVideo = view.FindViewById<Button>(Resource.Id.BoxButtonVideo);
             BoxButtonPhoto = view.FindViewById<Button>(Resource.Id.BoxButtonPhoto);
             btn_fold = view.FindViewById<Button>(Resource.Id.btn_fold);
+            btn_gate = view.FindViewById<Button>(Resource.Id.btn_gate);
+
+            BoxButtonStop.Enabled = (StaticBox.isDepot) ? false : true;
+            btn_gate.Enabled = (StaticBox.isDepot) ? false : true;
+            btn_fold.Enabled = (StaticBox.isDepot) ? false : true;
 
             BoxLinearAlarms = view.FindViewById<LinearLayout>(Resource.Id.BoxLinearAlarms);
 
@@ -100,6 +109,37 @@ namespace SmartBoxCity.Activity.Box
                 }
             }
 
+            btn_gate.Click += delegate
+            {
+                AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
+                if (btn_gate.Text == "Поднять")
+                {
+                    alert.SetTitle("Поднять роллету");
+                    alert.SetMessage("Вы действительно хотите поднять роллету?");
+                    alert.SetPositiveButton("Да", (senderAlert, args) =>
+                    {
+                        MakeUnlockRollete(alert);
+
+                    });
+                    alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+                    {
+                    });
+                }
+                else 
+                {
+                    alert.SetTitle("Опустить роллету");
+                    alert.SetMessage("Вы действительно хотите опустить роллету?");
+                    alert.SetPositiveButton("Да", (senderAlert, args) =>
+                    {
+                        MakeLockRollete(alert);
+                    });
+                }
+                alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+                {
+                });
+                Dialog dialog = alert.Create();
+                dialog.Show();
+            };
 
             btn_fold.Click += delegate
             {
@@ -112,18 +152,6 @@ namespace SmartBoxCity.Activity.Box
                     alert.SetPositiveButton("Сложить", (senderAlert, args) =>
                     {
                         MakeFold(alert);
-
-                        try
-                        {
-                            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                            BoxActivity content2 = new BoxActivity();
-                            transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null);
-                            transaction1.Commit();
-                        }
-                        catch (Exception ex)
-                        {
-                            Toast.MakeText(Activity, ex.Message, ToastLength.Long);
-                        }
                        
                     });
                     alert.SetNegativeButton("Отмена", (senderAlert, args) =>
@@ -136,12 +164,7 @@ namespace SmartBoxCity.Activity.Box
                     alert.SetMessage("Вы действительно хотите разложить контейнер?");
                     alert.SetPositiveButton("Разложить", (senderAlert, args) =>
                     {
-                        MakeUnFold(alert);
-
-                        FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                        BoxActivity content2 = new BoxActivity();
-                        transaction1.Replace(Resource.Id.frameDriverlayout, content2).AddToBackStack(null);
-                        transaction1.Commit();
+                        MakeUnfold(alert);
                     });
                 }
                 alert.SetNegativeButton("Отмена", (senderAlert, args) =>
@@ -196,6 +219,22 @@ namespace SmartBoxCity.Activity.Box
                 }
             };
 
+            BoxButtonStop.Click += delegate
+            {
+                AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
+                alert.SetTitle("Подтверждение");
+                alert.SetMessage("Вы действительно хотите остановить выполнение команд?");
+                alert.SetPositiveButton("Да", (senderAlert, args) =>
+                {
+                    StopCommands();
+                });
+                alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+                {
+                });
+                Dialog dialog = alert.Create();
+                dialog.Show();
+            };
+
             BoxButtonPhoto.Click += delegate
             {
                 AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
@@ -219,8 +258,8 @@ namespace SmartBoxCity.Activity.Box
                 alert.SetPositiveButton("Сделать", (senderAlert, args) =>
                 {
                     Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
-                    VideoFromServerActivity content = new VideoFromServerActivity(StaticBox.id, "");
-                    transaction.Replace(Resource.Id.framelayout, content);
+                    GetBoxVideo content = new GetBoxVideo(StaticBox.id, "");
+                    transaction.Replace(Resource.Id.frameDriverlayout, content);
                     transaction.Commit();
                 });
                 alert.SetNegativeButton("Отмена", (senderAlert, args) =>
@@ -231,6 +270,106 @@ namespace SmartBoxCity.Activity.Box
             };
 
             return view;
+        }
+
+        private async void MakeUnfold(AlertDialog.Builder alert)
+        {
+            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            {
+                BoxService.InitializeClient(client);
+                var o_data = new ServiceResponseObject<SuccessResponse>();
+                o_data = await BoxService.UnfoldContainer(StaticBox.id);
+
+                if (o_data.Status == HttpStatusCode.OK)
+                {
+                    alert.Dispose();
+                    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
+                    alert1.SetTitle("Разложить контейнер");
+                    alert1.SetMessage(o_data.Message);
+                    alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                    {
+
+                    });
+                    Dialog dialog1 = alert1.Create();
+                    dialog1.Show();
+
+                    btn_fold.Text = "Сложить";
+                    BoxTextFold.Text = "Разложен";
+
+                    try
+                    {
+                        FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                        BoxActivity content2 = new BoxActivity();
+                        transaction1.Replace(Resource.Id.frameDriverlayout, content2);
+                        transaction1.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        Toast.MakeText(Activity, "Ошибка обновления страницы", ToastLength.Long);
+                    }
+                }
+
+
+            }
+        }
+
+        private async void StopCommands()
+        {
+            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            {
+                BoxService.InitializeClient(client);
+                var o_data = new ServiceResponseObject<SuccessResponse>();
+                o_data = await BoxService.StopCommands(StaticBox.id);
+
+                if (o_data.Status == HttpStatusCode.OK)
+                {
+                    Toast.MakeText(Activity, "Успешно!", ToastLength.Long).Show();
+                    FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                    MainBoxStatusActivity content2 = new MainBoxStatusActivity();
+                    transaction1.Replace(Resource.Id.frameDriverlayout, content2);
+                    transaction1.Commit();
+                }
+                else
+                {
+                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                }
+            }
+        }
+
+        private async void MakeUnlockRollete(AlertDialog.Builder alert)
+        {
+            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            {
+                BoxService.InitializeClient(client);
+                var o_data = new ServiceResponseObject<SuccessResponse>();
+                o_data = await BoxService.UnlockRollete(StaticBox.id);
+
+                if (o_data.Status == HttpStatusCode.OK)
+                {
+                    alert.Dispose();
+                    Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
+                    alert1.SetTitle("Поднять роллету");
+                    alert1.SetMessage(o_data.ResponseData.Message);
+                    alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+                    {
+
+                    });
+                    Dialog dialog1 = alert1.Create();
+                    dialog1.Show();
+
+                    btn_gate.Text = "Опустить";
+                    BoxTextGate.Text = "Открыта";
+
+                    FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                    BoxActivity content2 = new BoxActivity();
+                    transaction1.Replace(Resource.Id.frameDriverlayout, content2);
+                    transaction1.Commit();
+                }
+                else
+                {
+                    Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                }
+            }
         }
 
         private void BoxTextEvents_Click(object sender, EventArgs e)
@@ -330,11 +469,18 @@ namespace SmartBoxCity.Activity.Box
                     alert1.SetMessage(o_data.ResponseData.Message);
                     alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
                     {
-                        btn_fold.Text = "Разложить";
-                        BoxTextFold.Text = "Сложен";
+                       
                     });
                     Dialog dialog1 = alert1.Create();
                     dialog1.Show();
+
+                    btn_fold.Text = "Разложить";
+                    BoxTextFold.Text = "Сложен";
+
+                    FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                    BoxActivity content2 = new BoxActivity();
+                    transaction1.Replace(Resource.Id.frameDriverlayout, content2);
+                    transaction1.Commit();
                 }
 
 
@@ -343,27 +489,34 @@ namespace SmartBoxCity.Activity.Box
 
 
 
-        private async void MakeUnFold(AlertDialog.Builder alert)
+        private async void MakeLockRollete(AlertDialog.Builder alert)
         {
             using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
             {
                 BoxService.InitializeClient(client);
                 var o_data = new ServiceResponseObject<SuccessResponse>();
-                o_data = await BoxService.UnfoldContainer(StaticBox.id);
+                o_data = await BoxService.LockRollete(StaticBox.id);
 
                 if (o_data.Status == HttpStatusCode.OK)
                 {
                     alert.Dispose();
                     Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
-                    alert1.SetTitle("Разложить контейнер");
-                    alert1.SetMessage(o_data.ResponseData.Message);
+                    alert1.SetTitle("Опустить роллету");
+                    alert1.SetMessage(o_data.Message);
                     alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
                     {
-                        btn_fold.Text = "Сложить";
-                        BoxTextFold.Text = "Разложен";
+                        
                     });
                     Dialog dialog1 = alert1.Create();
                     dialog1.Show();
+
+                    btn_gate.Text = "Поднять";
+                    BoxTextGate.Text = "Закрыта";
+
+                    FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                    BoxActivity content2 = new BoxActivity();
+                    transaction1.Replace(Resource.Id.frameDriverlayout, content2);
+                    transaction1.Commit();
                 }
                 else
                 {
@@ -479,17 +632,30 @@ namespace SmartBoxCity.Activity.Box
                     BoxTextHumidity.Text = (o_data.ResponseData.SENSORS_STATUS.humidity == null) ? "неизвестно" : o_data.ResponseData.SENSORS_STATUS.humidity;
                     BoxTextEvents.Text = (o_data.ResponseData.EVENT_COUNT == null) ? "неизвестно" : StaticBox.event_count + " шт.";
 
+                    
+
+
                     if (o_data.ResponseData.SENSORS_STATUS.Lock == "1")
                     {
-                        BoxTextLock.Text = "Закрыт";
+                        //BoxTextLock.Text = "Закрыт";
+
+                        BoxTextGate.Text = "Закрыта";
+                        btn_gate.Text = "Поднять";
                     }
                     else if (o_data.ResponseData.SENSORS_STATUS.Lock == "0")
                     {
-                        BoxTextLock.Text = "Открыт";
+                        //BoxTextLock.Text = "Открыт";
+
+                        BoxTextGate.Text = "Открыта";
+                        btn_gate.Text = "Опустить";
                     }
                     else
                     {
-                        BoxTextLock.Text = "Неизвестно";
+                        //BoxTextLock.Text = "Неизвестно";
+
+                        BoxTextGate.Text = "Неизвестно";
+                        btn_gate.Text = "Неизвестно";
+                        btn_gate.Enabled = false;
                     }
 
                     if (o_data.ResponseData.SENSORS_STATUS.fold == "1")
@@ -507,20 +673,6 @@ namespace SmartBoxCity.Activity.Box
                         BoxTextFold.Text = "Неизвестно";
                         btn_fold.Text = "Неизвестно";
                     }
-
-                    if (o_data.ResponseData.SENSORS_STATUS.gate == "1")
-                    {
-                        BoxTextGate.Text = "Закрыта";
-                    }
-                    else if (o_data.ResponseData.SENSORS_STATUS.gate == "0")
-                    {
-                        BoxTextGate.Text = "Открыта";
-                    }
-                    else
-                    {
-                        BoxTextGate.Text = "Неизвестно";
-                    }
-
                 }
                 else
                 {

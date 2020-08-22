@@ -80,6 +80,7 @@ namespace SmartBoxCity.Activity.Box
             btn_info_box.Click += delegate
             {
                 StaticBox.id = _boxes[position].Id;
+                StaticOrder.Order_id = _boxes[position].OrderId;
                 try
                 {
                     BoxActivity content2 = new BoxActivity();
