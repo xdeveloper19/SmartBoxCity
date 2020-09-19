@@ -15,7 +15,6 @@ using Android.Widget;
 using Entity.Model;
 using Entity.Model.BoxResponse;
 using Entity.Model.OrderResponse;
-using Entity.Model.OrderViewModel.OrderInfoViewModel;
 using Entity.Repository;
 using EntityLibrary.Model.OrderResponse;
 using Plugin.Settings;
@@ -46,9 +45,7 @@ namespace SmartBoxCity.Activity.Order
         private TextView Battery;
         private TextView Illumination;
         private TextView Humidity;
-        private TextView Gate;
         private TextView Lock;
-        private TextView Fold;
         private TextView Events;
 
         private Spinner Date;
@@ -86,9 +83,9 @@ namespace SmartBoxCity.Activity.Order
             Battery = view.FindViewById<TextView>(Resource.Id.OrderManagementTexBattery);
             Illumination = view.FindViewById<TextView>(Resource.Id.OrderManagementTextIllumination);
             Humidity = view.FindViewById<TextView>(Resource.Id.OrderManagementTextHumidity);
-            Gate = view.FindViewById<TextView>(Resource.Id.OrderManagementTextGate);
+            //Gate = view.FindViewById<TextView>(Resource.Id.OrderManagementTextGate);
             Lock = view.FindViewById<TextView>(Resource.Id.OrderManagementTextLock);
-            Fold = view.FindViewById<TextView>(Resource.Id.OrderManagementTextFold);
+            //Fold = view.FindViewById<TextView>(Resource.Id.OrderManagementTextFold);
             Events = view.FindViewById<TextView>(Resource.Id.OrderManagementTextEvents);
             progressBar = view.FindViewById<ProgressBar>(Resource.Id.OrderManagementProgressBar);
             Status = view.FindViewById<TextView>(Resource.Id.OrderManagementTextStatus);
@@ -109,11 +106,11 @@ namespace SmartBoxCity.Activity.Order
             {
 
                 AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
-                if (btn_Lock.Text == "Открыть")
+                if (btn_Lock.Text == "Поднять")
                 {
-                    alert.SetTitle("Открытие замка");
-                    alert.SetMessage("Вы действительно хотите открыть замок контейнера?");
-                    alert.SetPositiveButton("Открыть", (senderAlert, args) =>
+                    alert.SetTitle("Подтверждение действия");
+                    alert.SetMessage("Вы действительно хотите поднять роллету контейнера?");
+                    alert.SetPositiveButton("Поднять", (senderAlert, args) =>
                     {
                         MakeUnLock();
                     });
@@ -121,9 +118,9 @@ namespace SmartBoxCity.Activity.Order
                     {
                     });
                 }
-                else if (btn_Lock.Text == "Закрыть")
+                else if (btn_Lock.Text == "Опустить")
                 {
-                    alert.SetTitle("Закрытие замка");
+                    alert.SetTitle("Подтверждение действия");
                     if (StaticOrder.Order_Stage_Id == "3")
                     {
                         LayoutInflater layoutInflater = LayoutInflater.From(Activity);
@@ -174,8 +171,8 @@ namespace SmartBoxCity.Activity.Order
                             Date.Clickable = false;
                         };
                     }
-                    alert.SetMessage("Вы действительно хотите закрыть замок контейнера?");
-                    alert.SetPositiveButton("Закрыть", (senderAlert, args) =>
+                    alert.SetMessage("Вы действительно хотите опустить роллету контейнера?");
+                    alert.SetPositiveButton("Опустить", (senderAlert, args) =>
                     {
                         MakeLock(check);
                         if (check == true)
@@ -325,7 +322,7 @@ namespace SmartBoxCity.Activity.Order
                     if (o_data.Status == HttpStatusCode.OK)
                     {
                         Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
-                        alert1.SetTitle("Закрытие замка");
+                        alert1.SetTitle("Закрытие контейнера");
                         alert1.SetMessage(o_data.Message);
                         alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
                         {
@@ -340,18 +337,18 @@ namespace SmartBoxCity.Activity.Order
                             //btn_Lock.Focusable = false;
                             //btn_Lock.LongClickable = false;
                             btn_Lock.Visibility = ViewStates.Gone;
-                            Lock.Text = "Закрыт";
+                            Lock.Text = "Опущена";
                         }
                         else
                         {
-                            btn_Lock.Text = "Открыть";
-                            Lock.Text = "Закрыт";
+                            btn_Lock.Text = "Поднять";
+                            Lock.Text = "Опущена";
                         }
 
-                        FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-                        ManageOrderActivity content2 = new ManageOrderActivity();
-                        transaction1.Replace(Resource.Id.framelayout, content2);
-                        transaction1.Commit();
+                        //FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                        //ManageOrderActivity content2 = new ManageOrderActivity();
+                        //transaction1.Replace(Resource.Id.framelayout, content2);
+                        //transaction1.Commit();
                     }
                 }
             }
@@ -372,7 +369,7 @@ namespace SmartBoxCity.Activity.Order
                     if (o_data.Status == HttpStatusCode.OK)
                     {
                         Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
-                        alert1.SetTitle("Закрытие замка");
+                        alert1.SetTitle("Закрытие контейнера");
                         alert1.SetMessage(o_data.Message);
                         alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
                         {
@@ -406,7 +403,7 @@ namespace SmartBoxCity.Activity.Order
                     if (o_data.Status == HttpStatusCode.OK)
                     {
                         Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
-                        alert1.SetTitle("Открытие замка");
+                        alert1.SetTitle("Открытие контейнера");
                         alert1.SetMessage(o_data.Message);
                         alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
                         {
@@ -415,8 +412,8 @@ namespace SmartBoxCity.Activity.Order
                         Dialog dialog1 = alert1.Create();
                         dialog1.Show();
 
-                        btn_Lock.Text = "Закрыть";
-                        Lock.Text = "Открыт";
+                        btn_Lock.Text = "Опустить";
+                        Lock.Text = "Поднята";
 
                         FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
                         ManageOrderActivity content2 = new ManageOrderActivity();
@@ -603,47 +600,47 @@ namespace SmartBoxCity.Activity.Order
                         Payment.Text = "неизвестно";
                     }
 
-                    if (o_data.ResponseData.SENSORS_STATUS.Lock == "1")
+                    if (o_data.ResponseData.SENSORS_STATUS.gate == "1")
                     {
-                        Lock.Text = "Закрыт";
-                        btn_Lock.Text = "Открыть";
+                        Lock.Text = "Опущена";
+                        btn_Lock.Text = "Поднять";
                     }
-                    else if (o_data.ResponseData.SENSORS_STATUS.Lock == "0")
+                    else if (o_data.ResponseData.SENSORS_STATUS.gate == "0")
                     {
-                        Lock.Text = "Открыт";
-                        btn_Lock.Text = "Закрыть";
+                        Lock.Text = "Поднята";
+                        btn_Lock.Text = "Опустить";
                     }
                     else
                     {
                         Lock.Text = "Неизвестно";
-                        btn_Lock.Text = "Открыть";
+                        btn_Lock.Text = "Неизвестно";
                     }
 
-                    if (o_data.ResponseData.SENSORS_STATUS.fold == "1")
-                    {
-                        Fold.Text = "Разложен";
-                    }
-                    else if (o_data.ResponseData.SENSORS_STATUS.fold == "0")
-                    {
-                        Fold.Text = "Сложен";
-                    }
-                    else
-                    {
-                        Fold.Text = "Неизвестно";
-                    }
+                    //if (o_data.ResponseData.SENSORS_STATUS.fold == "1")
+                    //{
+                    //    Fold.Text = "Разложен";
+                    //}
+                    //else if (o_data.ResponseData.SENSORS_STATUS.fold == "0")
+                    //{
+                    //    Fold.Text = "Сложен";
+                    //}
+                    //else
+                    //{
+                    //    Fold.Text = "Неизвестно";
+                    //}
 
-                    if (o_data.ResponseData.SENSORS_STATUS.gate == "1")
-                    {
-                        Gate.Text = "Закрыта";
-                    }
-                    else if (o_data.ResponseData.SENSORS_STATUS.gate == "0")
-                    {
-                        Gate.Text = "Открыта";
-                    }
-                    else
-                    {
-                        Gate.Text = "Неизвестно";
-                    }
+                    //if (o_data.ResponseData.SENSORS_STATUS.gate == "1")
+                    //{
+                    //    Gate.Text = "Закрыта";
+                    //}
+                    //else if (o_data.ResponseData.SENSORS_STATUS.gate == "0")
+                    //{
+                    //    Gate.Text = "Открыта";
+                    //}
+                    //else
+                    //{
+                    //    Gate.Text = "Неизвестно";
+                    //}
 
                     btn_Lock.Enabled = (StaticOrder.Order_Stage_Id == "1" ||
                     StaticOrder.Order_Stage_Id == "4" ||

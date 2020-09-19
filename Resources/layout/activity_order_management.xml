@@ -289,10 +289,11 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:gravity="center"
                             android:layout_below="@+id/OrderManagementScrollSensors"
                             android:id="@+id/OrderManagementLinearOrderState"
                             android:orientation="horizontal">               
-                            <LinearLayout
+                           <!-- <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -311,15 +312,15 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity = "center"            
                                     android:id="@+id/OrderManagementTextFold" />
-                            </LinearLayout>
+                            </LinearLayout>-->
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/edittext_stili"
-                                android:layout_weight="1"
+                                android:textAlignment="center"
                                 android:orientation = "vertical">
                                 <TextView
-                                    android:text="Замок"
+                                    android:text="Роллета"
                                     android:textSize="15dp"
                                     android:padding="5dp"
                                     android:layout_weight="1"
@@ -358,7 +359,7 @@
                                     android:layout_height="30dp"
                                     android:id="@+id/OrderManagementButtonLock" />
                             </LinearLayout>                  
-                            <LinearLayout
+                           <!-- <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -376,7 +377,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_gravity = "center"            
                                     android:id="@+id/OrderManagementTextGate" />
-                            </LinearLayout>                           
+                            </LinearLayout> -->                          
                         </LinearLayout>
                 
 

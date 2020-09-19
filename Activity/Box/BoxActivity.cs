@@ -635,14 +635,14 @@ namespace SmartBoxCity.Activity.Box
                     
 
 
-                    if (o_data.ResponseData.SENSORS_STATUS.Lock == "1")
+                    if (o_data.ResponseData.SENSORS_STATUS.gate == "1")
                     {
                         //BoxTextLock.Text = "Закрыт";
 
                         BoxTextGate.Text = "Закрыта";
                         btn_gate.Text = "Поднять";
                     }
-                    else if (o_data.ResponseData.SENSORS_STATUS.Lock == "0")
+                    else if (o_data.ResponseData.SENSORS_STATUS.gate == "0")
                     {
                         //BoxTextLock.Text = "Открыт";
 
