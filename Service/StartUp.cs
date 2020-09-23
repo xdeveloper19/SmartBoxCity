@@ -16,11 +16,11 @@ namespace SmartBoxCity.Service
         /// <summary>
         /// Запуск задачи.
         /// </summary>
-        public static void StartTracking(Context context, string tag)
+        public static void StartTracking(Context context, int tag)
         {
             Log.Debug(TAG, "Starting Tracking");
 
-            var jobBuilder = CreateJobBuilderUsingJobId<JobWebBackgroundService>(context, 1);
+            var jobBuilder = CreateJobBuilderUsingJobId<JobWebBackgroundService>(context, tag);
             JobInfo jobInfo;
 
             //if (Build.VERSION.SdkInt >= BuildVersionCodes.P)
@@ -71,9 +71,20 @@ namespace SmartBoxCity.Service
             return new JobInfo.Builder(jobId, componentName);
         }
 
-
         /// <summary>
         /// Отмена задачи.
+        /// </summary>
+        public static void StopTracking(Context context, int tag)
+        {
+            Log.Debug(TAG, "Stopping Tracking");
+            var jobScheduler = (JobScheduler)context.GetSystemService(Context.JobSchedulerService);
+
+            jobScheduler.Cancel(tag);
+        }
+
+
+        /// <summary>
+        /// Отмена всех задач.
         /// </summary>
         public static void StopTracking(Context context)
         {
@@ -82,6 +93,7 @@ namespace SmartBoxCity.Service
 
             jobScheduler.CancelAll();
         }
+
     }
 
 

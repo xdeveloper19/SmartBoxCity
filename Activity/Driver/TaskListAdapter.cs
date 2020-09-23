@@ -247,7 +247,7 @@ namespace SmartBoxCity.Activity.Driver
                 {
                     //o_data.Message = "Успешно авторизован!";
                     StaticTask.IsStoppedGettingTasks = false;
-                    StartUp.StartTracking(context, TASK_TAG);
+                    StartUp.StartTracking(context, 1);
                     Toast.MakeText(context, o_data.ResponseData.Message, ToastLength.Long).Show();
                 }
                 else
@@ -273,7 +273,7 @@ namespace SmartBoxCity.Activity.Driver
                 {
                     //o_data.Message = "Успешно авторизован!";
                     StaticTask.IsStoppedGettingTasks = false;
-                    StartUp.StartTracking(context, TASK_TAG);
+                    StartUp.StartTracking(context, 1);
                     Toast.MakeText(context, o_data.ResponseData.Message, ToastLength.Long).Show();
                 }
                 else

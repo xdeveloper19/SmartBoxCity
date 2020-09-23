@@ -86,7 +86,7 @@ namespace SmartBoxCity.Activity
         protected override void OnStart()
         {
             if (!StaticTask.IsStoppedGettingTasks)
-                StartUp.StartTracking(this, TASK_TAG);
+                StartUp.StartTracking(this, 1);
             base.OnStart();
         }
 

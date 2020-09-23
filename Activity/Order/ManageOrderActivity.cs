@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
@@ -10,6 +12,7 @@ using Android.Gms.Tasks;
 using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
 using Entity.Model;
@@ -36,7 +39,7 @@ namespace SmartBoxCity.Activity.Order
         Finish,
         Completed
     }
-    public class ManageOrderActivity: Fragment
+    public class ManageOrderActivity : Fragment
     {
         #region Объявление переменных
         private TextView Id;
@@ -67,6 +70,7 @@ namespace SmartBoxCity.Activity.Order
         private string ErrorData;
 
         #endregion
+        SwipeRefreshLayout sweep;
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -100,7 +104,9 @@ namespace SmartBoxCity.Activity.Order
             Id.Click += Id_Click;
             Events.Click += Events_Click;
 
-           
+            sweep = view.FindViewById<SwipeRefreshLayout>(Resource.Id.SwipeRefreshLayout);
+            sweep.SetColorSchemeColors(Color.Red, Color.Green, Color.Blue, Color.Yellow);
+            sweep.Refresh += RefreshLayout_Refresh;
 
             btn_Lock.Click += delegate
             {
@@ -189,6 +195,7 @@ namespace SmartBoxCity.Activity.Order
 
                 // }                
             };
+
             btn_Pay.Click += delegate
             {
                 if (Payment.Text == "неизвестно")
@@ -212,7 +219,26 @@ namespace SmartBoxCity.Activity.Order
             return view;
             
         }
-
+        private void RefreshLayout_Refresh(object sender, EventArgs e)
+        {
+            //Data Refresh Place  
+            BackgroundWorker work = new BackgroundWorker();
+            work.DoWork += Work_DoWork;
+            work.RunWorkerCompleted += Work_RunWorkerCompleted;
+            work.RunWorkerAsync();
+        }
+        private void Work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            sweep.Refreshing = false;
+            ManageOrderActivity content = new ManageOrderActivity();
+            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+            transaction1.Replace(Resource.Id.framelayout, content);
+            transaction1.Commit();
+        }
+        private void Work_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Thread.Sleep(1000);
+        }
         private void Events_Click(object sender, EventArgs e)
         {
             try
@@ -245,32 +271,102 @@ namespace SmartBoxCity.Activity.Order
 
         private void AlertDialogCreation(string titleString, string messageString)
         {
-            AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
-            alert.SetTitle(titleString);
-            alert.SetMessage(messageString);
-            alert.SetPositiveButton("Да", (senderAlert, args) =>
-            {
-                switch(titleString)
-                {
-                    case "Сделать фотографию":
-                        GetPhoto();
-                        break;
-                    case "Сделать видео":
-                        Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
-                        VideoFromServerActivity content = new VideoFromServerActivity(StaticOrder.Order_id, "");
-                        transaction.Replace(Resource.Id.framelayout, content);
-                        transaction.Commit();
-                        break;
-                    case "Внесение оплаты":
-                        MakePayment();
-                        break;
-                }
-            });
-            alert.SetNegativeButton("Отмена", (senderAlert, args) =>
-            {
-            });
+            LayoutInflater layoutInflater = LayoutInflater.From(Activity);
+            View view = layoutInflater.Inflate(Resource.Layout.qqqqqqww, null);
+
+            var txtTitle = view.FindViewById<TextView>(Resource.Id.TextTitle);
+            var txtInfo = view.FindViewById<TextView>(Resource.Id.TextInfo);
+            var btn_Negative = view.FindViewById<Button>(Resource.Id.BtnNegative);
+            var btn_Positive = view.FindViewById<Button>(Resource.Id.BtnPositive);
+           // Thread thread = new Thread
+           //(()
+           //     =>{
+           //        while (true)
+           //        {
+           //            if (StaticOrder.MessageResult == "1")
+           //            {
+           //                btn_Positive.Text = "Открыть";
+           //                 return;
+           //            }
+           //        }
+           //});
+
+            txtTitle.Text = titleString;
+            txtInfo.Text = messageString;            
+
+            Android.App.AlertDialog.Builder alert = new Android.App.AlertDialog.Builder(Activity);            
+            
+            alert.SetView(view);
+            alert.SetCancelable(false);
+           
             Dialog dialog = alert.Create();
+            btn_Positive.Click += delegate
+            {
+                if (btn_Positive.Text == "Открыть")
+                {
+                    if (StaticOrder.MessageResult == "1")
+                    {
+                        //thread.Abort();
+                        //thread.Join();
+                        dialog.Dismiss();
+                        SetPhoto();
+                    }
+                    else
+                        Toast.MakeText(Activity, "Фото ещё не загруженно.", ToastLength.Long).Show();
+                }
+                else
+                {
+                    switch (titleString)
+                    {
+                        case "Сделать фотографию":
+                            btn_Positive.Text = "Открыть";
+                            GetPhoto();
+                            break;
+                        case "Сделать видео":
+                            Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                            VideoFromServerActivity content = new VideoFromServerActivity(StaticOrder.Order_id, "");
+                            transaction.Replace(Resource.Id.framelayout, content);
+                            transaction.Commit();
+                            break;
+                        case "Внесение оплаты":
+                            MakePayment();
+                            break;
+                    }
+                }
+            };
+            btn_Negative.Click += delegate
+            {
+                dialog.Dismiss();
+            };
             dialog.Show();
+
+
+            //AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
+            //alert.SetTitle(titleString);
+            //alert.SetMessage(messageString);
+            //alert.SetPositiveButton("Да", (senderAlert, args) =>
+            //{
+            //    switch(titleString)
+            //    {
+            //        case "Сделать фотографию":
+            //            GetPhoto();
+            //            break;
+            //        case "Сделать видео":
+            //            Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+            //            VideoFromServerActivity content = new VideoFromServerActivity(StaticOrder.Order_id, "");
+            //            transaction.Replace(Resource.Id.framelayout, content);
+            //            transaction.Commit();
+            //            break;
+            //        case "Внесение оплаты":
+            //            MakePayment();
+            //            break;
+            //    }
+            //});
+            //alert.SetNegativeButton("Отмена", (senderAlert, args) =>
+            //{
+            //});
+            //Dialog dialog = alert.Create();
+            //dialog.Show();
         }
 
         private void CreateTimeArray()
@@ -513,10 +609,33 @@ namespace SmartBoxCity.Activity.Order
         //    }            
         //}
 
+        private void SetPhoto()
+        {
+            LayoutInflater layoutInflater = LayoutInflater.From(Activity);
+            View view = layoutInflater.Inflate(Resource.Layout.modal_photo, null);
+            var img_get_photo = view.FindViewById<ImageView>(Resource.Id.img_get_photo);
+
+            var src = Android.Net.Uri.Parse(URL + StaticOrder.File_Name);
+            img_get_photo.SetImageURI(src);
+
+            var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + StaticOrder.File_Name);
+            img_get_photo.SetImageBitmap(imageBitmap);
+
+            Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
+            alert1.SetView(view);
+            alert1.SetCancelable(false);
+            alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+            {
+            });
+            Dialog dialog1 = alert1.Create();
+            dialog1.Show();            
+
+        }
         private async void GetPhoto()
         {
             try
             {
+                
                 using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
                 {
                     ManageOrderService.InitializeClient(client);
@@ -524,25 +643,11 @@ namespace SmartBoxCity.Activity.Order
                     o_data = await ManageOrderService.GetPhoto(StaticOrder.Order_id);
                     if (o_data.Status == HttpStatusCode.OK)
                     {
-
-                        LayoutInflater layoutInflater = LayoutInflater.From(Activity);
-                        View view = layoutInflater.Inflate(Resource.Layout.modal_photo, null);
-                        var img_get_photo = view.FindViewById<ImageView>(Resource.Id.img_get_photo);
-
-                        var src = Android.Net.Uri.Parse(URL + o_data.Message);
-                        img_get_photo.SetImageURI(src);
-
-                        var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.Message);
-                        img_get_photo.SetImageBitmap(imageBitmap);
-
-                        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
-                        alert1.SetView(view);
-                        alert1.SetCancelable(false);
-                        alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
-                        {
-                        });
-                        Dialog dialog1 = alert1.Create();
-                        dialog1.Show();
+                        ///дописать
+                        StaticOrder.File_Name = o_data.Message;
+                        StaticOrder.MessageResult = "0";
+                        StartUp.StartTracking(Activity, 2);
+                        
                     }
                     else
                     {

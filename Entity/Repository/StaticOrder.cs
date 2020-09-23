@@ -142,6 +142,8 @@ namespace Entity.Repository
         /// </summary>
         public static string Cargo_loading { get; set; }
         public static string Volume { get; set; }
+        public static string File_Name { get; set; }
+        public static string MessageResult { get; set; }
         #endregion
 
         /// <summary>

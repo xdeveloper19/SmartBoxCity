@@ -607,7 +607,7 @@ namespace WebService.Driver
                         {
                             var box = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
                             o_data.Message = "Успешно!";
-                            o_data.Status = response.StatusCode;// а почему переменная container_id пустая
+                            o_data.Status = response.StatusCode;
                             o_data.ResponseData = new SuccessResponse
                             {
                                 Message = box.Message

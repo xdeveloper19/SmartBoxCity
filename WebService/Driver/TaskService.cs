@@ -27,6 +27,91 @@ namespace WebService.Driver
         }
 
         /// <summary>
+        /// Получение фото.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task<ServiceResponseObject<SuccessResponse>> GetPhoto()
+        {
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://smartboxcity.ru:8003/container/00000000002/image");
+                request.Method = "GET";
+                request.Credentials = new NetworkCredential(CrossSettings.Current.GetValueOrDefault("token", ""), "");
+
+                var response = (HttpWebResponse)request.GetResponse();
+
+                Stream responseStream = response.GetResponseStream();
+
+
+
+                StreamReader myStreamReader = new StreamReader(responseStream, Encoding.Default);
+
+                string s_result = myStreamReader.ReadToEnd();
+
+                myStreamReader.Close();
+                responseStream.Close();
+
+                response.Close();
+                //HttpResponseMessage response = await _httpClient.GetAsync($"tasks");
+
+                //string s_result;
+                //using (HttpContent responseContent = response.Content)
+                //{
+                //    s_result = await responseContent.ReadAsStringAsync();
+                //}
+
+                ServiceResponseObject<SuccessResponse> o_data =
+                    new ServiceResponseObject<SuccessResponse>();
+
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.BadRequest:
+                        {
+                            ErrorResponseObject error = new ErrorResponseObject();
+                            error = JsonConvert.DeserializeObject<ErrorResponseObject>(s_result);
+                            o_data.Status = response.StatusCode;
+                            o_data.Message = error.Errors[0];
+                            return o_data;
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var tasks = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
+                            o_data.Message = "Успешно!";
+                            o_data.Status = response.StatusCode;
+                            o_data.ResponseData = new SuccessResponse
+                            {
+                                Message = tasks.Message
+                            };
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
+                }
+
+
+            }//can not access to close stream 
+            catch (Exception ex)
+            {
+                ServiceResponseObject<SuccessResponse> o_data =
+                   new ServiceResponseObject<SuccessResponse>();
+
+                o_data.Message = ex.Message;
+                o_data.Status = System.Net.HttpStatusCode.InternalServerError;
+                return o_data;
+            }
+        }
+        /// <summary>
         /// Получение задач.
         /// </summary>
         /// <returns></returns>

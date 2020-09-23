@@ -12,6 +12,8 @@ namespace SmartBoxCity.Service
     {
         private const string TASK_TAG = "task-job-tag";
         public const string ACTION_PROCESS_TASKS = "SmartBoxCity.UPDATE_TASKS";
+        public const string ACTION_PROCESS_CLIENT_PHOTO = "SmartBoxCity.CLIENT_PHOTO";
+
         MyTasksBroadcastReceiver receiver = new MyTasksBroadcastReceiver();
 
         public override void OnCreate()
@@ -31,6 +33,14 @@ namespace SmartBoxCity.Service
                             RegisterReceiver(receiver, new IntentFilter(ACTION_PROCESS_TASKS));
                             Intent intent = new Intent();
                             intent.SetAction(ACTION_PROCESS_TASKS);
+                            SendBroadcast(intent);
+                            break;
+                        }
+                    case 2:
+                        {
+                            RegisterReceiver(receiver, new IntentFilter(ACTION_PROCESS_CLIENT_PHOTO));
+                            Intent intent = new Intent();
+                            intent.SetAction(ACTION_PROCESS_CLIENT_PHOTO);
                             SendBroadcast(intent);
                             break;
                         }

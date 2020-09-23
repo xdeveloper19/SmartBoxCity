@@ -23,6 +23,7 @@ using WebService.Account;
 using Entity.Repository;
 using System;
 using Xamarin.Essentials;
+using SmartBoxCity.Service;
 
 namespace SmartBoxCity
 {
@@ -162,7 +163,7 @@ namespace SmartBoxCity
 
                             break;
                         case Resource.Id.title_about_us:
-                            if(StaticUser.PresenceOnPage == true)
+                            if (StaticUser.PresenceOnPage == true)
                             {
                                 AddOrderActivity content = new AddOrderActivity();
                                 transaction.Replace(Resource.Id.framelayout, content);
@@ -170,7 +171,7 @@ namespace SmartBoxCity
                                 transaction.Commit();
                             }
                             else
-                            {   
+                            {
                                 Activity_About_As content3 = new Activity_About_As();
                                 transaction.Replace(Resource.Id.framelayout, content3);
                                 transaction.AddToBackStack(null);
@@ -260,7 +261,6 @@ namespace SmartBoxCity
             
             //navigationView.SetNavigationItemSelectedListener(this);
         }
-
         protected override void OnDestroy()
         {
             //string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
@@ -390,21 +390,31 @@ namespace SmartBoxCity
 
         private void LeaveProfile()
         {
-            string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
-            File.Delete(dir_path + "user_data.txt");
-
-            using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+            try
             {
-                AuthService.InitializeClient(client);
-                AuthService.LogOut();
-                CrossSettings.Current.AddOrUpdateValue("token", "");
-                //CrossSettings.Current.AddOrUpdateValue("PresenceOnPage", "false");
-                StaticUser.PresenceOnPage = false;
-                StaticUser.IsUserOrMapActivity = false;
-            }
+                string dir_path = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
+                File.Delete(dir_path + "user_data.txt");
 
-            Intent intent = new Intent(this, typeof(MainActivity));
-            StartActivity(intent);
+                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+                {
+                    AuthService.InitializeClient(client);
+                    AuthService.LogOut();
+                    CrossSettings.Current.AddOrUpdateValue("token", "");
+                    //CrossSettings.Current.AddOrUpdateValue("PresenceOnPage", "false");
+                    StaticUser.PresenceOnPage = false;
+                    StaticUser.IsUserOrMapActivity = false;
+                }
+
+                StartUp.StopTracking(this);
+                Intent intent = new Intent(this, typeof(MainActivity));
+                StartActivity(intent);
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(this, ex.Message, ToastLength.Long);
+                Intent intent = new Intent(this, typeof(MainActivity));
+                StartActivity(intent);
+            }
         }
 
         private void CreationAlertDialog(string warningMessage)

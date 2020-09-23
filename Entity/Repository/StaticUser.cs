@@ -62,6 +62,7 @@ namespace Entity.Repository
 
         public static bool IsContentMain { get; set; }
 
+
         /// <summary>
         /// Добавляю информацию о клиенте
         /// </summary>

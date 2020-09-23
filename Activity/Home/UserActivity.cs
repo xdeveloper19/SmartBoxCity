@@ -158,6 +158,7 @@ namespace SmartBoxCity.Activity.Home
             }
         }
 
+       
 
         private void UpdateList()
         {

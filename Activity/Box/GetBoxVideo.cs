@@ -11,6 +11,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Entity.Model;
+using Entity.Repository;
 using Plugin.Settings;
 using WebService;
 using WebService.Driver;
@@ -41,14 +42,7 @@ namespace SmartBoxCity.Activity.Box
                 videoView = view.FindViewById<VideoView>(Resource.Id.ViewVideoFromServer);
                 preloader = view.FindViewById<ProgressBar>(Resource.Id.preloader);
 
-                if (video_url == "")
-                {
-                    GetVideo();
-                }
-                else
-                {
-                    PlayVideoMethod();
-                }
+                PlayVideoMethod();
 
                 return view;
             }
@@ -80,38 +74,38 @@ namespace SmartBoxCity.Activity.Box
         //    //show media controls for 3 seconds when video starts to play
         //    mediaController.Show(3000);
         //}
-        private async void GetVideo()
-        {
-            try
-            {
-                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
-                {
-                    BoxService.InitializeClient(client);
-                    var o_data = new ServiceResponseObject<SuccessResponse>();
-                    o_data = await BoxService.GetVideo(id);
+        //private async void GetVideo()
+        //{
+        //    try
+        //    {
+        //        using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+        //        {
+        //            BoxService.InitializeClient(client);
+        //            var o_data = new ServiceResponseObject<SuccessResponse>();
+        //            o_data = await BoxService.GetVideo(id);
 
-                    if (o_data.Status == HttpStatusCode.OK)
-                    {
-                        video_url = o_data.ResponseData.Message;
-                        PlayVideoMethod();
-                        //controller = new MediaController(context);
-                        //img_get_video.CanPause();
-                        // controller.SetAnchorView(img_get_video);
-                        //img_get_video.SetMediaController(controller);
-                        //img_get_video.SetOnPreparedListener(new MediaOPlayerListener(context, img_get_video));
-                        //controller.Show(50000);
-                    }
-                    else
-                    {
-                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
-            }
-        }
+        //            if (o_data.Status == HttpStatusCode.OK)
+        //            {
+        //                video_url = o_data.ResponseData.Message;
+        //                PlayVideoMethod();
+        //                //controller = new MediaController(context);
+        //                //img_get_video.CanPause();
+        //                // controller.SetAnchorView(img_get_video);
+        //                //img_get_video.SetMediaController(controller);
+        //                //img_get_video.SetOnPreparedListener(new MediaOPlayerListener(context, img_get_video));
+        //                //controller.Show(50000);
+        //            }
+        //            else
+        //            {
+        //                Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+        //    }
+        //}
 
         private void PlayVideoMethod()
         {
@@ -125,7 +119,7 @@ namespace SmartBoxCity.Activity.Box
                 //controller.Show(50000);
                 preloader.Visibility = ViewStates.Visible;
 
-                var src = Android.Net.Uri.Parse(URL + video_url);
+                var src = Android.Net.Uri.Parse(URL + StaticOrder.File_Name);
                 videoView.SetVideoURI(src);
                 var mediaController = new MediaController(Activity);
                 mediaController.SetAnchorView(videoView);

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using Android.App;
 using Android.Content;
 using Android.Media;
@@ -9,6 +11,7 @@ using Entity.Repository;
 using Plugin.Settings;
 using SmartBoxCity.Activity;
 using WebService;
+using WebService.Client;
 using WebService.Driver;
 
 namespace SmartBoxCity.Service
@@ -17,6 +20,8 @@ namespace SmartBoxCity.Service
     public class MyTasksBroadcastReceiver : BroadcastReceiver
     {
         public static string ACTION_PROCESS_TASKS = "SmartBoxCity.UPDATE_TASKS";
+        public const string ACTION_PROCESS_CLIENT_PHOTO = "SmartBoxCity.CLIENT_PHOTO";
+
         // Идентификатор уведомления
         private static int NOTIFY_ID = 101;
         static readonly string CHANNEL_ID = "location_notification";
@@ -32,6 +37,18 @@ namespace SmartBoxCity.Service
                     {
                         CreateNotificationChannel(context);
                         GetTasks(context);
+                    }
+                    catch (Exception)
+                    {
+                        Toast.MakeText(context, "Приложение закрыто!", ToastLength.Long);
+                    }
+                }
+                else if (action.Equals(ACTION_PROCESS_CLIENT_PHOTO))
+                {
+                    try
+                    {
+                        //CreateNotificationChannel(context);
+                        UpdateFileData(context, StaticOrder.File_Name);
                     }
                     catch (Exception)
                     {
@@ -109,7 +126,7 @@ namespace SmartBoxCity.Service
                     PushNotifications(context, "Новая задача на перевозку груза", "Просмотреть задачу");
                     StaticTask.IsStoppedGeo = false;
                     StaticTask.IsStoppedGettingTasks = true;
-                    StartUp.StopTracking(context);
+                    StartUp.StopTracking(context, 1);
                     return;
                 }
                 else
@@ -118,6 +135,37 @@ namespace SmartBoxCity.Service
                     return;
                 }
             }
+        }
+
+        private async void UpdateFileData(Context context, string file_name)
+        {
+            var authValue = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes($"{CrossSettings.Current.GetValueOrDefault("token", "")}:")));
+            HttpClient client = new HttpClient()
+            {
+                DefaultRequestHeaders = { Authorization = authValue },
+                BaseAddress = new Uri("https://smartboxcity.ru/media.php?media=")
+            };
+            
+            ManageOrderService.InitializeClient(client);
+            var o_data = await ManageOrderService.CheckFile(file_name);
+
+            if (o_data.Status == System.Net.HttpStatusCode.OK)
+            {
+                StaticOrder.MessageResult = o_data.Message;
+                //дописать
+                if (o_data.Message == "1")
+                {
+                    Toast.MakeText(context, "Фото было успешно загружено. Можете его открыть.", ToastLength.Long);
+                    StartUp.StopTracking(context, 2);
+                }
+                    
+                return;
+            }
+            else
+            {
+                 return;
+            }
+            
         }
     }
 }

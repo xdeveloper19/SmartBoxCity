@@ -145,6 +145,54 @@ namespace WebService.Client
             }
         }
 
+        public static async Task<ServiceResponseObject<SuccessResponse>> CheckFile(string file_name)
+        {
+            try
+            {
+                HttpResponseMessage response = await _httpClient.GetAsync("https://smartboxcity.ru/media_json.php?media=" + file_name);
+                string s_result;
+                using (HttpContent responseContent = response.Content)
+                {
+                    s_result = await responseContent.ReadAsStringAsync();
+                }
+
+                ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
+                switch (response.StatusCode)
+                {
+                    case HttpStatusCode.BadRequest:
+                        {
+                            throw new Exception("Ошибка сервера 400");
+                        }
+                    case HttpStatusCode.InternalServerError:
+                        {
+                            throw new Exception("Внутренняя ошибка сервера 500");
+                        }
+
+                    case HttpStatusCode.NotFound:
+                        {
+                            throw new Exception("Ресурс не найден 404");
+                        }
+                    case HttpStatusCode.OK:
+                        {
+                            var message = JsonConvert.DeserializeObject<SuccessResponse>(s_result);
+                            o_data.Message = message.Message;
+                            o_data.Status = response.StatusCode;
+                            return o_data;
+                        }
+                    default:
+                        {
+                            throw new Exception(response.StatusCode.ToString() + " Server Error");
+                        }
+                }
+            }
+            catch (Exception ex)
+            {
+                ServiceResponseObject<SuccessResponse> o_data = new ServiceResponseObject<SuccessResponse>();
+                o_data.Message = ex.Message;
+                return o_data;
+            }
+        }
+
         /// <summary>
         /// Открыть замок контейнера.
         /// </summary>
