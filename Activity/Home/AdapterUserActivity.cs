@@ -205,24 +205,54 @@ namespace SmartBoxCity.Activity.Home
                         if (_Clicked == false)
                         {
                             _Clicked = true;
-                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                            alert.SetTitle("Сделать фотографию");
-                            alert.SetMessage("Вы действительно хотите сделать фотографию с камеры контейнера?");
-                            alert.SetPositiveButton("Сделать", (senderAlert, args) =>
-                            {
-                                _Clicked = false;
-                                MaxElement = listPosition.Max();
-                                GetPhoto(orders[MaxElement].id, alert);
-                                listPosition.Clear();
-                            });
-                            alert.SetNegativeButton("Отмена", (senderAlert, args) =>
-                            {
-                                _Clicked = false;
-                                listPosition.Clear();
-                            });
+                            LayoutInflater layoutInflater = LayoutInflater.From(context);
+                            View view = layoutInflater.Inflate(Resource.Layout.qqqqqqww, null);
+
+                            var txtTitle = view.FindViewById<TextView>(Resource.Id.TextTitle);
+                            var txtInfo = view.FindViewById<TextView>(Resource.Id.TextInfo);
+                            var btn_Negative = view.FindViewById<Button>(Resource.Id.BtnNegative);
+                            var btn_Positive = view.FindViewById<Button>(Resource.Id.BtnPositive);
+
+                            txtTitle.Text = "Сделать фотографию";
+                            txtInfo.Text = "Вы действительно хотите сделать фотографию с камеры контейнера?";
+
+                            Android.App.AlertDialog.Builder alert = new Android.App.AlertDialog.Builder(context);
+
+                            alert.SetView(view);
+                            alert.SetCancelable(false);
+
                             Dialog dialog = alert.Create();
+                            btn_Positive.Click += delegate
+                            {
+                                if (btn_Positive.Text == "Открыть")
+                                {
+                                    if (StaticOrder.MessageResult == "1")
+                                    {
+                                        dialog.Dismiss();
+                                        _Clicked = false;
+                                        SetPhoto();
+                                    }
+                                    else
+                                        Toast.MakeText(context, "Фото ещё не загруженно.", ToastLength.Long).Show();
+                                }
+                                else
+                                {
+                                    btn_Positive.Text = "Открыть";
+                                    MaxElement = listPosition.Max();
+                                    GetPhoto(orders[MaxElement].id, alert);
+                                    listPosition.Clear();
+                                }
+                            };
+                            btn_Negative.Click += delegate
+                            {
+                                _Clicked = false;
+                                listPosition.Clear();
+                                dialog.Dismiss();
+                            };
                             dialog.Show();
+
                         }
+
                         //AlertDialog.Builder alert = new AlertDialog.Builder(context);
                         //alert.SetTitle("Сделать фотографию");
                         //alert.SetMessage("Вы действительно хотите сделать фотографию с камеры контейнера?");
@@ -249,51 +279,64 @@ namespace SmartBoxCity.Activity.Home
                         if (_Clicked == false)
                         {
                             _Clicked = true;
-                            AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                            alert.SetTitle("Сделать видео");
-                            alert.SetMessage("Вы действительно хотите сделать видео с камеры контейнера?");
-                            alert.SetPositiveButton("Сделать", (senderAlert, args) =>
-                            {
-                                try
-                                {
-                                    _Clicked = false;
-                                    MaxElement = listPosition.Max();
-                                    VideoFromServerActivity content = new VideoFromServerActivity(orders[MaxElement].id, "");
-                                    listPosition.Clear();
-                                    manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null);
-                                    manager.Commit();
-                                }
-                                catch (Exception ex)
-                                {
-                                    Toast.MakeText(context, "Ошибка перехода на страницу", ToastLength.Long);
-                                }
-                            });
-                            alert.SetNegativeButton("Отмена", (senderAlert, args) =>
-                            {
-                                listPosition.Clear();
-                                _Clicked = false;
-                            });
+                            LayoutInflater layoutInflater = LayoutInflater.From(context);
+                            View view = layoutInflater.Inflate(Resource.Layout.qqqqqqww, null);
+
+                            var txtTitle = view.FindViewById<TextView>(Resource.Id.TextTitle);
+                            var txtInfo = view.FindViewById<TextView>(Resource.Id.TextInfo);
+                            var btn_Positive = view.FindViewById<Button>(Resource.Id.BtnPositive);
+                            var btn_Negative = view.FindViewById<Button>(Resource.Id.BtnNegative);
+
+                            txtTitle.Text = "Сделать видео";
+                            txtInfo.Text = "Вы действительно хотите сделать видео с камеры контейнера?";
+
+                            Android.App.AlertDialog.Builder alert = new Android.App.AlertDialog.Builder(context);
+                            alert.SetView(view);
+                            alert.SetCancelable(false);
+
                             Dialog dialog = alert.Create();
+
+                            btn_Positive.Text = "Да";
+                            btn_Positive.Click += delegate
+                            {
+                                if (btn_Positive.Text == "Открыть")
+                                {
+                                    if (StaticOrder.MessageResult == "1")
+                                    {
+                                        dialog.Dismiss();
+                                        _Clicked = false;
+                                        VideoFromServerActivity content = new VideoFromServerActivity();
+                                        listPosition.Clear();
+                                        manager.Replace(Resource.Id.framelayout, content).AddToBackStack(null);
+                                        manager.Commit();
+                                    }
+                                    else
+                                    {
+                                        Toast.MakeText(context, "Видео ещё не загруженно. Дождитесь оповещения.", ToastLength.Long).Show();
+                                    }
+                                }
+                                else
+                                {
+                                    btn_Positive.Text = "Открыть";
+                                    MaxElement = listPosition.Max();
+                                    GetVideo(orders[MaxElement].id);
+                                }
+                            };
+                            btn_Negative.Click += delegate
+                            {
+                                _Clicked = false;
+                                listPosition.Clear();
+                                dialog.Dismiss();
+                            };
                             dialog.Show();
-                        }
-                        //AlertDialog.Builder alert = new AlertDialog.Builder(context);
-                        //alert.SetTitle("Сделать видео");
-                        //alert.SetMessage("Вы действительно хотите сделать видео с камеры контейнера?");
-                        //alert.SetPositiveButton("Сделать", (senderAlert, args) =>
-                        //{
-                        //    GetVideo(orders[position].id, alert);
-                        //});
-                        //alert.SetNegativeButton("Отмена", (senderAlert, args) =>
-                        //{
-                        //});
-                        //Dialog dialog = alert.Create();
-                        //dialog.Show();
+                        }                      
                     }
                     catch (Exception ex)
                     {
                         Toast.MakeText(Application.Context, ex.Message, ToastLength.Long);
                     }
                 };
+
                 btn_order_management.Click += delegate
                 {
                     try
@@ -408,7 +451,7 @@ namespace SmartBoxCity.Activity.Home
         //                var img_get_video = view.FindViewById<VideoView>(Resource.Id.img_get_video);
         //                var src = Android.Net.Uri.Parse(URL + o_data.Message);
         //                //controller = new MediaController(context);
-                       
+
         //                img_get_video.SetVideoURI(src);
         //                //img_get_video.CanPause();
         //               // controller.SetAnchorView(img_get_video);
@@ -498,7 +541,33 @@ namespace SmartBoxCity.Activity.Home
 
         //    }
         //}
+        private async void GetVideo(string id)
+        {
+            try
+            {
+                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+                {
+                    ManageOrderService.InitializeClient(client);
+                    var o_data = new ServiceResponseObject<SuccessResponse>();
+                    o_data = await ManageOrderService.GetVideo(id);
 
+                    if (o_data.Status == HttpStatusCode.OK)
+                    {
+                        StaticOrder.File_Name = o_data.Message;
+                        StaticOrder.MessageResult = "0";
+                        StartUp.StartTracking(context, 2);
+                    }
+                    else
+                    {
+                        Toast.MakeText(context, o_data.Message, ToastLength.Long).Show();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(context, ex.Message, ToastLength.Long).Show();
+            }
+        }
         private void  SaveVideo(string urll)
         {
             try
@@ -609,7 +678,33 @@ namespace SmartBoxCity.Activity.Home
             //    null);
 
         }
+        private void SetPhoto()
+        {
 
+            LayoutInflater layoutInflater = LayoutInflater.From(context);
+            View view = layoutInflater.Inflate(Resource.Layout.modal_photo, null);
+            var img_get_photo = view.FindViewById<ImageView>(Resource.Id.img_get_photo);
+
+            var src = Android.Net.Uri.Parse(URL + StaticOrder.File_Name);
+            img_get_photo.SetImageURI(src);
+            Bitmap imageBitmap = HomeService.GetImageBitmapFromUrl(URL + StaticOrder.File_Name);
+
+            img_get_photo.SetImageBitmap(imageBitmap);
+            Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
+            alert1.SetView(view);
+
+            alert1.SetCancelable(false);
+            alert1.SetPositiveButton("Скачать", (senderAlert1, args1) =>
+            {
+                SaveImage(imageBitmap);
+            });
+            alert1.SetNegativeButton("Закрыть", (senderAlert1, args1) =>
+            {
+            });
+            Dialog dialog1 = alert1.Create();
+            dialog1.Show();
+
+        }
         private async void GetPhoto(string id, AlertDialog.Builder alert)
         {
             try
@@ -622,50 +717,9 @@ namespace SmartBoxCity.Activity.Home
 
                     if (o_data.Status == HttpStatusCode.OK)
                     {
-                        alert.Dispose();
-
-                        LayoutInflater layoutInflater = LayoutInflater.From(context);
-                        View view = layoutInflater.Inflate(Resource.Layout.modal_photo, null);
-                        var img_get_photo = view.FindViewById<ImageView>(Resource.Id.img_get_photo);
-
-                        var src = Android.Net.Uri.Parse(URL + o_data.Message);
-                        img_get_photo.SetImageURI(src);
-
-                        //var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.Message);
-                        Bitmap imageBitmap = HomeService.GetImageBitmapFromUrl(URL + o_data.Message);
-
-                        //SaveFileDialog dialog = new SaveFileDialog();
-                        //if (dialog.ShowDialog() == DialogResult.OK)
-                        //{
-                        //    int width = Convert.ToInt32(drawImage.Width);
-                        //    int height = Convert.ToInt32(drawImage.Height);
-                        //    Bitmap bmp = new Bitmap(width, height);
-                        //    drawImage.DrawToBitmap(bmp, new Rectangle(0, 0, width, height);
-                        //    bmp.Save(dialog.FileName, ImageFormat.Jpeg);
-                        //}
-
-                        //Android.Provider.MediaStore.Images.Media.InsertImage(imageBitmap, "photo", "");
-
-                        img_get_photo.SetImageBitmap(imageBitmap);
-                        //var storageDir = new File(
-                        //    Environment.ExternalStorageDirectory(
-                        //        Environment.DIRECTORY_PICTURES
-                        //    ),
-                        //    getAlbumName()
-                        //);
-                        Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(context);
-                        alert1.SetView(view);
-                        ////
-                        alert1.SetCancelable(false);
-                        alert1.SetPositiveButton("Скачать", (senderAlert1, args1) =>
-                        {
-                            SaveImage(imageBitmap);
-                        });
-                        alert1.SetNegativeButton("Закрыть", (senderAlert1, args1) =>
-                        {
-                        });
-                        Dialog dialog1 = alert1.Create();
-                        dialog1.Show();
+                        StaticOrder.File_Name = o_data.Message;
+                        StaticOrder.MessageResult = "0";
+                        StartUp.StartTracking(context, 2);
                     }
                     else
                     {

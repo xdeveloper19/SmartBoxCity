@@ -145,26 +145,49 @@ namespace SmartBoxCity.Service
                 DefaultRequestHeaders = { Authorization = authValue },
                 BaseAddress = new Uri("https://smartboxcity.ru/media.php?media=")
             };
-            
-            ManageOrderService.InitializeClient(client);
-            var o_data = await ManageOrderService.CheckFile(file_name);
 
-            if (o_data.Status == System.Net.HttpStatusCode.OK)
+            if(CrossSettings.Current.GetValueOrDefault("role", "") == "driver")
             {
-                StaticOrder.MessageResult = o_data.Message;
-                //дописать
-                if (o_data.Message == "1")
+                BoxService.InitializeClient(client);
+                var o_data = await BoxService.CheckFile(file_name);
+                if (o_data.Status == System.Net.HttpStatusCode.OK)
                 {
-                    Toast.MakeText(context, "Фото было успешно загружено. Можете его открыть.", ToastLength.Long);
-                    StartUp.StopTracking(context, 2);
+                    StaticOrder.MessageResult = o_data.Message;
+                    //дописать
+                    if (o_data.Message == "1")
+                    {
+                        StartUp.StopTracking(context, 2);
+                    }
+
+                    return;
                 }
-                    
-                return;
+                else
+                {
+                    return;
+                }
             }
             else
             {
-                 return;
-            }
+                ManageOrderService.InitializeClient(client);
+                var o_data = await ManageOrderService.CheckFile(file_name);
+                if (o_data.Status == System.Net.HttpStatusCode.OK)
+                {
+                    StaticOrder.MessageResult = o_data.Message;
+                    //дописать
+                    if (o_data.Message == "1")
+                    {
+                        StartUp.StopTracking(context, 2);
+                    }
+
+                    return;
+                }
+                else
+                {
+                    return;
+                }
+            }            
+
+            
             
         }
     }

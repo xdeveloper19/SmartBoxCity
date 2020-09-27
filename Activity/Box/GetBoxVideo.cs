@@ -22,15 +22,8 @@ namespace SmartBoxCity.Activity.Box
     {
         private VideoView videoView;
         private const string URL = "https://smartboxcity.ru/";
-        private string id;
-        private string video_url;
         private ProgressBar preloader;
 
-        public GetBoxVideo(string id, string video_url)
-        {
-            this.id = id;
-            this.video_url = video_url;
-        }
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
             try

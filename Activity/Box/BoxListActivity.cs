@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
 using Entity.Model;
@@ -39,7 +43,9 @@ namespace SmartBoxCity.Activity.Box
             var view = inflater.Inflate(Resource.Layout.driver_container_book, container, false);
             lstBox = view.FindViewById<ListView>(Resource.Id.boxlistview);
             txt_title_lst_box = view.FindViewById<TextView>(Resource.Id.txt_title_lst_box);
+
             transaction = this.FragmentManager.BeginTransaction();
+            
 
             if (Arguments != null)
             {
@@ -56,6 +62,7 @@ namespace SmartBoxCity.Activity.Box
            
             return view;
         }
+
         private async void GetBoxes()
         {
             try

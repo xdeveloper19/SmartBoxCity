@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using Android.App;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
 using Entity.Model;
@@ -18,6 +21,7 @@ using SmartBoxCity.Activity.Event;
 using SmartBoxCity.Activity.Home;
 using SmartBoxCity.Service;
 using WebService;
+using WebService.Client;
 using WebService.Driver;
 using Xamarin.Essentials;
 using static Android.Support.Design.Widget.AppBarLayout;
@@ -47,6 +51,7 @@ namespace SmartBoxCity.Activity.Box
         private Button btn_fold;
         private Button btn_gate;
         private LinearLayout BoxLinearAlarms;
+        SwipeRefreshLayout swipe;
         private const string URL = "https://smartboxcity.ru/";
         #endregion
         public override void OnCreate(Bundle savedInstanceState)
@@ -87,6 +92,10 @@ namespace SmartBoxCity.Activity.Box
             BoxButtonDetach.Text = (StaticBox.isDepot) ? "Прикрепить" : "Открепить";
             btn_fold.Enabled = (StaticBox.isDepot) ? false : true;
             #endregion
+
+            swipe = view.FindViewById<SwipeRefreshLayout>(Resource.Id.SwipeRefreshDriver);
+            swipe.SetColorSchemeColors(Color.Red, Color.Green, Color.Blue, Color.Yellow);
+            swipe.Refresh += RefreshLayout_Refresh;
 
             BoxTextEvents.Click += BoxTextEvents_Click;
             GetBoxParameters();
@@ -237,84 +246,161 @@ namespace SmartBoxCity.Activity.Box
 
             BoxButtonPhoto.Click += delegate
             {
-                AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
-                alert.SetTitle("Сделать фотографию");
-                alert.SetMessage("Вы действительно хотите сделать фотографию с камеры контейнера?");
-                alert.SetPositiveButton("Сделать", (senderAlert, args) =>
-                {
-                    GetPhoto(alert);
-                });
-                alert.SetNegativeButton("Отмена", (senderAlert, args) =>
-                {
-                });
-                Dialog dialog = alert.Create();
-                dialog.Show();
+                AlertDialogCreation("Сделать фотографию", "Вы действительно хотите сделать фотографию с камеры контейнера?");              
             };
             BoxButtonVideo.Click += delegate
             {
-                LayoutInflater layoutInflater = LayoutInflater.From(Activity);
-                View view = layoutInflater.Inflate(Resource.Layout.qqqqqqww, null);
+                AlertDialogCreation("Сделать видео", "Вы действительно хотите сделать видео с камеры контейнера?");
+            };
 
-                var txtTitle = view.FindViewById<TextView>(Resource.Id.TextTitle);
-                var txtInfo = view.FindViewById<TextView>(Resource.Id.TextInfo);
-                var btn_Positive = view.FindViewById<Button>(Resource.Id.BtnPositive);
-                var btn_Negative = view.FindViewById<Button>(Resource.Id.BtnNegative);
+            return view;
+        }
 
-                txtTitle.Text = "Сделать видео";
-                txtInfo.Text = "Вы действительно хотите сделать видео с камеры контейнера?";
+        private void RefreshLayout_Refresh(object sender, EventArgs e)
+        {
+            //Data Refresh Place  
+            BackgroundWorker work = new BackgroundWorker();
+            work.DoWork += Work_DoWork;
+            work.RunWorkerCompleted += Work_RunWorkerCompleted;
+            work.RunWorkerAsync();
+        }
+        private void Work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            swipe.Refreshing = false;
+            BoxActivity content = new BoxActivity();
+            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+            transaction1.Replace(Resource.Id.frameDriverlayout, content);
+            transaction1.Commit();
+        }
+        private void Work_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Thread.Sleep(1000);
+        }
+        private void AlertDialogCreation(string titleString, string messageString)
+        {
+            LayoutInflater layoutInflater = LayoutInflater.From(Activity);
+            View view = layoutInflater.Inflate(Resource.Layout.qqqqqqww, null);
 
-                Android.App.AlertDialog.Builder alert = new Android.App.AlertDialog.Builder(Activity);
-                alert.SetView(view);
-                alert.SetCancelable(false);
+            var txtTitle = view.FindViewById<TextView>(Resource.Id.TextTitle);
+            var txtInfo = view.FindViewById<TextView>(Resource.Id.TextInfo);
+            var btn_Negative = view.FindViewById<Button>(Resource.Id.BtnNegative);
+            var btn_Positive = view.FindViewById<Button>(Resource.Id.BtnPositive);
 
-                Dialog dialog = alert.Create();
-                
-                btn_Positive.Text = "Да";
-                btn_Positive.Click += delegate
+            txtTitle.Text = titleString;
+            txtInfo.Text = messageString;
+
+            Android.App.AlertDialog.Builder alert = new Android.App.AlertDialog.Builder(Activity);
+
+            alert.SetView(view);
+            alert.SetCancelable(false);
+
+            Dialog dialog = alert.Create();
+            btn_Positive.Click += delegate
+            {
+                if (btn_Positive.Text == "Открыть")
                 {
-                    if (btn_Positive.Text == "Открыть")
+                    if (StaticOrder.MessageResult == "1")
                     {
-                        if (StaticOrder.MessageResult == "1")
+                        switch (titleString)
                         {
-                            Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
-                            GetBoxVideo content = new GetBoxVideo(StaticBox.id, "");
-                            transaction.Replace(Resource.Id.frameDriverlayout, content);
-                            transaction.Commit();
-                        }
-                        else
-                        {
-                            Toast.MakeText(Activity, "Видео ещё не загруженно. Дождитесь оповещения.", ToastLength.Long).Show();
+                            case "Сделать фотографию":
+                                dialog.Dismiss();
+                                SetPhoto();
+                                break;
+                            case "Сделать видео":
+                                dialog.Dismiss();
+                                Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                                GetBoxVideo content = new GetBoxVideo();
+                                transaction.Replace(Resource.Id.frameDriverlayout, content);
+                                transaction.Commit();
+                                break;
                         }
                     }
                     else
                     {
-                        btn_Positive.Text = "Открыть";
-                        GetVideo();
+                        string PhotoorVideo = "";
+                        switch (titleString)
+                        {
+                            case "Сделать фотографию":
+                                PhotoorVideo = "Фото";
+                                break;
+                            case "Сделать видео":
+                                PhotoorVideo = "Видео";
+                                break;
+                        }
+                        Toast.MakeText(Activity, PhotoorVideo + " ещё не загруженно.", ToastLength.Long).Show();
                     }
-                };
-                btn_Negative.Click += delegate
+                }
+                else
                 {
-                    dialog.Dismiss();
-                };
-                dialog.Show();
-                //AlertDialog.Builder alert = new AlertDialog.Builder(Activity);
-                //alert.SetTitle("Сделать видео");
-                //alert.SetMessage("Вы действительно хотите сделать видео с камеры контейнера?");
-                //alert.SetPositiveButton("Сделать", (senderAlert, args) =>
-                //{
-                //    //Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
-                //    //GetBoxVideo content = new GetBoxVideo(StaticBox.id, "");
-                //    //transaction.Replace(Resource.Id.frameDriverlayout, content);
-                //    //transaction.Commit();
-                //});
-                //alert.SetNegativeButton("Отмена", (senderAlert, args) =>
-                //{
-                //});
-                //Dialog dialog = alert.Create();
-                //dialog.Show();
+                    switch (titleString)
+                    {
+                        case "Сделать фотографию":
+                            btn_Positive.Text = "Открыть";
+                            GetPhoto();
+                            break;
+                        case "Сделать видео":
+                            btn_Positive.Text = "Открыть";
+                            GetVideo();
+                            break;
+                    }
+                }
             };
+            btn_Negative.Click += delegate
+            {
+                dialog.Dismiss();
+            };
+            dialog.Show();
+        }
+        private void SetPhoto()
+        {
+            LayoutInflater layoutInflater = LayoutInflater.From(Activity);
+            View view = layoutInflater.Inflate(Resource.Layout.modal_photo, null);
+            var img_get_photo = view.FindViewById<ImageView>(Resource.Id.img_get_photo);
 
-            return view;
+            var src = Android.Net.Uri.Parse(URL + StaticOrder.File_Name);
+            img_get_photo.SetImageURI(src);
+
+            var imageBitmap = HomeService.GetImageBitmapFromUrl(URL + StaticOrder.File_Name);
+            img_get_photo.SetImageBitmap(imageBitmap);
+
+            Android.App.AlertDialog.Builder alert1 = new Android.App.AlertDialog.Builder(Activity);
+            alert1.SetView(view);
+            alert1.SetCancelable(false);
+            alert1.SetPositiveButton("Закрыть", (senderAlert1, args1) =>
+            {
+            });
+            Dialog dialog1 = alert1.Create();
+            dialog1.Show();
+
+        }
+        private async void GetPhoto()
+        {
+            try
+            {
+
+                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+                {
+                    BoxService.InitializeClient(client);
+                    var o_data = new ServiceResponseObject<SuccessResponse>();
+                    o_data = await BoxService.GetPhoto(StaticBox.id);
+                    if (o_data.Status == HttpStatusCode.OK)
+                    {
+                        StaticOrder.File_Name = o_data.ResponseData.Message;
+                        StaticOrder.MessageResult = "0";
+                        StartUp.StartTracking(Activity, 2);
+
+                    }
+                    else
+                    {
+                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                    }
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+            }
         }
         private async void GetVideo()
         {
@@ -328,15 +414,9 @@ namespace SmartBoxCity.Activity.Box
 
                     if (o_data.Status == HttpStatusCode.OK)
                     {
-                        StaticOrder.File_Name = o_data.Message;
+                        StaticOrder.File_Name = o_data.ResponseData.Message;
                         StaticOrder.MessageResult = "0";
                         StartUp.StartTracking(Activity, 2);
-                        //controller = new MediaController(context);
-                        //img_get_video.CanPause();
-                        // controller.SetAnchorView(img_get_video);
-                        //img_get_video.SetMediaController(controller);
-                        //img_get_video.SetOnPreparedListener(new MediaOPlayerListener(context, img_get_video));
-                        //controller.Show(50000);
                     }
                     else
                     {

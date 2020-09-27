@@ -69,6 +69,7 @@ namespace SmartBoxCity.Activity.Order
         private string ErrorHandling;
         private string ErrorData;
 
+        private Button btn_Positive;
         #endregion
         SwipeRefreshLayout sweep;
         public override void OnCreate(Bundle savedInstanceState)
@@ -229,11 +230,18 @@ namespace SmartBoxCity.Activity.Order
         }
         private void Work_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            sweep.Refreshing = false;
-            ManageOrderActivity content = new ManageOrderActivity();
-            FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
-            transaction1.Replace(Resource.Id.framelayout, content);
-            transaction1.Commit();
+            try
+            {
+                sweep.Refreshing = false;
+                ManageOrderActivity content = new ManageOrderActivity();
+                FragmentTransaction transaction1 = this.FragmentManager.BeginTransaction();
+                transaction1.Replace(Resource.Id.framelayout, content);
+                transaction1.Commit();
+            }
+            catch (System.Exception ex)
+            {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+            }           
         }
         private void Work_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -277,18 +285,23 @@ namespace SmartBoxCity.Activity.Order
             var txtTitle = view.FindViewById<TextView>(Resource.Id.TextTitle);
             var txtInfo = view.FindViewById<TextView>(Resource.Id.TextInfo);
             var btn_Negative = view.FindViewById<Button>(Resource.Id.BtnNegative);
-            var btn_Positive = view.FindViewById<Button>(Resource.Id.BtnPositive);
+            btn_Positive = view.FindViewById<Button>(Resource.Id.BtnPositive);
+
+            //TimerCallback tm = new TimerCallback(QWE);
+            // создаем таймер
+            int i = 0;
            // Thread thread = new Thread
            //(()
-           //     =>{
-           //        while (true)
+           //     =>
+           //{
+           //    while (true)
+           //    {
+           //        if (StaticOrder.MessageResult == "1")
            //        {
-           //            if (StaticOrder.MessageResult == "1")
-           //            {
-           //                btn_Positive.Text = "Открыть";
-           //                 return;
-           //            }
+           //            QWE();                       
+           //            return;
            //        }
+           //    }
            //});
 
             txtTitle.Text = titleString;
@@ -308,14 +321,40 @@ namespace SmartBoxCity.Activity.Order
                     {
                         //thread.Abort();
                         //thread.Join();
-                        dialog.Dismiss();
-                        SetPhoto();
+                        switch (titleString)
+                        {
+                            case "Сделать фотографию":
+                                dialog.Dismiss();
+                                SetPhoto();
+                                break;
+                            case "Сделать видео":
+                                dialog.Dismiss();
+                                Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
+                                VideoFromServerActivity content = new VideoFromServerActivity();
+                                transaction.Replace(Resource.Id.framelayout, content);
+                                transaction.Commit();
+                                break;
+                        }                        
                     }
                     else
-                        Toast.MakeText(Activity, "Фото ещё не загруженно.", ToastLength.Long).Show();
+                    {
+                        string PhotoorVideo = "";
+                        switch (titleString)
+                        {
+                            case "Сделать фотографию":
+                                PhotoorVideo = "Фото";
+                                break;
+                            case "Сделать видео":
+                                PhotoorVideo = "Видео";
+                                break;
+                        }
+                        Toast.MakeText(Activity, PhotoorVideo + " ещё не загруженно.", ToastLength.Long).Show();
+                    }                        
                 }
                 else
                 {
+                    //thread.Start();
+                    //Timer timer = new Timer(tm, i, 0, 1000);
                     switch (titleString)
                     {
                         case "Сделать фотографию":
@@ -323,10 +362,8 @@ namespace SmartBoxCity.Activity.Order
                             GetPhoto();
                             break;
                         case "Сделать видео":
-                            Android.App.FragmentTransaction transaction = this.FragmentManager.BeginTransaction();
-                            VideoFromServerActivity content = new VideoFromServerActivity(StaticOrder.Order_id, "");
-                            transaction.Replace(Resource.Id.framelayout, content);
-                            transaction.Commit();
+                            btn_Positive.Text = "Открыть";
+                            GetVideo();
                             break;
                         case "Внесение оплаты":
                             MakePayment();
@@ -368,6 +405,15 @@ namespace SmartBoxCity.Activity.Order
             //Dialog dialog = alert.Create();
             //dialog.Show();
         }
+
+        //private void QWE(object c)
+        //{
+        //    if (StaticOrder.MessageResult == "1")
+        //    {
+        //        btn_Positive.Text = "Открыть";
+        //        return;
+        //    }
+        //}
 
         private void CreateTimeArray()
         {
@@ -608,7 +654,33 @@ namespace SmartBoxCity.Activity.Order
         //        Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
         //    }            
         //}
+        private async void GetVideo()
+        {
+            try
+            {
+                using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+                {
+                    ManageOrderService.InitializeClient(client);
+                    var o_data = new ServiceResponseObject<SuccessResponse>();
+                    o_data = await ManageOrderService.GetVideo(StaticOrder.Order_id);
 
+                    if (o_data.Status == HttpStatusCode.OK)
+                    {
+                        StaticOrder.File_Name = o_data.Message;
+                        StaticOrder.MessageResult = "0";
+                        StartUp.StartTracking(Activity, 2);
+                    }
+                    else
+                    {
+                        Toast.MakeText(Activity, o_data.Message, ToastLength.Long).Show();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(Activity, ex.Message, ToastLength.Long).Show();
+            }
+        }
         private void SetPhoto()
         {
             LayoutInflater layoutInflater = LayoutInflater.From(Activity);

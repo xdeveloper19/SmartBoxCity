@@ -13,10 +13,13 @@ using Android.Views;
 using Android.Widget;
 using Entity.Model;
 using Entity.Model.OrderViewModel.OrderInfoViewModel;
+using Entity.Repository;
+using Plugin.Settings;
 using SmartBoxCity.Activity.Home;
 using SmartBoxCity.Service;
 using WebService;
 using WebService.Client;
+using WebService.Driver;
 
 namespace SmartBoxCity.Activity.Event
 {
@@ -104,7 +107,8 @@ namespace SmartBoxCity.Activity.Event
                                 SetPhoto(events[MaxElement].Name);
                             else
                             {
-                                VideoFromServerActivity content = new VideoFromServerActivity("", events[MaxElement].Name);
+                                GetVideo();
+                                VideoFromServerActivity content = new VideoFromServerActivity();
                                 listPosition.Clear();
                                 manager.Replace(Resource.Id.framelayout, content);
                                 manager.Commit();
@@ -135,6 +139,53 @@ namespace SmartBoxCity.Activity.Event
             };
             
             return view;
+        }
+
+        private async void GetVideo()
+        {
+            try
+            {
+                if(CrossSettings.Current.GetValueOrDefault("role", "") == "driver")
+                {
+                    using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+                    {
+                        BoxService.InitializeClient(client);
+                        var o_data = new ServiceResponseObject<SuccessResponse>();
+                        o_data = await BoxService.GetVideo(StaticBox.id);
+
+                        if (o_data.Status == HttpStatusCode.OK)
+                        {
+                            StaticOrder.File_Name = o_data.Message;
+                        }
+                        else
+                        {
+                            Toast.MakeText(context, o_data.Message, ToastLength.Long).Show();
+                        }
+                    }
+                }
+                else
+                {
+                    using (var client = ClientHelper.GetClient(CrossSettings.Current.GetValueOrDefault("token", "")))
+                    {
+                        ManageOrderService.InitializeClient(client);
+                        var o_data = new ServiceResponseObject<SuccessResponse>();
+                        o_data = await ManageOrderService.GetVideo(StaticBox.id);
+
+                        if (o_data.Status == HttpStatusCode.OK)
+                        {
+                            StaticOrder.File_Name = o_data.Message;
+                        }
+                        else
+                        {
+                            Toast.MakeText(context, o_data.Message, ToastLength.Long).Show();
+                        }
+                    }
+                }             
+            }
+            catch (Exception ex)
+            {
+                Toast.MakeText(context, ex.Message, ToastLength.Long).Show();
+            }
         }
 
         //private void SetVideo(string video_url)
